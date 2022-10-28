@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+<form method="post" th:action="@{/users/{userId}/update(userId=${user.id})}"
+      th:object="${user}">
+    <label for="login"> Login
+        <input id="login" name="login" th:value="*{login}" type="text">
+    </label><br>
+    <label for="firstName"> First name
+        <input id="firstName" name="firstName" th:value="*{firstName}" type="text">
+    </label><br>
+    <label for="lastName"> Last name
+        <input id="lastName" name="lastName" th:value="*{lastName}" type="text">
+    </label><br>
+    <label for="birthday">Birthday:
+        <input id="birthday" name="birthday" th:value="*{birthday}" type="date">
+    </label><br>
+    <label for="email"> email
+        <input id="email" name="email" th:value="*{email}" type="text">
+    </label><br>
+    <label for="password"> password
+        <input id="password" name="password" th:value="*{password}" type="text">
+    </label><br>
+    <div>
+        <label for="role">Role:
+            <select id="role" name="userRoleId">
+                <option th:each="role : ${roles}"
+                        th:selected="${role.id == user.userRole.id}"
+                        th:text="${role.name}"
+                        th:value="${role.id}">Role
+                </option>
+            </select>
+        </label>
+    </div>
+    <div>
+        <label for="status">Status:
+            <select id="status" name="userStatusId">
+                <option th:each="status : ${statuses}"
+                        th:selected="${status.id == user.userStatus.id}"
+                        th:text="${status.name}"
+                        th:value="${status.id}">Status
+                </option>
+            </select>
+        </label>
+    </div>
+    <button type="submit">Update</button>
+</form>
+<form method="post" th:action="@{/users/{userId}/delete(userId=${user.id})}" th:if="${'Admin' == user.userRole.name}">
+    <button type="submit">Remove</button>
+</form>
+</body>
+</html>

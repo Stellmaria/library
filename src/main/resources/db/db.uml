@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>b2a89b23-5340-4f17-81c9-b9d08d97fb5d.SCHEMA:library.public</OriginalElement>
+  <nodes>
+    <node x="1309.5" y="469.0">b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book_publishing_house</node>
+    <node x="702.0" y="-273.0">b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.user_status</node>
+    <node x="580.5" y="413.0">b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.orders</node>
+    <node x="580.5" y="70.0">b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.order_status</node>
+    <node x="702.0" y="1395.25">b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book_additional</node>
+    <node x="823.5" y="469.0">b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book_status</node>
+    <node x="337.49999999999994" y="70.0">b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.order_type</node>
+    <node x="337.49999999999994" y="469.0">b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book_language</node>
+    <node x="936.125" y="1431.0">b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.books_genres</node>
+    <node x="-150.0" y="878.0">b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.author</node>
+    <node x="823.5" y="-14.0">b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.users</node>
+    <node x="983.0" y="948.0">b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book_genre</node>
+    <node x="945.0" y="-273.0">b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.user_role</node>
+    <node x="-148.5" y="469.0">b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.author_role</node>
+    <node x="664.0" y="794.0">b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book</node>
+    <node x="94.5" y="469.0">b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book_format</node>
+    <node x="1066.5" y="469.0">b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book_series</node>
+    <node x="248.3258333333332" y="1431.0">b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.books_authors</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.orders" target="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.order_status" relationship="REFERENCES">
+      <point x="1.4210854715202004E-14" y="-160.5" />
+      <point x="0.0" y="104.5" />
+    </edge>
+    <edge source="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.users" target="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.user_role" relationship="REFERENCES">
+      <point x="55.75" y="-188.5" />
+      <point x="990.75" y="-39.0" />
+      <point x="1056.5" y="-39.0" />
+      <point x="0.0" y="104.5" />
+    </edge>
+    <edge source="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book" target="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book_format" relationship="REFERENCES">
+      <point x="-124.58333333333337" y="-272.5" />
+      <point x="688.9166666666666" y="774.0" />
+      <point x="206.0" y="774.0" />
+      <point x="0.0" y="104.5" />
+    </edge>
+    <edge source="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book_additional" target="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book" relationship="REFERENCES">
+      <point x="0.0" y="-160.5" />
+      <point x="0.0" y="272.5" />
+    </edge>
+    <edge source="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book" target="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.orders" relationship="REFERENCES">
+      <point x="-24.916666666666686" y="-272.5" />
+      <point x="788.5833333333333" y="754.0" />
+      <point x="692.0" y="754.0" />
+      <point x="0.0" y="160.5" />
+    </edge>
+    <edge source="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book" target="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book_publishing_house" relationship="REFERENCES">
+      <point x="124.58333333333334" y="-272.5" />
+      <point x="938.0833333333333" y="774.0" />
+      <point x="1441.0" y="774.0" />
+      <point x="0.0" y="104.5" />
+    </edge>
+    <edge source="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.books_authors" target="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.author" relationship="REFERENCES">
+      <point x="-55.75" y="-118.5" />
+      <point x="304.0758333333332" y="1364.0" />
+      <point x="-37.0" y="1364.0" />
+      <point x="0.0" y="188.5" />
+    </edge>
+    <edge source="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.orders" target="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.order_type" relationship="REFERENCES">
+      <point x="-74.33333333333331" y="-160.5" />
+      <point x="617.6666666666666" y="388.0" />
+      <point x="449.0" y="388.0" />
+      <point x="0.0" y="104.5" />
+    </edge>
+    <edge source="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book" target="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book_status" relationship="REFERENCES">
+      <point x="24.916666666666657" y="-272.5" />
+      <point x="838.4166666666666" y="754.0" />
+      <point x="935.0" y="754.0" />
+      <point x="0.0" y="104.5" />
+    </edge>
+    <edge source="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.books_genres" target="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book" relationship="REFERENCES">
+      <point x="-55.75" y="-118.5" />
+      <point x="991.875" y="1364.0" />
+      <point x="813.5" y="1364.0" />
+      <point x="0.0" y="272.5" />
+    </edge>
+    <edge source="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.users" target="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.user_status" relationship="REFERENCES">
+      <point x="-55.75" y="-188.5" />
+      <point x="879.25" y="-39.0" />
+      <point x="813.5" y="-39.0" />
+      <point x="0.0" y="104.5" />
+    </edge>
+    <edge source="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.books_authors" target="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book" relationship="REFERENCES">
+      <point x="55.75" y="-118.5" />
+      <point x="415.5758333333332" y="1364.0" />
+      <point x="813.5" y="1364.0" />
+      <point x="0.0" y="272.5" />
+    </edge>
+    <edge source="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.author" target="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.author_role" relationship="REFERENCES">
+      <point x="0.0" y="-188.5" />
+      <point x="0.0" y="104.5" />
+    </edge>
+    <edge source="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book" target="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book_language" relationship="REFERENCES">
+      <point x="-74.75000000000003" y="-272.5" />
+      <point x="738.75" y="764.0" />
+      <point x="449.0" y="764.0" />
+      <point x="0.0" y="104.5" />
+    </edge>
+    <edge source="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.orders" target="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.users" relationship="REFERENCES">
+      <point x="74.33333333333333" y="-160.5" />
+      <point x="766.3333333333333" y="388.0" />
+      <point x="935.0" y="388.0" />
+      <point x="0.0" y="188.5" />
+    </edge>
+    <edge source="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book" target="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book_series" relationship="REFERENCES">
+      <point x="74.75" y="-272.5" />
+      <point x="888.25" y="764.0" />
+      <point x="1178.0" y="764.0" />
+      <point x="0.0" y="104.5" />
+    </edge>
+    <edge source="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.books_genres" target="b2a89b23-5340-4f17-81c9-b9d08d97fb5d.TABLE:library.public.book_genre" relationship="REFERENCES">
+      <point x="55.75" y="-118.5" />
+      <point x="1103.375" y="1364.0" />
+      <point x="1102.75" y="1364.0" />
+      <point x="8.25" y="115.75" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.4164179104477612" showDependencies="false" x="711.5" y="722.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
