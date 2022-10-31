@@ -1,7 +1,7 @@
 package com.it.academy.library.dto.filter.book;
 
 import com.it.academy.library.model.entity.book.Book;
-import com.it.academy.library.model.querydsl.QueryPredicates;
+import com.it.academy.library.querydsl.QueryPredicates;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

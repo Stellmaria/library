@@ -1,5 +1,6 @@
 package com.it.academy.library.model.repository.entity.book;
 
+import com.it.academy.library.mapper.filter.book.BookAdditionalFilterMapper;
 import com.it.academy.library.model.entity.book.Book;
 import com.it.academy.library.model.entity.book.BookAdditional;
 import com.it.academy.library.model.entity.book.BookFormat;
@@ -8,7 +9,6 @@ import com.it.academy.library.model.entity.book.BookPublishingHouse;
 import com.it.academy.library.model.entity.book.BookSeries;
 import com.it.academy.library.model.entity.book.BookStatus;
 import com.it.academy.library.model.entity.order.Order;
-import com.it.academy.library.model.mapper.filter.book.BookAdditionalFilterMapper;
 import com.it.academy.library.model.repository.entity.IntegrationTestBase;
 import com.it.academy.library.util.ConstantUtil;
 import lombok.RequiredArgsConstructor;

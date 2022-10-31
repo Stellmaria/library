@@ -5,7 +5,7 @@
     <title>Registration</title>
 </head>
 <body>
-<form method="post" th:action="@{/users}" th:object="${user}">
+<form method="post" th:action="@{/users}" th:object="${user}" enctype="multipart/form-data">
     <label for="login"> Login
         <input id="login" name="login" th:value="*{login}" type="text">
     </label><br>
@@ -23,6 +23,9 @@
     </label><br>
     <label for="password"> password
         <input id="password" name="password" th:value="*{password}" type="text">
+    </label><br>
+    <label for="image"> image
+        <input id="image" name="image" type="file">
     </label><br>
     <div>
         <label for="role">Role:

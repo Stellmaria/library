@@ -1,7 +1,7 @@
 package com.it.academy.library.model.repository.entity.user;
 
+import com.it.academy.library.mapper.filter.user.UserRoleFilterMapper;
 import com.it.academy.library.model.entity.user.UserRole;
-import com.it.academy.library.model.mapper.filter.user.UserRoleFilterMapper;
 import com.it.academy.library.model.repository.entity.IntegrationTestBase;
 import com.it.academy.library.util.ConstantUtil;
 import lombok.RequiredArgsConstructor;

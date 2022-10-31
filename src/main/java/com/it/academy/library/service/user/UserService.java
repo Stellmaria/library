@@ -3,17 +3,20 @@ package com.it.academy.library.service.user;
 import com.it.academy.library.dto.create.user.UserCreateEditDto;
 import com.it.academy.library.dto.filter.user.UserFilter;
 import com.it.academy.library.dto.read.user.UserReadDto;
-import com.it.academy.library.model.listener.entity.AccessType;
-import com.it.academy.library.model.listener.entity.EntityEvent;
-import com.it.academy.library.model.mapper.create.user.UserCreateEditMapper;
-import com.it.academy.library.model.mapper.read.user.UserReadMapper;
+import com.it.academy.library.listener.entity.AccessType;
+import com.it.academy.library.listener.entity.EntityEvent;
+import com.it.academy.library.mapper.create.user.UserCreateEditMapper;
+import com.it.academy.library.mapper.read.user.UserReadMapper;
 import com.it.academy.library.model.repository.entity.user.UserRepository;
+import com.it.academy.library.service.ImageService;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -27,6 +30,7 @@ public class UserService {
     private final UserReadMapper userReadMapper;
     private final UserCreateEditMapper userCreateEditMapper;
     private final ApplicationEventPublisher eventPublisher;
+    private final ImageService imageService;
 
     public Page<UserReadDto> findAll(UserFilter userFilter, Pageable pageable) {
         var predicate = UserFilter.queryPredicates(userFilter);
@@ -58,7 +62,10 @@ public class UserService {
     @Transactional(rollbackFor = {Exception.class})
     public UserReadDto create(UserCreateEditDto userCreateEditDto) {
         return Optional.of(userCreateEditDto)
-                .map(userCreateEditMapper::map)
+                .map(it -> {
+                    uploadImage(it.getImage());
+                    return userCreateEditMapper.map(it);
+                })
                 .map(it -> {
                     eventPublisher.publishEvent(new EntityEvent(it, AccessType.CREATE));
                     return userRepository.save(it);
@@ -70,7 +77,10 @@ public class UserService {
     @Transactional(rollbackFor = {Exception.class})
     public Optional<UserReadDto> update(Long id, UserCreateEditDto userCreateEditDto) {
         return userRepository.findById(id)
-                .map(entity -> userCreateEditMapper.map(userCreateEditDto, entity))
+                .map(it -> {
+                    uploadImage(userCreateEditDto.getImage());
+                    return userCreateEditMapper.map(userCreateEditDto, it);
+                })
                 .map(it -> {
                     eventPublisher.publishEvent(new EntityEvent(it, AccessType.UPDATE));
                     return userRepository.saveAndFlush(it);
@@ -88,5 +98,12 @@ public class UserService {
                     return true;
                 })
                 .orElse(false);
+    }
+
+    @SneakyThrows
+    private void uploadImage(MultipartFile image) {
+        if (!image.isEmpty()) {
+            imageService.upload(image.getOriginalFilename(), image.getInputStream());
+        }
     }
 }

@@ -141,6 +141,7 @@ CREATE TABLE IF NOT EXISTS users
     user_role_id   INTEGER DEFAULT 1  NOT NULL,
     user_status_id INTEGER DEFAULT 1  NOT NULL,
     birthday       DATE               NOT NULL,
+    image          VARCHAR(255),
     created_at     TIMESTAMP WITHOUT TIME ZONE,
     modified_at    TIMESTAMP WITHOUT TIME ZONE,
     created_by     VARCHAR(64),

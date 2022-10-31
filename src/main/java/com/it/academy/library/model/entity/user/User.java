@@ -86,7 +86,6 @@ public class User extends AbstractAuditingEntity<Long> {
     @NotBlank
     @Size(min = 6, max = 32)
     private String password;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "user_role_id",
@@ -105,6 +104,8 @@ public class User extends AbstractAuditingEntity<Long> {
 
     @Column(nullable = false)
     private LocalDate birthday;
+
+    private String image;
 
     @OneToMany(
             mappedBy = "user",

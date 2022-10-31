@@ -1,7 +1,7 @@
 package com.it.academy.library.dto.filter.author;
 
 import com.it.academy.library.model.entity.author.Author;
-import com.it.academy.library.model.querydsl.QueryPredicates;
+import com.it.academy.library.querydsl.QueryPredicates;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

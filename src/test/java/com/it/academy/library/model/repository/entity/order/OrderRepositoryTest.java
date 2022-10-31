@@ -1,13 +1,13 @@
 package com.it.academy.library.model.repository.entity.order;
 
+import com.it.academy.library.mapper.filter.order.OrderFilterMapper;
+import com.it.academy.library.mapper.filter.order.OrderStatusFilterMapper;
+import com.it.academy.library.mapper.filter.order.OrderTypeFilterMapper;
+import com.it.academy.library.mapper.filter.user.UserFilterMapper;
 import com.it.academy.library.model.entity.order.Order;
 import com.it.academy.library.model.entity.order.OrderStatus;
 import com.it.academy.library.model.entity.order.OrderType;
 import com.it.academy.library.model.entity.user.User;
-import com.it.academy.library.model.mapper.filter.order.OrderFilterMapper;
-import com.it.academy.library.model.mapper.filter.order.OrderStatusFilterMapper;
-import com.it.academy.library.model.mapper.filter.order.OrderTypeFilterMapper;
-import com.it.academy.library.model.mapper.filter.user.UserFilterMapper;
 import com.it.academy.library.model.repository.entity.IntegrationTestBase;
 import com.it.academy.library.util.ConstantUtil;
 import lombok.RequiredArgsConstructor;

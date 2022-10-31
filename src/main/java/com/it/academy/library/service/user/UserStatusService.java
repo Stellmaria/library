@@ -1,9 +1,9 @@
 package com.it.academy.library.service.user;
 
 import com.it.academy.library.dto.read.user.UserStatusReadDto;
-import com.it.academy.library.model.listener.entity.AccessType;
-import com.it.academy.library.model.listener.entity.EntityEvent;
-import com.it.academy.library.model.mapper.read.user.UserStatusReadMapper;
+import com.it.academy.library.listener.entity.AccessType;
+import com.it.academy.library.listener.entity.EntityEvent;
+import com.it.academy.library.mapper.read.user.UserStatusReadMapper;
 import com.it.academy.library.model.repository.entity.user.UserStatusRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;

@@ -1,7 +1,7 @@
 package com.it.academy.library.model.repository.entity.book;
 
+import com.it.academy.library.mapper.filter.book.BookStatusFilterMapper;
 import com.it.academy.library.model.entity.book.BookStatus;
-import com.it.academy.library.model.mapper.filter.book.BookStatusFilterMapper;
 import com.it.academy.library.model.repository.entity.IntegrationTestBase;
 import com.it.academy.library.util.ConstantUtil;
 import lombok.RequiredArgsConstructor;

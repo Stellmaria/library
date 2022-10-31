@@ -1,11 +1,11 @@
 package com.it.academy.library.model.repository.entity.author;
 
+import com.it.academy.library.mapper.filter.author.AuthorFilterMapper;
+import com.it.academy.library.mapper.filter.author.AuthorRoleFilterMapper;
+import com.it.academy.library.mapper.filter.book.BookFilterMapper;
 import com.it.academy.library.model.entity.author.Author;
 import com.it.academy.library.model.entity.author.AuthorRole;
 import com.it.academy.library.model.entity.book.Book;
-import com.it.academy.library.model.mapper.filter.author.AuthorFilterMapper;
-import com.it.academy.library.model.mapper.filter.author.AuthorRoleFilterMapper;
-import com.it.academy.library.model.mapper.filter.book.BookFilterMapper;
 import com.it.academy.library.model.repository.entity.IntegrationTestBase;
 import com.it.academy.library.util.ConstantUtil;
 import lombok.RequiredArgsConstructor;
