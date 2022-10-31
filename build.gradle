@@ -7,6 +7,8 @@ plugins {
     id 'java'
 }
 
+apply from: 'version.gradle'
+
 group = 'com.it.academy'
 version = '0.0.1-SNAPSHOT'
 
@@ -27,7 +29,6 @@ repositories {
 
 ext {
     set('snippetsDir', file("build/generated-snippets"))
-    set('testcontainersVersion', "1.17.4")
 }
 
 dependencies {
@@ -36,7 +37,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    implementation 'org.springdoc:springdoc-openapi-ui:1.6.11'
+    implementation "org.springdoc:springdoc-openapi-ui:${versions.springdoc}"
 
     implementation 'org.liquibase:liquibase-core'
     implementation 'org.postgresql:postgresql'
@@ -44,7 +45,10 @@ dependencies {
 
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
 
-    implementation 'org.jetbrains:annotations:23.0.0'
+    implementation "org.jetbrains:annotations:${versions.jetbrains}"
+
+    implementation "org.mapstruct:mapstruct:${versions.mapstruct}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${versions.mapstruct}"
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
@@ -59,13 +63,13 @@ dependencies {
 
 dependencyManagement {
     imports {
-        mavenBom "org.testcontainers:testcontainers-bom:${testcontainersVersion}"
+        mavenBom "org.testcontainers:testcontainers-bom:${versions.testcontainers}"
     }
 }
 
 querydsl {
     jpa = true
-    library = "com.querydsl:querydsl-apt:5.0.0"
+    library = "com.querydsl:querydsl-apt:${versions.querydsl}"
     querydslSourcesDir = "$buildDir/generated/sources/annotationProcessor/java/main"
 }
 initQuerydslSourcesDir.dependsOn clean
