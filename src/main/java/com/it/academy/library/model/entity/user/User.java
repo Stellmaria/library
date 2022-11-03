@@ -53,7 +53,7 @@ public class User extends AbstractAuditingEntity<Long> {
     )
     @Size(min = 3, max = 50)
     @NotBlank
-    private String login;
+    private String username;
 
     @Column(name = "first_name",
             nullable = false,
@@ -71,20 +71,15 @@ public class User extends AbstractAuditingEntity<Long> {
     @NotBlank
     private String lastName;
 
-    @Column(name = "email",
-            nullable = false,
+    @Column(nullable = false,
             length = 50,
             unique = true
     )
     @Email
     private String email;
 
-    @Column(name = "password",
-            nullable = false,
-            length = 32
-    )
+    @Column(nullable = false)
     @NotBlank
-    @Size(min = 6, max = 32)
     private String password;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(

@@ -39,7 +39,7 @@ public class UserFilter {
 
     public static Predicate queryPredicates(@NotNull UserFilter userFilter) {
         return QueryPredicates.builder()
-                .add(userFilter.getLogin(), user.login::containsIgnoreCase)
+                .add(userFilter.getLogin(), user.username::containsIgnoreCase)
                 .add(userFilter.getFirstName(), user.firstName::containsIgnoreCase)
                 .add(userFilter.getLastName(), user.lastName::containsIgnoreCase)
                 .add(userFilter.getEmail(), user.email::containsIgnoreCase)

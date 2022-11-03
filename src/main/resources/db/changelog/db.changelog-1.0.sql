@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS users
     first_name     VARCHAR(99)        NOT NULL,
     last_name      VARCHAR(99)        NOT NULL,
     email          VARCHAR(50) UNIQUE NOT NULL,
-    password       VARCHAR(32)        NOT NULL,
+    password       VARCHAR(128)       NOT NULL DEFAULT '{noop}111111',
     user_role_id   INTEGER DEFAULT 1  NOT NULL,
     user_status_id INTEGER DEFAULT 1  NOT NULL,
     birthday       DATE               NOT NULL,

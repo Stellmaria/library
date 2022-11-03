@@ -3,6 +3,7 @@ package com.it.academy.library.dto.create.user;
 import com.it.academy.library.model.entity.user.User;
 import lombok.Value;
 import lombok.experimental.FieldNameConstants;
+import org.postgresql.util.LruCache;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,7 +21,7 @@ import java.time.LocalDate;
 public class UserCreateEditDto {
     @Size(min = 3, max = 50)
     @NotBlank
-    String login;
+    String username;
 
     @Size(min = 3, max = 99)
     @NotBlank
@@ -33,9 +34,8 @@ public class UserCreateEditDto {
     @Email
     String email;
 
-    @NotBlank
-    @Size(min = 6, max = 32)
-    String password;
+    @NotBlank(groups = LruCache.CreateAction.class)
+    String rawPassword;
 
     Integer userRoleId;
 

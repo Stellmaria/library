@@ -2,7 +2,7 @@ ext {
     versions = [
             'testcontainers': '1.17.4',
             'querydsl'      : '5.0.0',
-            'springdoc'     : '1.6.11',
+            'springdoc'     : '1.6.12',
             'jetbrains'     : '23.0.0',
             'mapstruct'     : '1.5.3.Final'
     ]

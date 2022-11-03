@@ -21,14 +21,15 @@ public class UserReadMapper implements Mapper<User, UserReadDto> {
     public UserReadDto map(@NotNull User object) {
         return new UserReadDto(
                 object.getId(),
-                object.getLogin(),
+                object.getUsername(),
                 object.getFirstName(),
                 object.getLastName(),
                 object.getEmail(),
                 object.getPassword(),
                 getUserRole(object),
                 getUserStatus(object),
-                object.getBirthday()
+                object.getBirthday(),
+                object.getImage()
         );
     }
 

@@ -7,8 +7,10 @@ import com.it.academy.library.dto.read.user.UserReadDto;
 import com.it.academy.library.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import static org.springframework.http.ResponseEntity.notFound;
+
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
@@ -31,6 +35,16 @@ public class UserRestController {
     public PageResponse<UserReadDto> findAll(UserFilter userFilter, Pageable pageable) {
         var page = userService.findAll(userFilter, pageable);
         return PageResponse.of(page);
+    }
+
+    @GetMapping(value = "/{id}/avatar")
+    public ResponseEntity<byte[]> findAvatar(@PathVariable("id") Long id) {
+        return userService.findAvatar(id)
+                .map(it -> ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .contentLength(it.length)
+                        .body(it))
+                .orElseGet(notFound()::build);
     }
 
     @GetMapping("/{id}")

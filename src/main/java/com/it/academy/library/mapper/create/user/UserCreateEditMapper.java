@@ -9,7 +9,9 @@ import com.it.academy.library.model.repository.entity.user.UserRoleRepository;
 import com.it.academy.library.model.repository.entity.user.UserStatusRepository;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
@@ -21,6 +23,7 @@ import static java.util.function.Predicate.not;
 public class UserCreateEditMapper implements Mapper<UserCreateEditDto, User> {
     private final UserRoleRepository userRoleRepository;
     private final UserStatusRepository userStatusRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public User map(@NotNull UserCreateEditDto object) {
@@ -36,14 +39,17 @@ public class UserCreateEditMapper implements Mapper<UserCreateEditDto, User> {
     }
 
     private void copy(@NotNull UserCreateEditDto object, @NotNull User user) {
-        user.setLogin(object.getLogin());
+        user.setUsername(object.getUsername());
         user.setFirstName(object.getFirstName());
         user.setLastName(object.getLastName());
         user.setEmail(object.getEmail());
-        user.setPassword(object.getPassword());
         user.setUserRole(getUserRole(object.getUserRoleId()));
         user.setUserStatus(getUserStatus(object.getUserStatusId()));
         user.setBirthday(object.getBirthday());
+        Optional.ofNullable(object.getRawPassword())
+                .filter(StringUtils::hasText)
+                .map(passwordEncoder::encode)
+                .ifPresent(user::setPassword);
         Optional.ofNullable(object.getImage())
                 .filter(not(MultipartFile::isEmpty))
                 .ifPresent(image -> user.setImage(image.getOriginalFilename()));

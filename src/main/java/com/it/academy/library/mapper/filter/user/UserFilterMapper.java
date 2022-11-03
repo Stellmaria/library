@@ -11,7 +11,7 @@ public class UserFilterMapper implements Mapper<User, UserFilter> {
     @Override
     public UserFilter map(@NotNull User object) {
         return new UserFilter(
-                object.getLogin(),
+                object.getUsername(),
                 object.getFirstName(),
                 object.getLastName(),
                 object.getEmail(),

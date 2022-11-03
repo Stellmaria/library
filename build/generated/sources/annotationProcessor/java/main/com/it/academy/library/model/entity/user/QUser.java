@@ -42,8 +42,6 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath lastName = createString("lastName");
 
-    public final StringPath login = createString("login");
-
     //inherited
     public final DateTimePath<java.time.Instant> modifiedAt = _super.modifiedAt;
 
@@ -53,6 +51,8 @@ public class QUser extends EntityPathBase<User> {
     public final CollectionPath<com.it.academy.library.model.entity.order.Order, com.it.academy.library.model.entity.order.QOrder> order = this.<com.it.academy.library.model.entity.order.Order, com.it.academy.library.model.entity.order.QOrder>createCollection("order", com.it.academy.library.model.entity.order.Order.class, com.it.academy.library.model.entity.order.QOrder.class, PathInits.DIRECT2);
 
     public final StringPath password = createString("password");
+
+    public final StringPath username = createString("username");
 
     public final QUserRole userRole;
 

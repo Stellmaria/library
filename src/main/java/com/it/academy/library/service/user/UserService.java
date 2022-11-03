@@ -7,25 +7,32 @@ import com.it.academy.library.listener.entity.AccessType;
 import com.it.academy.library.listener.entity.EntityEvent;
 import com.it.academy.library.mapper.create.user.UserCreateEditMapper;
 import com.it.academy.library.mapper.read.user.UserReadMapper;
+import com.it.academy.library.model.entity.user.User;
 import com.it.academy.library.model.repository.entity.user.UserRepository;
 import com.it.academy.library.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class UserService {
+public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final UserReadMapper userReadMapper;
     private final UserCreateEditMapper userCreateEditMapper;
@@ -101,9 +108,27 @@ public class UserService {
     }
 
     @SneakyThrows
-    private void uploadImage(MultipartFile image) {
+    private void uploadImage(@NotNull MultipartFile image) {
         if (!image.isEmpty()) {
             imageService.upload(image.getOriginalFilename(), image.getInputStream());
         }
+    }
+
+    public Optional<byte[]> findAvatar(Long id) {
+        return userRepository.findById(id)
+                .map(User::getImage)
+                .filter(StringUtils::hasText)
+                .flatMap(imageService::getImage);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username)
+                .map(user -> new org.springframework.security.core.userdetails.User(
+                        user.getUsername(),
+                        user.getPassword(),
+                        Collections.singleton(user.getUserRole())
+                ))
+                .orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: " + username));
     }
 }

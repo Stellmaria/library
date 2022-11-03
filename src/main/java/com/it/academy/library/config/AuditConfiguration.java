@@ -1,4 +1,4 @@
-package com.it.academy.library.config.condition;
+package com.it.academy.library.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

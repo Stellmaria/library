@@ -36,7 +36,7 @@ class UserRepositoryTest extends IntegrationTestBase {
 
         var actual = userRepository.save(
                 User.builder()
-                        .login(ConstantUtil.NEW + ConstantUtil.SAVE)
+                        .username(ConstantUtil.NEW + ConstantUtil.SAVE)
                         .firstName(ConstantUtil.NEW + ConstantUtil.SAVE)
                         .lastName(ConstantUtil.NEW + ConstantUtil.SAVE)
                         .email(EMAIL_EXAMPLE_COM)
@@ -58,7 +58,7 @@ class UserRepositoryTest extends IntegrationTestBase {
 
         assertAll(
                 () -> assertEquals(expectedCount, actualCount),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getLogin()),
+                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getUsername()),
                 () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getFirstName()),
                 () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getLastName()),
                 () -> assertEquals(EMAIL_EXAMPLE_COM, actual.getEmail()),
@@ -77,7 +77,7 @@ class UserRepositoryTest extends IntegrationTestBase {
         user.ifPresent(it -> {
             it.setLastName(ConstantUtil.NEW + ConstantUtil.UPDATE);
             it.setFirstName(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            it.setLogin(ConstantUtil.NEW + ConstantUtil.UPDATE);
+            it.setUsername(ConstantUtil.NEW + ConstantUtil.UPDATE);
             it.setEmail(TEST_GMAIL_COM);
             it.setPassword(ConstantUtil.NEW + ConstantUtil.UPDATE);
             it.setUserRole(
@@ -96,7 +96,7 @@ class UserRepositoryTest extends IntegrationTestBase {
         var actual = userRepository.findById(ConstantUtil.USER_ID_5);
 
         actual.ifPresent(it -> {
-            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getLogin());
+            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getUsername());
             assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getFirstName());
             assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getLastName());
             assertEquals(TEST_GMAIL_COM, it.getEmail());

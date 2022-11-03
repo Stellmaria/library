@@ -218,17 +218,17 @@ VALUES (1, 'Default'),
 SELECT SETVAL('user_status_id_seq', (SELECT MAX(id) FROM user_status));
 
 --changeset stell:21
-INSERT INTO users (id, login, first_name, last_name, email, password, user_role_id, user_status_id, birthday)
+INSERT INTO users (id, login, first_name, last_name, email, password, user_role_id, user_status_id, birthday, image)
 VALUES (1, 'default', 'default', 'default', 'default@gmil.com',
-        '789445654654654', 1, 1, '2000-1-1'),
+        '{noop}default', 1, 1, '2000-1-1', 'avatar_1.jpg'),
        (2, 'librarian', 'Sveta', 'Svetikova', 'sveta@gmail.com',
-        '123456', 5, 3, '1987-4-5'),
-       (3, 'reader', 'Petr', 'Petrov', 'petr@gmail.com', '456789',
-        3, 2, '1999-11-18'),
-       (4, 'guest', 'Sergey', 'Serge', 'sergey@gmail.com', 'qwerty',
-        3, 3, '2003-4-9'),
-       (5, 'admin', 'Ivan', 'Ivanov', 'ivan@gmail.com', '12345',
-        2, 3, '1989-7-7');
+        '{noop}123456', 5, 3, '1987-4-5', 'avatar_2.jpg'),
+       (3, 'reader', 'Petr', 'Petrov', 'petr@gmail.com', '{noop}456789',
+        3, 2, '1999-11-18', 'avatar_3.jpg'),
+       (4, 'guest', 'Sergey', 'Serge', 'sergey@gmail.com', '{noop}qwerty',
+        3, 3, '2003-4-9', 'avatar_4.jpg'),
+       (5, 'admin', 'Ivan', 'Ivanov', 'ivan@gmail.com', '{noop}123456',
+        2, 3, '1989-7-7', 'avatar_5.jpg');
 
 --changeset stell:22
 SELECT SETVAL('users_id_seq', (SELECT MAX(id) FROM users));

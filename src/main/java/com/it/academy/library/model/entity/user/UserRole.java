@@ -10,6 +10,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.SelectBeforeUpdate;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,15 +35,14 @@ import java.util.Objects;
 @ToString
 @Table(name = "user_role")
 @SelectBeforeUpdate
-public class UserRole extends AbstractAuditingEntity<Integer> {
+public class UserRole extends AbstractAuditingEntity<Integer> implements GrantedAuthority {
     private static final long serialVersionUID = 1925789169380350073L;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Integer id;
 
-    @Column(name = "name",
-            nullable = false,
+    @Column(nullable = false,
             length = 64,
             unique = true
     )
@@ -74,5 +74,10 @@ public class UserRole extends AbstractAuditingEntity<Integer> {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    @Override
+    public String getAuthority() {
+        return id.toString();
     }
 }

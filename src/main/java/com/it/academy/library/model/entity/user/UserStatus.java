@@ -41,8 +41,7 @@ public class UserStatus extends AbstractAuditingEntity<Integer> {
     @Id
     private Integer id;
 
-    @Column(name = "name",
-            nullable = false,
+    @Column(nullable = false,
             length = 64,
             unique = true
     )
