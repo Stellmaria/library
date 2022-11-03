@@ -117,3 +117,6 @@ gradle-app.setting
 /build/lombok/
 /build/resources/
 /build/tmp/
+/build/generated-snippets/
+/build/reports/
+/build/test-results/
