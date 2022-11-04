@@ -56,7 +56,7 @@
     </div>
     <button type="submit">Update</button>
 </form>
-<form method="post" th:action="@{/users/{userId}/delete(userId=${user.id})}" th:if="${'Admin' == user.userRole.name}">
+<form method="post" th:action="@{/users/{userId}/delete(userId=${user.id})}">
     <button type="submit">Remove</button>
 </form>
 </body>
