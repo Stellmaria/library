@@ -46,8 +46,7 @@ public class User extends AbstractAuditingEntity<Long> {
     @Id
     private Long id;
 
-    @Column(name = "login",
-            nullable = false,
+    @Column(nullable = false,
             length = 50,
             unique = true
     )

@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 public class OrderStatusFilterMapper implements Mapper<OrderStatus, OrderStatusFilter> {
     @Override
     public OrderStatusFilter map(@NotNull OrderStatus object) {
-        return new OrderStatusFilter(object.getName());
+        return new OrderStatusFilter(
+                object.getId(),
+                object.getName()
+        );
     }
 }

@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 public class AuthorRoleFilterMapper implements Mapper<AuthorRole, AuthorRoleFilter> {
     @Override
     public AuthorRoleFilter map(@NotNull AuthorRole object) {
-        return new AuthorRoleFilter(object.getName());
+        return new AuthorRoleFilter(
+                object.getId(),
+                object.getName()
+        );
     }
 }

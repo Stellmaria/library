@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 public class UserStatusFilterMapper implements Mapper<UserStatus, UserStatusFilter> {
     @Override
     public UserStatusFilter map(@NotNull UserStatus object) {
-        return new UserStatusFilter(object.getName());
+        return new UserStatusFilter(
+                object.getId(),
+                object.getName()
+        );
     }
 }

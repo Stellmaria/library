@@ -19,10 +19,13 @@ import static com.it.academy.library.model.entity.user.QUserStatus.userStatus;
 @AllArgsConstructor
 @Builder
 public class UserStatusFilter {
+    private Integer id;
+
     private String name;
 
     public static Predicate queryPredicates(@NotNull UserStatusFilter userStatusFilter) {
         return QueryPredicates.builder()
+                .add(userStatusFilter.getId(), userStatus.id::eq)
                 .add(userStatusFilter.getName(), userStatus.name::containsIgnoreCase)
                 .build();
     }

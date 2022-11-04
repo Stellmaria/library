@@ -11,6 +11,7 @@ public class OrderFilterMapper implements Mapper<Order, OrderFilter> {
     @Override
     public OrderFilter map(@NotNull Order object) {
         return new OrderFilter(
+                object.getId(),
                 object.getUser() != null ? object.getUser().getId() : null,
                 object.getOrderStatus() != null ? object.getOrderStatus().getId() : null,
                 object.getOrderType() != null ? object.getOrderType().getId() : null,

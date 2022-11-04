@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 public class OrderTypeFilterMapper implements Mapper<OrderType, OrderTypeFilter> {
     @Override
     public OrderTypeFilter map(@NotNull OrderType object) {
-        return new OrderTypeFilter(object.getName());
+        return new OrderTypeFilter(
+                object.getId(),
+                object.getName()
+        );
     }
 }

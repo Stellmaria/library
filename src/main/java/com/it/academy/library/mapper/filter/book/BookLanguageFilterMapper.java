@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 public class BookLanguageFilterMapper implements Mapper<BookLanguage, BookLanguageFilter> {
     @Override
     public BookLanguageFilter map(@NotNull BookLanguage object) {
-        return new BookLanguageFilter(object.getName());
+        return new BookLanguageFilter(
+                object.getId(),
+                object.getName()
+        );
     }
 }

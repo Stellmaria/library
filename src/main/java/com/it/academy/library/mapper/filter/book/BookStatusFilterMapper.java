@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 public class BookStatusFilterMapper implements Mapper<BookStatus, BookStatusFilter> {
     @Override
     public BookStatusFilter map(@NotNull BookStatus object) {
-        return new BookStatusFilter(object.getName());
+        return new BookStatusFilter(
+                object.getId(),
+                object.getName()
+        );
     }
 }

@@ -19,10 +19,13 @@ import static com.it.academy.library.model.entity.user.QUserRole.userRole;
 @AllArgsConstructor
 @Builder
 public class UserRoleFilter {
+    private Integer id;
+
     private String name;
 
     public static Predicate queryPredicates(@NotNull UserRoleFilter userRoleFilter) {
         return QueryPredicates.builder()
+                .add(userRoleFilter.getId(), userRole.id::eq)
                 .add(userRoleFilter.getName(), userRole.name::containsIgnoreCase)
                 .build();
     }

@@ -19,10 +19,13 @@ import static com.it.academy.library.model.entity.book.QBookFormat.bookFormat;
 @AllArgsConstructor
 @Builder
 public class BookFormatFilter {
+    private Integer id;
+
     private String name;
 
     public static Predicate queryPredicates(@NotNull BookFormatFilter bookFormatFilter) {
         return QueryPredicates.builder()
+                .add(bookFormatFilter.getId(), bookFormat.id::eq)
                 .add(bookFormatFilter.getName(), bookFormat.name::containsIgnoreCase)
                 .build();
     }

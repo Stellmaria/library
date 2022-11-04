@@ -19,10 +19,13 @@ import static com.it.academy.library.model.entity.book.QBookSeries.bookSeries;
 @AllArgsConstructor
 @Builder
 public class BookSeriesFilter {
+    private Integer id;
+
     private String name;
 
     public static Predicate queryPredicates(@NotNull BookSeriesFilter bookSeriesFilter) {
         return QueryPredicates.builder()
+                .add(bookSeriesFilter.getId(), bookSeries.id::eq)
                 .add(bookSeriesFilter.getName(), bookSeries.name::containsIgnoreCase)
                 .build();
     }

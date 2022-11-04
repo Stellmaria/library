@@ -11,6 +11,7 @@ public class BookAdditionalFilterMapper implements Mapper<BookAdditional, BookAd
     @Override
     public BookAdditionalFilter map(@NotNull BookAdditional object) {
         return new BookAdditionalFilter(
+                object.getId(),
                 object.getBook() != null ? object.getBook().getId() : null,
                 object.getVolume(),
                 object.getSerialNo(),

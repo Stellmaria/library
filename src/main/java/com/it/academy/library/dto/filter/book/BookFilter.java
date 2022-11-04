@@ -19,6 +19,8 @@ import static com.it.academy.library.model.entity.book.QBook.book;
 @AllArgsConstructor
 @Builder
 public class BookFilter {
+    private Long id;
+
     private String title;
 
     private String subtitle;
@@ -45,6 +47,7 @@ public class BookFilter {
 
     public static Predicate queryPredicates(@NotNull BookFilter bookFilter) {
         return QueryPredicates.builder()
+                .add(bookFilter.getId(), book.id::eq)
                 .add(bookFilter.getTitle(), book.title::containsIgnoreCase)
                 .add(bookFilter.getSubtitle(), book.subtitle::containsIgnoreCase)
                 .add(bookFilter.getYear(), book.year::eq)

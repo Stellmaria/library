@@ -21,6 +21,8 @@ import static com.it.academy.library.model.entity.author.QAuthor.author;
 @AllArgsConstructor
 @Builder
 public class AuthorFilter {
+    private Long id;
+
     private String firstName;
 
     private String lastName;
@@ -35,6 +37,7 @@ public class AuthorFilter {
 
     public static Predicate queryPredicates(@NotNull AuthorFilter authorFilter) {
         return QueryPredicates.builder()
+                .add(authorFilter.getId(), author.id::eq)
                 .add(authorFilter.getFirstName(), author.firstName::containsIgnoreCase)
                 .add(authorFilter.getLastName(), author.lastName::containsIgnoreCase)
                 .add(authorFilter.getBirthday(), author.birthday::eq)

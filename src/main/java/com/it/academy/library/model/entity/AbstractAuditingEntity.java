@@ -21,11 +21,14 @@ import java.time.Instant;
 public abstract class AbstractAuditingEntity<T extends Serializable> implements BaseEntity<T> {
     @CreatedDate
     private Instant createdAt;
+
     @LastModifiedDate
     private Instant modifiedAt;
+
     @CreatedBy
     @Column(length = 64)
     private String createdBy;
+
     @LastModifiedBy
     @Column(length = 64)
     private String modifiedBy;

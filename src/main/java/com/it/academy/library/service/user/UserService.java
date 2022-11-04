@@ -39,6 +39,17 @@ public class UserService implements UserDetailsService {
     private final ApplicationEventPublisher eventPublisher;
     private final ImageService imageService;
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username)
+                .map(user -> new org.springframework.security.core.userdetails.User(
+                        user.getUsername(),
+                        user.getPassword(),
+                        Collections.singleton(user.getUserRole())
+                ))
+                .orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: " + username));
+    }
+
     public Page<UserReadDto> findAll(UserFilter userFilter, Pageable pageable) {
         var predicate = UserFilter.queryPredicates(userFilter);
         return userRepository.findAll(predicate, pageable)
@@ -119,16 +130,5 @@ public class UserService implements UserDetailsService {
                 .map(User::getImage)
                 .filter(StringUtils::hasText)
                 .flatMap(imageService::getImage);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username)
-                .map(user -> new org.springframework.security.core.userdetails.User(
-                        user.getUsername(),
-                        user.getPassword(),
-                        Collections.singleton(user.getUserRole())
-                ))
-                .orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: " + username));
     }
 }

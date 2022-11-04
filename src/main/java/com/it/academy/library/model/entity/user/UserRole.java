@@ -78,6 +78,6 @@ public class UserRole extends AbstractAuditingEntity<Integer> implements Granted
 
     @Override
     public String getAuthority() {
-        return id.toString();
+        return name;
     }
 }

@@ -21,6 +21,8 @@ import static com.it.academy.library.model.entity.user.QUser.user;
 @AllArgsConstructor
 @Builder
 public class UserFilter {
+    private Long id;
+
     private String login;
 
     private String firstName;
@@ -39,6 +41,7 @@ public class UserFilter {
 
     public static Predicate queryPredicates(@NotNull UserFilter userFilter) {
         return QueryPredicates.builder()
+                .add(userFilter.getId(), user.id::eq)
                 .add(userFilter.getLogin(), user.username::containsIgnoreCase)
                 .add(userFilter.getFirstName(), user.firstName::containsIgnoreCase)
                 .add(userFilter.getLastName(), user.lastName::containsIgnoreCase)

@@ -11,6 +11,7 @@ public class AuthorFilterMapper implements Mapper<Author, AuthorFilter> {
     @Override
     public AuthorFilter map(@NotNull Author object) {
         return new AuthorFilter(
+                object.getId(),
                 object.getFirstName(),
                 object.getLastName(),
                 object.getAuthorRole() != null ? object.getAuthorRole().getId() : null,

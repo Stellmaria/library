@@ -218,7 +218,7 @@ VALUES (1, 'Default'),
 SELECT SETVAL('user_status_id_seq', (SELECT MAX(id) FROM user_status));
 
 --changeset stell:21
-INSERT INTO users (id, login, first_name, last_name, email, password, user_role_id, user_status_id, birthday, image)
+INSERT INTO users (id, username, first_name, last_name, email, password, user_role_id, user_status_id, birthday, image)
 VALUES (1, 'default', 'default', 'default', 'default@gmil.com',
         '{noop}default', 1, 1, '2000-1-1', 'avatar_1.jpg'),
        (2, 'librarian', 'Sveta', 'Svetikova', 'sveta@gmail.com',

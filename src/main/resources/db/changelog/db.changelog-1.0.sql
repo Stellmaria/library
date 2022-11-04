@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS user_status
 CREATE TABLE IF NOT EXISTS users
 (
     id             BIGSERIAL PRIMARY KEY,
-    login          VARCHAR(50) UNIQUE NOT NULL,
+    username       VARCHAR(50) UNIQUE NOT NULL,
     first_name     VARCHAR(99)        NOT NULL,
     last_name      VARCHAR(99)        NOT NULL,
     email          VARCHAR(50) UNIQUE NOT NULL,

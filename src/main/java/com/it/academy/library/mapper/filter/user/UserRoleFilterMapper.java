@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 public class UserRoleFilterMapper implements Mapper<UserRole, UserRoleFilter> {
     @Override
     public UserRoleFilter map(@NotNull UserRole object) {
-        return new UserRoleFilter(object.getName());
+        return new UserRoleFilter(
+                object.getId(),
+                object.getName()
+        );
     }
 }

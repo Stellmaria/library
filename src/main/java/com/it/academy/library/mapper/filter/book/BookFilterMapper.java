@@ -11,6 +11,7 @@ public class BookFilterMapper implements Mapper<Book, BookFilter> {
     @Override
     public BookFilter map(@NotNull Book object) {
         return new BookFilter(
+                object.getId(),
                 object.getTitle(),
                 object.getSubtitle(),
                 object.getYear(),

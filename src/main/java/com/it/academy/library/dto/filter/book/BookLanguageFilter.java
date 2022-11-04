@@ -19,10 +19,13 @@ import static com.it.academy.library.model.entity.book.QBookLanguage.bookLanguag
 @AllArgsConstructor
 @Builder
 public class BookLanguageFilter {
+    private Integer id;
+
     private String name;
 
     public static Predicate queryPredicates(@NotNull BookLanguageFilter bookLanguageFilter) {
         return QueryPredicates.builder()
+                .add(bookLanguageFilter.getId(), bookLanguage.id::eq)
                 .add(bookLanguageFilter.getName(), bookLanguage.name::containsIgnoreCase)
                 .build();
     }

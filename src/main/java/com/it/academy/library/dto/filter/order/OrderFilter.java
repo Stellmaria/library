@@ -21,6 +21,8 @@ import static com.it.academy.library.model.entity.order.QOrder.order;
 @AllArgsConstructor
 @Builder
 public class OrderFilter {
+    private Long id;
+
     private Long userId;
 
     private Integer orderStatusId;
@@ -33,6 +35,7 @@ public class OrderFilter {
 
     public static Predicate queryPredicates(@NotNull OrderFilter orderFilter) {
         return QueryPredicates.builder()
+                .add(orderFilter.getId(), order.id::eq)
                 .add(orderFilter.getUserId(), order.user.id::eq)
                 .add(orderFilter.getOrderStatusId(), order.orderStatus.id::eq)
                 .add(orderFilter.getOrderTypeId(), order.orderType.id::eq)

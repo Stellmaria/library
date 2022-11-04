@@ -14,8 +14,12 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(@NotNull HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .authorizeRequests().anyRequest().authenticated()
-                .and()
+                .authorizeHttpRequests(urlConfig -> urlConfig
+                        .antMatchers("/login", "/users/registration", "v3/api-docs/**", "/swagger-ui/**")
+                        .permitAll()
+                        .antMatchers("/admin/**").hasAuthority("Admin")
+                        .anyRequest().authenticated()
+                )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login")
@@ -23,7 +27,7 @@ public class SecurityConfiguration {
                 .formLogin(login -> login
                         .loginPage("/login")
                         .defaultSuccessUrl("/users")
-                        .permitAll());
+                );
         return http.build();
     }
 

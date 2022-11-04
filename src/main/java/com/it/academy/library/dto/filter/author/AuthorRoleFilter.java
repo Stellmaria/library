@@ -19,10 +19,13 @@ import static com.it.academy.library.model.entity.author.QAuthorRole.authorRole;
 @AllArgsConstructor
 @Builder
 public class AuthorRoleFilter {
+    private Integer id;
+
     private String name;
 
     public static Predicate queryPredicates(@NotNull AuthorRoleFilter authorRoleFilter) {
         return QueryPredicates.builder()
+                .add(authorRoleFilter.getId(), authorRole.id::eq)
                 .add(authorRoleFilter.getName(), authorRole.name::containsIgnoreCase)
                 .build();
     }

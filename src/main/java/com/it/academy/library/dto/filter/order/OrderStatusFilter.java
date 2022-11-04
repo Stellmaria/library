@@ -19,10 +19,13 @@ import static com.it.academy.library.model.entity.order.QOrderStatus.orderStatus
 @AllArgsConstructor
 @Builder
 public class OrderStatusFilter {
+    private Integer id;
+
     private String name;
 
     public static Predicate queryPredicates(@NotNull OrderStatusFilter orderStatusFilter) {
         return QueryPredicates.builder()
+                .add(orderStatusFilter.getId(), orderStatus.id::eq)
                 .add(orderStatusFilter.getName(), orderStatus.name::containsIgnoreCase)
                 .build();
     }

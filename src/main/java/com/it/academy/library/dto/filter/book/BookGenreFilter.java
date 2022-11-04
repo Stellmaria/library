@@ -19,12 +19,15 @@ import static com.it.academy.library.model.entity.book.QBookGenre.bookGenre;
 @AllArgsConstructor
 @Builder
 public class BookGenreFilter {
+    private Integer id;
+
     private String name;
 
     private String description;
 
     public static Predicate queryPredicates(@NotNull BookGenreFilter bookGenreFilter) {
         return QueryPredicates.builder()
+                .add(bookGenreFilter.getId(), bookGenre.id::eq)
                 .add(bookGenreFilter.getName(), bookGenre.name::containsIgnoreCase)
                 .add(bookGenreFilter.getDescription(), bookGenre.description::containsIgnoreCase)
                 .build();

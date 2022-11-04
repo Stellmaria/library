@@ -19,10 +19,13 @@ import static com.it.academy.library.model.entity.book.QBookStatus.bookStatus;
 @AllArgsConstructor
 @Builder
 public class BookStatusFilter {
+    private Integer id;
+
     private String name;
 
     public static Predicate queryPredicates(@NotNull BookStatusFilter bookStatusFilter) {
         return QueryPredicates.builder()
+                .add(bookStatusFilter.getId(), bookStatus.id::eq)
                 .add(bookStatusFilter.getName(), bookStatus.name::containsIgnoreCase)
                 .build();
     }
