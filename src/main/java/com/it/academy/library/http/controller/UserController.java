@@ -36,8 +36,10 @@ public class UserController {
     @PreAuthorize("hasAuthority('Admin')")
     public String findAll(@NotNull Model model, UserFilter userFilter, Pageable pageable) {
         var page = userService.findAll(userFilter, pageable);
+
         model.addAttribute("users", PageResponse.of(page));
         model.addAttribute("filter", userFilter);
+
         return "user/users";
     }
 
@@ -57,6 +59,7 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("roles", userRoleService.findAll());
         model.addAttribute("statuses", userStatusService.findAll());
+
         return "user/registration";
     }
 
@@ -69,7 +72,9 @@ public class UserController {
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             return "redirect:/users/registration";
         }
+
         userService.create(user);
+
         return "redirect:/login";
     }
 
@@ -85,6 +90,7 @@ public class UserController {
         if (!userService.delete(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+
         return "redirect:/users";
     }
 }

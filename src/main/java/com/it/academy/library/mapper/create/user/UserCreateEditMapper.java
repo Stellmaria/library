@@ -28,13 +28,16 @@ public class UserCreateEditMapper implements Mapper<UserCreateEditDto, User> {
     @Override
     public User map(@NotNull UserCreateEditDto object) {
         var user = new User();
+
         copy(object, user);
+
         return user;
     }
 
     @Override
     public User map(@NotNull UserCreateEditDto fromObject, @NotNull User toObject) {
         copy(fromObject, toObject);
+
         return toObject;
     }
 

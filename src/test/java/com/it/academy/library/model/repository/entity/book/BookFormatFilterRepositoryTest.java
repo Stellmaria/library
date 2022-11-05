@@ -25,12 +25,11 @@ class BookFormatFilterRepositoryTest extends IntegrationTestBase {
     @DisplayName("Save book format.")
     void saveBookFormat() {
         var expectedCount = bookFormatRepository.count() + 1;
+        var bookFormat = BookFormat.builder()
+                .name(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .build();
 
-        var actual = bookFormatRepository.save(
-                BookFormat.builder()
-                        .name(ConstantUtil.NEW + ConstantUtil.SAVE)
-                        .build()
-        );
+        var actual = bookFormatRepository.save(bookFormat);
         var actualCount = bookFormatRepository.count();
 
         assertAll(
@@ -70,11 +69,12 @@ class BookFormatFilterRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book format by book format filter.")
     void findAllBookFormatByBookFormatFilter() {
+        var bookFormat = BookFormat.builder()
+                .name(BOOK_FORMAT_FRAGMENT_NAME_VER)
+                .build();
+
         var actual = bookFormatRepository.findAllByBookFormatFilter(bookFormatFilterMapper.map(
-                BookFormat.builder()
-                        .name(BOOK_FORMAT_FRAGMENT_NAME_VER)
-                        .build())
-        );
+                bookFormat));
 
         assertThat(actual).hasSize(2);
     }

@@ -41,6 +41,24 @@ class BookAdditionalRepositoryTest extends IntegrationTestBase {
     @DisplayName("Save book additional.")
     void saveBookAdditional() {
         var expectedCount = bookAdditionalRepository.count() + 1;
+        var bookStatus = BookStatus.builder()
+                .id(ConstantUtil.BOOK_STATUS_ID_1)
+                .build();
+        var bookLanguage = BookLanguage.builder()
+                .id(ConstantUtil.BOOK_LANGUAGE_ID_10)
+                .build();
+        var bookFormat = BookFormat.builder()
+                .id(ConstantUtil.BOOK_FORMAT_ID_4)
+                .build();
+        var bookPublishingHouse = BookPublishingHouse.builder()
+                .id(BOOK_PUBLISHING_HOURS_ID_15)
+                .build();
+        var bookSeries = BookSeries.builder()
+                .id(ConstantUtil.BOOK_SERIES_ID_3)
+                .build();
+        var order = Order.builder()
+                .id(ORDER_ID_2)
+                .build();
         var book = Book.builder()
                 .title(ConstantUtil.NEW + ConstantUtil.SAVE)
                 .subtitle(ConstantUtil.NEW + ConstantUtil.SAVE)
@@ -49,48 +67,23 @@ class BookAdditionalRepositoryTest extends IntegrationTestBase {
                 .isbn10(ConstantUtil.ISBN_10)
                 .isbn13(ConstantUtil.ISBN_13)
                 .imagePath(ConstantUtil.NEW + ConstantUtil.SAVE)
-                .bookStatus(
-                        BookStatus.builder()
-                                .id(ConstantUtil.BOOK_STATUS_ID_1)
-                                .build()
-                )
-                .bookLanguage(
-                        BookLanguage.builder()
-                                .id(ConstantUtil.BOOK_LANGUAGE_ID_10)
-                                .build()
-                )
-                .bookFormat(
-                        BookFormat.builder()
-                                .id(ConstantUtil.BOOK_FORMAT_ID_4)
-                                .build()
-                )
-                .bookPublishingHouse(
-                        BookPublishingHouse.builder()
-                                .id(BOOK_PUBLISHING_HOURS_ID_15)
-                                .build()
-                )
-                .bookSeries(
-                        BookSeries.builder()
-                                .id(ConstantUtil.BOOK_SERIES_ID_3)
-                                .build()
-                )
-                .order(
-                        Order.builder()
-                                .id(ORDER_ID_2)
-                                .build()
-                )
+                .bookStatus(bookStatus)
+                .bookLanguage(bookLanguage)
+                .bookFormat(bookFormat)
+                .bookPublishingHouse(bookPublishingHouse)
+                .bookSeries(bookSeries)
+                .order(order)
                 .build();
         bookRepository.save(book);
+        var bookAdditional = BookAdditional.builder()
+                .book(book)
+                .volume(BOOK_ADDITIONAL_VOLUME_1)
+                .serialNo(BOOK_ADDITIONAL_SERIAL_NO_1)
+                .price(BOOK_ADDITIONAL_PRICE_10)
+                .link(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .build();
 
-        var actual = bookAdditionalRepository.save(
-                BookAdditional.builder()
-                        .book(book)
-                        .volume(BOOK_ADDITIONAL_VOLUME_1)
-                        .serialNo(BOOK_ADDITIONAL_SERIAL_NO_1)
-                        .price(BOOK_ADDITIONAL_PRICE_10)
-                        .link(ConstantUtil.NEW + ConstantUtil.SAVE)
-                        .build()
-        );
+        var actual = bookAdditionalRepository.save(bookAdditional);
         var actualCount = bookAdditionalRepository.count();
 
         assertAll(
@@ -152,13 +145,11 @@ class BookAdditionalRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book additional by book additional filter.")
     void findAllBookAdditionalByBookAdditionalFilter() {
+        var bookAdditional = BookAdditional.builder()
+                .price(BOOK_ADDITIONAL_PRICE_40)
+                .build();
         var actual = bookAdditionalRepository.findAllByBookAdditionalFilter(
-                bookAdditionalFilterMapper.map(
-                        BookAdditional.builder()
-                                .price(BOOK_ADDITIONAL_PRICE_40)
-                                .build()
-                )
-        );
+                bookAdditionalFilterMapper.map(bookAdditional));
 
         assertThat(actual).hasSize(1);
     }

@@ -24,6 +24,7 @@ public class QueryPredicates {
         if (object != null) {
             predicates.add(function.apply(object));
         }
+
         return this;
     }
 

@@ -2,14 +2,45 @@ package com.it.academy.library.mapper.filter.book;
 
 import com.it.academy.library.dto.filter.book.BookFilter;
 import com.it.academy.library.mapper.Mapper;
+import com.it.academy.library.mapper.filter.order.OrderFilterMapper;
 import com.it.academy.library.model.entity.book.Book;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
+@RequiredArgsConstructor
 public class BookFilterMapper implements Mapper<Book, BookFilter> {
+    private final BookStatusFilterMapper bookStatusFilterMapper;
+    private final BookLanguageFilterMapper bookLanguageFilterMapper;
+    private final BookFormatFilterMapper bookFormatFilterMapper;
+    private final BookPublishingHouseFilterMapper bookPublishingHouseFilterMapper;
+    private final BookSeriesFilterMapper bookSeriesFilterMapper;
+    private final OrderFilterMapper orderFilterMapper;
+
     @Override
     public BookFilter map(@NotNull Book object) {
+        var bookStatus = Optional.ofNullable(object.getBookStatus())
+                .map(bookStatusFilterMapper::map)
+                .orElse(null);
+        var bookLanguage = Optional.ofNullable(object.getBookLanguage())
+                .map(bookLanguageFilterMapper::map)
+                .orElse(null);
+        var bookFormat = Optional.ofNullable(object.getBookFormat())
+                .map(bookFormatFilterMapper::map)
+                .orElse(null);
+        var bookPublishingHouse = Optional.ofNullable(object.getBookPublishingHouse())
+                .map(bookPublishingHouseFilterMapper::map)
+                .orElse(null);
+        var bookSeries = Optional.ofNullable(object.getBookSeries())
+                .map(bookSeriesFilterMapper::map)
+                .orElse(null);
+        var order = Optional.ofNullable(object.getOrder())
+                .map(orderFilterMapper::map)
+                .orElse(null);
+
         return new BookFilter(
                 object.getId(),
                 object.getTitle(),
@@ -18,12 +49,12 @@ public class BookFilterMapper implements Mapper<Book, BookFilter> {
                 object.getPage(),
                 object.getIsbn10(),
                 object.getIsbn13(),
-                object.getBookStatus() != null ? object.getBookStatus().getId() : null,
-                object.getBookLanguage() != null ? object.getBookLanguage().getId() : null,
-                object.getBookFormat() != null ? object.getBookFormat().getId() : null,
-                object.getBookPublishingHouse() != null ? object.getBookPublishingHouse().getId() : null,
-                object.getBookSeries() != null ? object.getBookSeries().getId() : null,
-                object.getOrder() != null ? object.getOrder().getId() : null
+                bookStatus,
+                bookLanguage,
+                bookFormat,
+                bookPublishingHouse,
+                bookSeries,
+                order
         );
     }
 }

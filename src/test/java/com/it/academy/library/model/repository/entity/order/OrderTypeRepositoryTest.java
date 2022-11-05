@@ -25,12 +25,11 @@ class OrderTypeRepositoryTest extends IntegrationTestBase {
     @DisplayName("Save order type.")
     void saveOrderType() {
         var expectedCount = orderTypeRepository.count() + 1;
+        var orderType = OrderType.builder()
+                .name(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .build();
 
-        var actual = orderTypeRepository.save(
-                OrderType.builder()
-                        .name(ConstantUtil.NEW + ConstantUtil.SAVE)
-                        .build()
-        );
+        var actual = orderTypeRepository.save(orderType);
         var actualCount = orderTypeRepository.count();
 
         assertAll(
@@ -70,11 +69,12 @@ class OrderTypeRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all order type by order type.")
     void findAllOrderTypeByOrderTypeFilter() {
+        var orderType = OrderType.builder()
+                .name(ConstantUtil.ORDER_TYPE_NAME_UNCONFIRMED)
+                .build();
+
         var actual = orderTypeRepository.findAllByOrderTypeFilter(orderTypeFilterMapper.map(
-                OrderType.builder()
-                        .name(ConstantUtil.ORDER_TYPE_NAME_UNCONFIRMED)
-                        .build())
-        );
+                orderType));
 
         assertThat(actual).hasSize(1);
     }

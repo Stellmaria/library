@@ -12,6 +12,7 @@ public class OrderTypeCreateEditMapper implements Mapper<OrderTypeCreateEditDto,
     public OrderType map(@NotNull OrderTypeCreateEditDto object) {
         var orderType = new OrderType();
         orderType.setName(object.getName());
+
         return orderType;
     }
 }

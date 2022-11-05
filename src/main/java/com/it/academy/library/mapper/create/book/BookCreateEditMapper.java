@@ -47,6 +47,7 @@ public class BookCreateEditMapper implements Mapper<BookCreateEditDto, Book> {
         book.setBookPublishingHouse(getBookPublishingHouseRepository(object.getBookPublishingHouseId()));
         book.setBookSeries(getBookSeries(object.getBookSeriesId()));
         book.setOrder(getOrder(object.getOrderId()));
+
         return book;
     }
 

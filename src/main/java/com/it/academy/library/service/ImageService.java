@@ -19,6 +19,7 @@ public class ImageService {
     @SneakyThrows
     public void upload(String imagePath, @NotNull InputStream stream) {
         var path = Path.of(BUCKET, imagePath);
+
         try (stream) {
             Files.createDirectories(path.getParent());
             Files.write(path, stream.readAllBytes(), CREATE, TRUNCATE_EXISTING);
@@ -28,6 +29,7 @@ public class ImageService {
     @SneakyThrows
     public Optional<byte[]> getImage(String imagePath) {
         var path = Path.of(BUCKET, imagePath);
+
         return Files.exists(path)
                 ? Optional.of(Files.readAllBytes(path))
                 : Optional.empty();

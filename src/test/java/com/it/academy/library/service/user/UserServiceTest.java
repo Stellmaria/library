@@ -17,9 +17,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @RequiredArgsConstructor
 @DisplayName("User service test.")
 class UserServiceTest extends IntegrationTestBase {
-    private static final Long USER_4 = 4L;
-    private static final Long USER_3 = 3L;
-    private static final Long USER_99 = 99L;
+    private static final Long USER_ID_4 = 4L;
+    private static final Long USER_ID_3 = 3L;
+    private static final Long USER_ID_99 = 99L;
     private static final Integer USER_ROLE_ID_1 = 1;
     private static final Integer USER_STATUS_ID_1 = 1;
     private static final String TEST_EMAIL_EXAMPLE_COM = "test_email@example.com";
@@ -30,19 +30,19 @@ class UserServiceTest extends IntegrationTestBase {
     @Test
     @DisplayName("Create new user.")
     void create() {
-        var actual = userService.create(
-                new UserCreateEditDto(
-                        ConstantUtil.SAVE + ConstantUtil.NEW,
-                        ConstantUtil.SAVE + ConstantUtil.NEW,
-                        ConstantUtil.SAVE + ConstantUtil.NEW,
-                        TEST_EMAIL_EXAMPLE_COM,
-                        ConstantUtil.SAVE + ConstantUtil.NEW,
-                        USER_ROLE_ID_1,
-                        USER_STATUS_ID_1,
-                        ConstantUtil.BIRTHDAY,
-                        new MockMultipartFile("test", new byte[0])
-                )
+        var user = new UserCreateEditDto(
+                ConstantUtil.SAVE + ConstantUtil.NEW,
+                ConstantUtil.SAVE + ConstantUtil.NEW,
+                ConstantUtil.SAVE + ConstantUtil.NEW,
+                TEST_EMAIL_EXAMPLE_COM,
+                ConstantUtil.SAVE + ConstantUtil.NEW,
+                USER_ROLE_ID_1,
+                USER_STATUS_ID_1,
+                ConstantUtil.USER_BIRTHDAY,
+                new MockMultipartFile("test", new byte[0])
         );
+
+        var actual = userService.create(user);
 
         assertAll(
                 () -> assertEquals(ConstantUtil.SAVE + ConstantUtil.NEW, actual.getUsername()),
@@ -51,26 +51,26 @@ class UserServiceTest extends IntegrationTestBase {
                 () -> assertEquals(TEST_EMAIL_EXAMPLE_COM, actual.getEmail()),
                 () -> assertEquals(USER_ROLE_ID_1, actual.getUserRole().getId()),
                 () -> assertEquals(USER_STATUS_ID_1, actual.getUserStatus().getId()),
-                () -> assertEquals(ConstantUtil.BIRTHDAY, actual.getBirthday())
+                () -> assertEquals(ConstantUtil.USER_BIRTHDAY, actual.getBirthday())
         );
     }
 
     @Test
     @DisplayName("Update user.")
     void update() {
-        var actual = userService.update(
-                USER_4, new UserCreateEditDto(
-                        UPDATE + ConstantUtil.NEW,
-                        UPDATE + ConstantUtil.NEW,
-                        UPDATE + ConstantUtil.NEW,
-                        EMAIL_TEST_EXAMPLE_COM,
-                        UPDATE + ConstantUtil.NEW,
-                        USER_ROLE_ID_1,
-                        USER_STATUS_ID_1,
-                        ConstantUtil.BIRTHDAY,
-                        new MockMultipartFile("test", new byte[0])
-                )
+        var user = new UserCreateEditDto(
+                UPDATE + ConstantUtil.NEW,
+                UPDATE + ConstantUtil.NEW,
+                UPDATE + ConstantUtil.NEW,
+                EMAIL_TEST_EXAMPLE_COM,
+                UPDATE + ConstantUtil.NEW,
+                USER_ROLE_ID_1,
+                USER_STATUS_ID_1,
+                ConstantUtil.USER_BIRTHDAY,
+                new MockMultipartFile("test", new byte[0])
         );
+
+        var actual = userService.update(USER_ID_4, user);
 
         actual.ifPresent(it -> {
             assertEquals(UPDATE + ConstantUtil.NEW, actual.get().getUsername());
@@ -79,7 +79,7 @@ class UserServiceTest extends IntegrationTestBase {
             assertEquals(EMAIL_TEST_EXAMPLE_COM, actual.get().getEmail());
             assertEquals(USER_ROLE_ID_1, actual.get().getUserRole().getId());
             assertEquals(USER_STATUS_ID_1, actual.get().getUserStatus().getId());
-            assertEquals(ConstantUtil.BIRTHDAY, actual.get().getBirthday());
+            assertEquals(ConstantUtil.USER_BIRTHDAY, actual.get().getBirthday());
         });
     }
 
@@ -87,8 +87,8 @@ class UserServiceTest extends IntegrationTestBase {
     @DisplayName("Delete user.")
     void delete() {
         assertAll(
-                () -> assertTrue(userService.delete(USER_3)),
-                () -> assertFalse(userService.delete(USER_99))
+                () -> assertTrue(userService.delete(USER_ID_3)),
+                () -> assertFalse(userService.delete(USER_ID_99))
         );
     }
 }

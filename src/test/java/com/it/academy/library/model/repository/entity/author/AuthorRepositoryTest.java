@@ -36,22 +36,20 @@ class AuthorRepositoryTest extends IntegrationTestBase {
     @DisplayName("Save author.")
     void saveAuthor() {
         var expectedCount = authorRepository.count() + 1;
+        var authorRole = AuthorRole.builder()
+                .id(ConstantUtil.AUTHOR_ROLE_ID_1)
+                .build();
+        var author = Author.builder()
+                .firstName(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .lastName(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .imagePath(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .authorRole(authorRole)
+                .birthday(AUTHOR_BIRTHDAY)
+                .dateDeath(AUTHOR_DATE_DEATH)
+                .description(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .build();
 
-        var actual = authorRepository.save(
-                Author.builder()
-                        .firstName(ConstantUtil.NEW + ConstantUtil.SAVE)
-                        .lastName(ConstantUtil.NEW + ConstantUtil.SAVE)
-                        .imagePath(ConstantUtil.NEW + ConstantUtil.SAVE)
-                        .authorRole(
-                                AuthorRole.builder()
-                                        .id(ConstantUtil.AUTHOR_ROLE_ID_1)
-                                        .build()
-                        )
-                        .birthday(AUTHOR_BIRTHDAY)
-                        .dateDeath(AUTHOR_DATE_DEATH)
-                        .description(ConstantUtil.NEW + ConstantUtil.SAVE)
-                        .build()
-        );
+        var actual = authorRepository.save(author);
         var actualCount = authorRepository.count();
 
         assertAll(
@@ -113,11 +111,11 @@ class AuthorRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all author by author filter.")
     void findAllAuthorByAuthorFilter() {
-        var actual = authorRepository.findAllByAuthorFilter(authorFilterMapper.map(
-                Author.builder()
-                        .firstName(AUTHOR_FIRST_NAME_JAMES)
-                        .build())
-        );
+        var author = Author.builder()
+                .firstName(AUTHOR_FIRST_NAME_JAMES)
+                .build();
+
+        var actual = authorRepository.findAllByAuthorFilter(authorFilterMapper.map(author));
 
         assertThat(actual).hasSize(1);
     }
@@ -125,11 +123,11 @@ class AuthorRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all author by book filter.")
     void findAllAuthorByBookFilter() {
-        var actual = authorRepository.findAllByBookFilter(bookFilterMapper.map(
-                Book.builder()
-                        .title(ConstantUtil.BOOK_TITLE_FRAGMENT_PHP)
-                        .build())
-        );
+        var book = Book.builder()
+                .title(ConstantUtil.BOOK_TITLE_FRAGMENT_PHP)
+                .build();
+
+        var actual = authorRepository.findAllByBookFilter(bookFilterMapper.map(book));
 
         assertThat(actual).hasSize(2);
     }
@@ -137,11 +135,11 @@ class AuthorRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all author by author role filter.")
     void findAllAuthorByAuthorRoleFilter() {
-        var actual = authorRepository.findAllByAuthorRoleFilter(authorRoleFilterMapper.map(
-                AuthorRole.builder()
-                        .name(ConstantUtil.AUTHOR_ROLE_NAME_AUTHOR)
-                        .build())
-        );
+        var authorRole = AuthorRole.builder()
+                .name(ConstantUtil.AUTHOR_ROLE_NAME_AUTHOR)
+                .build();
+
+        var actual = authorRepository.findAllByAuthorRoleFilter(authorRoleFilterMapper.map(authorRole));
 
         assertThat(actual).hasSize(9);
     }

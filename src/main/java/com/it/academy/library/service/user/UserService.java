@@ -52,6 +52,7 @@ public class UserService implements UserDetailsService {
 
     public Page<UserReadDto> findAll(UserFilter userFilter, Pageable pageable) {
         var predicate = UserFilter.queryPredicates(userFilter);
+
         return userRepository.findAll(predicate, pageable)
                 .map(it -> {
                     eventPublisher.publishEvent(new EntityEvent(it, AccessType.READ));

@@ -24,6 +24,7 @@ public class BookAdditionalCreateEditMapper implements Mapper<BookAdditionalCrea
         bookAdditional.setSerialNo(object.getSerialNo());
         bookAdditional.setPrice(object.getPrice());
         bookAdditional.setLink(object.getLink());
+
         return bookAdditional;
     }
 

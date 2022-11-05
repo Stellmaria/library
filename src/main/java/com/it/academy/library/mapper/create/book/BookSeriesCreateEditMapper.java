@@ -12,6 +12,7 @@ public class BookSeriesCreateEditMapper implements Mapper<BookSeriesCreateEditDt
     public BookSeries map(@NotNull BookSeriesCreateEditDto object) {
         var bookSeries = new BookSeries();
         bookSeries.setName(object.getName());
+
         return bookSeries;
     }
 }

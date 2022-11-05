@@ -26,6 +26,7 @@ public class AuthorCreateEditMapper implements Mapper<AuthorCreateEditDto, Autho
         author.setBirthday(object.getBirthday());
         author.setDateDeath(object.getDateDeath());
         author.setDescription(object.getDescription());
+
         return author;
     }
 

@@ -8,8 +8,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static com.it.academy.library.model.entity.author.QAuthor.author;
 
@@ -27,7 +29,7 @@ public class AuthorFilter {
 
     private String lastName;
 
-    private Integer authorRoleId;
+    private AuthorRoleFilter authorRole;
 
     private LocalDate birthday;
 
@@ -43,7 +45,22 @@ public class AuthorFilter {
                 .add(authorFilter.getBirthday(), author.birthday::eq)
                 .add(authorFilter.getDateDeath(), author.dateDeath::eq)
                 .add(authorFilter.getDescription(), author.description::containsIgnoreCase)
-                .add(authorFilter.getAuthorRoleId(), author.authorRole.id::eq)
+                .add(getAuthorRoleId(authorFilter), author.authorRole.id::eq)
+                .add(getAuthorRoleName(authorFilter), author.authorRole.name::containsIgnoreCase)
                 .build();
+    }
+
+    @Nullable
+    private static String getAuthorRoleName(@NotNull AuthorFilter authorFilter) {
+        return Optional.ofNullable(authorFilter.getAuthorRole())
+                .map(AuthorRoleFilter::getName)
+                .orElse(null);
+    }
+
+    @Nullable
+    private static Integer getAuthorRoleId(@NotNull AuthorFilter authorFilter) {
+        return Optional.ofNullable(authorFilter.getAuthorRole())
+                .map(AuthorRoleFilter::getId)
+                .orElse(null);
     }
 }

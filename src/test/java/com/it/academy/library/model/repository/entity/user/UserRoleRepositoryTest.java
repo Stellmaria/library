@@ -25,12 +25,11 @@ class UserRoleRepositoryTest extends IntegrationTestBase {
     @DisplayName("Save user role.")
     void saveUserRole() {
         var expectedCount = userRoleRepository.count() + 1;
+        var userRole = UserRole.builder()
+                .name(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .build();
 
-        var actual = userRoleRepository.save(
-                UserRole.builder()
-                        .name(ConstantUtil.NEW + ConstantUtil.SAVE)
-                        .build()
-        );
+        var actual = userRoleRepository.save(userRole);
         var actualCount = userRoleRepository.count();
 
         assertAll(
@@ -70,11 +69,11 @@ class UserRoleRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find user role by user role filter.")
     void findAllUserRoleByUserRoleFilter() {
-        var actual = userRoleRepository.findAllByUserRoleFilter(userRoleFilterMapper.map(
-                UserRole.builder()
-                        .name(ConstantUtil.USER_ROLE_NAME_READER)
-                        .build())
-        );
+        var userRole = UserRole.builder()
+                .name(ConstantUtil.USER_ROLE_NAME_READER)
+                .build();
+
+        var actual = userRoleRepository.findAllByUserRoleFilter(userRoleFilterMapper.map(userRole));
 
         assertThat(actual).hasSize(1);
     }

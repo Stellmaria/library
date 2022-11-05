@@ -28,13 +28,12 @@ class BookGenreFilterRepositoryTest extends IntegrationTestBase {
     @DisplayName("Save book genre.")
     void saveBookGenre() {
         var expectedCount = bookGenreRepository.count() + 1;
+        var bookGenre = BookGenre.builder()
+                .name(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .description(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .build();
 
-        var actual = bookGenreRepository.save(
-                BookGenre.builder()
-                        .name(ConstantUtil.NEW + ConstantUtil.SAVE)
-                        .description(ConstantUtil.NEW + ConstantUtil.SAVE)
-                        .build()
-        );
+        var actual = bookGenreRepository.save(bookGenre);
         var actualCount = bookGenreRepository.count();
 
         assertAll(
@@ -76,11 +75,11 @@ class BookGenreFilterRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book genre by book filter.")
     void findAllBookGenreByBookFilter() {
-        var actual = bookGenreRepository.findAllByBookFilter(bookFilterMapper.map(
-                Book.builder()
-                        .title(ConstantUtil.BOOK_TITLE_FRAGMENT_PHP)
-                        .build())
-        );
+        var book = Book.builder()
+                .title(ConstantUtil.BOOK_TITLE_FRAGMENT_PHP)
+                .build();
+
+        var actual = bookGenreRepository.findAllByBookFilter(bookFilterMapper.map(book));
 
         assertThat(actual).hasSize(2);
     }
@@ -88,11 +87,12 @@ class BookGenreFilterRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book genre by book genre filter.")
     void findAllBookGenreByBookGenreFilter() {
+        var bookGenre = BookGenre.builder()
+                .name(ConstantUtil.BOOK_GENRE_FRAGMENT_NAME_SS)
+                .build();
+
         var actual = bookGenreRepository.findAllByBookGenreFilter(bookGenreFilterMapper.map(
-                BookGenre.builder()
-                        .name(ConstantUtil.BOOK_GENRE_FRAGMENT_NAME_SS)
-                        .build())
-        );
+                bookGenre));
 
         assertThat(actual).hasSize(2);
     }

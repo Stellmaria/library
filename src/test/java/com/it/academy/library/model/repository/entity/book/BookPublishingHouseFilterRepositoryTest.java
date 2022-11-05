@@ -25,12 +25,11 @@ class BookPublishingHouseFilterRepositoryTest extends IntegrationTestBase {
     @DisplayName("Save book publishing house.")
     void saveBookPublishingHouse() {
         var expectedCount = bookPublishingHouseRepository.count() + 1;
+        var bookPublishingHouse = BookPublishingHouse.builder()
+                .name(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .build();
 
-        var actual = bookPublishingHouseRepository.save(
-                BookPublishingHouse.builder()
-                        .name(ConstantUtil.NEW + ConstantUtil.SAVE)
-                        .build()
-        );
+        var actual = bookPublishingHouseRepository.save(bookPublishingHouse);
         var actualCount = bookPublishingHouseRepository.count();
 
         assertAll(
@@ -71,13 +70,13 @@ class BookPublishingHouseFilterRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book publishing house by book publishing house.")
     void findAllBookPublishingHouseByBookPublishingHouseFilter() {
+        var bookPublishingHouse = BookPublishingHouse.builder()
+                .name(ConstantUtil.BOOK_PUBLISHING_HOUSE_FRAGMENT_NAME_BOOKS)
+                .build();
+
         var actual = bookPublishingHouseRepository.findAllByBookPublishingHouseFilter(
                 bookPublishingHouseFilterMapper.map(
-                        BookPublishingHouse.builder()
-                                .name(ConstantUtil.BOOK_PUBLISHING_HOUSE_FRAGMENT_NAME_BOOKS)
-                                .build()
-                )
-        );
+                        bookPublishingHouse));
 
         assertThat(actual).hasSize(3);
     }

@@ -12,6 +12,7 @@ public class UserRoleCreateEditMapper implements Mapper<UserRoleCreateEditDto, U
     public UserRole map(@NotNull UserRoleCreateEditDto object) {
         var userRole = new UserRole();
         userRole.setName(object.getName());
+
         return userRole;
     }
 }

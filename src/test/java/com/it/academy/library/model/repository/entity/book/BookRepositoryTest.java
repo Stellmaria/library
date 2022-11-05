@@ -61,48 +61,41 @@ class BookRepositoryTest extends IntegrationTestBase {
     @DisplayName("Save book.")
     void saveBook() {
         var expectedCount = bookRepository.count() + 1;
+        var bookStatus = BookStatus.builder()
+                .id(ConstantUtil.BOOK_STATUS_ID_1)
+                .build();
+        var bookLanguage = BookLanguage.builder()
+                .id(ConstantUtil.BOOK_LANGUAGE_ID_13)
+                .build();
+        var bookFormat = BookFormat.builder()
+                .id(ConstantUtil.BOOK_FORMAT_ID_4)
+                .build();
+        var bookPublishingHouse = BookPublishingHouse.builder()
+                .id(ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_1)
+                .build();
+        var bookSeries = BookSeries.builder()
+                .id(ConstantUtil.BOOK_SERIES_ID_3)
+                .build();
+        var order = Order.builder()
+                .id(ConstantUtil.ORDER_ID_4)
+                .build();
+        var book = Book.builder()
+                .title(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .subtitle(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .year(ConstantUtil.BOOK_YEAR_2023)
+                .page(ConstantUtil.BOOK_PAGE_200)
+                .isbn10(ConstantUtil.ISBN_10)
+                .isbn13(ConstantUtil.ISBN_13)
+                .imagePath(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .bookStatus(bookStatus)
+                .bookLanguage(bookLanguage)
+                .bookFormat(bookFormat)
+                .bookPublishingHouse(bookPublishingHouse)
+                .bookSeries(bookSeries)
+                .order(order)
+                .build();
 
-        var actual = bookRepository.save(
-                Book.builder()
-                        .title(ConstantUtil.NEW + ConstantUtil.SAVE)
-                        .subtitle(ConstantUtil.NEW + ConstantUtil.SAVE)
-                        .year(ConstantUtil.BOOK_YEAR_2023)
-                        .page(ConstantUtil.BOOK_PAGE_200)
-                        .isbn10(ConstantUtil.ISBN_10)
-                        .isbn13(ConstantUtil.ISBN_13)
-                        .imagePath(ConstantUtil.NEW + ConstantUtil.SAVE)
-                        .bookStatus(
-                                BookStatus.builder()
-                                        .id(ConstantUtil.BOOK_STATUS_ID_1)
-                                        .build()
-                        )
-                        .bookLanguage(
-                                BookLanguage.builder()
-                                        .id(ConstantUtil.BOOK_LANGUAGE_ID_13)
-                                        .build()
-                        )
-                        .bookFormat(
-                                BookFormat.builder()
-                                        .id(ConstantUtil.BOOK_FORMAT_ID_4)
-                                        .build()
-                        )
-                        .bookPublishingHouse(
-                                BookPublishingHouse.builder()
-                                        .id(ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_1)
-                                        .build()
-                        )
-                        .bookSeries(
-                                BookSeries.builder()
-                                        .id(ConstantUtil.BOOK_SERIES_ID_3)
-                                        .build()
-                        )
-                        .order(
-                                Order.builder()
-                                        .id(ConstantUtil.ORDER_ID_4)
-                                        .build()
-                        )
-                        .build()
-        );
+        var actual = bookRepository.save(book);
         var actualCount = bookRepository.count();
 
         assertAll(
@@ -126,6 +119,24 @@ class BookRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Update book.")
     void updateBook() {
+        var bookStatus = BookStatus.builder()
+                .id(ConstantUtil.BOOK_STATUS_ID_1)
+                .build();
+        var bookLanguage = BookLanguage.builder()
+                .id(ConstantUtil.BOOK_LANGUAGE_ID_13)
+                .build();
+        var bookFormat = BookFormat.builder()
+                .id(ConstantUtil.BOOK_FORMAT_ID_4)
+                .build();
+        var bookPublishingHouse = BookPublishingHouse.builder()
+                .id(ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_1)
+                .build();
+        var bookSeries = BookSeries.builder()
+                .id(ConstantUtil.BOOK_SERIES_ID_3)
+                .build();
+        var order = Order.builder()
+                .id(ConstantUtil.ORDER_ID_4)
+                .build();
         var book = bookRepository.findById(BOOK_ID_4);
 
         book.ifPresent(it -> {
@@ -137,36 +148,12 @@ class BookRepositoryTest extends IntegrationTestBase {
             it.setIsbn13(ConstantUtil.ISBN_13);
             it.setImagePath(ConstantUtil.NEW + ConstantUtil.UPDATE);
             it.setImagePath(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            it.setBookStatus(
-                    BookStatus.builder()
-                            .id(ConstantUtil.BOOK_STATUS_ID_1)
-                            .build()
-            );
-            it.setBookLanguage(
-                    BookLanguage.builder()
-                            .id(ConstantUtil.BOOK_LANGUAGE_ID_13)
-                            .build()
-            );
-            it.setBookFormat(
-                    BookFormat.builder()
-                            .id(ConstantUtil.BOOK_FORMAT_ID_4)
-                            .build()
-            );
-            it.setBookPublishingHouse(
-                    BookPublishingHouse.builder()
-                            .id(ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_1)
-                            .build()
-            );
-            it.setBookSeries(
-                    BookSeries.builder()
-                            .id(ConstantUtil.BOOK_SERIES_ID_3)
-                            .build()
-            );
-            it.setOrder(
-                    Order.builder()
-                            .id(ConstantUtil.ORDER_ID_4)
-                            .build()
-            );
+            it.setBookStatus(bookStatus);
+            it.setBookLanguage(bookLanguage);
+            it.setBookFormat(bookFormat);
+            it.setBookPublishingHouse(bookPublishingHouse);
+            it.setBookSeries(bookSeries);
+            it.setOrder(order);
             bookRepository.save(it);
         });
         var actual = bookRepository.findById(BOOK_ID_4);
@@ -203,11 +190,12 @@ class BookRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book by book language filter.")
     void findAllBookByBooksLanguageFilter() {
+        var bookLanguage = BookLanguage.builder()
+                .name(BOOK_LANGUAGE_NAME_POLISH)
+                .build();
+
         var actual = bookRepository.findAllByBookLanguageFilter(bookLanguageFilterMapper.map(
-                BookLanguage.builder()
-                        .name(BOOK_LANGUAGE_NAME_POLISH)
-                        .build())
-        );
+                bookLanguage));
 
         assertThat(actual).hasSize(2);
     }
@@ -215,11 +203,11 @@ class BookRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book by book format filter.")
     void findAllBookByBookFormatFilter() {
-        var actual = bookRepository.findAllByBookFormatFilter(bookFormatFilterMapper.map(
-                BookFormat.builder()
-                        .name(BOOK_FORMAT_NAME_MASS_MARKET_PAPERBACK)
-                        .build())
-        );
+        var bookFormat = BookFormat.builder()
+                .name(BOOK_FORMAT_NAME_MASS_MARKET_PAPERBACK)
+                .build();
+
+        var actual = bookRepository.findAllByBookFormatFilter(bookFormatFilterMapper.map(bookFormat));
 
         assertThat(actual).hasSize(1);
     }
@@ -227,13 +215,12 @@ class BookRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book by book publishing house filter.")
     void findAllBookByBookPublishingHouseFilter() {
+        var bookPublishingHouse = BookPublishingHouse.builder()
+                .name(ConstantUtil.BOOK_PUBLISHING_HOUSE_FRAGMENT_NAME_BOOKS)
+                .build();
+
         var actual = bookRepository.findAllByBookPublishingHouseFilter(
-                bookPublishingHouseFilterMapper.map(
-                        BookPublishingHouse.builder()
-                                .name(ConstantUtil.BOOK_PUBLISHING_HOUSE_FRAGMENT_NAME_BOOKS)
-                                .build()
-                )
-        );
+                bookPublishingHouseFilterMapper.map(bookPublishingHouse));
 
         assertThat(actual).hasSize(3);
     }
@@ -241,11 +228,11 @@ class BookRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book by book status filter.")
     void findAllBookByBookStatusFilter() {
-        var actual = bookRepository.findAllByBookStatusFilter(bookStatusFilterMapper.map(
-                BookStatus.builder()
-                        .name(ConstantUtil.BOOK_STATUS_NAME_READING_ROOM)
-                        .build())
-        );
+        var bookStatus = BookStatus.builder()
+                .name(ConstantUtil.BOOK_STATUS_NAME_READING_ROOM)
+                .build();
+
+        var actual = bookRepository.findAllByBookStatusFilter(bookStatusFilterMapper.map(bookStatus));
 
         assertThat(actual).isEmpty();
     }
@@ -253,11 +240,11 @@ class BookRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book by book series filter.")
     void findAllBookByBookSeriesFilter() {
-        var actual = bookRepository.findAllByBookSeriesFilter(bookSeriesFilterMapper.map(
-                BookSeries.builder()
-                        .name(BOOK_SERIES_MILLENNIUM)
-                        .build())
-        );
+        var bookSeries = BookSeries.builder()
+                .name(BOOK_SERIES_MILLENNIUM)
+                .build();
+
+        var actual = bookRepository.findAllByBookSeriesFilter(bookSeriesFilterMapper.map(bookSeries));
 
         assertThat(actual).hasSize(2);
     }
@@ -265,11 +252,11 @@ class BookRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book by order filter.")
     void findAllBookByOrderFilter() {
-        var actual = bookRepository.findAllByOrderFilter(orderFilterMapper.map(
-                Order.builder()
-                        .orderDate(ConstantUtil.ORDER_DATE_10)
-                        .build())
-        );
+        var order = Order.builder()
+                .orderDate(ConstantUtil.ORDER_DATE_10)
+                .build();
+
+        var actual = bookRepository.findAllByOrderFilter(orderFilterMapper.map(order));
 
         assertThat(actual).hasSize(1);
     }
@@ -277,11 +264,11 @@ class BookRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book by user filter.")
     void findAllBookByUserFilter() {
-        var actual = bookRepository.findAllByUserFilter(userFilterMapper.map(
-                User.builder()
-                        .firstName(ConstantUtil.USER_FIRST_NAME_SVETA)
-                        .build())
-        );
+        var user = User.builder()
+                .firstName(ConstantUtil.USER_FIRST_NAME_SVETA)
+                .build();
+
+        var actual = bookRepository.findAllByUserFilter(userFilterMapper.map(user));
 
         assertThat(actual).hasSize(1);
     }
@@ -289,11 +276,11 @@ class BookRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book by book genre filter.")
     void findAllBookByGenreFilter() {
-        var actual = bookRepository.findAllByBookGenreFilter(bookGenreFilterMapper.map(
-                BookGenre.builder()
-                        .name(ConstantUtil.BOOK_GENRE_FRAGMENT_NAME_SS)
-                        .build())
-        );
+        var bookGenre = BookGenre.builder()
+                .name(ConstantUtil.BOOK_GENRE_FRAGMENT_NAME_SS)
+                .build();
+
+        var actual = bookRepository.findAllByBookGenreFilter(bookGenreFilterMapper.map(bookGenre));
 
         assertThat(actual).hasSize(6);
     }
@@ -301,11 +288,12 @@ class BookRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book by book additional.")
     void findAllBookByBookAdditionalFilter() {
+        var bookAdditional = BookAdditional.builder()
+                .price(BOOK_ADDITIONAL_PRICE_20)
+                .build();
+
         var actual = bookRepository.findAllByBookAdditionalFilter(bookAdditionalFilterMapper.map(
-                BookAdditional.builder()
-                        .price(BOOK_ADDITIONAL_PRICE_20)
-                        .build())
-        );
+                bookAdditional));
 
         assertThat(actual).hasSize(3);
     }
@@ -313,11 +301,11 @@ class BookRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book by author filter.")
     void findAllBookByAuthorFilter() {
-        var actual = bookRepository.findAllByAuthorFilter(authorFilterMapper.map(
-                Author.builder()
-                        .firstName("Stephenie")
-                        .build())
-        );
+        var author = Author.builder()
+                .firstName("Stephenie")
+                .build();
+
+        var actual = bookRepository.findAllByAuthorFilter(authorFilterMapper.map(author));
 
         assertThat(actual).hasSize(1);
     }
@@ -325,11 +313,11 @@ class BookRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book by book filter.")
     void findAllBookByBookFilter() {
-        var actual = bookRepository.findAllByBookFilter(bookFilterMapper.map(
-                Book.builder()
-                        .title(ConstantUtil.BOOK_TITLE_FRAGMENT_PHP)
-                        .build())
-        );
+        var book = Book.builder()
+                .title(ConstantUtil.BOOK_TITLE_FRAGMENT_PHP)
+                .build();
+
+        var actual = bookRepository.findAllByBookFilter(bookFilterMapper.map(book));
 
         assertThat(actual).hasSize(1);
     }

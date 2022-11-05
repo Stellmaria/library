@@ -13,6 +13,7 @@ public class BookPublishingHouseCreateEditMapper implements
     public BookPublishingHouse map(@NotNull BookPublishingHouseCreateEditDto object) {
         var bookPublishingHouse = new BookPublishingHouse();
         bookPublishingHouse.setName(object.getName());
+
         return bookPublishingHouse;
     }
 }

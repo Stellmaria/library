@@ -34,26 +34,24 @@ class UserRepositoryTest extends IntegrationTestBase {
     void saveUser() {
         var expectedCount = userRepository.count() + 1;
 
-        var actual = userRepository.save(
-                User.builder()
-                        .username(ConstantUtil.NEW + ConstantUtil.SAVE)
-                        .firstName(ConstantUtil.NEW + ConstantUtil.SAVE)
-                        .lastName(ConstantUtil.NEW + ConstantUtil.SAVE)
-                        .email(EMAIL_EXAMPLE_COM)
-                        .password(ConstantUtil.NEW + ConstantUtil.SAVE)
-                        .userRole(
-                                UserRole.builder()
-                                        .id(USER_ROLE_ID_2)
-                                        .build()
-                        )
-                        .userStatus(
-                                UserStatus.builder()
-                                        .id(USER_STATUS_ID_2)
-                                        .build()
-                        )
-                        .birthday(ConstantUtil.BIRTHDAY)
-                        .build()
-        );
+        var userRole = UserRole.builder()
+                .id(USER_ROLE_ID_2)
+                .build();
+        var userStatus = UserStatus.builder()
+                .id(USER_STATUS_ID_2)
+                .build();
+        var user = User.builder()
+                .username(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .firstName(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .lastName(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .email(EMAIL_EXAMPLE_COM)
+                .password(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .userRole(userRole)
+                .userStatus(userStatus)
+                .birthday(ConstantUtil.USER_BIRTHDAY)
+                .build();
+
+        var actual = userRepository.save(user);
         var actualCount = userRepository.count();
 
         assertAll(
@@ -65,13 +63,19 @@ class UserRepositoryTest extends IntegrationTestBase {
                 () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getPassword()),
                 () -> assertEquals(USER_ROLE_ID_2, actual.getUserRole().getId()),
                 () -> assertEquals(USER_STATUS_ID_2, actual.getUserStatus().getId()),
-                () -> assertEquals(ConstantUtil.BIRTHDAY, actual.getBirthday())
+                () -> assertEquals(ConstantUtil.USER_BIRTHDAY, actual.getBirthday())
         );
     }
 
     @Test
     @DisplayName("Update user.")
     void update() {
+        var userRole = UserRole.builder()
+                .id(USER_ROLE_ID_2)
+                .build();
+        var userStatus = UserStatus.builder()
+                .id(USER_STATUS_ID_2)
+                .build();
         var user = userRepository.findById(ConstantUtil.USER_ID_5);
 
         user.ifPresent(it -> {
@@ -80,17 +84,9 @@ class UserRepositoryTest extends IntegrationTestBase {
             it.setUsername(ConstantUtil.NEW + ConstantUtil.UPDATE);
             it.setEmail(TEST_GMAIL_COM);
             it.setPassword(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            it.setUserRole(
-                    UserRole.builder()
-                            .id(USER_ROLE_ID_2)
-                            .build()
-            );
-            it.setUserStatus(
-                    UserStatus.builder()
-                            .id(USER_STATUS_ID_2)
-                            .build()
-            );
-            it.setBirthday(ConstantUtil.BIRTHDAY);
+            it.setUserRole(userRole);
+            it.setUserStatus(userStatus);
+            it.setBirthday(ConstantUtil.USER_BIRTHDAY);
             userRepository.save(it);
         });
         var actual = userRepository.findById(ConstantUtil.USER_ID_5);
@@ -104,7 +100,7 @@ class UserRepositoryTest extends IntegrationTestBase {
             assertEquals(USER_ROLE_ID_2, it.getUserRole().getId());
             assertEquals(USER_STATUS_ID_2, it.getUserStatus().getId());
             assertEquals(ConstantUtil.USER_ID_5, it.getId());
-            assertEquals(ConstantUtil.BIRTHDAY, it.getBirthday());
+            assertEquals(ConstantUtil.USER_BIRTHDAY, it.getBirthday());
         });
     }
 
@@ -122,11 +118,11 @@ class UserRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all user by user role filter.")
     void findAllUserByUserRoleFilter() {
-        var actual = userRepository.findAllByUserRoleFilter(userRoleFilterMapper.map(
-                UserRole.builder()
-                        .name(ConstantUtil.USER_ROLE_NAME_READER)
-                        .build())
-        );
+        var userRole = UserRole.builder()
+                .name(ConstantUtil.USER_ROLE_NAME_READER)
+                .build();
+
+        var actual = userRepository.findAllByUserRoleFilter(userRoleFilterMapper.map(userRole));
 
         assertThat(actual).hasSize(2);
     }
@@ -134,23 +130,22 @@ class UserRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all user by user status filter.")
     void findAllUserByUserStatusFilter() {
-        var actual = userRepository.findAllByUserStatusFilter(userStatusFilterMapper.map(
-                UserStatus.builder()
-                        .name(ConstantUtil.USER_STATUS_NAME_GUEST)
-                        .build())
-        );
+        var userStatus = UserStatus.builder()
+                .name(ConstantUtil.USER_STATUS_NAME_GUEST)
+                .build();
 
+        var actual = userRepository.findAllByUserStatusFilter(userStatusFilterMapper.map(userStatus));
         assertThat(actual).hasSize(1);
     }
 
     @Test
     @DisplayName("Find all user by user filter.")
     void findAllUserByUserFilter() {
-        var actual = userRepository.findAllByUserFilter(userFilterMapper.map(
-                User.builder()
-                        .firstName(ConstantUtil.USER_FIRST_NAME_SVETA)
-                        .build())
-        );
+        var user = User.builder()
+                .firstName(ConstantUtil.USER_FIRST_NAME_SVETA)
+                .build();
+
+        var actual = userRepository.findAllByUserFilter(userFilterMapper.map(user));
 
         assertThat(actual).hasSize(1);
     }

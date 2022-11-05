@@ -24,12 +24,11 @@ class BookLanguageFilterRepositoryTest extends IntegrationTestBase {
     @DisplayName("Save book language.")
     void saveBookLanguage() {
         var expectedCount = bookLanguageRepository.count() + 1;
+        var bookLanguage = BookLanguage.builder()
+                .name(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .build();
 
-        var actual = bookLanguageRepository.save(
-                BookLanguage.builder()
-                        .name(ConstantUtil.NEW + ConstantUtil.SAVE)
-                        .build()
-        );
+        var actual = bookLanguageRepository.save(bookLanguage);
         var actualCount = bookLanguageRepository.count();
 
         assertAll(
@@ -69,13 +68,12 @@ class BookLanguageFilterRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book language by book language filter.")
     void findAllBookLanguageByBookLanguageFilter() {
+        var bookLanguage = BookLanguage.builder()
+                .name(BOOK_LANGUAGE_FRAGMENT_NAME_IAN)
+                .build();
+
         var actual = bookLanguageRepository.findAllByBookLanguageFilter(
-                bookLanguageFilterMapper.map(
-                        BookLanguage.builder()
-                                .name(BOOK_LANGUAGE_FRAGMENT_NAME_IAN)
-                                .build()
-                )
-        );
+                bookLanguageFilterMapper.map(bookLanguage));
 
         assertThat(actual).hasSize(21);
     }

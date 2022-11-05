@@ -8,8 +8,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static com.it.academy.library.model.entity.user.QUser.user;
 
@@ -33,9 +35,9 @@ public class UserFilter {
 
     private String password;
 
-    private Integer userRoleId;
+    private UserRoleFilter userRole;
 
-    private Integer userStatusId;
+    private UserStatusFilter userStatus;
 
     private LocalDate birthday;
 
@@ -47,9 +49,39 @@ public class UserFilter {
                 .add(userFilter.getLastName(), user.lastName::containsIgnoreCase)
                 .add(userFilter.getEmail(), user.email::containsIgnoreCase)
                 .add(userFilter.getPassword(), user.password::containsIgnoreCase)
-                .add(userFilter.getUserRoleId(), user.userRole.id::eq)
-                .add(userFilter.getUserStatusId(), user.userStatus.id::eq)
+                .add(getUserRoleId(userFilter), user.userRole.id::eq)
+                .add(getUserRoleName(userFilter), user.userRole.name::containsIgnoreCase)
+                .add(getUserStatusId(userFilter), user.userStatus.id::eq)
+                .add(getUserStatusName(userFilter), user.userStatus.name::containsIgnoreCase)
                 .add(userFilter.getBirthday(), user.birthday::eq)
                 .build();
+    }
+
+    @Nullable
+    private static String getUserStatusName(@NotNull UserFilter userFilter) {
+        return Optional.ofNullable(userFilter.getUserStatus())
+                .map(UserStatusFilter::getName)
+                .orElse(null);
+    }
+
+    @Nullable
+    private static Integer getUserStatusId(@NotNull UserFilter userFilter) {
+        return Optional.ofNullable(userFilter.getUserStatus())
+                .map(UserStatusFilter::getId)
+                .orElse(null);
+    }
+
+    @Nullable
+    private static String getUserRoleName(@NotNull UserFilter userFilter) {
+        return Optional.ofNullable(userFilter.getUserRole())
+                .map(UserRoleFilter::getName)
+                .orElse(null);
+    }
+
+    @Nullable
+    private static Integer getUserRoleId(@NotNull UserFilter userFilter) {
+        return Optional.ofNullable(userFilter.getUserRole())
+                .map(UserRoleFilter::getId)
+                .orElse(null);
     }
 }

@@ -25,12 +25,11 @@ class UserStatusRepositoryTest extends IntegrationTestBase {
     @DisplayName("Save user status.")
     void saveUserStatus() {
         var expectedCount = userStatusRepository.count() + 1;
+        var userStatus = UserStatus.builder()
+                .name(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .build();
 
-        var actual = userStatusRepository.save(
-                UserStatus.builder()
-                        .name(ConstantUtil.NEW + ConstantUtil.SAVE)
-                        .build()
-        );
+        var actual = userStatusRepository.save(userStatus);
         var actualCount = userStatusRepository.count();
 
         assertAll(
@@ -70,11 +69,12 @@ class UserStatusRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all user status by user status filter.")
     void findAllByUserStatusFilter() {
+        var userStatus = UserStatus.builder()
+                .name(ConstantUtil.USER_STATUS_NAME_GUEST)
+                .build();
+
         var actual = userStatusRepository.findAllByUserStatusFilter(userStatusFilterMapper.map(
-                UserStatus.builder()
-                        .name(ConstantUtil.USER_STATUS_NAME_GUEST)
-                        .build())
-        );
+                userStatus));
 
         assertThat(actual).hasSize(1);
     }

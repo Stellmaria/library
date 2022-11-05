@@ -26,12 +26,11 @@ class OrderStatusRepositoryTest extends IntegrationTestBase {
     @DisplayName("Save order status.")
     void saveOrderStatus() {
         var expectedCount = orderStatusRepository.count() + 1;
+        var orderStatus = OrderStatus.builder()
+                .name(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .build();
 
-        var actual = orderStatusRepository.save(
-                OrderStatus.builder()
-                        .name(ConstantUtil.NEW + ConstantUtil.SAVE)
-                        .build()
-        );
+        var actual = orderStatusRepository.save(orderStatus);
         var actualCount = orderStatusRepository.count();
 
         assertAll(
@@ -71,11 +70,12 @@ class OrderStatusRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all order status by order status filter.")
     void findAllOrderStatusByOrderStatusFilter() {
+        var orderStatus = OrderStatus.builder()
+                .name(ORDER_STATUS_NAME_UNCONFIRMED)
+                .build();
+
         var actual = orderStatusRepository.findAllByOrderStatusFilter(orderStatusFilterMapper.map(
-                OrderStatus.builder()
-                        .name(ORDER_STATUS_NAME_UNCONFIRMED)
-                        .build())
-        );
+                orderStatus));
 
         assertThat(actual).hasSize(1);
     }

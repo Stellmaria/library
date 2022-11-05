@@ -46,28 +46,24 @@ class OrderRepositoryTest extends IntegrationTestBase {
     @DisplayName("Save order.")
     void saveOrder() {
         var expectedCount = orderRepository.count() + 1;
+        var user = User.builder()
+                .id(ConstantUtil.USER_ID_5)
+                .build();
+        var orderStatus = OrderStatus.builder()
+                .id(ORDER_STATUS_ID_1)
+                .build();
+        var orderType = OrderType.builder()
+                .id(ORDER_TYPE_ID_2)
+                .build();
+        var order = Order.builder()
+                .user(user)
+                .orderStatus(orderStatus)
+                .orderType(orderType)
+                .orderDate(ORDER_DATE_11)
+                .returnDate(ORDER_RETURN_DATE_21)
+                .build();
 
-        var actual = orderRepository.save(
-                Order.builder()
-                        .user(
-                                User.builder()
-                                        .id(ConstantUtil.USER_ID_5)
-                                        .build()
-                        )
-                        .orderStatus(
-                                OrderStatus.builder()
-                                        .id(ORDER_STATUS_ID_1)
-                                        .build()
-                        )
-                        .orderType(
-                                OrderType.builder()
-                                        .id(ORDER_TYPE_ID_2)
-                                        .build()
-                        )
-                        .orderDate(ORDER_DATE_11)
-                        .returnDate(ORDER_RETURN_DATE_21)
-                        .build()
-        );
+        var actual = orderRepository.save(order);
         var actualCount = orderRepository.count();
 
         assertAll(
@@ -83,23 +79,21 @@ class OrderRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Update order.")
     void updateOrder() {
+        var user = User.builder()
+                .id(ConstantUtil.USER_ID_5)
+                .build();
+        var orderType = OrderType.builder()
+                .id(ORDER_TYPE_ID_2)
+                .build();
+        var orderStatus = OrderStatus.builder()
+                .id(ORDER_STATUS_ID_1)
+                .build();
         var order = orderRepository.findById(ORDER_ID_3);
 
         order.ifPresent(it -> {
-            it.setUser(
-                    User.builder()
-                            .id(ConstantUtil.USER_ID_5)
-                            .build());
-            it.setOrderStatus(
-                    OrderStatus.builder()
-                            .id(ORDER_STATUS_ID_1)
-                            .build()
-            );
-            it.setOrderType(
-                    OrderType.builder()
-                            .id(ORDER_TYPE_ID_2)
-                            .build()
-            );
+            it.setUser(user);
+            it.setOrderStatus(orderStatus);
+            it.setOrderType(orderType);
             it.setOrderDate(ConstantUtil.ORDER_DATE_10);
             it.setReturnDate(ORDER_RETURN_DATE_21);
             orderRepository.save(it);
@@ -130,11 +124,11 @@ class OrderRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all order by user filter.")
     void findAllOrderByUserFilter() {
-        var actual = orderRepository.findAllByUserFilter(userFilterMapper.map(
-                User.builder()
-                        .firstName(USER_FIRST_NAME_SERGEY)
-                        .build())
-        );
+        var user = User.builder()
+                .firstName(USER_FIRST_NAME_SERGEY)
+                .build();
+
+        var actual = orderRepository.findAllByUserFilter(userFilterMapper.map(user));
 
         assertThat(actual).hasSize(1);
     }
@@ -142,11 +136,11 @@ class OrderRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all order by order filter.")
     void findAllOrderByOrderFilter() {
-        var actual = orderRepository.findAllByOrderFilter(orderFilterMapper.map(
-                Order.builder()
-                        .orderDate(ORDER_DATE_25)
-                        .build())
-        );
+        var order = Order.builder()
+                .orderDate(ORDER_DATE_25)
+                .build();
+
+        var actual = orderRepository.findAllByOrderFilter(orderFilterMapper.map(order));
 
         assertThat(actual).hasSize(1);
     }
@@ -154,11 +148,12 @@ class OrderRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find orders by order status.")
     void findAllByStatus() {
+        var orderStatus = OrderStatus.builder()
+                .name(ORDER_STATUS_NAME_APPROVED)
+                .build();
+
         var actual = orderRepository.findAllByOrderStatusFilter(orderStatusFilterMapper.map(
-                OrderStatus.builder()
-                        .name(ORDER_STATUS_NAME_APPROVED)
-                        .build())
-        );
+                orderStatus));
 
         assertThat(actual).hasSize(1);
     }
@@ -166,11 +161,11 @@ class OrderRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find orders by order type filter.")
     void findAllByType() {
-        var actual = orderRepository.findAllByOrderTypeFilter(orderTypeFilterMapper.map(
-                OrderType.builder()
-                        .name(ConstantUtil.ORDER_TYPE_NAME_UNCONFIRMED)
-                        .build())
-        );
+        var orderType = OrderType.builder()
+                .name(ConstantUtil.ORDER_TYPE_NAME_UNCONFIRMED)
+                .build();
+
+        var actual = orderRepository.findAllByOrderTypeFilter(orderTypeFilterMapper.map(orderType));
 
         assertThat(actual).hasSize(2);
     }

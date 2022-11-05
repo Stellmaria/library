@@ -24,12 +24,11 @@ class AuthorRoleRepositoryTest extends IntegrationTestBase {
     @DisplayName("Save author role.")
     void saveAuthorRole() {
         var expectedCount = authorRoleRepository.count() + 1;
+        var authorRole = AuthorRole.builder()
+                .name(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .build();
 
-        var actual = authorRoleRepository.save(
-                AuthorRole.builder()
-                        .name(ConstantUtil.NEW + ConstantUtil.SAVE)
-                        .build()
-        );
+        var actual = authorRoleRepository.save(authorRole);
         var actualCount = authorRoleRepository.count();
 
         assertAll(
@@ -69,11 +68,12 @@ class AuthorRoleRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all author by author role filter.")
     void findAllAuthorByAuthorRoleFilterRole() {
+        var authorRole = AuthorRole.builder()
+                .name(ConstantUtil.AUTHOR_ROLE_NAME_AUTHOR)
+                .build();
+
         var actual = authorRoleRepository.findAllByAuthorRoleFilter(authorRoleFilterMapper.map(
-                AuthorRole.builder()
-                        .name(ConstantUtil.AUTHOR_ROLE_NAME_AUTHOR)
-                        .build())
-        );
+                authorRole));
 
         assertThat(actual).hasSize(4);
     }

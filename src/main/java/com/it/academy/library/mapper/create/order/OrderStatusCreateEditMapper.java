@@ -12,6 +12,7 @@ public class OrderStatusCreateEditMapper implements Mapper<OrderStatusCreateEdit
     public OrderStatus map(@NotNull OrderStatusCreateEditDto object) {
         var orderStatus = new OrderStatus();
         orderStatus.setName(object.getName());
+
         return orderStatus;
     }
 }

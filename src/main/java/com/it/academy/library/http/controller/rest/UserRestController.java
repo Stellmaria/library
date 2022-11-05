@@ -34,6 +34,7 @@ public class UserRestController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public PageResponse<UserReadDto> findAll(UserFilter userFilter, Pageable pageable) {
         var page = userService.findAll(userFilter, pageable);
+
         return PageResponse.of(page);
     }
 
