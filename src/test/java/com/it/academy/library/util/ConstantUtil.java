@@ -25,12 +25,12 @@ public class ConstantUtil {
     public static final Long ORDER_ID_4 = 4L;
     public static final LocalDateTime ORDER_DATE_10 =
             LocalDateTime.of(2022, 10, 23, 14, 35);
-    public static final String ORDER_TYPE_NAME_DEFAULT = "Default";
+    public static final String ORDER_TYPE_NAME_UNCONFIRMED = "Unconfirmed";
     public static final Long USER_ID_5 = 5L;
     public static final LocalDate BIRTHDAY = LocalDate.of(2000, 1, 10);
     public static final String USER_FIRST_NAME_SVETA = "Sveta";
-    public static final String USER_ROLE_NAME_LIBRARIAN = "Librarian";
-    public static final String USER_STATUS_NAME_DEFAULT = "Default";
+    public static final String USER_ROLE_NAME_READER = "Reader";
+    public static final String USER_STATUS_NAME_GUEST = "Guest";
     public static final String ISBN_13 = "978-5699383719";
     public static final String ISBN_10 = "5699383719";
     public static final String NEW = "NEW ";

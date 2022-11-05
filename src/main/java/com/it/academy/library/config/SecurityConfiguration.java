@@ -26,6 +26,7 @@ public class SecurityConfiguration {
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login")
+                        .deleteCookies("JSESSIONID")
                 )
                 .formLogin(login -> login
                         .loginPage("/login")

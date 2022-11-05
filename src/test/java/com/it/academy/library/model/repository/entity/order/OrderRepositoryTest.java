@@ -168,7 +168,7 @@ class OrderRepositoryTest extends IntegrationTestBase {
     void findAllByType() {
         var actual = orderRepository.findAllByOrderTypeFilter(orderTypeFilterMapper.map(
                 OrderType.builder()
-                        .name(ConstantUtil.ORDER_TYPE_NAME_DEFAULT)
+                        .name(ConstantUtil.ORDER_TYPE_NAME_UNCONFIRMED)
                         .build())
         );
 

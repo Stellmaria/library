@@ -124,11 +124,11 @@ class UserRepositoryTest extends IntegrationTestBase {
     void findAllUserByUserRoleFilter() {
         var actual = userRepository.findAllByUserRoleFilter(userRoleFilterMapper.map(
                 UserRole.builder()
-                        .name(ConstantUtil.USER_ROLE_NAME_LIBRARIAN)
+                        .name(ConstantUtil.USER_ROLE_NAME_READER)
                         .build())
         );
 
-        assertThat(actual).hasSize(1);
+        assertThat(actual).hasSize(2);
     }
 
     @Test
@@ -136,7 +136,7 @@ class UserRepositoryTest extends IntegrationTestBase {
     void findAllUserByUserStatusFilter() {
         var actual = userRepository.findAllByUserStatusFilter(userStatusFilterMapper.map(
                 UserStatus.builder()
-                        .name(ConstantUtil.USER_STATUS_NAME_DEFAULT)
+                        .name(ConstantUtil.USER_STATUS_NAME_GUEST)
                         .build())
         );
 

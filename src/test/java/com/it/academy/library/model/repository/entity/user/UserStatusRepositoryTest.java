@@ -72,7 +72,7 @@ class UserStatusRepositoryTest extends IntegrationTestBase {
     void findAllByUserStatusFilter() {
         var actual = userStatusRepository.findAllByUserStatusFilter(userStatusFilterMapper.map(
                 UserStatus.builder()
-                        .name(ConstantUtil.USER_STATUS_NAME_DEFAULT)
+                        .name(ConstantUtil.USER_STATUS_NAME_GUEST)
                         .build())
         );
 

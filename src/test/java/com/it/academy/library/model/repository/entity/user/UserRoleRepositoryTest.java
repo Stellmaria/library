@@ -72,7 +72,7 @@ class UserRoleRepositoryTest extends IntegrationTestBase {
     void findAllUserRoleByUserRoleFilter() {
         var actual = userRoleRepository.findAllByUserRoleFilter(userRoleFilterMapper.map(
                 UserRole.builder()
-                        .name(ConstantUtil.USER_ROLE_NAME_LIBRARIAN)
+                        .name(ConstantUtil.USER_ROLE_NAME_READER)
                         .build())
         );
 
