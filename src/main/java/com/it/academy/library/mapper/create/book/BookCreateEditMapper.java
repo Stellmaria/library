@@ -35,8 +35,22 @@ public class BookCreateEditMapper implements Mapper<BookCreateEditDto, Book> {
     private final OrderRepository orderRepository;
 
     @Override
+    public Book map(BookCreateEditDto fromObject, Book toObject) {
+        copy(fromObject, toObject);
+
+        return toObject;
+    }
+
+    @Override
     public Book map(@NotNull BookCreateEditDto object) {
         var book = new Book();
+
+        copy(object, book);
+
+        return book;
+    }
+
+    private void copy(@NotNull BookCreateEditDto object, @NotNull Book book) {
         book.setTitle(object.getTitle());
         book.setSubtitle(object.getSubtitle());
         book.setYear(object.getYear());
@@ -52,8 +66,6 @@ public class BookCreateEditMapper implements Mapper<BookCreateEditDto, Book> {
         book.setBookPublishingHouse(getBookPublishingHouseRepository(object.getBookPublishingHouseId()));
         book.setBookSeries(getBookSeries(object.getBookSeriesId()));
         book.setOrder(getOrder(object.getOrderId()));
-
-        return book;
     }
 
     private BookStatus getBookStatus(Integer id) {

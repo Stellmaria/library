@@ -3,8 +3,6 @@ package com.it.academy.library.service.user;
 import com.it.academy.library.dto.create.user.UserCreateEditDto;
 import com.it.academy.library.dto.filter.user.UserFilter;
 import com.it.academy.library.dto.read.user.UserReadDto;
-import com.it.academy.library.listener.entity.AccessType;
-import com.it.academy.library.listener.entity.EntityEvent;
 import com.it.academy.library.mapper.create.user.UserCreateEditMapper;
 import com.it.academy.library.mapper.read.user.UserReadMapper;
 import com.it.academy.library.model.entity.user.User;
@@ -13,7 +11,6 @@ import com.it.academy.library.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,7 +33,6 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final UserReadMapper userReadMapper;
     private final UserCreateEditMapper userCreateEditMapper;
-    private final ApplicationEventPublisher eventPublisher;
     private final ImageService imageService;
 
     @Override
@@ -54,28 +50,18 @@ public class UserService implements UserDetailsService {
         var predicate = UserFilter.queryPredicates(userFilter);
 
         return userRepository.findAll(predicate, pageable)
-                .map(it -> {
-                    eventPublisher.publishEvent(new EntityEvent(it, AccessType.READ));
-                    return userReadMapper.map(it);
-                });
+                .map(userReadMapper::map);
     }
 
-    @SuppressWarnings("unused")
     public Collection<UserReadDto> findAll() {
         return userRepository.findAll().stream()
-                .map(it -> {
-                    eventPublisher.publishEvent(new EntityEvent(it, AccessType.READ));
-                    return userReadMapper.map(it);
-                })
+                .map(userReadMapper::map)
                 .collect(Collectors.toList());
     }
 
     public Optional<UserReadDto> findById(Long id) {
         return userRepository.findById(id)
-                .map(it -> {
-                    eventPublisher.publishEvent(new EntityEvent(it, AccessType.READ));
-                    return userReadMapper.map(it);
-                });
+                .map(userReadMapper::map);
     }
 
     @Transactional(rollbackFor = {Exception.class})
@@ -85,10 +71,7 @@ public class UserService implements UserDetailsService {
                     uploadImage(it.getImage());
                     return userCreateEditMapper.map(it);
                 })
-                .map(it -> {
-                    eventPublisher.publishEvent(new EntityEvent(it, AccessType.CREATE));
-                    return userRepository.save(it);
-                })
+                .map(userRepository::save)
                 .map(userReadMapper::map)
                 .orElseThrow();
     }
@@ -100,10 +83,7 @@ public class UserService implements UserDetailsService {
                     uploadImage(userCreateEditDto.getImage());
                     return userCreateEditMapper.map(userCreateEditDto, it);
                 })
-                .map(it -> {
-                    eventPublisher.publishEvent(new EntityEvent(it, AccessType.UPDATE));
-                    return userRepository.saveAndFlush(it);
-                })
+                .map(userRepository::saveAndFlush)
                 .map(userReadMapper::map);
     }
 
@@ -111,7 +91,6 @@ public class UserService implements UserDetailsService {
     public boolean delete(Long id) {
         return userRepository.findById(id)
                 .map(it -> {
-                    eventPublisher.publishEvent(new EntityEvent(it, AccessType.DELETE));
                     userRepository.delete(it);
                     userRepository.flush();
                     return true;

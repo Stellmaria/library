@@ -1,12 +1,9 @@
 package com.it.academy.library.service.user;
 
 import com.it.academy.library.dto.read.user.UserRoleReadDto;
-import com.it.academy.library.listener.entity.AccessType;
-import com.it.academy.library.listener.entity.EntityEvent;
 import com.it.academy.library.mapper.read.user.UserRoleReadMapper;
 import com.it.academy.library.model.repository.entity.user.UserRoleRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,22 +17,15 @@ import java.util.stream.Collectors;
 public class UserRoleService {
     private final UserRoleRepository userRoleRepository;
     private final UserRoleReadMapper userRoleReadMapper;
-    private final ApplicationEventPublisher eventPublisher;
 
     public Optional<UserRoleReadDto> findById(Integer id) {
         return userRoleRepository.findById(id)
-                .map(it -> {
-                    eventPublisher.publishEvent(new EntityEvent(it, AccessType.READ));
-                    return userRoleReadMapper.map(it);
-                });
+                .map(userRoleReadMapper::map);
     }
 
     public Collection<UserRoleReadDto> findAll() {
         return userRoleRepository.findAll().stream()
-                .map(it -> {
-                    eventPublisher.publishEvent(new EntityEvent(it, AccessType.READ));
-                    return userRoleReadMapper.map(it);
-                })
+                .map(userRoleReadMapper::map)
                 .collect(Collectors.toList());
     }
 }

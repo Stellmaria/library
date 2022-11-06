@@ -1,0 +1,31 @@
+package com.it.academy.library.service.book;
+
+import com.it.academy.library.dto.read.book.BookPublishingHouseReadDto;
+import com.it.academy.library.mapper.read.book.BookPublishingHouseReadMapper;
+import com.it.academy.library.model.repository.entity.book.BookPublishingHouseRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
+public class BookPublishingHouseService {
+    private final BookPublishingHouseRepository bookPublishingHouseRepository;
+    private final BookPublishingHouseReadMapper bookPublishingHouseReadMapper;
+
+    public Optional<BookPublishingHouseReadDto> findById(Integer id) {
+        return bookPublishingHouseRepository.findById(id)
+                .map(bookPublishingHouseReadMapper::map);
+    }
+
+    public Collection<BookPublishingHouseReadDto> findAll() {
+        return bookPublishingHouseRepository.findAll().stream()
+                .map(bookPublishingHouseReadMapper::map)
+                .collect(Collectors.toList());
+    }
+}

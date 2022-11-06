@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book</title>
+</head>
+<body>
+<div th:insert="~{fragments :: header}"></div>
+<form enctype="multipart/form-data" method="post" th:action="@{/books/{bookId}/update(bookId=${book.id})}"
+      th:object="${book}">
+    <label for="title"> Title:
+        <input id="title" name="title" th:value="*{title}" type="text">
+    </label><br>
+    <label for="subtitle"> Subtitle:
+        <input id="subtitle" name="subtitle" th:value="*{subtitle}" type="text">
+    </label><br>
+    <label for="year"> Year:
+        <input id="year" name="subtitle" th:value="*{year}" type="text">
+    </label><br>
+    <label for="page"> Page:
+        <input id="page" name="page" th:value="*{page}" type="text">
+    </label><br>
+    <label for="isbn10"> Isbn10:
+        <input id="isbn10" name="isbn10" th:value="*{isbn10}" type="text">
+    </label><br>
+    <label for="isbn13"> Isbn13:
+        <input id="isbn13" name="isbn13" th:value="*{isbn13}" type="text">
+    </label><br>
+    <div th:if="${book.image}">
+        <img alt="User image" th:src="@{/api/v1/books/{bookId}/image(bookId=${book.id})}">
+    </div>
+    <label for="image"> Image:
+        <input id="image" name="image" type="file">
+    </label><br>
+    <div>
+        <label for="bookStatus">Status:
+            <select id="bookStatus" name="bookStatusId">
+                <option th:each="bookStatus : ${statuses}"
+                        th:selected="${bookStatus.id == book.bookStatus.id}"
+                        th:text="${bookStatus.name}"
+                        th:value="${bookStatus.id}">Status
+                </option>
+            </select>
+        </label>
+    </div>
+    <div th:if="${book.bookLanguage != null}">
+        <label for="bookLanguage">Language:
+            <select id="bookLanguage" name="bookLanguageId">
+                <option th:each="bookLanguage : ${languages}"
+                        th:selected="${bookLanguage.id == book.bookLanguage.id}"
+                        th:text="${bookLanguage.name}"
+                        th:value="${bookLanguage.id}">Language
+                </option>
+            </select>
+        </label>
+    </div>
+    <div th:if="${book.bookLanguage == null}">
+        <label for="bookLanguageN">Language:
+            <select id="bookLanguageN" name="bookLanguageId">
+                <option disabled selected value> -- select an option --</option>
+                <option th:each="bookLanguage : ${languages}"
+                        th:text="${bookLanguage.name}"
+                        th:value="${bookLanguage.id}">Language
+                </option>
+            </select>
+        </label>
+    </div>
+    <div th:if="${book.bookFormat != null}">
+        <label for="bookFormat">Format:
+            <select id="bookFormat" name="bookFormatId">
+                <option th:each="bookFormat : ${formats}"
+                        th:selected="${bookFormat.id == book.bookFormat.id}"
+                        th:text="${bookFormat.name}"
+                        th:value="${bookFormat.id}">Format
+                </option>
+            </select>
+        </label>
+    </div>
+    <div th:if="${book.bookFormat == null}">
+        <label for="bookFormatN">Format:
+            <select id="bookFormatN" name="bookFormatId">
+                <option disabled selected value> -- select an option --</option>
+                <option th:each="bookFormat : ${formats}"
+                        th:text="${bookFormat.name}"
+                        th:value="${bookFormat.id}">Format
+                </option>
+            </select>
+        </label>
+    </div>
+    <div th:if="${book.bookPublishingHouse != null}">
+        <label for="bookPublishingHouse">Publishing House:
+            <select id="bookPublishingHouse" name="bookPublishingHouseId">
+                <option th:each="bookPublishingHouse : ${houses}"
+                        th:selected="${bookPublishingHouse.id == book.bookPublishingHouse.id}"
+                        th:text="${bookPublishingHouse.name}"
+                        th:value="${bookPublishingHouse.id}">Publishing House
+                </option>
+            </select>
+        </label>
+    </div>
+    <div th:if="${book.bookPublishingHouse == null}">
+        <label for="bookPublishingHouseN">Publishing House:
+            <select id="bookPublishingHouseN" name="bookPublishingHouseId">
+                <option disabled selected value> -- select an option --</option>
+                <option th:each="bookPublishingHouse : ${houses}"
+                        th:text="${bookPublishingHouse.name}"
+                        th:value="${bookPublishingHouse.id}">Publishing House
+                </option>
+            </select>
+        </label>
+    </div>
+    <div th:if="${book.bookSeries != null}">
+        <label for="bookSeries">Series:
+            <select id="bookSeries" name="bookSeriesId">
+                <option th:each="bookSeries : ${series}"
+                        th:selected="${bookSeries.id == book.bookSeries.id}"
+                        th:text="${bookSeries.name}"
+                        th:value="${bookSeries.id}">Series
+                </option>
+            </select>
+        </label>
+    </div>
+    <div th:if="${book.bookSeries == null}">
+        <label for="bookSeriesN">Series:
+            <select id="bookSeriesN" name="bookSeriesId">
+                <option disabled selected value> -- select an option --</option>
+                <option th:each="bookSeries : ${series}"
+                        th:text="${bookSeries.name}"
+                        th:value="${bookSeries.id}">Series
+                </option>
+            </select>
+        </label>
+    </div>
+    <button type="submit">Update</button>
+</form>
+<form method="post" th:action="@{/books/{bookId}/delete(bookId=${book.id})}">
+    <button type="submit">Remove</button>
+</form>
+</body>
+</html>

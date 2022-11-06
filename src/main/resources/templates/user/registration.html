@@ -30,6 +30,7 @@
     <div>
         <label for="role">Role:
             <select id="role" name="userRoleId">
+                <option disabled selected value> -- select an option --</option>
                 <option th:each="role : ${roles}"
                         th:selected="${role.id == user.userRoleId}"
                         th:text="${role.name}"
@@ -41,6 +42,7 @@
     <div>
         <label for="status">Status:
             <select id="status" name="userStatusId">
+                <option disabled selected value> -- select an option --</option>
                 <option th:each="status : ${statuses}"
                         th:selected="${status.id == user.userStatusId}"
                         th:text="${status.name}"
