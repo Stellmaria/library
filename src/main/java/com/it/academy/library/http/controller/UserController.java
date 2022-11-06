@@ -32,6 +32,15 @@ public class UserController {
     private final UserRoleService userRoleService;
     private final UserStatusService userStatusService;
 
+    @GetMapping("/registration")
+    public String registration(@NotNull Model model, UserCreateEditDto user) {
+        model.addAttribute("user", user);
+        model.addAttribute("roles", userRoleService.findAll());
+        model.addAttribute("statuses", userStatusService.findAll());
+
+        return "user/registration";
+    }
+
     @GetMapping
     @PreAuthorize("hasAuthority('Admin')")
     public String findAll(@NotNull Model model, UserFilter userFilter, Pageable pageable) {
@@ -52,15 +61,6 @@ public class UserController {
                     model.addAttribute("statuses", userStatusService.findAll());
                     return "user/user";
                 }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    }
-
-    @GetMapping("/registration")
-    public String registration(@NotNull Model model, UserCreateEditDto user) {
-        model.addAttribute("user", user);
-        model.addAttribute("roles", userRoleService.findAll());
-        model.addAttribute("statuses", userStatusService.findAll());
-
-        return "user/registration";
     }
 
     @PostMapping
