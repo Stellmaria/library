@@ -36,7 +36,7 @@ public class BookReadMapper implements Mapper<Book, BookReadDto> {
                 object.getPage(),
                 object.getIsbn10(),
                 object.getIsbn13(),
-                object.getImagePath(),
+                object.getImage(),
                 getBookStatus(object),
                 getBookLanguage(object),
                 getBookFormat(object),

@@ -18,8 +18,11 @@ import com.it.academy.library.model.repository.entity.order.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
+
+import static java.util.function.Predicate.not;
 
 @Component
 @RequiredArgsConstructor
@@ -40,7 +43,9 @@ public class BookCreateEditMapper implements Mapper<BookCreateEditDto, Book> {
         book.setPage(book.getPage());
         book.setIsbn10(object.getIsbn10());
         book.setIsbn13(object.getIsbn13());
-        book.setImagePath(object.getImagePath());
+        Optional.ofNullable(object.getImage())
+                .filter(not(MultipartFile::isEmpty))
+                .ifPresent(image -> book.setImage(image.getOriginalFilename()));
         book.setBookStatus(getBookStatus(object.getBookStatusId()));
         book.setBookLanguage(getBookLanguage(object.getBookLanguageId()));
         book.setBookFormat(getBookFormat(object.getBookFormatId()));

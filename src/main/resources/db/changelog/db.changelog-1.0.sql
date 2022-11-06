@@ -209,7 +209,7 @@ CREATE TABLE IF NOT EXISTS book
     page                     SMALLINT,
     isbn_10                  VARCHAR(10),
     isbn_13                  VARCHAR(15),
-    image_path               VARCHAR(255),
+    image                    VARCHAR(255),
     book_status_id           INTEGER DEFAULT 1 NOT NULL,
     book_language_id         INTEGER,
     book_format_id           INTEGER,

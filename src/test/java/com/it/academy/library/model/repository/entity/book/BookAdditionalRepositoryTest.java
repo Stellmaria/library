@@ -66,7 +66,7 @@ class BookAdditionalRepositoryTest extends IntegrationTestBase {
                 .page(ConstantUtil.BOOK_PAGE_200)
                 .isbn10(ConstantUtil.ISBN_10)
                 .isbn13(ConstantUtil.ISBN_13)
-                .imagePath(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .image(ConstantUtil.NEW + ConstantUtil.SAVE)
                 .bookStatus(bookStatus)
                 .bookLanguage(bookLanguage)
                 .bookFormat(bookFormat)
@@ -99,7 +99,7 @@ class BookAdditionalRepositoryTest extends IntegrationTestBase {
                 () -> assertEquals(ConstantUtil.BOOK_PAGE_200, actual.getBook().getPage()),
                 () -> assertEquals(ConstantUtil.ISBN_10, actual.getBook().getIsbn10()),
                 () -> assertEquals(ConstantUtil.ISBN_13, actual.getBook().getIsbn13()),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getBook().getImagePath()),
+                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getBook().getImage()),
                 () -> assertEquals(ConstantUtil.BOOK_STATUS_ID_1, actual.getBook().getBookStatus().getId()),
                 () -> assertEquals(ConstantUtil.BOOK_LANGUAGE_ID_10, actual.getBook().getBookLanguage().getId()),
                 () -> assertEquals(ConstantUtil.BOOK_FORMAT_ID_4, actual.getBook().getBookFormat().getId()),

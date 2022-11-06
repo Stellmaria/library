@@ -23,7 +23,7 @@ public class BookReadDto {
 
     String isbn13;
 
-    String imagePath;
+    String image;
 
     BookStatusReadDto bookStatus;
 

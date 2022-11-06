@@ -69,9 +69,8 @@ public class Book extends AbstractAuditingEntity<Long> {
     @ISBN(type = ISBN.Type.ISBN_13)
     private String isbn13;
 
-    @Column(name = "image_path")
     @NotBlank
-    private String imagePath;
+    private String image;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(

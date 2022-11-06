@@ -3,6 +3,7 @@ package com.it.academy.library.dto.create.book;
 import com.it.academy.library.model.entity.book.Book;
 import lombok.Value;
 import org.hibernate.validator.constraints.ISBN;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
@@ -29,8 +30,7 @@ public class BookCreateEditDto {
     @ISBN(type = ISBN.Type.ISBN_13)
     String isbn13;
 
-    @NotBlank
-    String imagePath;
+    MultipartFile image;
 
     Integer bookStatusId;
 

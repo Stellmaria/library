@@ -86,7 +86,7 @@ class BookRepositoryTest extends IntegrationTestBase {
                 .page(ConstantUtil.BOOK_PAGE_200)
                 .isbn10(ConstantUtil.ISBN_10)
                 .isbn13(ConstantUtil.ISBN_13)
-                .imagePath(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .image(ConstantUtil.NEW + ConstantUtil.SAVE)
                 .bookStatus(bookStatus)
                 .bookLanguage(bookLanguage)
                 .bookFormat(bookFormat)
@@ -106,7 +106,7 @@ class BookRepositoryTest extends IntegrationTestBase {
                 () -> assertEquals(ConstantUtil.BOOK_PAGE_200, actual.getPage()),
                 () -> assertEquals(ConstantUtil.ISBN_10, actual.getIsbn10()),
                 () -> assertEquals(ConstantUtil.ISBN_13, actual.getIsbn13()),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getImagePath()),
+                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getImage()),
                 () -> assertEquals(ConstantUtil.BOOK_STATUS_ID_1, actual.getBookStatus().getId()),
                 () -> assertEquals(ConstantUtil.BOOK_LANGUAGE_ID_13, actual.getBookLanguage().getId()),
                 () -> assertEquals(ConstantUtil.BOOK_FORMAT_ID_4, actual.getBookFormat().getId()),
@@ -146,8 +146,7 @@ class BookRepositoryTest extends IntegrationTestBase {
             it.setPage(ConstantUtil.BOOK_PAGE_200);
             it.setIsbn10(ConstantUtil.ISBN_10);
             it.setIsbn13(ConstantUtil.ISBN_13);
-            it.setImagePath(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            it.setImagePath(ConstantUtil.NEW + ConstantUtil.UPDATE);
+            it.setImage(ConstantUtil.NEW + ConstantUtil.UPDATE);
             it.setBookStatus(bookStatus);
             it.setBookLanguage(bookLanguage);
             it.setBookFormat(bookFormat);
@@ -166,7 +165,7 @@ class BookRepositoryTest extends IntegrationTestBase {
             assertEquals(ConstantUtil.BOOK_PAGE_200, it.getPage());
             assertEquals(ConstantUtil.ISBN_10, it.getIsbn10());
             assertEquals(ConstantUtil.ISBN_13, it.getIsbn13());
-            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getImagePath());
+            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getImage());
             assertEquals(ConstantUtil.BOOK_STATUS_ID_1, it.getBookStatus().getId());
             assertEquals(ConstantUtil.BOOK_LANGUAGE_ID_13, it.getBookLanguage().getId());
             assertEquals(ConstantUtil.BOOK_FORMAT_ID_4, it.getBookFormat().getId());
