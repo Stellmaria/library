@@ -1,7 +1,9 @@
 package com.it.academy.library.dto.create.book;
 
 import com.it.academy.library.model.entity.book.Book;
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.ISBN;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,36 +13,38 @@ import javax.validation.constraints.Positive;
 /**
  * A DTO for the {@link Book} entity.
  */
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BookCreateEditDto {
     @NotBlank
-    String title;
+    private String title;
 
-    String subtitle;
-
-    @Positive
-    Integer year;
+    private String subtitle;
 
     @Positive
-    Short page;
+    private Integer year;
+
+    @Positive
+    private Short page;
 
     @ISBN(type = ISBN.Type.ISBN_10)
-    String isbn10;
+    private String isbn10;
 
     @ISBN(type = ISBN.Type.ISBN_13)
-    String isbn13;
+    private String isbn13;
 
-    MultipartFile image;
+    private MultipartFile image;
 
-    Integer bookStatusId;
+    private Integer bookStatusId;
 
-    Integer bookLanguageId;
+    private Integer bookLanguageId;
 
-    Integer bookFormatId;
+    private Integer bookFormatId;
 
-    Integer bookPublishingHouseId;
+    private Integer bookPublishingHouseId;
 
-    Integer bookSeriesId;
+    private Integer bookSeriesId;
 
-    Long orderId;
+    private Long orderId;
 }

@@ -199,10 +199,10 @@ SELECT SETVAL('book_status_id_seq', (SELECT MAX(id) FROM book_status));
 
 --changeset stell:17
 INSERT INTO user_role (id, name, created_at, created_by)
-VALUES (1, 'Guest', '2022-11-1T00:00', 'stell'),
-       (2, 'Admin', '2022-11-1T00:00', 'stell'),
-       (3, 'Reader', '2022-11-1T00:00', 'stell'),
-       (4, 'Librarian', '2022-11-1T00:00', 'stell');
+VALUES (1, 'ROLE_GUEST', '2022-11-1T00:00', 'stell'),
+       (2, 'ROLE_ADMIN', '2022-11-1T00:00', 'stell'),
+       (3, 'ROLE_READER', '2022-11-1T00:00', 'stell'),
+       (4, 'ROLE_LIBRARIAN', '2022-11-1T00:00', 'stell');
 
 --changeset stell:18
 SELECT SETVAL('user_role_id_seq', (SELECT MAX(id) FROM user_role));

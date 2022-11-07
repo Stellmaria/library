@@ -17,10 +17,10 @@ public class SecurityConfiguration {
         http
                 .csrf().disable()
                 .authorizeHttpRequests(urlConfig -> urlConfig
-                        .antMatchers("/login", "/users/registration", "v3/api-docs/**", "/swagger-ui/**")
-                        .permitAll()
-                        .antMatchers("/users/{\\d+}/delete").hasAuthority("Admin")
-                        .antMatchers("/admin/**").hasAuthority("Admin")
+                        .antMatchers("/login", "/users/registration", "v3/api-docs/**",
+                                "/swagger-ui/**").permitAll()
+                        .antMatchers("/users/{\\d+}/delete").hasRole("ADMIN")
+                        .antMatchers("/admin/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .logout(logout -> logout
@@ -30,7 +30,7 @@ public class SecurityConfiguration {
                 )
                 .formLogin(login -> login
                         .loginPage("/login")
-                        .defaultSuccessUrl("/users")
+                        .defaultSuccessUrl("/")
                 );
         return http.build();
     }

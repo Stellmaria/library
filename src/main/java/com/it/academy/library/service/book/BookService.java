@@ -54,6 +54,7 @@ public class BookService {
         return Optional.of(bookDto)
                 .map(it -> {
                     uploadImage(it.getImage());
+                    it.setBookStatusId(1);
                     return bookCreateEditMapper.map(it);
                 })
                 .map(bookRepository::save)

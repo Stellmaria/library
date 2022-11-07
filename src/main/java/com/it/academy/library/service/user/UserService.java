@@ -69,6 +69,8 @@ public class UserService implements UserDetailsService {
         return Optional.of(userCreateEditDto)
                 .map(it -> {
                     uploadImage(it.getImage());
+                    it.setUserRoleId(1);
+                    it.setUserStatusId(1);
                     return userCreateEditMapper.map(it);
                 })
                 .map(userRepository::save)

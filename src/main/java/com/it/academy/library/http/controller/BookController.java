@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -68,6 +69,7 @@ public class BookController {
                     model.addAttribute("formats", bookFormatService.findAll());
                     model.addAttribute("houses", bookPublishingHouseService.findAll());
                     model.addAttribute("series", bookSeriesService.findAll());
+                    SecurityContextHolder.getContext().getAuthentication().getAuthorities();
                     return "book/book";
                 }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }

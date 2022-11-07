@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Add Book</title>
 </head>
 <body>
-<div th:insert="~{fragments :: header}"></div>
+<div sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')" th:insert="~{fragments :: header}"></div>
 <form enctype="multipart/form-data" method="post" th:action="@{/books}" th:object="${book}">
     <label for="title"> Title:
         <input id="title" name="title" th:value="*{title}" type="text">

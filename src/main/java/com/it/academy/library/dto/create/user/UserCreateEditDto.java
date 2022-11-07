@@ -1,7 +1,9 @@
 package com.it.academy.library.dto.create.user;
 
 import com.it.academy.library.model.entity.user.User;
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
 import org.postgresql.util.LruCache;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,34 +18,36 @@ import java.time.LocalDate;
 /**
  * A DTO for the {@link User} entity.
  */
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @FieldNameConstants
 public class UserCreateEditDto {
     @Size(min = 3, max = 50)
     @NotBlank
-    String username;
+    private String username;
 
     @Size(min = 3, max = 99)
     @NotBlank
-    String firstName;
+    private String firstName;
 
     @Size(min = 3, max = 99)
     @NotBlank
-    String lastName;
+    private String lastName;
 
     @Email
-    String email;
+    private String email;
 
     @NotBlank(groups = LruCache.CreateAction.class)
-    String rawPassword;
+    private String rawPassword;
 
-    Integer userRoleId;
+    private Integer userRoleId;
 
-    Integer userStatusId;
+    private Integer userStatusId;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
-    LocalDate birthday;
+    private LocalDate birthday;
 
-    MultipartFile image;
+    private MultipartFile image;
 }

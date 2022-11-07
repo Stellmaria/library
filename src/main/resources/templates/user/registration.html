@@ -27,30 +27,6 @@
     <label for="image"> Image:
         <input id="image" name="image" type="file">
     </label><br>
-    <div>
-        <label for="role">Role:
-            <select id="role" name="userRoleId">
-                <option disabled selected value> -- select an option --</option>
-                <option th:each="role : ${roles}"
-                        th:selected="${role.id == user.userRoleId}"
-                        th:text="${role.name}"
-                        th:value="${role.id}">Role
-                </option>
-            </select>
-        </label>
-    </div>
-    <div>
-        <label for="status">Status:
-            <select id="status" name="userStatusId">
-                <option disabled selected value> -- select an option --</option>
-                <option th:each="status : ${statuses}"
-                        th:selected="${status.id == user.userStatusId}"
-                        th:text="${status.name}"
-                        th:value="${status.id}">Status
-                </option>
-            </select>
-        </label>
-    </div>
     <button type="submit">Registration</button>
 </form>
 <div th:if="${errors}">
