@@ -1,11 +1,17 @@
 /*Reset*/
-@import "rest.css";
+@import "rest/rest.css";
 
 /*Fonts*/
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 /*Header*/
 @import "header/header.css";
+
+/*Button*/
+@import "header/btn/btn.css";
+
+/*Footer*/
+@import "footer/footer.css";
 
 /*
 font-family: 'Poppins', sans-serif;

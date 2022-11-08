@@ -3,9 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+
+    <!--    Style main-->
     <link rel="stylesheet" th:href="@{/styles/css/main.css}">
+
+    <!--    Style for home page-->
+    <link rel="stylesheet" th:href="@{/styles/css/home/home.css}">
+
 </head>
 <body>
-<div th:insert="~{header :: header}"></div>
+
+<header>
+    <div th:insert="~{fragments/header :: header}"></div>
+</header>
+
+<main>
+    <section class="home">
+        <div class="container">
+            <div class="home-content">
+                <h1 class="home-heading">The book is a small life.</h1>
+
+                <div class="home-text">
+                    <p>The reading of all good books is like conversation with the finest men of past centuries.</p>
+                </div>
+
+                <div class="home-btn">
+                    <a class="btn btn-big" th:href="@{/books}">Road to Reading</a>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="home-bg-img">
+            <img alt="Home cover" th:src="@{images/home/cover/cover-home.jpg}">
+        </div>
+
+    </section>
+</main>
+
+<footer>
+    <div th:insert="~{fragments/footer :: footer}"></div>
+</footer>
+
 </body>
 </html>

@@ -12,7 +12,7 @@
 
             <nav class="header-nav">
                 <ul>
-                    <li><a href="#">Link</a></li>
+                    <li><a th:href="@{/books}">Books</a></li>
                     <li><a href="#">Link</a></li>
                     <li><a href="#">Link</a></li>
                     <li><a href="#">Link</a></li>
@@ -20,14 +20,17 @@
             </nav>
 
             <div class="header-login">
-                <a th:href="@{/users/registration}"> Registration</a>
-                <a class="btn" th:href="@{/login}"> Login</a>
+                <a th:href="@{/users/registration}">Registration</a>
+
+                <a class="btn" th:href="@{/login}">Login</a>
+
                 <!--                Cart-->
                 <a class="cart" href="#">
                     <!--                    COUNT-->
                     <span class="cart-number">3</span>
-                    <img alt="Cart" th:src="@{/images/icon/cart2.svg}">
+                    <img alt="Cart" th:src="@{/images/home/icon/cart2.svg}">
                 </a>
+
             </div>
         </div>
     </div>

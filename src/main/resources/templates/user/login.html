@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" th:href="@{/styles/css/login.css}">
+    <link rel="stylesheet" th:href="@{/styles/css/login/login.css}">
 </head>
 <body th:style="'background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),' +
- 'url(images/cover.jpg) no-repeat fixed center center; -webkit-background-size: cover; background-size: cover;'">
+ 'url(images/login/cover.jpg) no-repeat fixed center center; -webkit-background-size: cover; background-size: cover;'">
 <div class="container">
     <div class="login-wrap">
         <div class="title">
@@ -14,6 +14,11 @@
         </div>
 
         <form action="/login" method="post">
+
+            <div class="error" th:if="${param.error}">
+                Bad login or password
+            </div>
+
             <div class="input-area">
                 <label for="username">Username
                     <input autocomplete="off" id="username" name="username" required type="text">
@@ -40,33 +45,4 @@
 </div>
 </body>
 </html>
-
-<!--forgot-pass-->
-<!--form-toggle-area span-->
-
-
-<!--        <div class="input-form">-->
-<!--            <label for="username">Login:-->
-<!--                <input id="username" name="username" type="text" placeholder="Login">-->
-<!--            </label>-->
-<!--        </div>-->
-<!--        <div class="input-form">-->
-<!--            <label for="password">Password:-->
-<!--                <input id="password" name="password" type="password" placeholder="Password">-->
-<!--            </label><br>-->
-<!--        </div>-->
-<!--        <div class="input-form">-->
-<!--            <button type="submit" class="btn">Login</button>-->
-<!--        </div>-->
-<!--    </form>-->
-<!--</div>-->
-<!--<form action="/users/registration">-->
-<!--    <button type="submit">Registration</button>-->
-<!--</form>-->
-
-<!--<div class="form">-->
-<!--    <form action="/login" method="post">-->
-<!--        <div style="color: red" th:if="${param.error}">-->
-<!--            Bad login or password-->
-<!--        </div>-->
 

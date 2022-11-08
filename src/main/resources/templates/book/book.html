@@ -136,23 +136,23 @@
         <button type="submit">Update</button>
     </form>
 </div>
-<div sec:authorize="hasAnyRole('ADMIN','LIBRARIAN','GUEST','USER')">
-    <div th:text="${book.title}">
-        <p>Title:</p>
-    </div>
-    <div th:text="${book.subtitle}">Subtitle</div>
-    <div th:text="${book.year}">Year</div>
-    <div th:text="${book.page}">Page</div>
-    <div th:text="${book.isbn10}">Isbn10</div>
-    <div th:text="${book.isbn13}">Isbn13</div>
-    <div th:if="${book.image}">
-        <img alt="User image" th:src="@{/api/v1/books/{bookId}/image(bookId=${book.id})}">
-    </div>
-</div>
-<div sec:authorize="hasRole('ADMIN')">
-    <form method="post" th:action="@{/books/{bookId}/delete(bookId=${book.id})}">
-        <button type="submit">Remove</button>
-    </form>
-</div>
+<!--<div sec:authorize="hasAnyRole('ADMIN','LIBRARIAN','GUEST','USER')">-->
+<!--    <div th:text="${book.title}">-->
+<!--        <p>Title:</p>-->
+<!--    </div>-->
+<!--    <div th:text="${book.subtitle}">Subtitle</div>-->
+<!--    <div th:text="${book.year}">Year</div>-->
+<!--    <div th:text="${book.page}">Page</div>-->
+<!--    <div th:text="${book.isbn10}">Isbn10</div>-->
+<!--    <div th:text="${book.isbn13}">Isbn13</div>-->
+<!--    <div th:if="${book.image}">-->
+<!--        <img alt="User image" th:src="@{/api/v1/books/{bookId}/image(bookId=${book.id})}">-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div sec:authorize="hasRole('ADMIN')">-->
+<!--    <form method="post" th:action="@{/books/{bookId}/delete(bookId=${book.id})}">-->
+<!--        <button type="submit">Remove</button>-->
+<!--    </form>-->
+<!--</div>-->
 </body>
 </html>

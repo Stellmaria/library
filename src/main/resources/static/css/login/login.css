@@ -6,6 +6,7 @@ font-family: 'Ubuntu', sans-serif;
 */
 
 :root {
+    --login-hover: #8a3b40;
     --login-color: #fff;
     --rainbow: linear-gradient(to right, #9B7EE4, #68E9E9, #FBFF15, #41E7E7, #E603B4,
     #4EF0F0, #98FF12, #2CF5F5, #E603B4, #ba551f) 0 0;
@@ -72,6 +73,13 @@ form {
     margin-top: 3rem;
 }
 
+.error {
+    font-size: 1.2rem;
+    color: red;
+    text-align: center;
+    font-weight: bold;
+}
+
 .input-area {
     margin-top: 2.4rem;
     position: relative;
@@ -124,7 +132,7 @@ button {
     cursor: pointer;
     border: 2px solid transparent;
     border-radius: 2rem;
-    background: steelblue;
+    background: var(--login-hover);
     transition: all 0.3s ease;
 }
 
@@ -155,7 +163,7 @@ button:hover {
 }
 
 .form-toggle-area p a:hover {
-    color: skyblue;
+    color: var(--login-hover);
 }
 
 @keyframes gradient {
