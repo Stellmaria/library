@@ -17,8 +17,8 @@ public class SecurityConfiguration {
         http
                 .csrf().disable()
                 .authorizeHttpRequests(urlConfig -> urlConfig
-                        .antMatchers("/login", "/users/registration", "v3/api-docs/**",
-                                "/swagger-ui/**").permitAll()
+                        .antMatchers("/login", "/users/registration", "v3/api-docs/**", "/swagger-ui/**",
+                                "/styles/css/**", "/images/**", "/js/**", "/").permitAll()
                         .antMatchers("/users/{\\d+}/delete").hasRole("ADMIN")
                         .antMatchers("/admin/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
