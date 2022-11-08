@@ -1,6 +1,8 @@
 package com.it.academy.library.http.controller;
 
+import com.it.academy.library.dto.PageResponse;
 import com.it.academy.library.dto.create.book.BookCreateEditDto;
+import com.it.academy.library.dto.filter.book.BookFilter;
 import com.it.academy.library.service.book.BookFormatService;
 import com.it.academy.library.service.book.BookLanguageService;
 import com.it.academy.library.service.book.BookPublishingHouseService;
@@ -9,6 +11,7 @@ import com.it.academy.library.service.book.BookService;
 import com.it.academy.library.service.book.BookStatusService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -47,8 +50,11 @@ public class BookController {
     }
 
     @GetMapping
-    public String findAll(@NotNull Model model) {
-        model.addAttribute("books", bookService.findAll());
+    public String findAll(@NotNull Model model, BookFilter bookFilter, Pageable pageable) {
+        var page = bookService.findAll(bookFilter, pageable);
+
+        model.addAttribute("books", PageResponse.of(page));
+        model.addAttribute("filter", bookFilter);
 
         return "book/books";
     }

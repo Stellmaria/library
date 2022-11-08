@@ -3,34 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Books</title>
+
+    <!--    Style main-->
+    <link rel="stylesheet" th:href="@{/styles/css/main.css}">
+
+    <!--    Style for home page-->
+    <link rel="stylesheet" th:href="@{/styles/css/home/home.css}">
+
 </head>
 <body>
-<div th:insert="~{fragments :: header}"></div>
-<form action="/books">
-    <label for="title">Title:
-        <input id="title" name="title" th:value="${filter.title}" type="text">
-    </label>
-    <label for="subtitle">Subtitle:
-        <input id="subtitle" name="subtitle" th:value="${filter.subtitle}" type="text">
-    </label>
-    <label for="year">Year:
-        <input id="year" name="year" th:value="${filter.year}" type="text">
-    </label><br>
-    <label for="page">Page:
-        <input id="page" name="page" th:value="${filter.page}" type="text">
-    </label>
-    <button type="submit">Filter</button>
-    <div>
-        <label for="page1">Page:
-            <input id="page1" name="page" th:value="${books.metadata.page}" type="number">
-        </label>
-        <label for="size" th:value="${books.metadata.size}">Size:
-            <input id="size" name="size" type="number">
-        </label>
-    </div>
-</form>
+
+<header>
+    <div th:insert="~{fragments/header :: header}"></div>
+</header>
+
+<!--<form action="/books">-->
+<!--    <label for="title">Title:-->
+<!--        <input id="title" name="title" th:value="${filter.title}" type="text">-->
+<!--    </label>-->
+<!--    <label for="subtitle">Subtitle:-->
+<!--        <input id="subtitle" name="subtitle" th:value="${filter.subtitle}" type="text">-->
+<!--    </label>-->
+<!--    <label for="year">Year:-->
+<!--        <input id="year" name="year" th:value="${filter.year}" type="text">-->
+<!--    </label><br>-->
+<!--    <label for="page">Page:-->
+<!--        <input id="page" name="page" th:value="${filter.page}" type="text">-->
+<!--    </label>-->
+<!--    <button type="submit">Filter</button>-->
+<!--    <div>-->
+<!--        <label for="page1">Page:-->
+<!--            <input id="page1" name="page" th:value="${books.metadata.page}" type="number">-->
+<!--        </label>-->
+<!--        <label for="size" th:value="${books.metadata.size}">Size:-->
+<!--            <input id="size" name="size" type="number">-->
+<!--        </label>-->
+<!--    </div>-->
+<!--</form>-->
+
 <div th:each="book : ${books.content}">
     <a th:href="@{'/books/' + ${book.id}}" th:text="${book.title}"> Book</a>
 </div>
+
+<footer>
+    <div th:insert="~{fragments/footer :: footer}"></div>
+</footer>
+
 </body>
 </html>

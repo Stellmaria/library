@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Header</title>
@@ -8,21 +8,30 @@
 <header class="header">
     <div class="container">
         <div class="header-row">
-            <div class="header-logo">Library</div>
+            <div class="header-logo"><a th:href="@{/}">Library</a>
+            </div>
 
             <nav class="header-nav">
                 <ul>
                     <li><a th:href="@{/books}">Books</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
+                    <!--                    <li><a href="#">Link</a></li>-->
+                    <!--                    <li><a href="#">Link</a></li>-->
+                    <!--                    <li><a href="#">Link</a></li>-->
                 </ul>
             </nav>
 
             <div class="header-login">
-                <a th:href="@{/users/registration}">Registration</a>
+                <a sec:authorize="!isAuthenticated()" th:href="@{/users/registration}">Registration</a>
 
-                <a class="btn" th:href="@{/login}">Login</a>
+                <a class="btn" sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
+
+                <span class="header-login-name" sec:authorize="isAuthenticated()"
+                      th:text="${#authentication.principal.username}">Login
+                </span>
+
+                <form action="/logout" method="post" sec:authorize="isAuthenticated()">
+                    <button class="btn" type="submit">Logout</button>
+                </form>
 
                 <!--                Cart-->
                 <a class="cart" href="#">

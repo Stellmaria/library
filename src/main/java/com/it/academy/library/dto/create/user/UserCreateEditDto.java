@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 /**
@@ -22,15 +21,12 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @FieldNameConstants
 public class UserCreateEditDto {
-    @Size(min = 3, max = 50)
     @NotBlank
     private String username;
 
-    @Size(min = 3, max = 99)
     @NotBlank
     private String firstName;
 
-    @Size(min = 3, max = 99)
     @NotBlank
     private String lastName;
 
