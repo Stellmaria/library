@@ -41,6 +41,7 @@ body {
     height: auto;
     width: 100%;
     box-sizing: border-box;
+    transition: all 0.4s ease;
 }
 
 .title h1 {
@@ -53,7 +54,7 @@ body {
 
 .title h1:before {
     position: absolute;
-    content: "";
+    content: '';
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);

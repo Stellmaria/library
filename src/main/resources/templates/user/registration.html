@@ -2,35 +2,92 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Registration</title>
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/styles/css/login.css}">
+    <style th:inline="text">
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url([[@{/images/cover.jpg}]]) no-repeat fixed center center;
+            background-size: cover;
+        }
+    </style>
 </head>
 <body>
-<form method="post" th:action="@{/users}" th:object="${user}" enctype="multipart/form-data">
-    <label for="username"> Username:
-        <input id="username" name="username" th:value="*{username}" type="text">
-    </label><br>
-    <label for="rawPassword"> Password:
-        <input id="rawPassword" name="rawPassword" type="password">
-    </label><br>
-    <label for="firstName"> First name:
-        <input id="firstName" name="firstName" th:value="*{firstName}" type="text">
-    </label><br>
-    <label for="lastName"> Last name:
-        <input id="lastName" name="lastName" th:value="*{lastName}" type="text">
-    </label><br>
-    <label for="email"> Email:
-        <input id="email" name="email" th:value="*{email}" type="text">
-    </label><br>
-    <label for="birthday">Birthday:
-        <input id="birthday" name="birthday" th:value="*{birthday}" type="date">
-    </label><br>
-    <label for="image"> Image:
-        <input id="image" name="image" type="file">
-    </label><br>
-    <button type="submit">Registration</button>
-</form>
-<div th:if="${errors}">
-    <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Error message</p>
+<div class="container">
+    <div class="signup-wrap">
+        <div class="title">
+            <h1>Signup</h1>
+        </div>
+
+        <form enctype="multipart/form-data" method="post" th:action="@{/users}" th:object="${user}">
+            <div class="input-area">
+                <label for="username">Login
+                    <input autocomplete="off" id="username" name="username" required th:value="*{username}" type="text">
+                </label>
+            </div>
+
+            <div class="input-area">
+                <label for="firstName">First name
+                    <input autocomplete="off" id="firstName" name="firstName" required th:value="*{firstName}"
+                           type="text">
+                </label>
+            </div>
+
+            <div class="input-area">
+                <label for="lastName">Last name
+                    <input autocomplete="off" id="lastName" name="lastName" required th:value="*{lastName}" type="text">
+                </label>
+            </div>
+
+            <div class="input-area">
+                <label for="email">Email
+                    <input autocomplete="off" id="email" name="email" required th:value="*{email}" type="email">
+                </label>
+            </div>
+
+            <div class="input-area">
+                <label for="rawPassword">Password
+                    <input id="rawPassword" name="rawPassword" required type="password">
+                </label>
+            </div>
+
+            <div class="button-area">
+                <button class="login-btn">Login</button>
+            </div>
+
+            <div class="form-toggle-area">
+                <p>Have an account?
+                    <span id="toggle-login"><a th:href="@{/login}">Login now</a></span>
+                </p>
+            </div>
+        </form>
+    </div>
 </div>
 </body>
 </html>
+<!--    <label for="username"> Username:-->
+<!--        <input id="username" name="username" th:value="*{username}" type="text">-->
+<!--    </label><br>-->
+<!--    <label for="rawPassword"> Password:-->
+<!--        <input id="rawPassword" name="rawPassword" type="password">-->
+<!--    </label><br>-->
+<!--    <label for="firstName"> First name:-->
+<!--        <input id="firstName" name="firstName" th:value="*{firstName}" type="text">-->
+<!--    </label><br>-->
+<!--    <label for="lastName"> Last name:-->
+<!--        <input id="lastName" name="lastName" th:value="*{lastName}" type="text">-->
+<!--    </label><br>-->
+<!--    <label for="email"> Email:-->
+<!--        <input id="email" name="email" th:value="*{email}" type="text">-->
+<!--    </label><br>-->
+<!--    <label for="birthday">Birthday:-->
+<!--        <input id="birthday" name="birthday" th:value="*{birthday}" type="date">-->
+<!--    </label><br>-->
+<!--    <label for="image"> Image:-->
+<!--        <input id="image" name="image" type="file">-->
+<!--    </label><br>-->
+<!--    <button type="submit">Registration</button>-->
+<!--</form>-->
+<!--<div th:if="${errors}">-->
+<!--    <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Error message</p>-->
+<!--</div>-->
+
