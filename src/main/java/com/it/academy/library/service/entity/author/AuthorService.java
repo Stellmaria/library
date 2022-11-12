@@ -53,9 +53,7 @@ public class AuthorService {
     public Collection<AuthorReadDto> findAllByBookId(Long id) {
         var bookFilter = BookFilter.builder().id(id).build();
 
-        return authorRepository.findAllByBookFilter(bookFilter).stream()
-                .map(authorReadMapper::map)
-                .collect(Collectors.toList());
+        return authorRepository.findAllByBookFilter(bookFilter).stream().map(authorReadMapper::map).collect(Collectors.toList());
     }
 
     @Transactional(rollbackFor = {Exception.class})
@@ -63,6 +61,7 @@ public class AuthorService {
         return Optional.of(authorDto)
                 .map(it -> {
                     uploadImage(it.getImagePath());
+
                     return authorCreateEditMapper.map(it);
                 })
                 .map(authorRepository::save)
@@ -98,10 +97,8 @@ public class AuthorService {
                 }).orElse(false);
     }
 
+    @SuppressWarnings("unused")
     public Optional<byte[]> findImage(Long id) {
-        return authorRepository.findById(id)
-                .map(Author::getImagePath)
-                .filter(StringUtils::hasText)
-                .flatMap(imageService::getImage);
+        return authorRepository.findById(id).map(Author::getImagePath).filter(StringUtils::hasText).flatMap(imageService::getImage);
     }
 }

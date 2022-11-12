@@ -3,6 +3,7 @@ package com.it.academy.library.http.controller;
 import com.it.academy.library.model.repository.entity.IntegrationTestBase;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -20,6 +21,7 @@ class UserControllerTest extends IntegrationTestBase {
 
     @SneakyThrows
     @Test
+    @Disabled
     @DisplayName("Find all users.")
     void findAllUser() {
         mockMvc.perform(get("/users"))

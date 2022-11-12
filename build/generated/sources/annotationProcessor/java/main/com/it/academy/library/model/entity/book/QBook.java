@@ -62,7 +62,7 @@ public class QBook extends EntityPathBase<Book> {
 
     public final com.it.academy.library.model.entity.order.QOrder order;
 
-    public final NumberPath<Short> page = createNumber("page", Short.class);
+    public final NumberPath<Short> pages = createNumber("pages", Short.class);
 
     public final StringPath subtitle = createString("subtitle");
 

@@ -54,7 +54,7 @@ public class BookCreateEditMapper implements Mapper<BookCreateEditDto, Book> {
         book.setTitle(object.getTitle());
         book.setSubtitle(object.getSubtitle());
         book.setYear(object.getYear());
-        book.setPage(book.getPage());
+        book.setPages(book.getPages());
         book.setIsbn10(object.getIsbn10());
         book.setIsbn13(object.getIsbn13());
         setImage(object, book);

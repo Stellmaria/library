@@ -39,7 +39,6 @@ public class UserController {
     }
 
     @GetMapping
-//    @PreAuthorize("hasAuthority('Admin')")
     public String findAll(@NotNull Model model, UserFilter userFilter, Pageable pageable) {
         var page = userService.findAll(userFilter, pageable);
 

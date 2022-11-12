@@ -44,7 +44,7 @@ public class BookAdditionalFilter {
                 .add(getBookTitle(bookAdditionalFilter), bookAdditional.book.title::containsIgnoreCase)
                 .add(getBookSubtitle(bookAdditionalFilter), bookAdditional.book.subtitle::containsIgnoreCase)
                 .add(getBookYear(bookAdditionalFilter), bookAdditional.book.year::eq)
-                .add(getBookPage(bookAdditionalFilter), bookAdditional.book.page::eq)
+                .add(getBookPage(bookAdditionalFilter), bookAdditional.book.pages::eq)
                 .add(getBookIsbn10(bookAdditionalFilter), bookAdditional.book.isbn10::containsIgnoreCase)
                 .add(getBookIsbn13(bookAdditionalFilter), bookAdditional.book.isbn13::containsIgnoreCase)
                 .add(getBookStatusId(bookAdditionalFilter), bookAdditional.book.bookStatus.id::eq)
@@ -193,7 +193,7 @@ public class BookAdditionalFilter {
     @Nullable
     private static Short getBookPage(@NotNull BookAdditionalFilter bookAdditionalFilter) {
         return Optional.ofNullable(bookAdditionalFilter.getBook())
-                .map(BookFilter::getPage)
+                .map(BookFilter::getPages)
                 .orElse(null);
     }
 

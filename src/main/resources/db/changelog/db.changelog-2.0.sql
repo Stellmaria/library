@@ -274,7 +274,7 @@ VALUES (1, 3, 3, 3, '2022-10-23T10:00', '2022-10-17T10:00',
 SELECT SETVAL('orders_id_seq', (SELECT MAX(id) FROM orders));
 
 --changeset stell:29
-INSERT INTO book (id, title, year, page, isbn_10, isbn_13, book_language_id, book_format_id,
+INSERT INTO book (id, title, year, pages, isbn_10, isbn_13, book_language_id, book_format_id,
                   book_publishing_house_id, book_series_id, order_id, book_status_id, created_at, created_by, image)
 VALUES (1, 'Twilight', 2008, 544, 0316038377, 9780316038379, 1,
         1, 10, null, 1, 3, '2022-11-1T00:00',

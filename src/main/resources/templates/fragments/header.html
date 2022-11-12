@@ -16,7 +16,7 @@
                 <ul>
                     <li><a th:href="@{/books}">Books</a></li>
 
-                    <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/users}">Users</a></li>
+                    <li sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')"><a th:href="@{/users}">Users</a></li>
 
                     <li><a th:href="@{/authors}">Authors</a></li>
 

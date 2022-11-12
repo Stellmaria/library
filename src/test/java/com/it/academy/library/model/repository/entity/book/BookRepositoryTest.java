@@ -83,7 +83,7 @@ class BookRepositoryTest extends IntegrationTestBase {
                 .title(ConstantUtil.NEW + ConstantUtil.SAVE)
                 .subtitle(ConstantUtil.NEW + ConstantUtil.SAVE)
                 .year(ConstantUtil.BOOK_YEAR_2023)
-                .page(ConstantUtil.BOOK_PAGE_200)
+                .pages(ConstantUtil.BOOK_PAGE_200)
                 .isbn10(ConstantUtil.ISBN_10)
                 .isbn13(ConstantUtil.ISBN_13)
                 .image(ConstantUtil.NEW + ConstantUtil.SAVE)
@@ -103,7 +103,7 @@ class BookRepositoryTest extends IntegrationTestBase {
                 () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getTitle()),
                 () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getSubtitle()),
                 () -> assertEquals(ConstantUtil.BOOK_YEAR_2023, actual.getYear()),
-                () -> assertEquals(ConstantUtil.BOOK_PAGE_200, actual.getPage()),
+                () -> assertEquals(ConstantUtil.BOOK_PAGE_200, actual.getPages()),
                 () -> assertEquals(ConstantUtil.ISBN_10, actual.getIsbn10()),
                 () -> assertEquals(ConstantUtil.ISBN_13, actual.getIsbn13()),
                 () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getImage()),
@@ -143,7 +143,7 @@ class BookRepositoryTest extends IntegrationTestBase {
             it.setTitle(ConstantUtil.NEW + ConstantUtil.UPDATE);
             it.setSubtitle(ConstantUtil.NEW + ConstantUtil.UPDATE);
             it.setYear(ConstantUtil.BOOK_YEAR_2023);
-            it.setPage(ConstantUtil.BOOK_PAGE_200);
+            it.setPages(ConstantUtil.BOOK_PAGE_200);
             it.setIsbn10(ConstantUtil.ISBN_10);
             it.setIsbn13(ConstantUtil.ISBN_13);
             it.setImage(ConstantUtil.NEW + ConstantUtil.UPDATE);
@@ -162,7 +162,7 @@ class BookRepositoryTest extends IntegrationTestBase {
             assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getTitle());
             assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getSubtitle());
             assertEquals(ConstantUtil.BOOK_YEAR_2023, it.getYear());
-            assertEquals(ConstantUtil.BOOK_PAGE_200, it.getPage());
+            assertEquals(ConstantUtil.BOOK_PAGE_200, it.getPages());
             assertEquals(ConstantUtil.ISBN_10, it.getIsbn10());
             assertEquals(ConstantUtil.ISBN_13, it.getIsbn13());
             assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getImage());

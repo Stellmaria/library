@@ -1,4 +1,5 @@
 .btn, a.btn {
+    border: none;
     min-height: 51px;
     justify-content: center;
     display: flex;

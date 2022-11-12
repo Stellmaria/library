@@ -1,0 +1,30 @@
+.search-label {
+    justify-content: center;
+    display: flex;
+    margin-top: 20px;
+}
+
+.section-input {
+    padding: 0 17px;
+    margin-right: 20px;
+}
+
+.filter-btn {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    flex: content;
+    margin-left: 50%;
+}
+
+.users {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.search-filter {
+    position: absolute;
+    flex: auto;
+    display: inline-block;
+}
+

@@ -21,11 +21,12 @@ public class SecurityConfiguration {
                                 "/styles/css/**", "/images/**", "/js/**", "/").permitAll()
                         .antMatchers("/users/{\\d+}/delete").hasRole("ADMIN")
                         .antMatchers("/admin/**").hasAuthority("ADMIN")
+                        .antMatchers("/users").hasAnyRole("ADMIN", "LIBRARIAN")
                         .anyRequest().authenticated()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login")
+                        .logoutSuccessUrl("/")
                         .deleteCookies("JSESSIONID")
                 )
                 .formLogin(login -> login

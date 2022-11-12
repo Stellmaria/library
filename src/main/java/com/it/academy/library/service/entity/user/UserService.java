@@ -84,6 +84,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(id)
                 .map(it -> {
                     uploadImage(userCreateEditDto.getImage());
+
                     return userCreateEditMapper.map(userCreateEditDto, it);
                 })
                 .map(userRepository::saveAndFlush)
@@ -96,6 +97,7 @@ public class UserService implements UserDetailsService {
                 .map(it -> {
                     userRepository.delete(it);
                     userRepository.flush();
+
                     return true;
                 })
                 .orElse(false);

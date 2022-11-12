@@ -26,9 +26,9 @@ public class BookCreateEditDto {
     private Integer year;
 
     @Positive
-    private Short page;
+    private Short pages;
 
-    @ISBN(type = ISBN.Type.ISBN_10)
+    //    @ISBN(type = ISBN.Type.ISBN_10)
     private String isbn10;
 
     @ISBN(type = ISBN.Type.ISBN_13)

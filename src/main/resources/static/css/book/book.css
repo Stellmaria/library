@@ -3,15 +3,19 @@
     padding-bottom: 70px;
 }
 
-.product {
-    min-height: 300px;
-    max-width: 300px;
+.container {
     text-align: center;
+}
+
+.product {
+    display: block;
+    max-width: 270px;
     margin-top: 30px;
 }
 
 .products-wrapper {
     display: inline-block;
+    margin-right: 30px;
 }
 
 .section-header {
@@ -54,4 +58,20 @@
     font-size: 20px;
     line-height: 27px;
     text-align: center;
+}
+
+.product-link {
+    transition: opacity 0.2s ease-in;
+}
+
+.product-link:hover {
+    opacity: 0.8;
+}
+
+.btn {
+    margin-left: 20px;
+}
+
+.section-input-books {
+    margin-left: 50px;
 }

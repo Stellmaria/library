@@ -55,7 +55,7 @@ public class Book extends AbstractAuditingEntity<Long> {
     private Integer year;
 
     @Positive
-    private Short page;
+    private Short pages;
 
     @Column(name = "isbn_10",
             length = 10

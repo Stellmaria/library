@@ -75,6 +75,7 @@ public class BookService {
                 .map(bookRepository::saveAndFlush)
                 .map(bookReadMapper::map);
     }
+
     @Transactional(rollbackFor = {Exception.class})
     public boolean delete(Long id) {
         return bookRepository.findById(id)

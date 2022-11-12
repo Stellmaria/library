@@ -63,7 +63,7 @@ class BookAdditionalRepositoryTest extends IntegrationTestBase {
                 .title(ConstantUtil.NEW + ConstantUtil.SAVE)
                 .subtitle(ConstantUtil.NEW + ConstantUtil.SAVE)
                 .year(ConstantUtil.BOOK_YEAR_2023)
-                .page(ConstantUtil.BOOK_PAGE_200)
+                .pages(ConstantUtil.BOOK_PAGE_200)
                 .isbn10(ConstantUtil.ISBN_10)
                 .isbn13(ConstantUtil.ISBN_13)
                 .image(ConstantUtil.NEW + ConstantUtil.SAVE)
@@ -96,7 +96,7 @@ class BookAdditionalRepositoryTest extends IntegrationTestBase {
                 () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getBook().getTitle()),
                 () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getBook().getSubtitle()),
                 () -> assertEquals(ConstantUtil.BOOK_YEAR_2023, actual.getBook().getYear()),
-                () -> assertEquals(ConstantUtil.BOOK_PAGE_200, actual.getBook().getPage()),
+                () -> assertEquals(ConstantUtil.BOOK_PAGE_200, actual.getBook().getPages()),
                 () -> assertEquals(ConstantUtil.ISBN_10, actual.getBook().getIsbn10()),
                 () -> assertEquals(ConstantUtil.ISBN_13, actual.getBook().getIsbn13()),
                 () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getBook().getImage()),

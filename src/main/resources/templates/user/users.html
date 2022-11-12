@@ -6,6 +6,9 @@
 
     <!--    Style main-->
     <link rel="stylesheet" th:href="@{/styles/css/main.css}">
+
+    <!--    Style filter-->
+    <link rel="stylesheet" th:href="@{/styles/css/filter.css}">
 </head>
 <body>
 
@@ -13,39 +16,47 @@
     <div th:insert="~{fragments/header :: header}"></div>
 </header>
 
-<form action="/users">
-    <label for="firstName"> First name:
-        <input id="firstName" name="firstName" th:value="${filter.firstName}" type="text">
-    </label>
+<main>
+    <div class="main-search">
+        <form action="/users" class="search">
+            <label class="search-label" for="username">Username
+                <input class="section-input" id="username" name="username" th:value="${filter.username}" type="text">
+            </label>
 
-    <label for="lastName"> Last name:
-        <input id="lastName" name="lastName" th:value="${filter.lastName}" type="text">
-    </label><br>
+            <label class="search-label" for="firstName">First name
+                <input class="section-input" id="firstName" name="firstName" th:value="${filter.firstName}" type="text">
+            </label>
 
-    <label for="email"> Email:
-        <input id="email" name="email" th:value="${filter.email}" type="text">
-    </label>
+            <label class="search-label" for="lastName">Last name
+                <input class="section-input" id="lastName" name="lastName" th:value="${filter.lastName}" type="text">
+            </label>
 
-    <label for="username"> Username:
-        <input id="username" name="username" th:value="${filter.username}" type="text">
-    </label>
+            <label class="search-label" for="email">Email
+                <input class="section-input" id="email" name="email" th:value="${filter.email}" type="text">
+            </label>
 
-    <button class="btn" type="submit">Filter</button>
+            <div class="filter-btn">
+                <button class="btn" type="submit">Filter</button>
+            </div>
 
-    <div>
-        <label for="page">Page:
-            <input id="page" name="page" th:value="${users.metadata.page}" type="number">
-        </label>
-        <label for="size" th:value="${users.metadata.size}">Size:
-            <input id="size" name="size" type="number">
-        </label>
+            <div>
+                <label class="search-label" for="page">Page
+                    <input class="section-input" id="page" name="page" th:value="${users.metadata.page}" type="number">
+                </label>
+
+                <label class="search-label" for="size" th:value="${users.metadata.size}">Size
+                    <input class="section-input" id="size" name="size" type="number">
+                </label>
+            </div>
+
+        </form>
     </div>
 
-</form>
+    <div class="users" th:each="user : ${users.content}">
+        <a th:href="@{'/users/' + ${user.id}}" th:text="|${user.firstName} ${user.lastName}|"> User</a>
+    </div>
 
-<div th:each="user : ${users.content}">
-    <a th:href="@{'/users/' + ${user.id}}" th:text="${user.firstName}"> User</a>
-</div>
+</main>
 
 <footer>
     <div th:insert="~{fragments/footer :: footer}"></div>

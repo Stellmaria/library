@@ -1,8 +1,8 @@
 /* Reset and base styles  */
+
 * {
     padding: 0;
     margin: 0;
-    border: none;
 }
 
 *, *::before, *::after {

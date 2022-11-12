@@ -206,7 +206,7 @@ CREATE TABLE IF NOT EXISTS book
     title                    VARCHAR(255)      NOT NULL,
     subtitle                 VARCHAR(255),
     year                     INTEGER,
-    page                     SMALLINT,
+    pages                    SMALLINT,
     isbn_10                  VARCHAR(10),
     isbn_13                  VARCHAR(15),
     image                    VARCHAR(255),
