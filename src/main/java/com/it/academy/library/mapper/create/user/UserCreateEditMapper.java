@@ -1,12 +1,12 @@
 package com.it.academy.library.mapper.create.user;
 
-import com.it.academy.library.dto.create.user.UserCreateEditDto;
 import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.model.entity.user.User;
 import com.it.academy.library.model.entity.user.UserRole;
 import com.it.academy.library.model.entity.user.UserStatus;
 import com.it.academy.library.model.repository.entity.user.UserRoleRepository;
 import com.it.academy.library.model.repository.entity.user.UserStatusRepository;
+import com.it.academy.library.service.dto.create.user.UserCreateEditDto;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.crypto.password.PasswordEncoder;

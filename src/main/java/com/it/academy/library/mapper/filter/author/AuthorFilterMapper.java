@@ -1,8 +1,8 @@
 package com.it.academy.library.mapper.filter.author;
 
-import com.it.academy.library.dto.filter.author.AuthorFilter;
 import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.model.entity.author.Author;
+import com.it.academy.library.service.dto.filter.author.AuthorFilter;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;

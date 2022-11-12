@@ -1,11 +1,11 @@
 package com.it.academy.library.http.controller;
 
-import com.it.academy.library.dto.PageResponse;
-import com.it.academy.library.dto.create.user.UserCreateEditDto;
-import com.it.academy.library.dto.filter.user.UserFilter;
-import com.it.academy.library.service.user.UserRoleService;
-import com.it.academy.library.service.user.UserService;
-import com.it.academy.library.service.user.UserStatusService;
+import com.it.academy.library.service.dto.PageResponse;
+import com.it.academy.library.service.dto.create.user.UserCreateEditDto;
+import com.it.academy.library.service.dto.filter.user.UserFilter;
+import com.it.academy.library.service.entity.user.UserRoleService;
+import com.it.academy.library.service.entity.user.UserService;
+import com.it.academy.library.service.entity.user.UserStatusService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Pageable;

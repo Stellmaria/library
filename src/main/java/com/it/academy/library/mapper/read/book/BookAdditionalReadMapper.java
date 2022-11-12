@@ -1,9 +1,9 @@
 package com.it.academy.library.mapper.read.book;
 
-import com.it.academy.library.dto.read.book.BookAdditionalReadDto;
-import com.it.academy.library.dto.read.book.BookReadDto;
 import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.model.entity.book.BookAdditional;
+import com.it.academy.library.service.dto.read.book.BookAdditionalReadDto;
+import com.it.academy.library.service.dto.read.book.BookReadDto;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;

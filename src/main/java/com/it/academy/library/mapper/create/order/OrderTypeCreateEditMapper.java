@@ -1,8 +1,8 @@
 package com.it.academy.library.mapper.create.order;
 
-import com.it.academy.library.dto.create.order.OrderTypeCreateEditDto;
 import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.model.entity.order.OrderType;
+import com.it.academy.library.service.dto.create.order.OrderTypeCreateEditDto;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 

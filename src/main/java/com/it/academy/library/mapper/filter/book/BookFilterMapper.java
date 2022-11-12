@@ -1,9 +1,9 @@
 package com.it.academy.library.mapper.filter.book;
 
-import com.it.academy.library.dto.filter.book.BookFilter;
 import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.mapper.filter.order.OrderFilterMapper;
 import com.it.academy.library.model.entity.book.Book;
+import com.it.academy.library.service.dto.filter.book.BookFilter;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;

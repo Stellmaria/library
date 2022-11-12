@@ -3,37 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <title>Book</title>
-    <link href="../../static/css/main.css" rel="stylesheet">
+
+    <!--    Style main-->
+    <link rel="stylesheet" th:href="@{/styles/css/main.css}">
+
 </head>
 <body>
-<div th:insert="~{fragments :: header}"></div>
+
+<header>
+    <div th:insert="~{fragments/header :: header}"></div>
+</header>
+
 <div sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')">
     <form enctype="multipart/form-data" method="post" th:action="@{/books/{bookId}/update(bookId=${book.id})}"
           th:object="${book}">
+
         <label for="title"> Title:
             <input id="title" name="title" th:value="*{title}" type="text">
         </label><br>
+
         <label for="subtitle"> Subtitle:
             <input id="subtitle" name="subtitle" th:value="*{subtitle}" type="text">
         </label><br>
+
         <label for="year"> Year:
             <input id="year" name="subtitle" th:value="*{year}" type="text">
         </label><br>
+
         <label for="page"> Page:
             <input id="page" name="page" th:value="*{page}" type="text">
         </label><br>
+
         <label for="isbn10"> Isbn10:
             <input id="isbn10" name="isbn10" th:value="*{isbn10}" type="text">
         </label><br>
+
         <label for="isbn13"> Isbn13:
             <input id="isbn13" name="isbn13" th:value="*{isbn13}" type="text">
         </label><br>
+
+        <div th:each="author : ${book.booksAuthors}">
+            <a th:href="@{'/authors/' + ${author.id}}" th:text="|${author.firstName} ${author.lastName}|"> Authors</a>
+        </div>
+
         <div th:if="${book.image}">
             <img alt="User image" th:src="@{/api/v1/books/{bookId}/image(bookId=${book.id})}">
         </div>
+
         <label for="image"> Image:
             <input id="image" name="image" type="file">
         </label><br>
+
         <div>
             <label for="bookStatus">Status:
                 <select id="bookStatus" name="bookStatusId">
@@ -45,6 +65,7 @@
                 </select>
             </label>
         </div>
+
         <div th:if="${book.bookLanguage != null}">
             <label for="bookLanguage">Language:
                 <select id="bookLanguage" name="bookLanguageId">
@@ -56,6 +77,7 @@
                 </select>
             </label>
         </div>
+
         <div th:if="${book.bookLanguage == null}">
             <label for="bookLanguageN">Language:
                 <select id="bookLanguageN" name="bookLanguageId">
@@ -67,6 +89,7 @@
                 </select>
             </label>
         </div>
+
         <div th:if="${book.bookFormat != null}">
             <label for="bookFormat">Format:
                 <select id="bookFormat" name="bookFormatId">
@@ -78,6 +101,7 @@
                 </select>
             </label>
         </div>
+
         <div th:if="${book.bookFormat == null}">
             <label for="bookFormatN">Format:
                 <select id="bookFormatN" name="bookFormatId">
@@ -89,6 +113,7 @@
                 </select>
             </label>
         </div>
+
         <div th:if="${book.bookPublishingHouse != null}">
             <label for="bookPublishingHouse">Publishing House:
                 <select id="bookPublishingHouse" name="bookPublishingHouseId">
@@ -100,6 +125,7 @@
                 </select>
             </label>
         </div>
+
         <div th:if="${book.bookPublishingHouse == null}">
             <label for="bookPublishingHouseN">Publishing House:
                 <select id="bookPublishingHouseN" name="bookPublishingHouseId">
@@ -111,6 +137,7 @@
                 </select>
             </label>
         </div>
+
         <div th:if="${book.bookSeries != null}">
             <label for="bookSeries">Series:
                 <select id="bookSeries" name="bookSeriesId">
@@ -122,6 +149,7 @@
                 </select>
             </label>
         </div>
+
         <div th:if="${book.bookSeries == null}">
             <label for="bookSeriesN">Series:
                 <select id="bookSeriesN" name="bookSeriesId">
@@ -133,8 +161,18 @@
                 </select>
             </label>
         </div>
+
+        <!--        <div th:if="${book.image}">-->
+        <!--            <img alt="User image" th:src="@{/api/v1/books/{bookId}/image(bookId=${book.id})}">-->
+        <!--        </div>-->
+
         <button type="submit">Update</button>
     </form>
+
+    <form sec:authorize="hasRole('ADMIN')" method="post" th:action="@{/books/{bookId}/delete(bookId=${book.id})}">
+        <button type="submit">Remove</button>
+    </form>
+
 </div>
 <!--<div sec:authorize="hasAnyRole('ADMIN','LIBRARIAN','GUEST','USER')">-->
 <!--    <div th:text="${book.title}">-->
@@ -149,10 +187,6 @@
 <!--        <img alt="User image" th:src="@{/api/v1/books/{bookId}/image(bookId=${book.id})}">-->
 <!--    </div>-->
 <!--</div>-->
-<!--<div sec:authorize="hasRole('ADMIN')">-->
-<!--    <form method="post" th:action="@{/books/{bookId}/delete(bookId=${book.id})}">-->
-<!--        <button type="submit">Remove</button>-->
-<!--    </form>-->
-<!--</div>-->
+
 </body>
 </html>

@@ -1,8 +1,8 @@
 package com.it.academy.library.model.repository.filter.user;
 
 
-import com.it.academy.library.dto.filter.user.UserStatusFilter;
 import com.it.academy.library.model.entity.user.UserStatus;
+import com.it.academy.library.service.dto.filter.user.UserStatusFilter;
 
 import java.util.Collection;
 

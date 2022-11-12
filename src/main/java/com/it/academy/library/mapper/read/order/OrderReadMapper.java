@@ -1,12 +1,12 @@
 package com.it.academy.library.mapper.read.order;
 
-import com.it.academy.library.dto.read.order.OrderReadDto;
-import com.it.academy.library.dto.read.order.OrderStatusReadDto;
-import com.it.academy.library.dto.read.order.OrderTypeReadDto;
-import com.it.academy.library.dto.read.user.UserReadDto;
 import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.mapper.read.user.UserReadMapper;
 import com.it.academy.library.model.entity.order.Order;
+import com.it.academy.library.service.dto.read.order.OrderReadDto;
+import com.it.academy.library.service.dto.read.order.OrderStatusReadDto;
+import com.it.academy.library.service.dto.read.order.OrderTypeReadDto;
+import com.it.academy.library.service.dto.read.user.UserReadDto;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ControllerExceptionHandler {
     @ExceptionHandler(Exception.class)
     public String handlerException(Exception exception) {
-        log.error("Exception", exception);
+        log.error("Exception ", exception);
         return "error/error500";
     }
 }

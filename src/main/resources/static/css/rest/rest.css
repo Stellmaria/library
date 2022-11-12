@@ -74,7 +74,7 @@ input, textarea, button, select {
 }
 
 input::-ms-clear {
-    display: none;
+    /*display: none;*/
 }
 
 button, input[type="submit"] {
@@ -85,7 +85,7 @@ button, input[type="submit"] {
 }
 
 input:focus, input:active, button:focus, button:active {
-    outline: none;
+    /*outline: none;*/
 }
 
 button::-moz-focus-inner {

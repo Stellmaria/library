@@ -1,8 +1,8 @@
 package com.it.academy.library.mapper.create.author;
 
-import com.it.academy.library.dto.create.author.AuthorRoleCreateEditDto;
 import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.model.entity.author.AuthorRole;
+import com.it.academy.library.service.dto.create.author.AuthorRoleCreateEditDto;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 

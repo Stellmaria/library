@@ -10,6 +10,9 @@
     <!--    Style for home page-->
     <link rel="stylesheet" th:href="@{/styles/css/home/home.css}">
 
+    <!--    Style for home page-->
+    <link rel="stylesheet" th:href="@{/styles/css/book/book.css}">
+
 </head>
 <body>
 
@@ -41,9 +44,41 @@
 <!--    </div>-->
 <!--</form>-->
 
-<div th:each="book : ${books.content}">
-    <a th:href="@{'/books/' + ${book.id}}" th:text="${book.title}"> Book</a>
-</div>
+<main>
+    <section class="featured-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-header-title">Books</h2>
+                <div class="section-header-description">
+                    <p>New books - new reading</p>
+                </div>
+            </div>
+
+            <!--            <div th:each="book : ${books.content}">-->
+
+
+            <!--                <div th:if="${book.image}">-->
+            <!--                    <img alt="User image" th:src="@{/api/v1/books/{bookId}/image(bookId=${book.id})}">-->
+            <!--                </div>-->
+
+            <!--            </div>-->
+
+            <div class="products-wrapper" th:each="book : ${books.content}">
+                <div class="product">
+                    <div th:if="${book.image}">
+                        <img class="product-image" alt="User image"
+                             th:src="@{/api/v1/books/{bookId}/image(bookId=${book.id})}">
+                    </div>
+
+                    <h4 class="product_title">
+                        <a th:href="@{'/books/' + ${book.id}}" th:text="${book.title}"> Book</a>
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
 
 <footer>
     <div th:insert="~{fragments/footer :: footer}"></div>

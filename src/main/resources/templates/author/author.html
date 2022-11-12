@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Author</title>
+
+    <!--    Style main-->
+    <link rel="stylesheet" th:href="@{/styles/css/main.css}">
+</head>
+<body>
+
+<header>
+    <div th:insert="~{fragments/header :: header}"></div>
+</header>
+
+<form method="post" th:action="@{/authors/{authorId}/update(authorId=${author.id})}"
+      th:object="${author}" enctype="multipart/form-data">
+
+    <label for="firstName"> First name:
+        <input id="firstName" name="firstName" th:value="*{firstName}" type="text">
+    </label><br>
+
+    <label for="lastName"> Last name:
+        <input id="lastName" name="lastName" th:value="*{lastName}" type="text">
+    </label><br>
+
+<!--    <label for="imagePath"> Image:-->
+<!--        <input id="imagePath" name="imagePath" th:value="*{imagePath}" type="image">-->
+<!--    </label><br>-->
+
+    <label for="birthday">Birthday:
+        <input id="birthday" name="birthday" th:value="*{birthday}" type="date">
+    </label><br>
+
+    <label for="dateDeath">Date death:
+        <input id="dateDeath" name="dateDeath" th:value="*{dateDeath}" type="date">
+    </label><br>
+
+    <label for="description"> Description:
+        <input id="description" name="description" th:value="*{description}" type="text">
+    </label><br>
+
+    <button type="submit">Update</button>
+</form>
+
+</body>
+</html>

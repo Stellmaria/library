@@ -1,8 +1,8 @@
 package com.it.academy.library.model.repository.filter.user.impl;
 
-import com.it.academy.library.dto.filter.user.UserStatusFilter;
 import com.it.academy.library.model.entity.user.UserStatus;
 import com.it.academy.library.model.repository.filter.user.FilterUserStatusRepository;
+import com.it.academy.library.service.dto.filter.user.UserStatusFilter;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;

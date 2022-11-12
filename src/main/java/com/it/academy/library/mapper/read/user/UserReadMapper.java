@@ -1,10 +1,10 @@
 package com.it.academy.library.mapper.read.user;
 
-import com.it.academy.library.dto.read.user.UserReadDto;
-import com.it.academy.library.dto.read.user.UserRoleReadDto;
-import com.it.academy.library.dto.read.user.UserStatusReadDto;
 import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.model.entity.user.User;
+import com.it.academy.library.service.dto.read.user.UserReadDto;
+import com.it.academy.library.service.dto.read.user.UserRoleReadDto;
+import com.it.academy.library.service.dto.read.user.UserStatusReadDto;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;

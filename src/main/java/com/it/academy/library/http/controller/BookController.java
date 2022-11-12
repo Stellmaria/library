@@ -1,14 +1,15 @@
 package com.it.academy.library.http.controller;
 
-import com.it.academy.library.dto.PageResponse;
-import com.it.academy.library.dto.create.book.BookCreateEditDto;
-import com.it.academy.library.dto.filter.book.BookFilter;
-import com.it.academy.library.service.book.BookFormatService;
-import com.it.academy.library.service.book.BookLanguageService;
-import com.it.academy.library.service.book.BookPublishingHouseService;
-import com.it.academy.library.service.book.BookSeriesService;
-import com.it.academy.library.service.book.BookService;
-import com.it.academy.library.service.book.BookStatusService;
+import com.it.academy.library.service.dto.PageResponse;
+import com.it.academy.library.service.dto.create.book.BookCreateEditDto;
+import com.it.academy.library.service.dto.filter.book.BookFilter;
+import com.it.academy.library.service.entity.author.AuthorService;
+import com.it.academy.library.service.entity.book.BookFormatService;
+import com.it.academy.library.service.entity.book.BookLanguageService;
+import com.it.academy.library.service.entity.book.BookPublishingHouseService;
+import com.it.academy.library.service.entity.book.BookSeriesService;
+import com.it.academy.library.service.entity.book.BookService;
+import com.it.academy.library.service.entity.book.BookStatusService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Pageable;
@@ -36,6 +37,7 @@ public class BookController {
     private final BookFormatService bookFormatService;
     private final BookPublishingHouseService bookPublishingHouseService;
     private final BookSeriesService bookSeriesService;
+    private final AuthorService authorService;
 
     @GetMapping("/addBook")
     public String addBook(@NotNull Model model, BookCreateEditDto book) {
@@ -69,7 +71,10 @@ public class BookController {
                     model.addAttribute("formats", bookFormatService.findAll());
                     model.addAttribute("houses", bookPublishingHouseService.findAll());
                     model.addAttribute("series", bookSeriesService.findAll());
+                    model.addAttribute("authors", authorService.findAllByBookId(id));
+
                     SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+
                     return "book/book";
                 }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }

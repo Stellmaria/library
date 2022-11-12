@@ -1,8 +1,8 @@
 package com.it.academy.library.model.repository.filter.book.impl;
 
-import com.it.academy.library.dto.filter.book.BookStatusFilter;
 import com.it.academy.library.model.entity.book.BookStatus;
 import com.it.academy.library.model.repository.filter.book.FilterBookStatusRepository;
+import com.it.academy.library.service.dto.filter.book.BookStatusFilter;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;

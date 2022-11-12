@@ -1,6 +1,5 @@
 package com.it.academy.library.mapper.create.order;
 
-import com.it.academy.library.dto.create.order.OrderCreateEditDto;
 import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.model.entity.order.Order;
 import com.it.academy.library.model.entity.order.OrderStatus;
@@ -9,6 +8,7 @@ import com.it.academy.library.model.entity.user.User;
 import com.it.academy.library.model.repository.entity.order.OrderStatusRepository;
 import com.it.academy.library.model.repository.entity.order.OrderTypeRepository;
 import com.it.academy.library.model.repository.entity.user.UserRepository;
+import com.it.academy.library.service.dto.create.order.OrderCreateEditDto;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;

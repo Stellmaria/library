@@ -1,8 +1,8 @@
 package com.it.academy.library.mapper.filter.user;
 
-import com.it.academy.library.dto.filter.user.UserFilter;
 import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.model.entity.user.User;
+import com.it.academy.library.service.dto.filter.user.UserFilter;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;

@@ -1,8 +1,8 @@
 package com.it.academy.library.mapper.create.book;
 
-import com.it.academy.library.dto.create.book.BookSeriesCreateEditDto;
 import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.model.entity.book.BookSeries;
+import com.it.academy.library.service.dto.create.book.BookSeriesCreateEditDto;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 

@@ -1,7 +1,7 @@
 package com.it.academy.library.model.repository.filter.book;
 
-import com.it.academy.library.dto.filter.book.BookSeriesFilter;
 import com.it.academy.library.model.entity.book.BookSeries;
+import com.it.academy.library.service.dto.filter.book.BookSeriesFilter;
 
 import java.util.Collection;
 

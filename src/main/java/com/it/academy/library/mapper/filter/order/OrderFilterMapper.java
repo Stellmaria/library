@@ -1,9 +1,9 @@
 package com.it.academy.library.mapper.filter.order;
 
-import com.it.academy.library.dto.filter.order.OrderFilter;
 import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.mapper.filter.user.UserFilterMapper;
 import com.it.academy.library.model.entity.order.Order;
+import com.it.academy.library.service.dto.filter.order.OrderFilter;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;

@@ -1,8 +1,8 @@
 package com.it.academy.library.model.repository.filter.book.impl;
 
-import com.it.academy.library.dto.filter.book.BookAdditionalFilter;
 import com.it.academy.library.model.entity.book.BookAdditional;
 import com.it.academy.library.model.repository.filter.book.FilterBookAdditionalRepository;
+import com.it.academy.library.service.dto.filter.book.BookAdditionalFilter;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;

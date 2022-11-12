@@ -1,8 +1,8 @@
 package com.it.academy.library.model.repository.filter.order.impl;
 
-import com.it.academy.library.dto.filter.order.OrderStatusFilter;
 import com.it.academy.library.model.entity.order.OrderStatus;
 import com.it.academy.library.model.repository.filter.order.FilterOrderStatusRepository;
+import com.it.academy.library.service.dto.filter.order.OrderStatusFilter;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;

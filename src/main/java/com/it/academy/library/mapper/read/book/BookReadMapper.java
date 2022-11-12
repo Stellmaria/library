@@ -1,20 +1,23 @@
 package com.it.academy.library.mapper.read.book;
 
-import com.it.academy.library.dto.read.book.BookFormatReadDto;
-import com.it.academy.library.dto.read.book.BookLanguageReadDto;
-import com.it.academy.library.dto.read.book.BookPublishingHouseReadDto;
-import com.it.academy.library.dto.read.book.BookReadDto;
-import com.it.academy.library.dto.read.book.BookSeriesReadDto;
-import com.it.academy.library.dto.read.book.BookStatusReadDto;
-import com.it.academy.library.dto.read.order.OrderReadDto;
 import com.it.academy.library.mapper.Mapper;
+import com.it.academy.library.mapper.read.author.AuthorReadMapper;
 import com.it.academy.library.mapper.read.order.OrderReadMapper;
+import com.it.academy.library.model.entity.BooksAuthors;
 import com.it.academy.library.model.entity.book.Book;
+import com.it.academy.library.service.dto.read.book.BookFormatReadDto;
+import com.it.academy.library.service.dto.read.book.BookLanguageReadDto;
+import com.it.academy.library.service.dto.read.book.BookPublishingHouseReadDto;
+import com.it.academy.library.service.dto.read.book.BookReadDto;
+import com.it.academy.library.service.dto.read.book.BookSeriesReadDto;
+import com.it.academy.library.service.dto.read.book.BookStatusReadDto;
+import com.it.academy.library.service.dto.read.order.OrderReadDto;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -25,6 +28,7 @@ public class BookReadMapper implements Mapper<Book, BookReadDto> {
     private final BookPublishingHouseReadMapper bookPublishingHouseReadMapper;
     private final BookSeriesReadMapper bookSeriesReadMapper;
     private final OrderReadMapper orderReadMapper;
+    private final AuthorReadMapper authorReadMapper;
 
     @Override
     public BookReadDto map(@NotNull Book object) {
@@ -42,7 +46,12 @@ public class BookReadMapper implements Mapper<Book, BookReadDto> {
                 getBookFormat(object),
                 getBookPublishingHouse(object),
                 getBookSeries(object),
-                getOrder(object)
+                getOrder(object),
+                Optional.of(object.getBooksAuthors().stream()
+                                .map(BooksAuthors::getAuthor)
+                                .map(authorReadMapper::map)
+                                .collect(Collectors.toList()))
+                        .orElse(null)
         );
     }
 

@@ -1,9 +1,9 @@
 package com.it.academy.library.model.repository.filter.author.impl;
 
-import com.it.academy.library.dto.filter.author.AuthorRoleFilter;
 import com.it.academy.library.model.entity.author.Author;
 import com.it.academy.library.model.entity.author.AuthorRole;
 import com.it.academy.library.model.repository.filter.author.FilterAuthorRoleRepository;
+import com.it.academy.library.service.dto.filter.author.AuthorRoleFilter;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;

@@ -1,6 +1,5 @@
 package com.it.academy.library.mapper.create.book;
 
-import com.it.academy.library.dto.create.book.BookCreateEditDto;
 import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.model.entity.book.Book;
 import com.it.academy.library.model.entity.book.BookFormat;
@@ -15,6 +14,7 @@ import com.it.academy.library.model.repository.entity.book.BookPublishingHouseRe
 import com.it.academy.library.model.repository.entity.book.BookSeriesRepository;
 import com.it.academy.library.model.repository.entity.book.BookStatusRepository;
 import com.it.academy.library.model.repository.entity.order.OrderRepository;
+import com.it.academy.library.service.dto.create.book.BookCreateEditDto;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
@@ -57,15 +57,19 @@ public class BookCreateEditMapper implements Mapper<BookCreateEditDto, Book> {
         book.setPage(book.getPage());
         book.setIsbn10(object.getIsbn10());
         book.setIsbn13(object.getIsbn13());
-        Optional.ofNullable(object.getImage())
-                .filter(not(MultipartFile::isEmpty))
-                .ifPresent(image -> book.setImage(image.getOriginalFilename()));
+        setImage(object, book);
         book.setBookStatus(getBookStatus(object.getBookStatusId()));
         book.setBookLanguage(getBookLanguage(object.getBookLanguageId()));
         book.setBookFormat(getBookFormat(object.getBookFormatId()));
         book.setBookPublishingHouse(getBookPublishingHouseRepository(object.getBookPublishingHouseId()));
         book.setBookSeries(getBookSeries(object.getBookSeriesId()));
         book.setOrder(getOrder(object.getOrderId()));
+    }
+
+    private void setImage(@NotNull BookCreateEditDto object, @NotNull Book book) {
+        Optional.ofNullable(object.getImage())
+                .filter(not(MultipartFile::isEmpty))
+                .ifPresent(image -> book.setImage(image.getOriginalFilename()));
     }
 
     private BookStatus getBookStatus(Integer id) {

@@ -1,8 +1,8 @@
 package com.it.academy.library.model.repository.filter.user.impl;
 
-import com.it.academy.library.dto.filter.user.UserRoleFilter;
 import com.it.academy.library.model.entity.user.UserRole;
 import com.it.academy.library.model.repository.filter.user.FilterUserRoleRepository;
+import com.it.academy.library.service.dto.filter.user.UserRoleFilter;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;

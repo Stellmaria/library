@@ -5,6 +5,10 @@
     <title>Add Book</title>
 </head>
 <body>
+<header>
+    <div th:insert="~{fragments/header :: header}"></div>
+</header>
+
 <div sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')" th:insert="~{fragments :: header}"></div>
 <form enctype="multipart/form-data" method="post" th:action="@{/books}" th:object="${book}">
     <label for="title"> Title:

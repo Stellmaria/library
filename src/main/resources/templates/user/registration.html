@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+
     <link rel="stylesheet" th:href="@{/styles/css/login/login.css}">
 
     <style th:inline="text">
@@ -11,15 +12,17 @@
             background-size: cover;
         }
     </style>
+
 </head>
 <body>
+
 <div class="container">
     <div class="signup-wrap">
         <div class="title">
             <h1>Signup</h1>
         </div>
 
-        <form enctype="multipart/form-data" method="post" th:action="@{/users}" th:object="${user}">
+        <form method="post" th:action="@{/users}" th:object="${user}">
             <div class="input-area">
                 <label for="username">Login
                     <input autocomplete="off" id="username" name="username" required th:value="*{username}" type="text">
@@ -52,7 +55,7 @@
             </div>
 
             <div class="button-area">
-                <button class="login-btn">Login</button>
+                <button type="submit" class="login-btn">Login</button>
             </div>
 
             <div class="form-toggle-area">
@@ -63,5 +66,6 @@
         </form>
     </div>
 </div>
+
 </body>
 </html>

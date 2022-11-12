@@ -1,7 +1,7 @@
 package com.it.academy.library.model.repository.filter.author;
 
-import com.it.academy.library.dto.filter.author.AuthorRoleFilter;
 import com.it.academy.library.model.entity.author.AuthorRole;
+import com.it.academy.library.service.dto.filter.author.AuthorRoleFilter;
 
 import java.util.Collection;
 

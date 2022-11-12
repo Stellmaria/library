@@ -1,8 +1,8 @@
 package com.it.academy.library.mapper.create.user;
 
-import com.it.academy.library.dto.create.user.UserRoleCreateEditDto;
 import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.model.entity.user.UserRole;
+import com.it.academy.library.service.dto.create.user.UserRoleCreateEditDto;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 

@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS users
     password       VARCHAR(128)       NOT NULL DEFAULT '{noop}111111',
     user_role_id   INTEGER DEFAULT 1  NOT NULL,
     user_status_id INTEGER DEFAULT 1  NOT NULL,
-    birthday       DATE               NOT NULL,
+    birthday       DATE,
     image          VARCHAR(255),
     created_at     TIMESTAMP WITHOUT TIME ZONE,
     modified_at    TIMESTAMP WITHOUT TIME ZONE,

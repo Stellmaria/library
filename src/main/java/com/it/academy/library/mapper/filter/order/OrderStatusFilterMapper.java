@@ -1,8 +1,8 @@
 package com.it.academy.library.mapper.filter.order;
 
-import com.it.academy.library.dto.filter.order.OrderStatusFilter;
 import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.model.entity.order.OrderStatus;
+import com.it.academy.library.service.dto.filter.order.OrderStatusFilter;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 

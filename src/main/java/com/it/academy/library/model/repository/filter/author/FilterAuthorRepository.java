@@ -1,9 +1,9 @@
 package com.it.academy.library.model.repository.filter.author;
 
-import com.it.academy.library.dto.filter.author.AuthorFilter;
-import com.it.academy.library.dto.filter.author.AuthorRoleFilter;
-import com.it.academy.library.dto.filter.book.BookFilter;
 import com.it.academy.library.model.entity.author.Author;
+import com.it.academy.library.service.dto.filter.author.AuthorFilter;
+import com.it.academy.library.service.dto.filter.author.AuthorRoleFilter;
+import com.it.academy.library.service.dto.filter.book.BookFilter;
 
 import java.util.Collection;
 

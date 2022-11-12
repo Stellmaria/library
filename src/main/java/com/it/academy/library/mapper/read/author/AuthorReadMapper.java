@@ -1,9 +1,9 @@
 package com.it.academy.library.mapper.read.author;
 
-import com.it.academy.library.dto.read.author.AuthorReadDto;
-import com.it.academy.library.dto.read.author.AuthorRoleReadDto;
 import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.model.entity.author.Author;
+import com.it.academy.library.service.dto.read.author.AuthorReadDto;
+import com.it.academy.library.service.dto.read.author.AuthorRoleReadDto;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;

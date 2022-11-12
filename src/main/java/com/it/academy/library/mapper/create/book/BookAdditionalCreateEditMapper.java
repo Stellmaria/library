@@ -1,10 +1,10 @@
 package com.it.academy.library.mapper.create.book;
 
-import com.it.academy.library.dto.create.book.BookAdditionalCreateEditDto;
 import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.model.entity.book.Book;
 import com.it.academy.library.model.entity.book.BookAdditional;
 import com.it.academy.library.model.repository.entity.book.BookRepository;
+import com.it.academy.library.service.dto.create.book.BookAdditionalCreateEditDto;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;

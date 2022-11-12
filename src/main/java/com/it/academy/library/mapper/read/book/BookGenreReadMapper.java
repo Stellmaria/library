@@ -1,8 +1,8 @@
 package com.it.academy.library.mapper.read.book;
 
-import com.it.academy.library.dto.read.book.BookGenreReadDto;
 import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.model.entity.book.BookGenre;
+import com.it.academy.library.service.dto.read.book.BookGenreReadDto;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 

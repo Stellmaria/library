@@ -5,6 +5,7 @@
     <title>Header</title>
 </head>
 <body>
+
 <header class="header">
     <div class="container">
         <div class="header-row">
@@ -14,8 +15,11 @@
             <nav class="header-nav">
                 <ul>
                     <li><a th:href="@{/books}">Books</a></li>
-                    <!--                    <li><a href="#">Link</a></li>-->
-                    <!--                    <li><a href="#">Link</a></li>-->
+
+                    <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/users}">Users</a></li>
+
+                    <li><a th:href="@{/authors}">Authors</a></li>
+
                     <!--                    <li><a href="#">Link</a></li>-->
                 </ul>
             </nav>
@@ -44,5 +48,6 @@
         </div>
     </div>
 </header>
+
 </body>
 </html>
