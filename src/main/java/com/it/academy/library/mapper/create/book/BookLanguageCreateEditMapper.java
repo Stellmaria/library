@@ -11,6 +11,7 @@ public class BookLanguageCreateEditMapper implements Mapper<BookLanguageCreateEd
     @Override
     public BookLanguage map(@NotNull BookLanguageCreateEditDto object) {
         var bookLanguage = new BookLanguage();
+
         bookLanguage.setName(object.getName());
 
         return bookLanguage;

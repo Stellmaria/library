@@ -76,7 +76,8 @@ public class BookController {
                     SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 
                     return "book/book";
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                })
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping
@@ -86,6 +87,7 @@ public class BookController {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("book", book);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+
             return "redirect:/books/addBook";
         }
 

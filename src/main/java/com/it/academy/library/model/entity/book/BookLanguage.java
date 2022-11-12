@@ -65,6 +65,7 @@ public class BookLanguage extends AbstractAuditingEntity<Integer> {
             return false;
         }
         BookLanguage that = (BookLanguage) o;
+
         return id != null && Objects.equals(id, that.id);
     }
 

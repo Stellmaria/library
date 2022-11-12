@@ -90,6 +90,7 @@ public class Author extends AbstractAuditingEntity<Long> {
             return false;
         }
         Author author = (Author) o;
+
         return id != null && Objects.equals(id, author.id);
     }
 

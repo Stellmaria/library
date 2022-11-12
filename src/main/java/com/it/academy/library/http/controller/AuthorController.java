@@ -51,7 +51,8 @@ public class AuthorController {
                     SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 
                     return "author/author";
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                })
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     public String create(@Validated AuthorCreateEditDto author, @NotNull BindingResult bindingResult,
@@ -59,6 +60,7 @@ public class AuthorController {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("author", author);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+
             return "redirect:/author/addAuthor";
         }
 

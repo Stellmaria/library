@@ -11,6 +11,7 @@ public class BookFormatCreateEditMapper implements Mapper<BookFormatCreateEditDt
     @Override
     public BookFormat map(@NotNull BookFormatCreateEditDto object) {
         var bookFormat = new BookFormat();
+
         bookFormat.setName(object.getName());
 
         return bookFormat;

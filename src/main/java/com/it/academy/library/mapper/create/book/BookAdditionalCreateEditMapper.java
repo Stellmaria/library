@@ -19,6 +19,7 @@ public class BookAdditionalCreateEditMapper implements Mapper<BookAdditionalCrea
     @Override
     public BookAdditional map(@NotNull BookAdditionalCreateEditDto object) {
         var bookAdditional = new BookAdditional();
+
         bookAdditional.setBook(getBook(object.getBookId()));
         bookAdditional.setVolume(object.getVolume());
         bookAdditional.setSerialNo(object.getSerialNo());

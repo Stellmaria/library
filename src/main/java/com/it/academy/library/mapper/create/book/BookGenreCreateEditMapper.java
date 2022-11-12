@@ -11,6 +11,7 @@ public class BookGenreCreateEditMapper implements Mapper<BookGenreCreateEditDto,
     @Override
     public BookGenre map(@NotNull BookGenreCreateEditDto object) {
         var bookGenre = new BookGenre();
+
         bookGenre.setName(object.getName());
 
         return bookGenre;

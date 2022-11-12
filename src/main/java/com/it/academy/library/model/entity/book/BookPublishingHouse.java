@@ -63,6 +63,7 @@ public class BookPublishingHouse extends AbstractAuditingEntity<Integer> {
             return false;
         }
         BookPublishingHouse that = (BookPublishingHouse) o;
+
         return id != null && Objects.equals(id, that.id);
     }
 

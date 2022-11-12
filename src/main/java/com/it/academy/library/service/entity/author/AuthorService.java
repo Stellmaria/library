@@ -62,7 +62,7 @@ public class AuthorService {
     public AuthorReadDto create(AuthorCreateEditDto authorDto) {
         return Optional.of(authorDto)
                 .map(it -> {
-                    uploadImage(it.getImagePath());
+                    Optional.ofNullable(it.getImagePath()).ifPresent(this::uploadImage);
 
                     return authorCreateEditMapper.map(it);
                 })
@@ -96,7 +96,8 @@ public class AuthorService {
                     authorRepository.delete(entity);
 
                     return true;
-                }).orElse(false);
+                })
+                .orElse(false);
     }
 
     @SuppressWarnings("unused")

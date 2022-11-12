@@ -53,7 +53,7 @@ public class BookService {
     public BookReadDto create(BookCreateEditDto bookDto) {
         return Optional.of(bookDto)
                 .map(it -> {
-                    uploadImage(it.getImage());
+                    Optional.ofNullable(it.getImage()).ifPresent(this::uploadImage);
 
                     it.setBookStatusId(1);
 
@@ -84,7 +84,8 @@ public class BookService {
                     bookRepository.flush();
 
                     return true;
-                }).orElse(false);
+                })
+                .orElse(false);
     }
 
     @SneakyThrows

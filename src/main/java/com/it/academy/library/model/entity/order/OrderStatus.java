@@ -63,6 +63,7 @@ public class OrderStatus extends AbstractAuditingEntity<Integer> {
             return false;
         }
         OrderStatus that = (OrderStatus) o;
+
         return id != null && Objects.equals(id, that.id);
     }
 

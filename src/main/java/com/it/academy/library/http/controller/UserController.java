@@ -56,7 +56,8 @@ public class UserController {
                     model.addAttribute("roles", userRoleService.findAll());
                     model.addAttribute("statuses", userStatusService.findAll());
                     return "user/user";
-                }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                })
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping
@@ -66,6 +67,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("user", user);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+
             return "redirect:/users/registration";
         }
 

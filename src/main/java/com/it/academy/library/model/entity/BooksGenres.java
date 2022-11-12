@@ -62,6 +62,7 @@ public class BooksGenres extends AbstractAuditingEntity<Long> {
             return false;
         }
         BooksGenres that = (BooksGenres) o;
+
         return id != null && Objects.equals(id, that.id);
     }
 

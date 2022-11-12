@@ -138,6 +138,7 @@ public class Book extends AbstractAuditingEntity<Long> {
             return false;
         }
         Book book = (Book) o;
+
         return id != null && Objects.equals(id, book.id);
     }
 

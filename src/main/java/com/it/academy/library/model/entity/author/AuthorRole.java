@@ -63,6 +63,7 @@ public class AuthorRole extends AbstractAuditingEntity<Integer> {
             return false;
         }
         AuthorRole that = (AuthorRole) o;
+
         return id != null && Objects.equals(id, that.id);
     }
 

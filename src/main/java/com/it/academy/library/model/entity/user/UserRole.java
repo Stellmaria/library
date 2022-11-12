@@ -68,6 +68,7 @@ public class UserRole extends AbstractAuditingEntity<Integer> implements Granted
             return false;
         }
         UserRole userRole = (UserRole) o;
+
         return id != null && Objects.equals(id, userRole.id);
     }
 

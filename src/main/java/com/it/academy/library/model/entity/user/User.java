@@ -118,6 +118,7 @@ public class User extends AbstractAuditingEntity<Long> {
             return false;
         }
         User user = (User) o;
+
         return id != null && Objects.equals(id, user.id);
     }
 

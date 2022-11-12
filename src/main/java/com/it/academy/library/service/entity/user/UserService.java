@@ -42,7 +42,8 @@ public class UserService implements UserDetailsService {
                         user.getUsername(),
                         user.getPassword(),
                         Collections.singleton(user.getUserRole())
-                )).orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: " + username));
+                ))
+                .orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: " + username));
     }
 
     public Page<UserReadDto> findAll(UserFilter userFilter, Pageable pageable) {

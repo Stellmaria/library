@@ -95,6 +95,7 @@ public class Order extends AbstractAuditingEntity<Long> {
             return false;
         }
         Order order = (Order) o;
+
         return id != null && Objects.equals(id, order.id);
     }
 

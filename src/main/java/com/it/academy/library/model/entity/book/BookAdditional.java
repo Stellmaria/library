@@ -70,6 +70,7 @@ public class BookAdditional extends AbstractAuditingEntity<Long> {
             return false;
         }
         BookAdditional that = (BookAdditional) o;
+
         return id != null && Objects.equals(id, that.id);
     }
 

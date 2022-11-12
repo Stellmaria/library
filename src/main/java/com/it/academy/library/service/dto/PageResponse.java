@@ -14,6 +14,7 @@ public class PageResponse<T> {
 
     public static <T> @NotNull PageResponse<T> of(@NotNull Page<T> page) {
         var metadata = new Metadata(page.getNumber(), page.getSize(), page.getTotalElements());
+
         return new PageResponse<>(page.getContent(), metadata);
     }
 

@@ -49,13 +49,21 @@ public class UserCreateEditMapper implements Mapper<UserCreateEditDto, User> {
         user.setUserRole(getUserRole(object.getUserRoleId()));
         user.setUserStatus(getUserStatus(object.getUserStatusId()));
         user.setBirthday(object.getBirthday());
+        setPassword(object, user);
+        setImage(object, user);
+    }
+
+    private void setImage(@NotNull UserCreateEditDto object, @NotNull User user) {
+        Optional.ofNullable(object.getImage())
+                .filter(not(MultipartFile::isEmpty))
+                .ifPresent(image -> user.setImage(image.getOriginalFilename()));
+    }
+
+    private void setPassword(@NotNull UserCreateEditDto object, @NotNull User user) {
         Optional.ofNullable(object.getRawPassword())
                 .filter(StringUtils::hasText)
                 .map(passwordEncoder::encode)
                 .ifPresent(user::setPassword);
-        Optional.ofNullable(object.getImage())
-                .filter(not(MultipartFile::isEmpty))
-                .ifPresent(image -> user.setImage(image.getOriginalFilename()));
     }
 
     private UserRole getUserRole(Integer id) {

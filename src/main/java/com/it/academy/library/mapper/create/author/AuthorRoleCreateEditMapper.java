@@ -11,6 +11,7 @@ public class AuthorRoleCreateEditMapper implements Mapper<AuthorRoleCreateEditDt
     @Override
     public AuthorRole map(@NotNull AuthorRoleCreateEditDto object) {
         var authorRole = new AuthorRole();
+
         authorRole.setName(object.getName());
 
         return authorRole;

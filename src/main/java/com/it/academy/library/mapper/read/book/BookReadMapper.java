@@ -5,6 +5,7 @@ import com.it.academy.library.mapper.read.author.AuthorReadMapper;
 import com.it.academy.library.mapper.read.order.OrderReadMapper;
 import com.it.academy.library.model.entity.BooksAuthors;
 import com.it.academy.library.model.entity.book.Book;
+import com.it.academy.library.service.dto.read.author.AuthorReadDto;
 import com.it.academy.library.service.dto.read.book.BookFormatReadDto;
 import com.it.academy.library.service.dto.read.book.BookLanguageReadDto;
 import com.it.academy.library.service.dto.read.book.BookPublishingHouseReadDto;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -47,12 +49,17 @@ public class BookReadMapper implements Mapper<Book, BookReadDto> {
                 getBookPublishingHouse(object),
                 getBookSeries(object),
                 getOrder(object),
-                Optional.of(object.getBooksAuthors().stream()
-                                .map(BooksAuthors::getAuthor)
-                                .map(authorReadMapper::map)
-                                .collect(Collectors.toList()))
-                        .orElse(null)
+                getAuthors(object)
         );
+    }
+
+    @NotNull
+    private List<AuthorReadDto> getAuthors(@NotNull Book object) {
+        return Optional.of(object.getBooksAuthors().stream()
+                        .map(BooksAuthors::getAuthor)
+                        .map(authorReadMapper::map)
+                        .collect(Collectors.toList()))
+                .orElse(null);
     }
 
     private OrderReadDto getOrder(@NotNull Book object) {

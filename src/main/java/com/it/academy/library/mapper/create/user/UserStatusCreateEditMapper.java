@@ -11,6 +11,7 @@ public class UserStatusCreateEditMapper implements Mapper<UserStatusCreateEditDt
     @Override
     public UserStatus map(@NotNull UserStatusCreateEditDto object) {
         var userStatus = new UserStatus();
+
         userStatus.setName(object.getName());
 
         return userStatus;

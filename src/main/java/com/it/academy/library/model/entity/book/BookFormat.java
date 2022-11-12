@@ -63,6 +63,7 @@ public class BookFormat extends AbstractAuditingEntity<Integer> {
             return false;
         }
         BookFormat that = (BookFormat) o;
+
         return id != null && Objects.equals(id, that.id);
     }
 

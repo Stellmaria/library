@@ -63,6 +63,7 @@ public class OrderType extends AbstractAuditingEntity<Integer> {
             return false;
         }
         OrderType orderType = (OrderType) o;
+
         return id != null && Objects.equals(id, orderType.id);
     }
 

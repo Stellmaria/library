@@ -63,6 +63,7 @@ public class BookStatus extends AbstractAuditingEntity<Integer> {
             return false;
         }
         BookStatus that = (BookStatus) o;
+
         return id != null && Objects.equals(id, that.id);
     }
 

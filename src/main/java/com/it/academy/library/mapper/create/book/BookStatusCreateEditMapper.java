@@ -11,6 +11,7 @@ public class BookStatusCreateEditMapper implements Mapper<BookStatusCreateEditDt
     @Override
     public BookStatus map(@NotNull BookStatusCreateEditDto object) {
         var bookStatus = new BookStatus();
+
         bookStatus.setName(object.getName());
 
         return bookStatus;

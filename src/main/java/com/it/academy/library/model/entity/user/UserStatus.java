@@ -67,6 +67,7 @@ public class UserStatus extends AbstractAuditingEntity<Integer> {
             return false;
         }
         UserStatus that = (UserStatus) o;
+
         return id != null && Objects.equals(id, that.id);
     }
 

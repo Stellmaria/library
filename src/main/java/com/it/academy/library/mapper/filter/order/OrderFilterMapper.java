@@ -4,8 +4,12 @@ import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.mapper.filter.user.UserFilterMapper;
 import com.it.academy.library.model.entity.order.Order;
 import com.it.academy.library.service.dto.filter.order.OrderFilter;
+import com.it.academy.library.service.dto.filter.order.OrderStatusFilter;
+import com.it.academy.library.service.dto.filter.order.OrderTypeFilter;
+import com.it.academy.library.service.dto.filter.user.UserFilter;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -19,23 +23,34 @@ public class OrderFilterMapper implements Mapper<Order, OrderFilter> {
 
     @Override
     public OrderFilter map(@NotNull Order object) {
-        var user = Optional.ofNullable(object.getUser())
-                .map(userFilterMapper::map)
-                .orElse(null);
-        var orderStatus = Optional.ofNullable(object.getOrderStatus())
-                .map(orderStatusFilterMapper::map)
-                .orElse(null);
-        var orderType = Optional.ofNullable(object.getOrderType())
-                .map(orderTypeFilterMapper::map)
-                .orElse(null);
-
         return new OrderFilter(
                 object.getId(),
-                user,
-                orderStatus,
-                orderType,
+                getUser(object),
+                getOrderStatus(object),
+                getOrderType(object),
                 object.getOrderDate(),
                 object.getReturnDate()
         );
+    }
+
+    @Nullable
+    private OrderTypeFilter getOrderType(@NotNull Order object) {
+        return Optional.ofNullable(object.getOrderType())
+                .map(orderTypeFilterMapper::map)
+                .orElse(null);
+    }
+
+    @Nullable
+    private OrderStatusFilter getOrderStatus(@NotNull Order object) {
+        return Optional.ofNullable(object.getOrderStatus())
+                .map(orderStatusFilterMapper::map)
+                .orElse(null);
+    }
+
+    @Nullable
+    private UserFilter getUser(@NotNull Order object) {
+        return Optional.ofNullable(object.getUser())
+                .map(userFilterMapper::map)
+                .orElse(null);
     }
 }

@@ -22,6 +22,7 @@ public class AuthorCreateEditMapper implements Mapper<AuthorCreateEditDto, Autho
     @Override
     public Author map(@NotNull AuthorCreateEditDto object) {
         var author = new Author();
+
         author.setFirstName(object.getFirstName());
         author.setLastName(object.getLastName());
         setImage(object, author);

@@ -25,6 +25,7 @@ public class OrderCreateEditMapper implements Mapper<OrderCreateEditDto, Order> 
     @Override
     public Order map(@NotNull OrderCreateEditDto object) {
         var order = new Order();
+
         order.setUser(getUser(object.getUserId()));
         order.setOrderStatus(getOrderStatus(object.getOrderStatusId()));
         order.setOrderType(getOrderType(object.getOrderTypeId()));
