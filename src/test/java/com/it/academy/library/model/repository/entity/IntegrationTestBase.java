@@ -9,7 +9,7 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 @IT
-@WithMockUser(username = "test", password = "test", authorities = {"Admin", "User"})
+@WithMockUser(username = "test", password = "test", authorities = {"ADMIN", "USER"})
 public abstract class IntegrationTestBase {
     private static final PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:15.0");
 
