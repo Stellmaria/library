@@ -7,10 +7,7 @@
     <!--    Style main-->
     <link rel="stylesheet" th:href="@{/styles/css/main.css}">
 
-    <!--    Style for home page-->
-    <link rel="stylesheet" th:href="@{/styles/css/home/home.css}">
-
-    <!--    Style for home page-->
+    <!--    Style for books-->
     <link rel="stylesheet" th:href="@{/styles/css/book/book.css}">
 
     <!--    Style filter-->
@@ -24,54 +21,48 @@
 </header>
 
 <main>
-    <div class="main-search">
-        <form action="/books" class="search">
-            <div class="search-filter">
+    <header>
+        <div class="header-search">
+            <form action="/books" class="search">
                 <label class="search-label" for="title">
-                    <input class="section-input-books" id="title" name="title" th:value="${filter.title}" type="text">
-                    <button class="btn" type="submit">Search</button>
+                    <button class="btn search" type="submit">Type to search</button>
+
+                    <input class="search-input" id="title" name="title" placeholder="Search" th:value="${filter.title}"
+                           type="text">
+
+                    <input class="search-input" id="page" name="page" th:value="${books.metadata.page}" type="number">
+
+                    <input class="search-input" id="size" name="size" th:value="${books.metadata.size}" type="number">
                 </label>
+            </form>
+        </div>
+    </header>
 
-            </div>
+    <div class="product-container">
+        <section class="featured-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-header-title">Books</h2>
+                    <div class="section-header-description">
+                        <p>New books - new reading</p>
+                    </div>
+                </div>
 
-            <div>
-                <label class="search-label" for="page">Page:
-                    <input class="section-input" id="page" name="page" th:value="${books.metadata.page}" type="number">
-                </label>
+                <div class="products-wrapper" th:each="book : ${books.content}">
+                    <a class="product-link" th:href="@{'/books/' + ${book.id}}">
+                        <div class="product">
+                            <img alt="Product image" class="product-image" th:if="${book.image}"
+                                 th:src="@{/api/v1/books/{bookId}/image(bookId=${book.id})}">
 
-                <label class="search-label" for="size" th:value="${books.metadata.size}">Size:
-                    <input class="section-input" id="size" name="size" type="number">
-                </label>
-            </div>
-
-        </form>
-    </div>
-
-    <section class="featured-section">
-        <div class="container">
-
-            <div class="section-header">
-                <h2 class="section-header-title">Books</h2>
-                <div class="section-header-description">
-                    <p>New books - new reading</p>
+                            <h4 class="product_title">
+                                <span th:text="${book.title}">Title</span>
+                            </h4>
+                        </div>
+                    </a>
                 </div>
             </div>
-
-            <div class="products-wrapper" th:each="book : ${books.content}">
-                <a class="product-link" th:href="@{'/books/' + ${book.id}}">
-                    <div class="product">
-                        <img alt="Product image" class="product-image" th:if="${book.image}"
-                             th:src="@{/api/v1/books/{bookId}/image(bookId=${book.id})}">
-
-                        <h4 class="product_title">
-                            <span th:text="${book.title}">Title</span>
-                        </h4>
-                    </div>
-                </a>
-            </div>
-
-        </div>
-    </section>
+        </section>
+    </div>
 </main>
 
 <footer>
