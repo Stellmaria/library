@@ -70,3 +70,16 @@
     line-height: 27px;
     text-align: center;
 }
+
+.product-element {
+    text-align: center;
+}
+
+.element {
+    display: flex;
+    justify-content: center;
+}
+
+.product-element h3 {
+    color: var(--header-hover);
+}

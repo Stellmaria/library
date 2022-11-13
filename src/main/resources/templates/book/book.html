@@ -16,203 +16,230 @@
     <div th:insert="~{fragments/header :: header}"></div>
 </header>
 
-<div class="books" sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')">
-    <form enctype="multipart/form-data" method="post" th:action="@{/books/{bookId}/update(bookId=${book.id})}"
-          th:object="${book}">
+<main>
+    <div class="product-element" sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')">
+        <form enctype="multipart/form-data" method="post" th:action="@{/books/{bookId}/update(bookId=${book.id})}"
+              th:object="${book}">
 
-        <label for="title"> Title:
-            <input id="title" name="title" th:value="*{title}" type="text">
-        </label><br>
+            <label for="title"> Title:
+                <input id="title" name="title" th:value="*{title}" type="text">
+            </label><br>
 
-        <label for="subtitle"> Subtitle:
-            <input id="subtitle" name="subtitle" th:value="*{subtitle}" type="text">
-        </label><br>
+            <label for="subtitle"> Subtitle:
+                <input id="subtitle" name="subtitle" th:value="*{subtitle}" type="text">
+            </label><br>
 
-        <label for="year"> Year:
-            <input id="year" name="year" th:value="*{year}" type="text">
-        </label><br>
+            <label for="year"> Year:
+                <input id="year" name="year" th:value="*{year}" type="number">
+            </label><br>
 
-        <label for="pages"> Page:
-            <input id="pages" name="pages" th:value="*{pages}" type="text">
-        </label><br>
+            <label for="pages"> Page:
+                <input id="pages" name="pages" th:value="*{pages}" type="number">
+            </label><br>
 
-        <label for="isbn10"> Isbn10:
-            <input id="isbn10" name="isbn10" th:value="*{isbn10}" type="text">
-        </label><br>
+            <label for="isbn10"> Isbn10:
+                <input id="isbn10" name="isbn10" th:value="*{isbn10}" type="text">
+            </label><br>
 
-        <label for="isbn13"> Isbn13:
-            <input id="isbn13" name="isbn13" th:value="*{isbn13}" type="text">
-        </label><br>
+            <label for="isbn13"> Isbn13:
+                <input id="isbn13" name="isbn13" th:value="*{isbn13}" type="text">
+            </label><br>
 
-        <div th:each="author : ${book.booksAuthors}">
-            <a th:href="@{'/authors/' + ${author.id}}" th:text="|${author.firstName} ${author.lastName}|"> Authors</a>
+            <div th:each="author : ${book.booksAuthors}">
+                <a th:href="@{'/authors/' + ${author.id}}" th:text="|${author.firstName} ${author.lastName}|">
+                    Authors</a>
+            </div>
+
+            <div th:if="${book.image}">
+                <img alt="User image" th:src="@{/api/v1/books/{bookId}/image(bookId=${book.id})}">
+            </div>
+
+            <label for="image"> Image:
+                <input id="image" name="image" type="file">
+            </label><br>
+
+            <div>
+                <label for="bookStatus">Status:
+                    <select id="bookStatus" name="bookStatusId">
+                        <option th:each="bookStatus : ${statuses}"
+                                th:selected="${bookStatus.id == book.bookStatus.id}"
+                                th:text="${bookStatus.name}"
+                                th:value="${bookStatus.id}">Status
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            <div th:if="${book.bookLanguage != null}">
+                <label for="bookLanguage">Language:
+                    <select id="bookLanguage" name="bookLanguageId">
+                        <option th:each="bookLanguage : ${languages}"
+                                th:selected="${bookLanguage.id == book.bookLanguage.id}"
+                                th:text="${bookLanguage.name}"
+                                th:value="${bookLanguage.id}">Language
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            <div th:if="${book.bookLanguage == null}">
+                <label for="bookLanguageN">Language:
+                    <select id="bookLanguageN" name="bookLanguageId">
+                        <option disabled selected value> -- select an option --</option>
+                        <option th:each="bookLanguage : ${languages}"
+                                th:text="${bookLanguage.name}"
+                                th:value="${bookLanguage.id}">Language
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            <div th:if="${book.bookFormat != null}">
+                <label for="bookFormat">Format:
+                    <select id="bookFormat" name="bookFormatId">
+                        <option th:each="bookFormat : ${formats}"
+                                th:selected="${bookFormat.id == book.bookFormat.id}"
+                                th:text="${bookFormat.name}"
+                                th:value="${bookFormat.id}">Format
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            <div th:if="${book.bookFormat == null}">
+                <label for="bookFormatN">Format:
+                    <select id="bookFormatN" name="bookFormatId">
+                        <option disabled selected value> -- select an option --</option>
+                        <option th:each="bookFormat : ${formats}"
+                                th:text="${bookFormat.name}"
+                                th:value="${bookFormat.id}">Format
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            <div th:if="${book.bookPublishingHouse != null}">
+                <label for="bookPublishingHouse">Publishing House:
+                    <select id="bookPublishingHouse" name="bookPublishingHouseId">
+                        <option th:each="bookPublishingHouse : ${houses}"
+                                th:selected="${bookPublishingHouse.id == book.bookPublishingHouse.id}"
+                                th:text="${bookPublishingHouse.name}"
+                                th:value="${bookPublishingHouse.id}">Publishing House
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            <div th:if="${book.bookPublishingHouse == null}">
+                <label for="bookPublishingHouseN">Publishing House:
+                    <select id="bookPublishingHouseN" name="bookPublishingHouseId">
+                        <option disabled selected value> -- select an option --</option>
+                        <option th:each="bookPublishingHouse : ${houses}"
+                                th:text="${bookPublishingHouse.name}"
+                                th:value="${bookPublishingHouse.id}">Publishing House
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            <div th:if="${book.bookSeries != null}">
+                <label for="bookSeries">Series:
+                    <select id="bookSeries" name="bookSeriesId">
+                        <option th:each="bookSeries : ${series}"
+                                th:selected="${bookSeries.id == book.bookSeries.id}"
+                                th:text="${bookSeries.name}"
+                                th:value="${bookSeries.id}">Series
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            <div th:if="${book.bookSeries == null}">
+                <label for="bookSeriesN">Series:
+                    <select id="bookSeriesN" name="bookSeriesId">
+                        <option disabled selected value> -- select an option --</option>
+                        <option th:each="bookSeries : ${series}"
+                                th:text="${bookSeries.name}"
+                                th:value="${bookSeries.id}">Series
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            <button class="btn" type="submit">Update</button>
+        </form>
+
+        <form method="post" sec:authorize="hasRole('ADMIN')" th:action="@{/books/{bookId}/delete(bookId=${book.id})}">
+            <button class="btn" type="submit">Remove</button>
+        </form>
+    </div>
+
+    <div class="product-element" sec:authorize="hasAnyRole('READER', 'GUSET')">
+        <div class="element">
+            <h3>Title: </h3>
+
+            <p th:text="${book.title}"></p>
+        </div>
+
+        <div class="element">
+            <h3>Subtitle: </h3>
+
+            <p th:text="${book.subtitle}"></p>
+        </div>
+
+        <div class="element">
+            <h3>Year: </h3>
+
+            <p th:text="${book.year}"></p>
+        </div>
+
+        <div class="element">
+            <h3>Page: </h3>
+
+            <p th:text="${book.pages}"></p>
+        </div>
+
+        <div class="element">
+            <h3>Isbn10: </h3>
+
+            <p th:text="${book.isbn10}"></p>
+        </div>
+
+        <div class="element">
+            <h3>Isbn13: </h3>
+
+            <p th:text="${book.isbn13}"></p>
+        </div>
+
+        <div class="element" th:if="${book.bookLanguage != null}">
+            <h3>Language: </h3>
+
+            <p th:text="${book.bookLanguage.name}"></p>
+        </div>
+
+        <div class="element" th:if="${book.bookFormat != null}">
+            <h3>Format: </h3>
+
+            <p th:text="${book.bookFormat.name}"></p>
+        </div>
+
+        <div class="element" th:if="${book.bookPublishingHouse != null}">
+            <h3>PublishingHouse: </h3>
+
+            <p th:text="${book.bookPublishingHouse.name}"></p>
+        </div>
+
+        <div class="element" th:if="${book.bookSeries != null}">
+            <h3>Series: </h3>
+
+            <p th:text="${book.bookSeries.name}"></p>
         </div>
 
         <div th:if="${book.image}">
-            <img alt="User image" th:src="@{/api/v1/books/{bookId}/image(bookId=${book.id})}">
+            <img alt="book image" th:src="@{/api/v1/books/{bookId}/image(bookId=${book.id})}">
         </div>
-
-        <label for="image"> Image:
-            <input id="image" name="image" type="file">
-        </label><br>
-
-        <div>
-            <label for="bookStatus">Status:
-                <select id="bookStatus" name="bookStatusId">
-                    <option th:each="bookStatus : ${statuses}"
-                            th:selected="${bookStatus.id == book.bookStatus.id}"
-                            th:text="${bookStatus.name}"
-                            th:value="${bookStatus.id}">Status
-                    </option>
-                </select>
-            </label>
-        </div>
-
-        <div th:if="${book.bookLanguage != null}">
-            <label for="bookLanguage">Language:
-                <select id="bookLanguage" name="bookLanguageId">
-                    <option th:each="bookLanguage : ${languages}"
-                            th:selected="${bookLanguage.id == book.bookLanguage.id}"
-                            th:text="${bookLanguage.name}"
-                            th:value="${bookLanguage.id}">Language
-                    </option>
-                </select>
-            </label>
-        </div>
-
-        <div th:if="${book.bookLanguage == null}">
-            <label for="bookLanguageN">Language:
-                <select id="bookLanguageN" name="bookLanguageId">
-                    <option disabled selected value> -- select an option --</option>
-                    <option th:each="bookLanguage : ${languages}"
-                            th:text="${bookLanguage.name}"
-                            th:value="${bookLanguage.id}">Language
-                    </option>
-                </select>
-            </label>
-        </div>
-
-        <div th:if="${book.bookFormat != null}">
-            <label for="bookFormat">Format:
-                <select id="bookFormat" name="bookFormatId">
-                    <option th:each="bookFormat : ${formats}"
-                            th:selected="${bookFormat.id == book.bookFormat.id}"
-                            th:text="${bookFormat.name}"
-                            th:value="${bookFormat.id}">Format
-                    </option>
-                </select>
-            </label>
-        </div>
-
-        <div th:if="${book.bookFormat == null}">
-            <label for="bookFormatN">Format:
-                <select id="bookFormatN" name="bookFormatId">
-                    <option disabled selected value> -- select an option --</option>
-                    <option th:each="bookFormat : ${formats}"
-                            th:text="${bookFormat.name}"
-                            th:value="${bookFormat.id}">Format
-                    </option>
-                </select>
-            </label>
-        </div>
-
-        <div th:if="${book.bookPublishingHouse != null}">
-            <label for="bookPublishingHouse">Publishing House:
-                <select id="bookPublishingHouse" name="bookPublishingHouseId">
-                    <option th:each="bookPublishingHouse : ${houses}"
-                            th:selected="${bookPublishingHouse.id == book.bookPublishingHouse.id}"
-                            th:text="${bookPublishingHouse.name}"
-                            th:value="${bookPublishingHouse.id}">Publishing House
-                    </option>
-                </select>
-            </label>
-        </div>
-
-        <div th:if="${book.bookPublishingHouse == null}">
-            <label for="bookPublishingHouseN">Publishing House:
-                <select id="bookPublishingHouseN" name="bookPublishingHouseId">
-                    <option disabled selected value> -- select an option --</option>
-                    <option th:each="bookPublishingHouse : ${houses}"
-                            th:text="${bookPublishingHouse.name}"
-                            th:value="${bookPublishingHouse.id}">Publishing House
-                    </option>
-                </select>
-            </label>
-        </div>
-
-        <div th:if="${book.bookSeries != null}">
-            <label for="bookSeries">Series:
-                <select id="bookSeries" name="bookSeriesId">
-                    <option th:each="bookSeries : ${series}"
-                            th:selected="${bookSeries.id == book.bookSeries.id}"
-                            th:text="${bookSeries.name}"
-                            th:value="${bookSeries.id}">Series
-                    </option>
-                </select>
-            </label>
-        </div>
-
-        <div th:if="${book.bookSeries == null}">
-            <label for="bookSeriesN">Series:
-                <select id="bookSeriesN" name="bookSeriesId">
-                    <option disabled selected value> -- select an option --</option>
-                    <option th:each="bookSeries : ${series}"
-                            th:text="${bookSeries.name}"
-                            th:value="${bookSeries.id}">Series
-                    </option>
-                </select>
-            </label>
-        </div>
-
-        <button type="submit">Update</button>
-    </form>
-
-    <form sec:authorize="hasRole('ADMIN')" method="post" th:action="@{/books/{bookId}/delete(bookId=${book.id})}">
-        <button type="submit">Remove</button>
-    </form>
-
-</div>
-
-<div class="books" sec:authorize="hasAnyRole('READER', 'GUSET')">
-    <div th:text="${book.title}">
-        <p>Title:</p>
     </div>
-
-    <div th:text="${book.subtitle}">Subtitle</div>
-
-    <div th:text="${book.year}">Year</div>
-
-    <div th:text="${book.pages}">Page</div>
-
-    <div th:text="${book.isbn10}">Isbn10</div>
-
-    <div th:text="${book.isbn13}">Isbn13</div>
-
-    <div th:if="${book.bookLanguage != null}">
-        <div th:text="${book.bookLanguage.name}">Language</div>
-    </div>
-
-    <div th:if="${book.bookFormat != null}">
-        <div th:text="${book.bookFormat.name}">Format</div>
-    </div>
-
-    <div th:if="${book.bookPublishingHouse != null}">
-        <div th:text="${book.bookPublishingHouse.name}">PublishingHouse</div>
-    </div>
-
-    <div th:if="${book.bookSeries != null}">
-        <div th:text="${book.bookSeries.name}">Series</div>
-    </div>
-
-    <div th:each="author : ${book.booksAuthors}">
-        <a th:href="@{'/authors/' + ${author.id}}" th:text="|${author.firstName} ${author.lastName}|"> Authors</a>
-    </div>
-
-    <div th:if="${book.image}">
-        <img alt="book image" th:src="@{/api/v1/books/{bookId}/image(bookId=${book.id})}">
-    </div>
-
-</div>
+</main>
 
 <footer>
     <div th:insert="~{fragments/footer :: footer}"></div>

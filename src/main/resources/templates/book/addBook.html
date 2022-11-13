@@ -3,99 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Book</title>
+
+    <!--    Style main-->
+    <link rel="stylesheet" th:href="@{/styles/css/main.css}">
 </head>
 <body>
+
 <header>
     <div th:insert="~{fragments/header :: header}"></div>
 </header>
 
-<div sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')" th:insert="~{fragments :: header}"></div>
-<form enctype="multipart/form-data" method="post" th:action="@{/books}" th:object="${book}">
-    <label for="title"> Title:
-        <input id="title" name="title" th:value="*{title}" type="text">
-    </label><br>
-    <label for="subtitle"> Subtitle:
-        <input id="subtitle" name="subtitle" th:value="*{subtitle}" type="text">
-    </label><br>
-    <label for="year"> Year:
-        <input id="year" name="year" th:value="*{year}" type="text">
-    </label><br>
-    <label for="page"> Page:
-        <input id="page" name="page" th:value="*{page}" type="text">
-    </label><br>
-    <label for="isbn10"> Isbn10:
-        <input id="isbn10" name="isbn10" th:value="*{isbn10}" type="text">
-    </label><br>
-    <label for="isbn13"> Isbn13:
-        <input id="isbn13" name="isbn13" th:value="*{isbn13}" type="text">
-    </label><br>
-    <label for="image"> Image:
-        <input id="image" name="image" type="file">
-    </label><br>
-    <div>
-        <label for="bookStatus">Status:
-            <select id="bookStatus" name="bookStatusId">
-                <option disabled selected value></option>
-                <option th:each="bookStatus : ${statuses}"
-                        th:selected="${bookStatus.id == book.bookStatusId}"
-                        th:text="${bookStatus.name}"
-                        th:value="${bookStatus.id}">Status
-                </option>
-            </select>
-        </label>
+<main>
+    <div sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')">
+        <form enctype="multipart/form-data" method="post" th:action="@{/books}" th:object="${book}">
+            <label for="title"> Title:
+                <input id="title" name="title" th:value="*{title}" type="text">
+            </label><br>
+
+            <label for="subtitle"> Subtitle:
+                <input id="subtitle" name="subtitle" th:value="*{subtitle}" type="text">
+            </label><br>
+
+            <label for="year"> Year:
+                <input id="year" name="year" th:value="*{year}" type="number">
+            </label><br>
+
+            <label for="pages"> Page:
+                <input id="pages" name="pages" th:value="*{pages}" type="number">
+            </label><br>
+
+            <label for="isbn10"> Isbn10:
+                <input id="isbn10" name="isbn10" th:value="*{isbn10}" type="text">
+            </label><br>
+
+            <label for="isbn13"> Isbn13:
+                <input id="isbn13" name="isbn13" th:value="*{isbn13}" type="text">
+            </label><br>
+
+            <label for="image"> Image:
+                <input id="image" name="image" type="file">
+            </label><br>
+
+            <div>
+                <label for="bookStatus">Status:
+                    <select id="bookStatus" name="bookStatusId">
+                        <option disabled selected value></option>
+                        <option th:each="bookStatus : ${statuses}"
+                                th:selected="${bookStatus.id == book.bookStatusId}"
+                                th:text="${bookStatus.name}"
+                                th:value="${bookStatus.id}">Status
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            <div>
+                <label for="bookLanguage">Language:
+                    <select id="bookLanguage" name="bookLanguageId">
+                        <option disabled selected value></option>
+                        <option th:each="bookLanguage : ${languages}"
+                                th:selected="${bookLanguage.id == book.bookLanguageId}"
+                                th:text="${bookLanguage.name}"
+                                th:value="${bookLanguage.id}">Language
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            <div>
+                <label for="bookFormat">Format:
+                    <select id="bookFormat" name="bookFormatId">
+                        <option disabled selected value></option>
+                        <option th:each="bookFormat : ${formats}"
+                                th:selected="${bookFormat.id == book.bookFormatId}"
+                                th:text="${bookFormat.name}"
+                                th:value="${bookFormat.id}">Format
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            <div>
+                <label for="bookPublishingHouse">Publishing House:
+                    <select id="bookPublishingHouse" name="bookPublishingHouseId">
+                        <option disabled selected value></option>
+                        <option th:each="bookPublishingHouse : ${houses}"
+                                th:selected="${bookPublishingHouse.id == book.bookPublishingHouseId}"
+                                th:text="${bookPublishingHouse.name}"
+                                th:value="${bookPublishingHouse.id}">Publishing House
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            <div>
+                <label for="bookSeries">Series:
+                    <select id="bookSeries" name="bookSeriesId">
+                        <option disabled selected value></option>
+                        <option th:each="bookSeries : ${series}"
+                                th:selected="${bookSeries.id == book.bookSeriesId}"
+                                th:text="${bookSeries.name}"
+                                th:value="${bookSeries.id}">Series
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            <div>
+                <label for="authors">Author:
+                    <select id="authors" name="authorsId">
+                        <option disabled selected value></option>
+                        <option th:each="author : ${authors}"
+                                th:text="|${author.firstName} ${author.lastName}|"
+                                th:value="${author.id}">Author
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            <button type="submit">Add new book</button>
+        </form>
+
+        <div th:if="${errors}">
+            <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Error message</p>
+        </div>
     </div>
-    <div>
-        <label for="bookLanguage">Language:
-            <select id="bookLanguage" name="bookLanguageId">
-                <option disabled selected value></option>
-                <option th:each="bookLanguage : ${languages}"
-                        th:selected="${bookLanguage.id == book.bookLanguageId}"
-                        th:text="${bookLanguage.name}"
-                        th:value="${bookLanguage.id}">Language
-                </option>
-            </select>
-        </label>
-    </div>
-    <div>
-        <label for="bookFormat">Format:
-            <select id="bookFormat" name="bookFormatId">
-                <option disabled selected value></option>
-                <option th:each="bookFormat : ${formats}"
-                        th:selected="${bookFormat.id == book.bookFormatId}"
-                        th:text="${bookFormat.name}"
-                        th:value="${bookFormat.id}">Format
-                </option>
-            </select>
-        </label>
-    </div>
-    <div>
-        <label for="bookPublishingHouse">Publishing House:
-            <select id="bookPublishingHouse" name="bookPublishingHouseId">
-                <option disabled selected value></option>
-                <option th:each="bookPublishingHouse : ${houses}"
-                        th:selected="${bookPublishingHouse.id == book.bookPublishingHouseId}"
-                        th:text="${bookPublishingHouse.name}"
-                        th:value="${bookPublishingHouse.id}">Publishing House
-                </option>
-            </select>
-        </label>
-    </div>
-    <div>
-        <label for="bookSeries">Series:
-            <select id="bookSeries" name="bookSeriesId">
-                <option disabled selected value></option>
-                <option th:each="bookSeries : ${series}"
-                        th:selected="${bookSeries.id == book.bookSeriesId}"
-                        th:text="${bookSeries.name}"
-                        th:value="${bookSeries.id}">Series
-                </option>
-            </select>
-        </label>
-    </div>
-    <button type="submit">Add new book</button>
-</form>
-<div th:if="${errors}">
-    <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Error message</p>
-</div>
+</main>
+
+<footer>
+    <div th:insert="~{fragments/footer :: footer}"></div>
+</footer>
 </body>
 </html>
