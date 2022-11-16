@@ -9,8 +9,6 @@ import com.it.academy.library.service.dto.create.user.UserCreateEditDto;
 import com.it.academy.library.service.dto.filter.user.UserFilter;
 import com.it.academy.library.service.dto.read.user.UserReadDto;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,7 +17,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -46,13 +43,31 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: " + username));
     }
 
-    public Page<UserReadDto> findAll(UserFilter userFilter, Pageable pageable) {
-        var predicate = UserFilter.queryPredicates(userFilter);
+    @Transactional(rollbackFor = {Exception.class})
+    public UserReadDto create(UserCreateEditDto dto) {
+        return Optional.of(dto)
+                .map(it -> {
+                    Optional.ofNullable(it.getImage())
+                            .ifPresent(multipartFile -> ImageService.uploadImage(multipartFile, imageService));
+
+                    it.setUserRoleId(1);
+                    it.setUserStatusId(1);
+
+                    return userCreateEditMapper.map(it);
+                })
+                .map(userRepository::save)
+                .map(userReadMapper::map)
+                .orElseThrow();
+    }
+
+    public Page<UserReadDto> findAll(UserFilter filter, Pageable pageable) {
+        var predicate = UserFilter.queryPredicates(filter);
 
         return userRepository.findAll(predicate, pageable)
                 .map(userReadMapper::map);
     }
 
+    @SuppressWarnings("unused")
     public Collection<UserReadDto> findAll() {
         return userRepository.findAll().stream()
                 .map(userReadMapper::map)
@@ -65,28 +80,12 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional(rollbackFor = {Exception.class})
-    public UserReadDto create(UserCreateEditDto userCreateEditDto) {
-        return Optional.of(userCreateEditDto)
-                .map(it -> {
-                    Optional.ofNullable(it.getImage()).ifPresent(this::uploadImage);
-
-                    it.setUserRoleId(1);
-                    it.setUserStatusId(1);
-
-                    return userCreateEditMapper.map(it);
-                })
-                .map(userRepository::save)
-                .map(userReadMapper::map)
-                .orElseThrow();
-    }
-
-    @Transactional(rollbackFor = {Exception.class})
-    public Optional<UserReadDto> update(Long id, UserCreateEditDto userCreateEditDto) {
+    public Optional<UserReadDto> update(Long id, UserCreateEditDto dto) {
         return userRepository.findById(id)
                 .map(it -> {
-                    uploadImage(userCreateEditDto.getImage());
+                    ImageService.uploadImage(dto.getImage(), imageService);
 
-                    return userCreateEditMapper.map(userCreateEditDto, it);
+                    return userCreateEditMapper.map(dto, it);
                 })
                 .map(userRepository::saveAndFlush)
                 .map(userReadMapper::map);
@@ -102,13 +101,6 @@ public class UserService implements UserDetailsService {
                     return true;
                 })
                 .orElse(false);
-    }
-
-    @SneakyThrows
-    private void uploadImage(@NotNull MultipartFile image) {
-        if (!image.isEmpty()) {
-            imageService.upload(image.getOriginalFilename(), image.getInputStream());
-        }
     }
 
     public Optional<byte[]> findAvatar(Long id) {

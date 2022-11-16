@@ -166,14 +166,23 @@
                 </label>
             </div>
 
-            <button class="btn" type="submit">Update</button>
+            <div class="button">
+                <button class="btn" type="submit">Update</button>
+            </div>
         </form>
 
-        <form method="post" sec:authorize="hasRole('ADMIN')" th:action="@{/books/{bookId}/delete(bookId=${book.id})}">
-            <button class="btn" type="submit">Remove</button>
-        </form>
+        <div class="button-form">
+            <div class="button">
+                <form class="button" method="post" sec:authorize="hasRole('ADMIN')"
+                      th:action="@{/books/{bookId}/delete(bookId=${book.id})}">
+                    <button class="btn" type="submit">Remove</button>
+                </form>
+            </div>
+        </div>
     </div>
+</main>
 
+<main>
     <div class="product-element" sec:authorize="hasAnyRole('READER', 'GUSET')">
         <div class="element">
             <h3>Title: </h3>
@@ -232,10 +241,11 @@
         <div class="element" th:if="${book.bookSeries != null}">
             <h3>Series: </h3>
 
-            <p th:text="${book.bookSeries.name}"></p>
+            <a th:href="@{'/books/series/' + ${book.bookSeries.id}}" th:text="${book.bookSeries.name}"> Book
+                series</a>
         </div>
 
-        <div th:if="${book.image}">
+        <div class="img-book" th:if="${book.image}">
             <img alt="book image" th:src="@{/api/v1/books/{bookId}/image(bookId=${book.id})}">
         </div>
     </div>

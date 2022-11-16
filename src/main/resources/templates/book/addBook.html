@@ -6,6 +6,9 @@
 
     <!--    Style main-->
     <link rel="stylesheet" th:href="@{/styles/css/main.css}">
+
+    <!--    Style for books-->
+    <link rel="stylesheet" th:href="@{/styles/css/book/book.css}">
 </head>
 <body>
 
@@ -14,7 +17,7 @@
 </header>
 
 <main>
-    <div sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')">
+    <div class="product-element" sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')">
         <form enctype="multipart/form-data" method="post" th:action="@{/books}" th:object="${book}">
             <label for="title"> Title:
                 <input id="title" name="title" th:value="*{title}" type="text">
@@ -109,19 +112,11 @@
                 </label>
             </div>
 
-            <div>
-                <label for="authors">Author:
-                    <select id="authors" name="authorsId">
-                        <option disabled selected value></option>
-                        <option th:each="author : ${authors}"
-                                th:text="|${author.firstName} ${author.lastName}|"
-                                th:value="${author.id}">Author
-                        </option>
-                    </select>
-                </label>
+            <div class="last">
+                <div class="button-form">
+                    <button class="btn" type="submit">Add new book</button>
+                </div>
             </div>
-
-            <button type="submit">Add new book</button>
         </form>
 
         <div th:if="${errors}">
@@ -130,8 +125,9 @@
     </div>
 </main>
 
-<footer>
+<footer class="footer-end">
     <div th:insert="~{fragments/footer :: footer}"></div>
 </footer>
+
 </body>
 </html>

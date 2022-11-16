@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add series</title>
+
+    <!--    Style main-->
+    <link rel="stylesheet" th:href="@{/styles/css/main.css}">
+
+    <!--    Style for books-->
+    <link rel="stylesheet" th:href="@{/styles/css/book/book.css}">
+</head>
+<body>
+
+<header>
+    <div th:insert="~{fragments/header :: header}"></div>
+</header>
+
+<main>
+    <div class="product-element" sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')">
+        <form enctype="multipart/form-data" method="post" th:action="@{/books/series}" th:object="${series}">
+            <label for="name"> Name:
+                <input id="name" name="name" th:value="*{name}" type="text">
+            </label><br>
+
+
+            <div th:if="${errors}">
+                <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Error message</p>
+            </div>
+        </form>
+    </div>
+</main>
+
+</body>
+</html>

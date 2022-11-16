@@ -26,16 +26,24 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class AuthorController {
     private final AuthorService authorService;
 
-    @GetMapping("/addAuthor")
-    public String addAuthor(@NotNull Model model, AuthorCreateEditDto author) {
-        model.addAttribute("author", author);
+    public String create(@Validated AuthorCreateEditDto author, @NotNull BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("author", author);
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
 
-        return "author/addAuthor";
+            return "redirect:/author/addAuthor";
+        }
+
+        authorService.create(author);
+
+        return "redirect:/books";
+
     }
 
     @GetMapping
-    public String findAll(@NotNull Model model, AuthorFilter authorFilter, Pageable pageable) {
-        var page = authorService.findAll(authorFilter, pageable);
+    public String findAll(@NotNull Model model, AuthorFilter filter, Pageable pageable) {
+        var page = authorService.findAll(filter, pageable);
 
         model.addAttribute("books", PageResponse.of(page));
 
@@ -55,21 +63,6 @@ public class AuthorController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    public String create(@Validated AuthorCreateEditDto author, @NotNull BindingResult bindingResult,
-                         RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("author", author);
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-
-            return "redirect:/author/addAuthor";
-        }
-
-        authorService.create(author);
-
-        return "redirect:/books";
-
-    }
-
     @PostMapping("/{id}/update")
     public String update(@PathVariable("id") Long id, @Validated AuthorCreateEditDto author) {
         return authorService.update(id, author)
@@ -84,5 +77,12 @@ public class AuthorController {
         }
 
         return "redirect:/authors";
+    }
+
+    @GetMapping("/addAuthor")
+    public String addAuthor(@NotNull Model model, AuthorCreateEditDto author) {
+        model.addAttribute("author", author);
+
+        return "author/addAuthor";
     }
 }

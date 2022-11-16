@@ -29,21 +29,28 @@ public class UserController {
     private final UserRoleService userRoleService;
     private final UserStatusService userStatusService;
 
-    @GetMapping("/registration")
-    public String registration(@NotNull Model model, UserCreateEditDto user) {
-        model.addAttribute("user", user);
-        model.addAttribute("roles", userRoleService.findAll());
-        model.addAttribute("statuses", userStatusService.findAll());
+    @PostMapping
+    public String create(@Validated UserCreateEditDto dto,
+                         @NotNull BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("user", dto);
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
 
-        return "user/registration";
+            return "redirect:/users/registration";
+        }
+
+        userService.create(dto);
+
+        return "redirect:/";
     }
 
     @GetMapping
-    public String findAll(@NotNull Model model, UserFilter userFilter, Pageable pageable) {
-        var page = userService.findAll(userFilter, pageable);
+    public String findAll(@NotNull Model model, UserFilter filter, Pageable pageable) {
+        var page = userService.findAll(filter, pageable);
 
         model.addAttribute("users", PageResponse.of(page));
-        model.addAttribute("filter", userFilter);
+        model.addAttribute("filter", filter);
 
         return "user/users";
     }
@@ -51,34 +58,19 @@ public class UserController {
     @GetMapping("/{id}")
     public String findById(@PathVariable("id") Long id, Model model) {
         return userService.findById(id)
-                .map(user -> {
-                    model.addAttribute("user", user);
+                .map(dto -> {
+                    model.addAttribute("user", dto);
                     model.addAttribute("roles", userRoleService.findAll());
                     model.addAttribute("statuses", userStatusService.findAll());
+
                     return "user/user";
                 })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping
-    public String create(@Validated UserCreateEditDto user,
-                         @NotNull BindingResult bindingResult,
-                         RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("user", user);
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-
-            return "redirect:/users/registration";
-        }
-
-        userService.create(user);
-
-        return "redirect:/login";
-    }
-
     @PostMapping("/{id}/update")
-    public String update(@PathVariable("id") Long id, @Validated UserCreateEditDto user) {
-        return userService.update(id, user)
+    public String update(@PathVariable("id") Long id, @Validated UserCreateEditDto dto) {
+        return userService.update(id, dto)
                 .map(it -> "redirect:/users/{id}")
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
@@ -90,5 +82,14 @@ public class UserController {
         }
 
         return "redirect:/users";
+    }
+
+    @GetMapping("/registration")
+    public String registration(@NotNull Model model, UserCreateEditDto user) {
+        model.addAttribute("user", user);
+        model.addAttribute("roles", userRoleService.findAll());
+        model.addAttribute("statuses", userStatusService.findAll());
+
+        return "user/registration";
     }
 }

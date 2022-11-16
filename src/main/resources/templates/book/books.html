@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Books</title>
@@ -12,7 +12,6 @@
 
     <!--    Style filter-->
     <link rel="stylesheet" th:href="@{/styles/css/filter.css}">
-
 </head>
 <body>
 
@@ -33,6 +32,10 @@
                     <input class="search-input" id="page" name="page" th:value="${books.metadata.page}" type="number">
 
                     <input class="search-input" id="size" name="size" th:value="${books.metadata.size}" type="number">
+
+                    <a class="btn" sec:authorize="hasAnyRole('ADMIN', 'LIBRARIAN')" th:href="@{/books/addBook}">
+                        Add book
+                    </a>
                 </label>
             </form>
         </div>

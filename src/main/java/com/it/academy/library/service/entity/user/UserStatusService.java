@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,11 +16,6 @@ import java.util.stream.Collectors;
 public class UserStatusService {
     private final UserStatusRepository userStatusRepository;
     private final UserStatusReadMapper userStatusReadMapper;
-
-    public Optional<UserStatusReadDto> findById(Integer id) {
-        return userStatusRepository.findById(id)
-                .map(userStatusReadMapper::map);
-    }
 
     public Collection<UserStatusReadDto> findAll() {
         return userStatusRepository.findAll().stream()

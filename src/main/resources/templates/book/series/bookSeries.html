@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Book series</title>
+
+    <!--    Style main-->
+    <link rel="stylesheet" th:href="@{/styles/css/main.css}">
+
+    <!--    Style for books-->
+    <link rel="stylesheet" th:href="@{/styles/css/book/book.css}">
+</head>
+<body>
+
+<header>
+    <div th:insert="~{fragments/header :: header}"></div>
+</header>
+
+<main>
+    <div class="element">
+        <h3>Name: </h3>
+
+        <p th:text="${series.name}">Name</p>
+    </div>
+
+    <div th:each="book : ${books}">
+        <h3 th:text="${book.title}"></h3>
+    </div>
+
+</main>
+
+</body>
+</html>

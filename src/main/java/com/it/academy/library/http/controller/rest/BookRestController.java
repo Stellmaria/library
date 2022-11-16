@@ -31,6 +31,12 @@ import static org.springframework.http.ResponseEntity.notFound;
 public class BookRestController {
     private final BookService bookService;
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public BookReadDto create(@Validated @RequestBody BookCreateEditDto book) {
+        return bookService.create(book);
+    }
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public PageResponse<BookReadDto> findAll(BookFilter bookFilter, Pageable pageable) {
         var page = bookService.findAll(bookFilter, pageable);
@@ -38,26 +44,10 @@ public class BookRestController {
         return PageResponse.of(page);
     }
 
-    @GetMapping(value = "/{id}/image")
-    public ResponseEntity<byte[]> findAvatar(@PathVariable("id") Long id) {
-        return bookService.findImage(id)
-                .map(it -> ResponseEntity.ok()
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .contentLength(it.length)
-                        .body(it))
-                .orElseGet(notFound()::build);
-    }
-
     @GetMapping("/{id}")
     public BookReadDto findById(@PathVariable("id") Long id) {
         return bookService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    }
-
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public BookReadDto create(@Validated @RequestBody BookCreateEditDto book) {
-        return bookService.create(book);
     }
 
     @PutMapping("/{id}")
@@ -72,5 +62,15 @@ public class BookRestController {
         if (!bookService.delete(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping(value = "/{id}/image")
+    public ResponseEntity<byte[]> findAvatar(@PathVariable("id") Long id) {
+        return bookService.findImage(id)
+                .map(it -> ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .contentLength(it.length)
+                        .body(it))
+                .orElseGet(notFound()::build);
     }
 }

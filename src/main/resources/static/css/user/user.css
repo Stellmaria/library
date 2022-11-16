@@ -1,3 +1,5 @@
-.main-user {
+.list-users {
     text-align: center;
+    color: var(--header-hover);
+    padding-top: 20px;
 }

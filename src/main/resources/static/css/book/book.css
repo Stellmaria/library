@@ -83,3 +83,25 @@
 .product-element h3 {
     color: var(--header-hover);
 }
+
+.button {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+}
+
+.button-form {
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+
+.img-book {
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+
+.last {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+}

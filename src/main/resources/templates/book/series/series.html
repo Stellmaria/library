@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Series</title>
+
+    <!--    Style main-->
+    <link rel="stylesheet" th:href="@{/styles/css/main.css}">
+
+    <!--    Style for books-->
+    <link rel="stylesheet" th:href="@{/styles/css/book/book.css}">
+
+    <!--    Style filter-->
+    <link rel="stylesheet" th:href="@{/styles/css/filter.css}">
+</head>
+<body>
+
+<header>
+    <div th:insert="~{fragments/header :: header}"></div>
+</header>
+
+<main>
+    <div th:each="bookSeries : ${series.content}">
+        <a th:href="@{'/books/series/' + ${bookSeries.id}}" th:text="${bookSeries.name}"> Book series</a>
+    </div>
+</main>
+
+</body>
+</html>

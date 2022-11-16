@@ -31,6 +31,12 @@ import static org.springframework.http.ResponseEntity.notFound;
 public class UserRestController {
     private final UserService userService;
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserReadDto create(@Validated @RequestBody UserCreateEditDto user) {
+        return userService.create(user);
+    }
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public PageResponse<UserReadDto> findAll(UserFilter userFilter, Pageable pageable) {
         var page = userService.findAll(userFilter, pageable);
@@ -38,26 +44,10 @@ public class UserRestController {
         return PageResponse.of(page);
     }
 
-    @GetMapping(value = "/{id}/avatar")
-    public ResponseEntity<byte[]> findAvatar(@PathVariable("id") Long id) {
-        return userService.findAvatar(id)
-                .map(it -> ResponseEntity.ok()
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .contentLength(it.length)
-                        .body(it))
-                .orElseGet(notFound()::build);
-    }
-
     @GetMapping("/{id}")
     public UserReadDto findById(@PathVariable("id") Long id) {
         return userService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    }
-
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public UserReadDto create(@Validated @RequestBody UserCreateEditDto user) {
-        return userService.create(user);
     }
 
     @PutMapping("/{id}")
@@ -72,5 +62,15 @@ public class UserRestController {
         if (!userService.delete(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping(value = "/{id}/avatar")
+    public ResponseEntity<byte[]> findAvatar(@PathVariable("id") Long id) {
+        return userService.findAvatar(id)
+                .map(it -> ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .contentLength(it.length)
+                        .body(it))
+                .orElseGet(notFound()::build);
     }
 }

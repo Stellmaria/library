@@ -39,24 +39,28 @@ public class BookController {
     private final BookSeriesService bookSeriesService;
     private final AuthorService authorService;
 
-    @GetMapping("/addBook")
-    public String addBook(@NotNull Model model, BookCreateEditDto book) {
-        model.addAttribute("book", book);
-        model.addAttribute("statuses", bookStatusService.findAll());
-        model.addAttribute("languages", bookLanguageService.findAll());
-        model.addAttribute("formats", bookFormatService.findAll());
-        model.addAttribute("houses", bookPublishingHouseService.findAll());
-        model.addAttribute("series", bookSeriesService.findAll());
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public String create(@Validated BookCreateEditDto dto, @NotNull BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("book", dto);
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
 
-        return "book/addBook";
+            return "redirect:/books/addBook";
+        }
+
+        bookService.create(dto);
+
+        return "redirect:/books";
     }
 
     @GetMapping
-    public String findAll(@NotNull Model model, BookFilter bookFilter, Pageable pageable) {
-        var page = bookService.findAll(bookFilter, pageable);
+    public String findAll(@NotNull Model model, BookFilter filter, Pageable pageable) {
+        var page = bookService.findAll(filter, pageable);
 
         model.addAttribute("books", PageResponse.of(page));
-        model.addAttribute("filter", bookFilter);
+        model.addAttribute("filter", filter);
 
         return "book/books";
     }
@@ -80,25 +84,9 @@ public class BookController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public String create(@Validated BookCreateEditDto book, @NotNull BindingResult bindingResult,
-                         RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("book", book);
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-
-            return "redirect:/books/addBook";
-        }
-
-        bookService.create(book);
-
-        return "redirect:/books";
-    }
-
     @PostMapping("/{id}/update")
-    public String update(@PathVariable("id") Long id, @Validated BookCreateEditDto book) {
-        return bookService.update(id, book)
+    public String update(@PathVariable("id") Long id, @Validated BookCreateEditDto dto) {
+        return bookService.update(id, dto)
                 .map(it -> "redirect:/books/{id}")
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
@@ -110,5 +98,17 @@ public class BookController {
         }
 
         return "redirect:/books";
+    }
+
+    @GetMapping("/addBook")
+    public String addBook(@NotNull Model model, BookCreateEditDto dto) {
+        model.addAttribute("book", dto);
+        model.addAttribute("statuses", bookStatusService.findAll());
+        model.addAttribute("languages", bookLanguageService.findAll());
+        model.addAttribute("formats", bookFormatService.findAll());
+        model.addAttribute("houses", bookPublishingHouseService.findAll());
+        model.addAttribute("series", bookSeriesService.findAll());
+
+        return "book/addBook";
     }
 }

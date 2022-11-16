@@ -69,13 +69,12 @@
             </label>
         </div>
 
-        <button sec:authorize="hasRole('ADMIN')" type="submit">Update</button>
+        <button class="btn" sec:authorize="hasRole('ADMIN')" type="submit">Update</button>
     </form>
 </main>
 
-
 <form method="post" th:action="@{/users/{userId}/delete(userId=${user.id})}" sec:authorize="hasRole('ADMIN')">
-    <button type="submit">Remove</button>
+    <button class="btn" type="submit">Remove</button>
 </form>
 
 </body>
