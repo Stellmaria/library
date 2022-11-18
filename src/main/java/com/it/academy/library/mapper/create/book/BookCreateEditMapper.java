@@ -8,6 +8,7 @@ import com.it.academy.library.model.entity.book.BookPublishingHouse;
 import com.it.academy.library.model.entity.book.BookSeries;
 import com.it.academy.library.model.entity.book.BookStatus;
 import com.it.academy.library.model.entity.order.Order;
+import com.it.academy.library.model.repository.entity.author.AuthorRepository;
 import com.it.academy.library.model.repository.entity.book.BookFormatRepository;
 import com.it.academy.library.model.repository.entity.book.BookLanguageRepository;
 import com.it.academy.library.model.repository.entity.book.BookPublishingHouseRepository;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.util.function.Predicate.not;
 
@@ -33,6 +35,7 @@ public class BookCreateEditMapper implements Mapper<BookCreateEditDto, Book> {
     private final BookPublishingHouseRepository bookPublishingHouseRepository;
     private final BookSeriesRepository bookSeriesRepository;
     private final OrderRepository orderRepository;
+    private final AuthorRepository authorRepository;
 
     @Override
     public Book map(BookCreateEditDto fromObject, Book toObject) {
@@ -64,6 +67,12 @@ public class BookCreateEditMapper implements Mapper<BookCreateEditDto, Book> {
         book.setBookPublishingHouse(getBookPublishingHouseRepository(object.getBookPublishingHouseId()));
         book.setBookSeries(getBookSeries(object.getBookSeriesId()));
         book.setOrder(getOrder(object.getOrderId()));
+
+        book.setBooksAuthors(Optional.of(object.getAuthorId().stream()
+                .map(aLong -> authorRepository.findById(aLong).orElse(null))
+                .map()
+                .collect(Collectors.toList()))
+        );
     }
 
     private void setImage(@NotNull BookCreateEditDto object, @NotNull Book book) {

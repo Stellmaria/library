@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+import java.util.Collection;
 
 /**
  * A DTO for the {@link Book} entity.
@@ -47,4 +48,6 @@ public class BookCreateEditDto {
     private Integer bookSeriesId;
 
     private Long orderId;
+
+    private Collection<Long> authorId;
 }
