@@ -11,6 +11,7 @@
     <!--    Style for books-->
     <link rel="stylesheet" th:href="@{/styles/css/book/book.css}">
 </head>
+
 <body>
 
 <header>
@@ -24,6 +25,11 @@
                 <input id="name" name="name" th:value="*{name}" type="text">
             </label><br>
 
+            <div class="last">
+                <div class="button-form">
+                    <button class="btn" type="submit">Add new book series</button>
+                </div>
+            </div>
 
             <div th:if="${errors}">
                 <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Error message</p>

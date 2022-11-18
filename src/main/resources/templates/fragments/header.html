@@ -9,7 +9,8 @@
 <header class="header">
     <div class="container">
         <div class="header-row">
-            <div class="header-logo"><a th:href="@{/}">Library</a>
+            <div class="header-logo">
+                <a th:href="@{/}">Library</a>
             </div>
 
             <nav class="header-nav">
@@ -19,8 +20,6 @@
                     <li sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')"><a th:href="@{/users}">Users</a></li>
 
                     <li><a th:href="@{/authors}">Authors</a></li>
-
-                    <!--                    <li><a href="#">Link</a></li>-->
                 </ul>
             </nav>
 
@@ -43,7 +42,6 @@
                     <span class="cart-number">3</span>
                     <img alt="Cart" th:src="@{/images/home/icon/cart2.svg}">
                 </a>
-
             </div>
         </div>
     </div>

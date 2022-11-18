@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -11,6 +11,7 @@
     <!--    Style for books-->
     <link rel="stylesheet" th:href="@{/styles/css/book/book.css}">
 </head>
+
 <body>
 
 <header>
@@ -18,17 +19,39 @@
 </header>
 
 <main>
-    <div class="element">
-        <h3>Name: </h3>
+    <div class="product-element" sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')">
+        <form method="post" th:action="@{/books/{bookId}/update(bookId=${book.id})}" th:object="${series}">
+            <h3>Name: </h3>
 
-        <p th:text="${series.name}">Name</p>
+            <p th:text="*{name}">Name</p>
+
+            <div class="button">
+                <button class="btn" type="submit">Update</button>
+            </div>
+        </form>
     </div>
 
     <div th:each="book : ${books}">
         <h3 th:text="${book.title}"></h3>
     </div>
 
+    <div class="button-form">
+        <div class="button">
+            <form class="button" method="post" sec:authorize="hasRole('ADMIN')"
+                  th:action="@{/books/{bookId}/delete(bookId=${book.id})}">
+                <button class="btn" type="submit">Remove</button>
+            </form>
+        </div>
+    </div>
 </main>
+
+<footer>
+    <div class="last">
+        <div class="button-form">
+            <a class="btn btn-big" th:href="@{/books/series/}">Book series</a>
+        </div>
+    </div>
+</footer>
 
 </body>
 </html>

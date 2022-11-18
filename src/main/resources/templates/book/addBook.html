@@ -10,6 +10,7 @@
     <!--    Style for books-->
     <link rel="stylesheet" th:href="@{/styles/css/book/book.css}">
 </head>
+
 <body>
 
 <header>
@@ -115,6 +116,10 @@
             <div class="last">
                 <div class="button-form">
                     <button class="btn" type="submit">Add new book</button>
+
+                    <a class="btn btn-big" th:href="@{/books/series/addSeries/}">
+                        Add new book series
+                    </a>
                 </div>
             </div>
         </form>
