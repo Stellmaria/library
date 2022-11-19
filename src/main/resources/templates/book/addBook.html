@@ -7,8 +7,8 @@
     <!--    Style main-->
     <link rel="stylesheet" th:href="@{/styles/css/main.css}">
 
-    <!--    Style for books-->
-    <link rel="stylesheet" th:href="@{/styles/css/book/book.css}">
+    <!--    Style for product-->
+    <link rel="stylesheet" th:href="@{/styles/css/product/product.css}">
 </head>
 
 <body>
@@ -22,31 +22,31 @@
         <form enctype="multipart/form-data" method="post" th:action="@{/books}" th:object="${book}">
             <label for="title"> Title:
                 <input id="title" name="title" th:value="*{title}" type="text">
-            </label><br>
+            </label>
 
             <label for="subtitle"> Subtitle:
                 <input id="subtitle" name="subtitle" th:value="*{subtitle}" type="text">
-            </label><br>
+            </label>
 
             <label for="year"> Year:
                 <input id="year" name="year" th:value="*{year}" type="number">
-            </label><br>
+            </label>
 
             <label for="pages"> Page:
                 <input id="pages" name="pages" th:value="*{pages}" type="number">
-            </label><br>
+            </label>
 
             <label for="isbn10"> Isbn10:
                 <input id="isbn10" name="isbn10" th:value="*{isbn10}" type="text">
-            </label><br>
+            </label>
 
             <label for="isbn13"> Isbn13:
                 <input id="isbn13" name="isbn13" th:value="*{isbn13}" type="text">
-            </label><br>
+            </label>
 
             <label for="image"> Image:
                 <input id="image" name="image" type="file">
-            </label><br>
+            </label>
 
             <div>
                 <label for="bookStatus">Status:
@@ -129,9 +129,7 @@
                 <div class="button-form">
                     <button class="btn" type="submit">Add new book</button>
 
-                    <a class="btn btn-big" th:href="@{/books/series/addSeries/}">
-                        Add new book series
-                    </a>
+                    <a class="btn btn-big" th:href="@{/books/series/addSeries/}">Add new book series</a>
                 </div>
             </div>
         </form>

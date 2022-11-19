@@ -76,6 +76,7 @@ public class BookController {
                     model.addAttribute("houses", bookPublishingHouseService.findAll());
                     model.addAttribute("series", bookSeriesService.findAll());
                     model.addAttribute("authors", authorService.findAllByBookId(id));
+                    model.addAttribute("allAuthors", authorService.findAll());
 
                     SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 

@@ -10,8 +10,8 @@
     <!--    Style filter-->
     <link rel="stylesheet" th:href="@{/styles/css/filter.css}">
 
-    <!--    Users filter-->
-    <link rel="stylesheet" th:href="@{/styles/css/user/user.css}">
+    <!--    Style for product-->
+    <link rel="stylesheet" th:href="@{/styles/css/product/product.css}">
 </head>
 <body>
 
@@ -46,8 +46,18 @@
         </div>
     </header>
 
-    <div class="list-users" th:each="user : ${users.content}">
-        <a th:href="@{'/users/' + ${user.id}}" th:text="|${user.firstName} ${user.lastName}|"> User</a>
+    <div class="parameter-controls">
+        <section class="featured-section">
+            <div class="container">
+                <div class="products-wrapper" th:each="user : ${users.content}">
+                    <a class="product-link" th:href="@{'/users/' + ${user.id}}">
+                        <h4 class="product_title">
+                            <span th:text="|${user.firstName} ${user.lastName}|"> User</span>
+                        </h4>
+                    </a>
+                </div>
+            </div>
+        </section>
     </div>
 </main>
 

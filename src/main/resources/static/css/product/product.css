@@ -80,6 +80,10 @@
     justify-content: center;
 }
 
+.element h3 {
+    color: var(--header-hover);
+}
+
 .product-element h3 {
     color: var(--header-hover);
 }

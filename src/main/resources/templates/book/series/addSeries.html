@@ -8,8 +8,8 @@
     <!--    Style main-->
     <link rel="stylesheet" th:href="@{/styles/css/main.css}">
 
-    <!--    Style for books-->
-    <link rel="stylesheet" th:href="@{/styles/css/book/book.css}">
+    <!--    Style for product-->
+    <link rel="stylesheet" th:href="@{/styles/css/product/product.css}">
 </head>
 
 <body>
@@ -23,7 +23,7 @@
         <form enctype="multipart/form-data" method="post" th:action="@{/books/series}" th:object="${series}">
             <label for="name"> Name:
                 <input id="name" name="name" th:value="*{name}" type="text">
-            </label><br>
+            </label>
 
             <div class="last">
                 <div class="button-form">

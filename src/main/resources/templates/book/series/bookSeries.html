@@ -8,50 +8,55 @@
     <!--    Style main-->
     <link rel="stylesheet" th:href="@{/styles/css/main.css}">
 
-    <!--    Style for books-->
-    <link rel="stylesheet" th:href="@{/styles/css/book/book.css}">
+    <!--    Style for product-->
+    <link rel="stylesheet" th:href="@{/styles/css/product/product.css}">
 </head>
 
 <body>
 
 <header>
     <div th:insert="~{fragments/header :: header}"></div>
+
+    <div class="last">
+        <div class="button-form">
+            <a class="btn btn-big" th:href="@{/books/series/}">Book series</a>
+        </div>
+    </div>
 </header>
 
 <main>
     <div class="product-element" sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')">
-        <form method="post" th:action="@{/books/{bookId}/update(bookId=${book.id})}" th:object="${series}">
+        <form method="post" th:action="@{/books/series/{bookSeriesId}/update(bookSeriesId=${series.id})}"
+              th:object="${series}">
             <h3>Name: </h3>
 
-            <p th:text="*{name}">Name</p>
+            <p th:text="*{name}">Name: </p>
 
             <div class="button">
                 <button class="btn" type="submit">Update</button>
             </div>
         </form>
     </div>
+</main>
 
+<main>
     <div th:each="book : ${books}">
-        <h3 th:text="${book.title}"></h3>
+        <div class="element">
+            <h3>Book: </h3>
+
+            <a th:href="@{'/books/' + ${book.id}}" th:text="${book.title}">Books</a>
+        </div>
     </div>
 
     <div class="button-form">
         <div class="button">
             <form class="button" method="post" sec:authorize="hasRole('ADMIN')"
-                  th:action="@{/books/{bookId}/delete(bookId=${book.id})}">
+                  th:action="@{/books/series{bookSeriesId}/delete(bookSeriesId=${series.id})}">
                 <button class="btn" type="submit">Remove</button>
             </form>
         </div>
     </div>
 </main>
-
-<footer>
-    <div class="last">
-        <div class="button-form">
-            <a class="btn btn-big" th:href="@{/books/series/}">Book series</a>
-        </div>
-    </div>
-</footer>
 
 </body>
 </html>

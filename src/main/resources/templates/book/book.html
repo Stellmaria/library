@@ -7,8 +7,8 @@
     <!--    Style main-->
     <link rel="stylesheet" th:href="@{/styles/css/main.css}">
 
-    <!--    Style for books-->
-    <link rel="stylesheet" th:href="@{/styles/css/book/book.css}">
+    <!--    Style for product-->
+    <link rel="stylesheet" th:href="@{/styles/css/product/product.css}">
 </head>
 
 <body>
@@ -51,13 +51,25 @@
                     Authors</a>
             </div>
 
+            <div>
+                <label for="authors">Authors:
+                    <select id="authors" multiple name="authorsId">
+                        <option disabled selected value></option>
+                        <option th:each="author : ${allAuthors}"
+                                th:text="|${author.firstName} ${author.lastName}|"
+                                th:value="${author.id}">Authors
+                        </option>
+                    </select>
+                </label>
+            </div>
+
             <div th:if="${book.image}">
                 <img alt="User image" th:src="@{/api/v1/books/{bookId}/image(bookId=${book.id})}">
             </div>
 
             <label for="image"> Image:
                 <input id="image" name="image" type="file">
-            </label><br>
+            </label>
 
             <div>
                 <label for="bookStatus">Status:
@@ -244,6 +256,13 @@
 
             <a th:href="@{'/books/series/' + ${book.bookSeries.id}}" th:text="${book.bookSeries.name}"> Book
                 series</a>
+        </div>
+
+        <div class="element" th:each="author : ${book.authors}">
+            <h3>Author: </h3>
+
+            <a th:href="@{'/authors/' + ${author.id}}" th:text="|${author.firstName} ${author.lastName}|">
+                Authors</a>
         </div>
 
         <div class="img-book" th:if="${book.image}">

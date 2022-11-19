@@ -7,8 +7,8 @@
     <!--    Style main-->
     <link rel="stylesheet" th:href="@{/styles/css/main.css}">
 
-    <!--    Style for books-->
-    <link rel="stylesheet" th:href="@{/styles/css/book/book.css}">
+    <!--    Style for product-->
+    <link rel="stylesheet" th:href="@{/styles/css/product/product.css}">
 
     <!--    Style filter-->
     <link rel="stylesheet" th:href="@{/styles/css/filter.css}">
@@ -21,8 +21,28 @@
 </header>
 
 <main>
-    <div th:each="bookSeries : ${series.content}">
-        <a th:href="@{'/books/series/' + ${bookSeries.id}}" th:text="${bookSeries.name}"> Book series</a>
+    <div class="product-container">
+        <section class="featured-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-header-title">Book series</h2>
+
+                    <div class="section-header-description">
+                        <p>Drop everything... and read!</p>
+                    </div>
+                </div>
+
+                <div class="products-wrapper" th:each="bookSeries : ${series.content}">
+                    <a class="product-link" th:href="@{'/books/series/' + ${bookSeries.id}}">
+                        <div class="product">
+                            <h4 class="product_title">
+                                <span th:text="${bookSeries.name}"> Book series</span>
+                            </h4>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
     </div>
 </main>
 

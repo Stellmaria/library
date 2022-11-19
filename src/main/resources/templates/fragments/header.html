@@ -15,11 +15,21 @@
 
             <nav class="header-nav">
                 <ul>
-                    <li><a th:href="@{/books}">Books</a></li>
+                    <li>
+                        <a th:href="@{/books}">Books</a>
+                    </li>
 
-                    <li sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')"><a th:href="@{/users}">Users</a></li>
+                    <li>
+                        <a th:href="@{/books/series}">Series</a>
+                    </li>
 
-                    <li><a th:href="@{/authors}">Authors</a></li>
+                    <li sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')">
+                        <a th:href="@{/users}">Users</a>
+                    </li>
+
+                    <li>
+                        <a th:href="@{/authors}">Authors</a>
+                    </li>
                 </ul>
             </nav>
 
@@ -40,6 +50,7 @@
                 <a class="cart" href="#">
                     <!--                    COUNT-->
                     <span class="cart-number">3</span>
+
                     <img alt="Cart" th:src="@{/images/home/icon/cart2.svg}">
                 </a>
             </div>
