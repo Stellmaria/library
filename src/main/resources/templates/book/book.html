@@ -46,7 +46,7 @@
                 <input id="isbn13" name="isbn13" th:value="*{isbn13}" type="text">
             </label><br>
 
-            <div th:each="author : ${book.booksAuthors}">
+            <div th:each="author : ${book.authors}">
                 <a th:href="@{'/authors/' + ${author.id}}" th:text="|${author.firstName} ${author.lastName}|">
                     Authors</a>
             </div>

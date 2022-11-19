@@ -28,7 +28,7 @@ public class QAuthor extends EntityPathBase<Author> {
 
     public final DatePath<java.time.LocalDate> birthday = createDate("birthday", java.time.LocalDate.class);
 
-    public final CollectionPath<com.it.academy.library.model.entity.BooksAuthors, com.it.academy.library.model.entity.QBooksAuthors> booksAuthors = this.<com.it.academy.library.model.entity.BooksAuthors, com.it.academy.library.model.entity.QBooksAuthors>createCollection("booksAuthors", com.it.academy.library.model.entity.BooksAuthors.class, com.it.academy.library.model.entity.QBooksAuthors.class, PathInits.DIRECT2);
+    public final CollectionPath<com.it.academy.library.model.entity.book.Book, com.it.academy.library.model.entity.book.QBook> books = this.<com.it.academy.library.model.entity.book.Book, com.it.academy.library.model.entity.book.QBook>createCollection("books", com.it.academy.library.model.entity.book.Book.class, com.it.academy.library.model.entity.book.QBook.class, PathInits.DIRECT2);
 
     //inherited
     public final DateTimePath<java.time.Instant> createdAt = _super.createdAt;

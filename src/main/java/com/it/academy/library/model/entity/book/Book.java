@@ -1,8 +1,8 @@
 package com.it.academy.library.model.entity.book;
 
 import com.it.academy.library.model.entity.AbstractAuditingEntity;
-import com.it.academy.library.model.entity.BooksAuthors;
 import com.it.academy.library.model.entity.BooksGenres;
+import com.it.academy.library.model.entity.author.Author;
 import com.it.academy.library.model.entity.order.Order;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,9 +23,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.util.Collection;
 import java.util.Objects;
@@ -69,7 +70,6 @@ public class Book extends AbstractAuditingEntity<Long> {
     @ISBN(type = ISBN.Type.ISBN_13)
     private String isbn13;
 
-    @NotBlank
     private String image;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -113,13 +113,15 @@ public class Book extends AbstractAuditingEntity<Long> {
     @ToString.Exclude
     private Collection<BookAdditional> bookAdditional;
 
-    @OneToMany(
-            mappedBy = "book",
-            cascade = CascadeType.ALL
-    )
+    @ManyToMany(cascade = {CascadeType.ALL})
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Collection<BooksAuthors> booksAuthors;
+    @JoinTable(
+            name = "books_authors",
+            joinColumns = {@JoinColumn(name = "book_id")},
+            inverseJoinColumns = {@JoinColumn(name = "author_id")}
+    )
+    private Collection<Author> authors;
 
     @OneToMany(
             mappedBy = "book",

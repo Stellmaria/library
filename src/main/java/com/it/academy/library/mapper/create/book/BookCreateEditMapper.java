@@ -1,6 +1,7 @@
 package com.it.academy.library.mapper.create.book;
 
 import com.it.academy.library.mapper.Mapper;
+import com.it.academy.library.model.entity.author.Author;
 import com.it.academy.library.model.entity.book.Book;
 import com.it.academy.library.model.entity.book.BookFormat;
 import com.it.academy.library.model.entity.book.BookLanguage;
@@ -21,8 +22,9 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static java.util.function.Predicate.not;
 
@@ -67,12 +69,19 @@ public class BookCreateEditMapper implements Mapper<BookCreateEditDto, Book> {
         book.setBookPublishingHouse(getBookPublishingHouseRepository(object.getBookPublishingHouseId()));
         book.setBookSeries(getBookSeries(object.getBookSeriesId()));
         book.setOrder(getOrder(object.getOrderId()));
+        book.setAuthors(getAuthors(object));
+    }
 
-        book.setBooksAuthors(Optional.of(object.getAuthorId().stream()
-                .map(aLong -> authorRepository.findById(aLong).orElse(null))
-                .map()
-                .collect(Collectors.toList()))
-        );
+    @NotNull
+    private Collection<Author> getAuthors(@NotNull BookCreateEditDto object) {
+        Collection<Author> authors = new ArrayList<>();
+
+        object.getAuthorsId().stream()
+                .map(aLong -> Optional.of(authorRepository.findById(aLong))
+                        .orElse(null))
+                .forEachOrdered(author -> author.ifPresent(authors::add));
+
+        return authors;
     }
 
     private void setImage(@NotNull BookCreateEditDto object, @NotNull Book book) {

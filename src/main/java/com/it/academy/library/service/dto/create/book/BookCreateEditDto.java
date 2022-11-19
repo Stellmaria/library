@@ -49,5 +49,5 @@ public class BookCreateEditDto {
 
     private Long orderId;
 
-    private Collection<Long> authorId;
+    private Collection<Long> authorsId;
 }

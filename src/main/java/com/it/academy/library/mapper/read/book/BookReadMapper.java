@@ -3,7 +3,6 @@ package com.it.academy.library.mapper.read.book;
 import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.mapper.read.author.AuthorReadMapper;
 import com.it.academy.library.mapper.read.order.OrderReadMapper;
-import com.it.academy.library.model.entity.BooksAuthors;
 import com.it.academy.library.model.entity.book.Book;
 import com.it.academy.library.service.dto.read.author.AuthorReadDto;
 import com.it.academy.library.service.dto.read.book.BookFormatReadDto;
@@ -55,8 +54,7 @@ public class BookReadMapper implements Mapper<Book, BookReadDto> {
 
     @NotNull
     private List<AuthorReadDto> getAuthors(@NotNull Book object) {
-        return Optional.of(object.getBooksAuthors().stream()
-                        .map(BooksAuthors::getAuthor)
+        return Optional.of(object.getAuthors().stream()
                         .map(authorReadMapper::map)
                         .collect(Collectors.toList()))
                 .orElse(null);

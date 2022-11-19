@@ -113,6 +113,18 @@
                 </label>
             </div>
 
+            <div>
+                <label for="authors">Authors:
+                    <select id="authors" multiple name="authorsId">
+                        <option disabled selected value></option>
+                        <option th:each="author : ${authors}"
+                                th:text="|${author.firstName} ${author.lastName}|"
+                                th:value="${author.id}">Authors
+                        </option>
+                    </select>
+                </label>
+            </div>
+
             <div class="last">
                 <div class="button-form">
                     <button class="btn" type="submit">Add new book</button>
@@ -129,10 +141,6 @@
         </div>
     </div>
 </main>
-
-<footer class="footer-end">
-    <div th:insert="~{fragments/footer :: footer}"></div>
-</footer>
 
 </body>
 </html>

@@ -108,6 +108,7 @@ public class BookController {
         model.addAttribute("formats", bookFormatService.findAll());
         model.addAttribute("houses", bookPublishingHouseService.findAll());
         model.addAttribute("series", bookSeriesService.findAll());
+        model.addAttribute("authors", authorService.findAll());
 
         return "book/addBook";
     }

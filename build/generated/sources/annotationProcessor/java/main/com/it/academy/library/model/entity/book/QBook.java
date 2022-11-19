@@ -24,6 +24,8 @@ public class QBook extends EntityPathBase<Book> {
 
     public final com.it.academy.library.model.entity.QAbstractAuditingEntity _super = new com.it.academy.library.model.entity.QAbstractAuditingEntity(this);
 
+    public final CollectionPath<com.it.academy.library.model.entity.author.Author, com.it.academy.library.model.entity.author.QAuthor> authors = this.<com.it.academy.library.model.entity.author.Author, com.it.academy.library.model.entity.author.QAuthor>createCollection("authors", com.it.academy.library.model.entity.author.Author.class, com.it.academy.library.model.entity.author.QAuthor.class, PathInits.DIRECT2);
+
     public final CollectionPath<BookAdditional, QBookAdditional> bookAdditional = this.<BookAdditional, QBookAdditional>createCollection("bookAdditional", BookAdditional.class, QBookAdditional.class, PathInits.DIRECT2);
 
     public final QBookFormat bookFormat;
@@ -31,8 +33,6 @@ public class QBook extends EntityPathBase<Book> {
     public final QBookLanguage bookLanguage;
 
     public final QBookPublishingHouse bookPublishingHouse;
-
-    public final CollectionPath<com.it.academy.library.model.entity.BooksAuthors, com.it.academy.library.model.entity.QBooksAuthors> booksAuthors = this.<com.it.academy.library.model.entity.BooksAuthors, com.it.academy.library.model.entity.QBooksAuthors>createCollection("booksAuthors", com.it.academy.library.model.entity.BooksAuthors.class, com.it.academy.library.model.entity.QBooksAuthors.class, PathInits.DIRECT2);
 
     public final QBookSeries bookSeries;
 
