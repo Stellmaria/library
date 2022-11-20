@@ -203,31 +203,31 @@
             <p th:text="${book.title}"></p>
         </div>
 
-        <div class="element">
+        <div class="element" th:if="${book.subtitle != null}">
             <h3>Subtitle: </h3>
 
             <p th:text="${book.subtitle}"></p>
         </div>
 
-        <div class="element">
+        <div class="element" th:if="${book.year != null}">
             <h3>Year: </h3>
 
             <p th:text="${book.year}"></p>
         </div>
 
-        <div class="element">
+        <div class="element" th:if="${book.pages != null}">
             <h3>Page: </h3>
 
             <p th:text="${book.pages}"></p>
         </div>
 
-        <div class="element">
+        <div class="element" th:if="${book.isbn10 != null}">
             <h3>Isbn10: </h3>
 
             <p th:text="${book.isbn10}"></p>
         </div>
 
-        <div class="element">
+        <div class="element" th:if="${book.isbn13 != null}">
             <h3>Isbn13: </h3>
 
             <p th:text="${book.isbn13}"></p>
@@ -258,7 +258,7 @@
                 series</a>
         </div>
 
-        <div class="element" th:each="author : ${book.authors}">
+        <div class="element" th:each="author : ${book.authors}" th:if="${book.authors != null}">
             <h3>Author: </h3>
 
             <a th:href="@{'/authors/' + ${author.id}}" th:text="|${author.firstName} ${author.lastName}|">

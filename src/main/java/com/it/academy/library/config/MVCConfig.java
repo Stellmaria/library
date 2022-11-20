@@ -13,8 +13,10 @@ public class MVCConfig implements WebMvcConfigurer {
     public void addResourceHandlers(@NotNull ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/styles/css/**")
                 .addResourceLocations("classpath:/static/css/");
+
         registry.addResourceHandler("/images/**")
                 .addResourceLocations("classpath:/static/images/");
+
         registry.addResourceHandler("/js/**")
                 .addResourceLocations("classpath:/static/js/");
     }

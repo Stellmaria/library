@@ -43,6 +43,7 @@ class BookRepositoryTest extends IntegrationTestBase {
     private static final Long BOOK_ID_4 = 4L;
     private static final Long BOOK_ID_6 = 6L;
     private static final String BOOK_SERIES_MILLENNIUM = "Millennium";
+    private static final String FIRST_NAME_STIEG = "Stieg";
 
     private final BookRepository bookRepository;
     private final BookAdditionalFilterMapper bookAdditionalFilterMapper;
@@ -245,7 +246,7 @@ class BookRepositoryTest extends IntegrationTestBase {
 
         var actual = bookRepository.findAllByBookSeriesFilter(bookSeriesFilterMapper.map(bookSeries));
 
-        assertThat(actual).hasSize(2);
+        assertThat(actual).hasSize(4);
     }
 
     @Test
@@ -301,12 +302,12 @@ class BookRepositoryTest extends IntegrationTestBase {
     @DisplayName("Find all book by author filter.")
     void findAllBookByAuthorFilter() {
         var author = Author.builder()
-                .firstName("Stephenie")
+                .firstName(FIRST_NAME_STIEG)
                 .build();
 
         var actual = bookRepository.findAllByAuthorFilter(authorFilterMapper.map(author));
 
-        assertThat(actual).hasSize(1);
+        assertThat(actual).hasSize(4);
     }
 
     @Test

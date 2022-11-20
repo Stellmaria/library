@@ -33,15 +33,13 @@ public class UserRestController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserReadDto create(@Validated @RequestBody UserCreateEditDto user) {
-        return userService.create(user);
+    public UserReadDto create(@Validated @RequestBody UserCreateEditDto dto) {
+        return userService.create(dto);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public PageResponse<UserReadDto> findAll(UserFilter userFilter, Pageable pageable) {
-        var page = userService.findAll(userFilter, pageable);
-
-        return PageResponse.of(page);
+    public PageResponse<UserReadDto> findAll(UserFilter filter, Pageable pageable) {
+        return PageResponse.of(userService.findAll(filter, pageable));
     }
 
     @GetMapping("/{id}")
@@ -51,8 +49,8 @@ public class UserRestController {
     }
 
     @PutMapping("/{id}")
-    public UserReadDto update(@PathVariable("id") Long id, @Validated @RequestBody UserCreateEditDto user) {
-        return userService.update(id, user)
+    public UserReadDto update(@PathVariable("id") Long id, @Validated @RequestBody UserCreateEditDto dto) {
+        return userService.update(id, dto)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 

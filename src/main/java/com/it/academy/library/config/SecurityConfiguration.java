@@ -33,6 +33,7 @@ public class SecurityConfiguration {
                         .loginPage("/login")
                         .defaultSuccessUrl("/books")
                 );
+
         return http.build();
     }
 

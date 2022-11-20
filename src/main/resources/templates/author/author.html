@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Author</title>
@@ -17,35 +17,90 @@
     <div th:insert="~{fragments/header :: header}"></div>
 </header>
 
-<form method="post" th:action="@{/authors/{authorId}/update(authorId=${author.id})}"
-      th:object="${author}" enctype="multipart/form-data">
+<main>
+    <div class="product-element" sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')">
+        <form enctype="multipart/form-data" method="post"
+              th:action="@{/authors/{authorId}/update(authorId=${author.id})}" th:object="${author}">
 
-    <label for="firstName"> First name:
-        <input id="firstName" name="firstName" th:value="*{firstName}" type="text">
-    </label><br>
+            <label for="firstName"> First name:
+                <input id="firstName" name="firstName" th:value="*{firstName}" type="text">
+            </label><br>
 
-    <label for="lastName"> Last name:
-        <input id="lastName" name="lastName" th:value="*{lastName}" type="text">
-    </label><br>
+            <label for="lastName"> Last name:
+                <input id="lastName" name="lastName" th:value="*{lastName}" type="text">
+            </label><br>
 
-<!--    <label for="imagePath"> Image:-->
-<!--        <input id="imagePath" name="imagePath" th:value="*{imagePath}" type="image">-->
-<!--    </label><br>-->
+            <div th:if="${author.image}">
+                <img alt="Author image" th:src="@{/api/v1/authors/{authorId}/image(authorId=${author.id})}">
+            </div>
 
-    <label for="birthday">Birthday:
-        <input id="birthday" name="birthday" th:value="*{birthday}" type="date">
-    </label><br>
+            <label for="imagePath"> Image:
+                <input id="imagePath" name="imagePath" type="file">
+            </label><br>
 
-    <label for="dateDeath">Date death:
-        <input id="dateDeath" name="dateDeath" th:value="*{dateDeath}" type="date">
-    </label><br>
+            <label for="birthday">Birthday:
+                <input id="birthday" name="birthday" th:value="*{birthday}" type="date">
+            </label><br>
 
-    <label for="description"> Description:
-        <input id="description" name="description" th:value="*{description}" type="text">
-    </label><br>
+            <label for="dateDeath">Date death:
+                <input id="dateDeath" name="dateDeath" th:value="*{dateDeath}" type="date">
+            </label><br>
 
-    <button type="submit">Update</button>
-</form>
+            <label for="description"> Description:
+                <input id="description" name="description" th:value="*{description}" type="text">
+            </label><br>
+
+            <div class="button">
+                <button class="btn" type="submit">Update</button>
+            </div>
+        </form>
+
+        <div class="button-form">
+            <div class="button">
+                <form class="button" method="post" sec:authorize="hasRole('ADMIN')"
+                      th:action="@{/authors/{authorId}/delete(authorId=${author.id})}">
+                    <button class="btn" type="submit">Remove</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<main>
+    <div class="product-element" sec:authorize="hasAnyRole('READER', 'GUSET')">
+        <div class="element">
+            <h3>Name: </h3>
+
+            <p th:text="|${author.firstName} ${author.lastName}|"></p>
+        </div>
+
+        <div class="img-book" th:if="${author.image}">
+            <img alt="book image" th:src="@{/api/v1/authors/{authorId}/image(authorId=${author.id})}">
+        </div>
+
+        <div class="element" th:if="${author.birthday != null}">
+            <h3>Birthday: </h3>
+
+            <p th:text="${author.birthday}"></p>
+        </div>
+
+        <div class="element" th:if="${author.dateDeath != null}">
+            <h3>Date death: </h3>
+
+            <p th:text="${author.dateDeath}"></p>
+        </div>
+
+        <div class="element" th:if="${author.description != null}">
+            <h3>Description: </h3>
+
+            <p th:text="${author.description}"></p>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div th:insert="~{fragments/footer :: footer}"></div>
+</footer>
 
 </body>
 </html>

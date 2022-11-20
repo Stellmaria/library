@@ -103,7 +103,7 @@ public class AuthorService {
     @SuppressWarnings("unused")
     public Optional<byte[]> findImage(Long id) {
         return authorRepository.findById(id)
-                .map(Author::getImagePath)
+                .map(Author::getImage)
                 .filter(StringUtils::hasText)
                 .flatMap(imageService::getImage);
     }

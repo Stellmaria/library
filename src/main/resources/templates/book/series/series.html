@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Series</title>
@@ -21,7 +22,29 @@
 </header>
 
 <main>
-    <div class="product-container">
+    <header>
+        <div>
+            <form action="/books/series">
+                <label class="search-label" for="name">
+                    <button class="btn search" type="submit">Filter</button>
+
+                    <input class="search-input" id="name" name="name" placeholder="Search" th:value="${filter.name}"
+                           type="text">
+
+                    <input class="search-input" id="page" name="page" th:value="${series.metadata.page}" type="number">
+
+                    <input class="search-input" id="size" name="size" th:value="${series.metadata.size}" type="number">
+
+                    <a class="btn" sec:authorize="hasAnyRole('ADMIN', 'LIBRARIAN')"
+                       th:href="@{/books/series/addSeries}">
+                        Add book series
+                    </a>
+                </label>
+            </form>
+        </div>
+    </header>
+
+    <div>
         <section class="featured-section">
             <div class="container">
                 <div class="section-header">

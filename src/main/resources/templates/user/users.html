@@ -21,8 +21,8 @@
 
 <main>
     <header>
-        <div class="header-search">
-            <form action="/users" class="search">
+        <div>
+            <form action="/users">
                 <label class="search-label" for="firstName">
                     <button class="btn search" type="submit">Filter</button>
 
@@ -38,9 +38,9 @@
                     <input class="search-input" id="email" name="email" placeholder="Email" th:value="${filter.email}"
                            type="text">
 
-                    <input class="search-input" id="size" name="size" type="number">
-
                     <input class="search-input" id="page" name="page" th:value="${users.metadata.page}" type="number">
+
+                    <input class="search-input" id="size" name="size" th:value="${users.metadata.size}" type="number">
                 </label>
             </form>
         </div>

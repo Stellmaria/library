@@ -57,9 +57,7 @@ public class BookController {
 
     @GetMapping
     public String findAll(@NotNull Model model, BookFilter filter, Pageable pageable) {
-        var page = bookService.findAll(filter, pageable);
-
-        model.addAttribute("books", PageResponse.of(page));
+        model.addAttribute("books", PageResponse.of(bookService.findAll(filter, pageable)));
         model.addAttribute("filter", filter);
 
         return "book/books";

@@ -56,9 +56,8 @@ public class Author extends AbstractAuditingEntity<Long> {
     @Size(min = 3, max = 64)
     private String lastName;
 
-    @Column(name = "image_path")
     @NotBlank
-    private String imagePath;
+    private String image;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_role_id")

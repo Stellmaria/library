@@ -47,9 +47,7 @@ public class UserController {
 
     @GetMapping
     public String findAll(@NotNull Model model, UserFilter filter, Pageable pageable) {
-        var page = userService.findAll(filter, pageable);
-
-        model.addAttribute("users", PageResponse.of(page));
+        model.addAttribute("users", PageResponse.of(userService.findAll(filter, pageable)));
         model.addAttribute("filter", filter);
 
         return "user/users";

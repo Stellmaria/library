@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS author
     id             BIGSERIAL PRIMARY KEY,
     first_name     VARCHAR(64) NOT NULL,
     last_name      VARCHAR(64) NOT NULL,
-    image_path     VARCHAR(255),
+    image          VARCHAR(255),
     author_role_id INTEGER,
     birthday       DATE,
     date_death     DATE,

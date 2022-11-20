@@ -43,9 +43,8 @@ public class AuthorController {
 
     @GetMapping
     public String findAll(@NotNull Model model, AuthorFilter filter, Pageable pageable) {
-        var page = authorService.findAll(filter, pageable);
-
-        model.addAttribute("books", PageResponse.of(page));
+        model.addAttribute("authors", PageResponse.of(authorService.findAll(filter, pageable)));
+        model.addAttribute("filter", filter);
 
         return "author/authors";
     }

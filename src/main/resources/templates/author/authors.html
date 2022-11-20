@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Authors</title>
@@ -18,6 +18,64 @@
 <header>
     <div th:insert="~{fragments/header :: header}"></div>
 </header>
+
+<main>
+    <header>
+        <div>
+            <form action="/authors">
+                <label class="search-label" for="firstName">
+                    <button class="btn search" type="submit">Filter</button>
+
+                    <input class="search-input" id="firstName" name="firstName" placeholder="First name"
+                           th:value="${filter.firstName}" type="text">
+
+                    <input class="search-input" id="lastName" name="lastName" placeholder="Last name"
+                           th:value="${filter.lastName}" type="text">
+
+                    <input class="search-input" id="page" name="page" th:value="${authors.metadata.page}" type="number">
+
+                    <input class="search-input" id="size" name="size" th:value="${authors.metadata.size}" type="number">
+
+                    <a class="btn" sec:authorize="hasAnyRole('ADMIN', 'LIBRARIAN')"
+                       th:href="@{/authors/addAuthor}">
+                        Add author
+                    </a>
+                </label>
+            </form>
+        </div>
+    </header>
+
+    <div>
+        <section class="featured-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-header-title">Authors</h2>
+
+                    <div class="section-header-description">
+                        <p>It all started with a tablet, scroll, birch-bark...</p>
+                    </div>
+                </div>
+
+                <div class="products-wrapper" th:each="author : ${authors.content}">
+                    <a class="product-link" th:href="@{'/authors/' + ${author.id}}">
+                        <div class="product">
+                            <img alt="Product image" class="product-image" th:if="${author.image}"
+                                 th:src="@{/api/v1/authors/{authorId}/image(authorId=${author.id})}">
+
+                            <h4 class="product_title">
+                                <span th:text="|${author.firstName} ${author.lastName}|"> Book series</span>
+                            </h4>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer>
+    <div th:insert="~{fragments/footer :: footer}"></div>
+</footer>
 
 </body>
 </html>

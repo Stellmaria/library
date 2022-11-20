@@ -42,7 +42,7 @@ class AuthorRepositoryTest extends IntegrationTestBase {
         var author = Author.builder()
                 .firstName(ConstantUtil.NEW + ConstantUtil.SAVE)
                 .lastName(ConstantUtil.NEW + ConstantUtil.SAVE)
-                .imagePath(ConstantUtil.NEW + ConstantUtil.SAVE)
+                .image(ConstantUtil.NEW + ConstantUtil.SAVE)
                 .authorRole(authorRole)
                 .birthday(AUTHOR_BIRTHDAY)
                 .dateDeath(AUTHOR_DATE_DEATH)
@@ -56,7 +56,7 @@ class AuthorRepositoryTest extends IntegrationTestBase {
                 () -> assertEquals(expectedCount, actualCount),
                 () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getFirstName()),
                 () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getLastName()),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getImagePath()),
+                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getImage()),
                 () -> assertEquals(ConstantUtil.AUTHOR_ROLE_ID_1, actual.getAuthorRole().getId()),
                 () -> assertEquals(AUTHOR_BIRTHDAY, actual.getBirthday()),
                 () -> assertEquals(AUTHOR_DATE_DEATH, actual.getDateDeath()),
@@ -83,7 +83,7 @@ class AuthorRepositoryTest extends IntegrationTestBase {
         author.ifPresent(it -> {
             it.setFirstName(ConstantUtil.NEW + ConstantUtil.UPDATE);
             it.setLastName(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            it.setImagePath(ConstantUtil.NEW + ConstantUtil.UPDATE);
+            it.setImage(ConstantUtil.NEW + ConstantUtil.UPDATE);
             it.setAuthorRole(
                     AuthorRole.builder()
                             .id(ConstantUtil.AUTHOR_ROLE_ID_1)
@@ -100,7 +100,7 @@ class AuthorRepositoryTest extends IntegrationTestBase {
             assertEquals(AUTHOR_ID_15, it.getId());
             assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getFirstName());
             assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getLastName());
-            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getImagePath());
+            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getImage());
             assertEquals(ConstantUtil.AUTHOR_ROLE_ID_1, it.getAuthorRole().getId());
             assertEquals(AUTHOR_BIRTHDAY, it.getBirthday());
             assertEquals(AUTHOR_DATE_DEATH, it.getDateDeath());

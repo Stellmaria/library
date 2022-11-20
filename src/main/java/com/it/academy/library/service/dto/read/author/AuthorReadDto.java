@@ -16,9 +16,7 @@ public class AuthorReadDto {
 
     String lastName;
 
-    String imagePath;
-
-    AuthorRoleReadDto authorRole;
+    String image;
 
     LocalDate birthday;
 

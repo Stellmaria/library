@@ -1,10 +1,10 @@
 package com.it.academy.library.http.controller.rest;
 
 import com.it.academy.library.service.dto.PageResponse;
-import com.it.academy.library.service.dto.create.book.BookCreateEditDto;
-import com.it.academy.library.service.dto.filter.book.BookFilter;
-import com.it.academy.library.service.dto.read.book.BookReadDto;
-import com.it.academy.library.service.entity.book.BookService;
+import com.it.academy.library.service.dto.create.author.AuthorCreateEditDto;
+import com.it.academy.library.service.dto.filter.author.AuthorFilter;
+import com.it.academy.library.service.dto.read.author.AuthorReadDto;
+import com.it.academy.library.service.entity.author.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -26,45 +26,45 @@ import org.springframework.web.server.ResponseStatusException;
 import static org.springframework.http.ResponseEntity.notFound;
 
 @RestController
-@RequestMapping("/api/v1/books")
+@RequestMapping("/api/v1/authors")
 @RequiredArgsConstructor
-public class BookRestController {
-    private final BookService bookService;
+public class AuthorRestController {
+    private final AuthorService authorService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BookReadDto create(@Validated @RequestBody BookCreateEditDto dto) {
-        return bookService.create(dto);
+    public AuthorReadDto create(@Validated @RequestBody AuthorCreateEditDto dto) {
+        return authorService.create(dto);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public PageResponse<BookReadDto> findAll(BookFilter filter, Pageable pageable) {
-        return PageResponse.of(bookService.findAll(filter, pageable));
+    public PageResponse<AuthorReadDto> findAll(AuthorFilter filter, Pageable pageable) {
+        return PageResponse.of(authorService.findAll(filter, pageable));
     }
 
     @GetMapping("/{id}")
-    public BookReadDto findById(@PathVariable("id") Long id) {
-        return bookService.findById(id)
+    public AuthorReadDto findById(@PathVariable("id") Long id) {
+        return authorService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping("/{id}")
-    public BookReadDto update(@PathVariable("id") Long id, @Validated @RequestBody BookCreateEditDto dto) {
-        return bookService.update(id, dto)
+    public AuthorReadDto update(@PathVariable("id") Long id, @Validated @RequestBody AuthorCreateEditDto dto) {
+        return authorService.update(id, dto)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") Long id) {
-        if (!bookService.delete(id)) {
+        if (!authorService.delete(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping(value = "/{id}/image")
     public ResponseEntity<byte[]> findAvatar(@PathVariable("id") Long id) {
-        return bookService.findImage(id)
+        return authorService.findImage(id)
                 .map(it -> ResponseEntity.ok()
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .contentLength(it.length)

@@ -37,7 +37,7 @@ public class AuthorCreateEditMapper implements Mapper<AuthorCreateEditDto, Autho
     private void setImage(@NotNull AuthorCreateEditDto object, Author author) {
         Optional.ofNullable(object.getImagePath())
                 .filter(not(MultipartFile::isEmpty))
-                .ifPresent(image -> author.setImagePath(image.getOriginalFilename()));
+                .ifPresent(image -> author.setImage(image.getOriginalFilename()));
     }
 
     private AuthorRole gerAuthorRole(Integer id) {

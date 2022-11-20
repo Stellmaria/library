@@ -44,7 +44,7 @@ public class QAuthor extends EntityPathBase<Author> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final StringPath imagePath = createString("imagePath");
+    public final StringPath image = createString("image");
 
     public final StringPath lastName = createString("lastName");
 

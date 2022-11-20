@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,11 +17,6 @@ public class AuthorRoleService {
 
     private final AuthorRoleRepository authorRoleRepository;
     private final AuthorRoleReadMapper authorRoleReadMapper;
-
-    public Optional<AuthorRoleReadDto> findById(Integer id) {
-        return authorRoleRepository.findById(id)
-                .map(authorRoleReadMapper::map);
-    }
 
     public Collection<AuthorRoleReadDto> findAll() {
         return authorRoleRepository.findAll().stream()
