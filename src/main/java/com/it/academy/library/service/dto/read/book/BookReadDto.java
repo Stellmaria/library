@@ -1,7 +1,7 @@
 package com.it.academy.library.service.dto.read.book;
 
 import com.it.academy.library.model.entity.book.Book;
-import com.it.academy.library.service.dto.read.author.AuthorReadDto;
+import com.it.academy.library.service.dto.read.AuthorReadDto;
 import com.it.academy.library.service.dto.read.order.OrderReadDto;
 import lombok.Value;
 

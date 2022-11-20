@@ -1,6 +1,6 @@
-package com.it.academy.library.service.dto.read.author;
+package com.it.academy.library.service.dto.read;
 
-import com.it.academy.library.model.entity.author.Author;
+import com.it.academy.library.model.entity.Author;
 import lombok.Value;
 
 import java.time.LocalDate;
