@@ -1,7 +1,6 @@
 package com.it.academy.library.model.entity.book;
 
 import com.it.academy.library.model.entity.AbstractAuditingEntity;
-import com.it.academy.library.model.entity.BooksGenres;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -12,13 +11,12 @@ import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import java.util.Collection;
@@ -49,13 +47,10 @@ public class BookGenre extends AbstractAuditingEntity<Integer> {
 
     private String description;
 
-    @OneToMany(
-            mappedBy = "bookGenre",
-            cascade = CascadeType.ALL
-    )
+    @ManyToMany(mappedBy = "genres")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Collection<BooksGenres> booksGenres;
+    private Collection<Book> books;
 
     @Override
     public boolean equals(Object o) {

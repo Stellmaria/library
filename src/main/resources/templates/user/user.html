@@ -17,7 +17,7 @@
 </header>
 
 <main>
-    <div class="product-element">
+    <div class="product-element" sec:authorize="hasRole('ADMIN')">
         <form enctype="multipart/form-data" method="post"
               th:action="@{/users/{userId}/update(userId=${user.id})}" th:object="${user}">
 

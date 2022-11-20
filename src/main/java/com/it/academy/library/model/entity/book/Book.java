@@ -1,8 +1,7 @@
 package com.it.academy.library.model.entity.book;
 
 import com.it.academy.library.model.entity.AbstractAuditingEntity;
-import com.it.academy.library.model.entity.BooksGenres;
-import com.it.academy.library.model.entity.author.Author;
+import com.it.academy.library.model.entity.Author;
 import com.it.academy.library.model.entity.order.Order;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -123,13 +122,15 @@ public class Book extends AbstractAuditingEntity<Long> {
     )
     private Collection<Author> authors;
 
-    @OneToMany(
-            mappedBy = "book",
-            cascade = CascadeType.ALL
-    )
+    @ManyToMany(cascade = {CascadeType.ALL})
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private Collection<BooksGenres> booksGenres;
+    @JoinTable(
+            name = "books_genres",
+            joinColumns = {@JoinColumn(name = "book_id")},
+            inverseJoinColumns = {@JoinColumn(name = "genre_id")}
+    )
+    private Collection<BookGenre> genres;
 
     @Override
     public boolean equals(Object o) {

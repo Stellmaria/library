@@ -22,7 +22,7 @@ public class QBooksAuthors extends EntityPathBase<BooksAuthors> {
 
     public static final QBooksAuthors booksAuthors = new QBooksAuthors("booksAuthors");
 
-    public final com.it.academy.library.model.entity.author.QAuthor author;
+    public final QAuthor author;
 
     public final com.it.academy.library.model.entity.book.QBook book;
 
@@ -46,7 +46,7 @@ public class QBooksAuthors extends EntityPathBase<BooksAuthors> {
 
     public QBooksAuthors(Class<? extends BooksAuthors> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.author = inits.isInitialized("author") ? new com.it.academy.library.model.entity.author.QAuthor(forProperty("author"), inits.get("author")) : null;
+        this.author = inits.isInitialized("author") ? new QAuthor(forProperty("author")) : null;
         this.book = inits.isInitialized("book") ? new com.it.academy.library.model.entity.book.QBook(forProperty("book"), inits.get("book")) : null;
     }
 

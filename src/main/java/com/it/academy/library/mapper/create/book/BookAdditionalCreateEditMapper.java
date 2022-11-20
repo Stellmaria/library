@@ -17,16 +17,27 @@ public class BookAdditionalCreateEditMapper implements Mapper<BookAdditionalCrea
     public final BookRepository bookRepository;
 
     @Override
+    public BookAdditional map(@NotNull BookAdditionalCreateEditDto fromObject, @NotNull BookAdditional toObject) {
+        copy(fromObject, toObject);
+
+        return toObject;
+    }
+
+    @Override
     public BookAdditional map(@NotNull BookAdditionalCreateEditDto object) {
         var bookAdditional = new BookAdditional();
 
+        copy(object, bookAdditional);
+
+        return bookAdditional;
+    }
+
+    private void copy(@NotNull BookAdditionalCreateEditDto object, @NotNull BookAdditional bookAdditional) {
         bookAdditional.setBook(getBook(object.getBookId()));
         bookAdditional.setVolume(object.getVolume());
         bookAdditional.setSerialNo(object.getSerialNo());
         bookAdditional.setPrice(object.getPrice());
         bookAdditional.setLink(object.getLink());
-
-        return bookAdditional;
     }
 
     private Book getBook(Long id) {

@@ -7,9 +7,6 @@ import java.time.LocalDateTime;
 
 @UtilityClass
 public class ConstantUtil {
-    public static final String AUTHOR_ROLE_NAME_AUTHOR = "Author";
-    public final static Integer AUTHOR_ROLE_ID_1 = 1;
-
     public static final Integer BOOK_STATUS_ID_1 = 1;
     public static final String BOOK_STATUS_NAME_READING_ROOM = "Reading room";
 

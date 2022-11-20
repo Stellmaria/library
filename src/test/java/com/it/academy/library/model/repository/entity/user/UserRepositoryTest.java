@@ -33,7 +33,6 @@ class UserRepositoryTest extends IntegrationTestBase {
     @DisplayName("Save user.")
     void saveUser() {
         var expectedCount = userRepository.count() + 1;
-
         var userRole = UserRole.builder()
                 .id(USER_ROLE_ID_2)
                 .build();

@@ -1,7 +1,7 @@
 package com.it.academy.library.mapper.create.book;
 
 import com.it.academy.library.mapper.Mapper;
-import com.it.academy.library.model.entity.author.Author;
+import com.it.academy.library.model.entity.Author;
 import com.it.academy.library.model.entity.book.Book;
 import com.it.academy.library.model.entity.book.BookFormat;
 import com.it.academy.library.model.entity.book.BookLanguage;
@@ -9,7 +9,7 @@ import com.it.academy.library.model.entity.book.BookPublishingHouse;
 import com.it.academy.library.model.entity.book.BookSeries;
 import com.it.academy.library.model.entity.book.BookStatus;
 import com.it.academy.library.model.entity.order.Order;
-import com.it.academy.library.model.repository.entity.author.AuthorRepository;
+import com.it.academy.library.model.repository.entity.AuthorRepository;
 import com.it.academy.library.model.repository.entity.book.BookFormatRepository;
 import com.it.academy.library.model.repository.entity.book.BookLanguageRepository;
 import com.it.academy.library.model.repository.entity.book.BookPublishingHouseRepository;
@@ -73,8 +73,7 @@ public class BookCreateEditMapper implements Mapper<BookCreateEditDto, Book> {
         book.setAuthors(getAuthors(object));
     }
 
-    @NotNull
-    private Collection<Author> getAuthors(@NotNull BookCreateEditDto object) {
+    private @NotNull Collection<Author> getAuthors(@NotNull BookCreateEditDto object) {
         Collection<Author> authors = new ArrayList<>();
 
         Objects.requireNonNull(object).getAuthorsId().stream()

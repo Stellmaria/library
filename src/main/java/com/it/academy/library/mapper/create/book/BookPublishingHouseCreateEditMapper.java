@@ -7,14 +7,27 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BookPublishingHouseCreateEditMapper implements
-        Mapper<BookPublishingHouseCreateEditDto, BookPublishingHouse> {
+public class BookPublishingHouseCreateEditMapper
+        implements Mapper<BookPublishingHouseCreateEditDto, BookPublishingHouse> {
+    @Override
+    public BookPublishingHouse map(@NotNull BookPublishingHouseCreateEditDto fromObject,
+                                   @NotNull BookPublishingHouse toObject) {
+        copy(fromObject, toObject);
+
+        return toObject;
+    }
+
     @Override
     public BookPublishingHouse map(@NotNull BookPublishingHouseCreateEditDto object) {
         var bookPublishingHouse = new BookPublishingHouse();
 
-        bookPublishingHouse.setName(object.getName());
+        copy(object, bookPublishingHouse);
 
         return bookPublishingHouse;
+    }
+
+    private void copy(@NotNull BookPublishingHouseCreateEditDto object,
+                      @NotNull BookPublishingHouse bookPublishingHouse) {
+        bookPublishingHouse.setName(object.getName());
     }
 }

@@ -22,7 +22,7 @@ public class QBookGenre extends EntityPathBase<BookGenre> {
 
     public final com.it.academy.library.model.entity.QAbstractAuditingEntity _super = new com.it.academy.library.model.entity.QAbstractAuditingEntity(this);
 
-    public final CollectionPath<com.it.academy.library.model.entity.BooksGenres, com.it.academy.library.model.entity.QBooksGenres> booksGenres = this.<com.it.academy.library.model.entity.BooksGenres, com.it.academy.library.model.entity.QBooksGenres>createCollection("booksGenres", com.it.academy.library.model.entity.BooksGenres.class, com.it.academy.library.model.entity.QBooksGenres.class, PathInits.DIRECT2);
+    public final CollectionPath<Book, QBook> books = this.<Book, QBook>createCollection("books", Book.class, QBook.class, PathInits.DIRECT2);
 
     //inherited
     public final DateTimePath<java.time.Instant> createdAt = _super.createdAt;

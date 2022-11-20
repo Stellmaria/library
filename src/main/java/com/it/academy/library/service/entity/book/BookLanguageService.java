@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,11 +16,6 @@ import java.util.stream.Collectors;
 public class BookLanguageService {
     private final BookLanguageRepository bookLanguageRepository;
     private final BookLanguageReadMapper bookLanguageReadMapper;
-
-    public Optional<BookLanguageReadDto> findById(Integer id) {
-        return bookLanguageRepository.findById(id)
-                .map(bookLanguageReadMapper::map);
-    }
 
     public Collection<BookLanguageReadDto> findAll() {
         return bookLanguageRepository.findAll().stream()

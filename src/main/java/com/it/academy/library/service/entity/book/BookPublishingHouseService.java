@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,11 +16,6 @@ import java.util.stream.Collectors;
 public class BookPublishingHouseService {
     private final BookPublishingHouseRepository bookPublishingHouseRepository;
     private final BookPublishingHouseReadMapper bookPublishingHouseReadMapper;
-
-    public Optional<BookPublishingHouseReadDto> findById(Integer id) {
-        return bookPublishingHouseRepository.findById(id)
-                .map(bookPublishingHouseReadMapper::map);
-    }
 
     public Collection<BookPublishingHouseReadDto> findAll() {
         return bookPublishingHouseRepository.findAll().stream()

@@ -1,6 +1,6 @@
 package com.it.academy.library.model.repository.entity.book;
 
-import com.it.academy.library.mapper.filter.author.AuthorFilterMapper;
+import com.it.academy.library.mapper.filter.AuthorFilterMapper;
 import com.it.academy.library.mapper.filter.book.BookAdditionalFilterMapper;
 import com.it.academy.library.mapper.filter.book.BookFilterMapper;
 import com.it.academy.library.mapper.filter.book.BookFormatFilterMapper;
@@ -11,7 +11,7 @@ import com.it.academy.library.mapper.filter.book.BookSeriesFilterMapper;
 import com.it.academy.library.mapper.filter.book.BookStatusFilterMapper;
 import com.it.academy.library.mapper.filter.order.OrderFilterMapper;
 import com.it.academy.library.mapper.filter.user.UserFilterMapper;
-import com.it.academy.library.model.entity.author.Author;
+import com.it.academy.library.model.entity.Author;
 import com.it.academy.library.model.entity.book.Book;
 import com.it.academy.library.model.entity.book.BookAdditional;
 import com.it.academy.library.model.entity.book.BookFormat;

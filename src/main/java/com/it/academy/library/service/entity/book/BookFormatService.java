@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,11 +16,6 @@ import java.util.stream.Collectors;
 public class BookFormatService {
     private final BookFormatRepository bookFormatRepository;
     private final BookFormatReadMapper bookFormatReadMapper;
-
-    public Optional<BookFormatReadDto> findById(Integer id) {
-        return bookFormatRepository.findById(id)
-                .map(bookFormatReadMapper::map);
-    }
 
     public Collection<BookFormatReadDto> findAll() {
         return bookFormatRepository.findAll().stream()

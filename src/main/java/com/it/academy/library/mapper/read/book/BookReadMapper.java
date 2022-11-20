@@ -1,10 +1,10 @@
 package com.it.academy.library.mapper.read.book;
 
 import com.it.academy.library.mapper.Mapper;
-import com.it.academy.library.mapper.read.author.AuthorReadMapper;
+import com.it.academy.library.mapper.read.AuthorReadMapper;
 import com.it.academy.library.mapper.read.order.OrderReadMapper;
 import com.it.academy.library.model.entity.book.Book;
-import com.it.academy.library.service.dto.read.author.AuthorReadDto;
+import com.it.academy.library.service.dto.read.AuthorReadDto;
 import com.it.academy.library.service.dto.read.book.BookFormatReadDto;
 import com.it.academy.library.service.dto.read.book.BookLanguageReadDto;
 import com.it.academy.library.service.dto.read.book.BookPublishingHouseReadDto;
@@ -52,7 +52,6 @@ public class BookReadMapper implements Mapper<Book, BookReadDto> {
         );
     }
 
-    @NotNull
     private Collection<AuthorReadDto> getAuthors(@NotNull Book object) {
         return Optional.of(object.getAuthors().stream()
                         .map(authorReadMapper::map)

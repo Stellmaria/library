@@ -24,7 +24,7 @@ public class QBook extends EntityPathBase<Book> {
 
     public final com.it.academy.library.model.entity.QAbstractAuditingEntity _super = new com.it.academy.library.model.entity.QAbstractAuditingEntity(this);
 
-    public final CollectionPath<com.it.academy.library.model.entity.author.Author, com.it.academy.library.model.entity.author.QAuthor> authors = this.<com.it.academy.library.model.entity.author.Author, com.it.academy.library.model.entity.author.QAuthor>createCollection("authors", com.it.academy.library.model.entity.author.Author.class, com.it.academy.library.model.entity.author.QAuthor.class, PathInits.DIRECT2);
+    public final CollectionPath<com.it.academy.library.model.entity.Author, com.it.academy.library.model.entity.QAuthor> authors = this.<com.it.academy.library.model.entity.Author, com.it.academy.library.model.entity.QAuthor>createCollection("authors", com.it.academy.library.model.entity.Author.class, com.it.academy.library.model.entity.QAuthor.class, PathInits.DIRECT2);
 
     public final CollectionPath<BookAdditional, QBookAdditional> bookAdditional = this.<BookAdditional, QBookAdditional>createCollection("bookAdditional", BookAdditional.class, QBookAdditional.class, PathInits.DIRECT2);
 
@@ -36,8 +36,6 @@ public class QBook extends EntityPathBase<Book> {
 
     public final QBookSeries bookSeries;
 
-    public final CollectionPath<com.it.academy.library.model.entity.BooksGenres, com.it.academy.library.model.entity.QBooksGenres> booksGenres = this.<com.it.academy.library.model.entity.BooksGenres, com.it.academy.library.model.entity.QBooksGenres>createCollection("booksGenres", com.it.academy.library.model.entity.BooksGenres.class, com.it.academy.library.model.entity.QBooksGenres.class, PathInits.DIRECT2);
-
     public final QBookStatus bookStatus;
 
     //inherited
@@ -45,6 +43,8 @@ public class QBook extends EntityPathBase<Book> {
 
     //inherited
     public final StringPath createdBy = _super.createdBy;
+
+    public final CollectionPath<BookGenre, QBookGenre> genres = this.<BookGenre, QBookGenre>createCollection("genres", BookGenre.class, QBookGenre.class, PathInits.DIRECT2);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 

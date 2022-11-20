@@ -1,9 +1,9 @@
 package com.it.academy.library.http.controller;
 
 import com.it.academy.library.service.dto.PageResponse;
-import com.it.academy.library.service.dto.create.author.AuthorCreateEditDto;
-import com.it.academy.library.service.dto.filter.author.AuthorFilter;
-import com.it.academy.library.service.entity.author.AuthorService;
+import com.it.academy.library.service.dto.create.AuthorCreateEditDto;
+import com.it.academy.library.service.dto.filter.AuthorFilter;
+import com.it.academy.library.service.entity.AuthorService;
 import com.it.academy.library.service.entity.book.BookService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -28,18 +28,19 @@ public class AuthorController {
     private final AuthorService authorService;
     private final BookService bookService;
 
-    public String create(@Validated AuthorCreateEditDto author, @NotNull BindingResult bindingResult,
+    @PostMapping
+    public String create(@Validated AuthorCreateEditDto dto, @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("author", author);
+            redirectAttributes.addFlashAttribute("author", dto);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
 
             return "redirect:/author/addAuthor";
         }
 
-        authorService.create(author);
+        authorService.create(dto);
 
-        return "redirect:/books";
+        return "redirect:/authors";
 
     }
 
@@ -66,8 +67,8 @@ public class AuthorController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable("id") Long id, @Validated AuthorCreateEditDto author) {
-        return authorService.update(id, author)
+    public String update(@PathVariable("id") Long id, @Validated AuthorCreateEditDto dto) {
+        return authorService.update(id, dto)
                 .map(it -> "redirect:/authors/{id}")
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
@@ -82,8 +83,8 @@ public class AuthorController {
     }
 
     @GetMapping("/addAuthor")
-    public String addAuthor(@NotNull Model model, AuthorCreateEditDto author) {
-        model.addAttribute("author", author);
+    public String addAuthor(@NotNull Model model, AuthorCreateEditDto dto) {
+        model.addAttribute("author", dto);
 
         return "author/addAuthor";
     }

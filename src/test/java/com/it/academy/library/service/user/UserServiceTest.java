@@ -1,7 +1,7 @@
 package com.it.academy.library.service.user;
 
 import com.it.academy.library.model.repository.entity.IntegrationTestBase;
-import com.it.academy.library.service.dto.create.user.UserCreateEditDto;
+import com.it.academy.library.service.dto.create.UserCreateEditDto;
 import com.it.academy.library.service.entity.user.UserService;
 import com.it.academy.library.util.ConstantUtil;
 import lombok.RequiredArgsConstructor;

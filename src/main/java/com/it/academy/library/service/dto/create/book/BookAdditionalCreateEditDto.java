@@ -3,7 +3,6 @@ package com.it.academy.library.service.dto.create.book;
 import com.it.academy.library.model.entity.book.BookAdditional;
 import lombok.Value;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 
@@ -23,6 +22,5 @@ public class BookAdditionalCreateEditDto {
     @Positive
     BigDecimal price;
 
-    @NotBlank
     String link;
 }

@@ -6,7 +6,7 @@ import com.it.academy.library.model.entity.book.Book;
 import com.it.academy.library.model.repository.entity.book.BookRepository;
 import com.it.academy.library.service.ImageService;
 import com.it.academy.library.service.dto.create.book.BookCreateEditDto;
-import com.it.academy.library.service.dto.filter.author.AuthorFilter;
+import com.it.academy.library.service.dto.filter.AuthorFilter;
 import com.it.academy.library.service.dto.filter.book.BookFilter;
 import com.it.academy.library.service.dto.filter.book.BookSeriesFilter;
 import com.it.academy.library.service.dto.read.book.BookReadDto;

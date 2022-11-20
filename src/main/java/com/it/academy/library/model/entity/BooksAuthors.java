@@ -1,6 +1,5 @@
 package com.it.academy.library.model.entity;
 
-import com.it.academy.library.model.entity.author.Author;
 import com.it.academy.library.model.entity.book.Book;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

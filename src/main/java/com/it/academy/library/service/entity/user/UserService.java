@@ -1,11 +1,11 @@
 package com.it.academy.library.service.entity.user;
 
-import com.it.academy.library.mapper.create.user.UserCreateEditMapper;
+import com.it.academy.library.mapper.create.UserCreateEditMapper;
 import com.it.academy.library.mapper.read.user.UserReadMapper;
 import com.it.academy.library.model.entity.user.User;
 import com.it.academy.library.model.repository.entity.user.UserRepository;
 import com.it.academy.library.service.ImageService;
-import com.it.academy.library.service.dto.create.user.UserCreateEditDto;
+import com.it.academy.library.service.dto.create.UserCreateEditDto;
 import com.it.academy.library.service.dto.filter.user.UserFilter;
 import com.it.academy.library.service.dto.read.user.UserReadDto;
 import lombok.RequiredArgsConstructor;

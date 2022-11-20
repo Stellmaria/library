@@ -1,34 +1,19 @@
 --liquibase formatted sql
 
---changeset stell:1
-CREATE TABLE IF NOT EXISTS author_role
+--changeset stell:2
+CREATE TABLE IF NOT EXISTS author
 (
-    id          SERIAL PRIMARY KEY,
-    name        VARCHAR(64) UNIQUE NOT NULL,
+    id          BIGSERIAL PRIMARY KEY,
+    first_name  VARCHAR(64) NOT NULL,
+    last_name   VARCHAR(64) NOT NULL,
+    image       VARCHAR(255),
+    birthday    DATE,
+    date_death  DATE,
+    description VARCHAR(255),
     created_at  TIMESTAMP WITHOUT TIME ZONE,
     modified_at TIMESTAMP WITHOUT TIME ZONE,
     created_by  VARCHAR(64),
     modified_by VARCHAR(64)
-);
---rollback DROP TABLE author_role;
-
---changeset stell:2
-CREATE TABLE IF NOT EXISTS author
-(
-    id             BIGSERIAL PRIMARY KEY,
-    first_name     VARCHAR(64) NOT NULL,
-    last_name      VARCHAR(64) NOT NULL,
-    image          VARCHAR(255),
-    author_role_id INTEGER,
-    birthday       DATE,
-    date_death     DATE,
-    description    VARCHAR(255),
-    created_at     TIMESTAMP WITHOUT TIME ZONE,
-    modified_at    TIMESTAMP WITHOUT TIME ZONE,
-    created_by     VARCHAR(64),
-    modified_by    VARCHAR(64),
-    FOREIGN KEY (author_role_id) REFERENCES author_role (id)
-        ON UPDATE CASCADE ON DELETE SET NULL
 );
 --rollback DROP TABLE author;
 
@@ -238,8 +223,8 @@ CREATE TABLE IF NOT EXISTS book
 --changeset stell:16
 CREATE TABLE IF NOT EXISTS books_genres
 (
-    id          BIGSERIAL PRIMARY KEY,
-    book_id     BIGINT REFERENCES book (id) ON DELETE CASCADE,
+    id       BIGSERIAL PRIMARY KEY,
+    book_id  BIGINT REFERENCES book (id) ON DELETE CASCADE,
     genre_id INTEGER REFERENCES book_genre (id) ON DELETE CASCADE
 );
 --rollback DROP TABLE books_genres;

@@ -1,7 +1,7 @@
 package com.it.academy.library.http.controller;
 
 import com.it.academy.library.service.dto.PageResponse;
-import com.it.academy.library.service.dto.create.user.UserCreateEditDto;
+import com.it.academy.library.service.dto.create.UserCreateEditDto;
 import com.it.academy.library.service.dto.filter.user.UserFilter;
 import com.it.academy.library.service.entity.user.UserRoleService;
 import com.it.academy.library.service.entity.user.UserService;

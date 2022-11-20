@@ -1,10 +1,10 @@
 package com.it.academy.library.http.controller.rest;
 
 import com.it.academy.library.service.dto.PageResponse;
-import com.it.academy.library.service.dto.create.author.AuthorCreateEditDto;
-import com.it.academy.library.service.dto.filter.author.AuthorFilter;
-import com.it.academy.library.service.dto.read.author.AuthorReadDto;
-import com.it.academy.library.service.entity.author.AuthorService;
+import com.it.academy.library.service.dto.create.AuthorCreateEditDto;
+import com.it.academy.library.service.dto.filter.AuthorFilter;
+import com.it.academy.library.service.dto.read.AuthorReadDto;
+import com.it.academy.library.service.entity.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
