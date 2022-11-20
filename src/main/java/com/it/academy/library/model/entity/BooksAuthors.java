@@ -30,7 +30,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Table(name = "books_authors")
 @SelectBeforeUpdate
-public class BooksAuthors extends AbstractAuditingEntity<Long> {
+public class BooksAuthors implements BaseEntity<Long> {
     private static final long serialVersionUID = 6050944134567897270L;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

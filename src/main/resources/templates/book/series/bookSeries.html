@@ -26,34 +26,37 @@
 
 <main>
     <div class="product-element" sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')">
-        <form method="post" th:action="@{/books/series/{bookSeriesId}/update(bookSeriesId=${series.id})}"
+        <form method="post" th:action="@{/books/series/{seriesId}/update(seriesId=${series.id})}"
               th:object="${series}">
-            <h3>Name: </h3>
 
-            <p th:text="*{name}">Name: </p>
+            <label for="name"> Name:
+                <input id="name" name="name" th:value="*{name}" type="text">
+            </label><br>
 
             <div class="button">
                 <button class="btn" type="submit">Update</button>
             </div>
         </form>
+
+        <div class="button-form">
+            <div class="button">
+                <form class="button" method="post" sec:authorize="hasRole('ADMIN')"
+                      th:action="@{/books/series/{seriesId}/delete(seriesId=${series.id})}">
+                    <button class="btn" type="submit">Remove</button>
+                </form>
+            </div>
+        </div>
     </div>
 </main>
 
 <main>
-    <div th:each="book : ${books}">
-        <div class="element">
-            <h3>Book: </h3>
+    <div class="product-element" sec:authorize="hasAnyRole('READER', 'GUSET')">
+        <div th:each="book : ${books}">
+            <div class="element">
+                <h3>Book: </h3>
 
-            <a th:href="@{'/books/' + ${book.id}}" th:text="${book.title}">Books</a>
-        </div>
-    </div>
-
-    <div class="button-form">
-        <div class="button">
-            <form class="button" method="post" sec:authorize="hasRole('ADMIN')"
-                  th:action="@{/books/series{bookSeriesId}/delete(bookSeriesId=${series.id})}">
-                <button class="btn" type="submit">Remove</button>
-            </form>
+                <a th:href="@{'/books/' + ${book.id}}" th:text="${book.title}">Books</a>
+            </div>
         </div>
     </div>
 </main>

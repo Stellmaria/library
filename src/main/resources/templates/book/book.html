@@ -53,7 +53,7 @@
 
             <div>
                 <label for="authors">Authors:
-                    <select id="authors" multiple name="authorsId">
+                    <select id="authors" multiple="multiple" name="authorsId">
                         <option disabled selected value></option>
                         <option th:each="author : ${allAuthors}"
                                 th:text="|${author.firstName} ${author.lastName}|"
@@ -261,8 +261,7 @@
         <div class="element" th:each="author : ${book.authors}" th:if="${book.authors != null}">
             <h3>Author: </h3>
 
-            <a th:href="@{'/authors/' + ${author.id}}" th:text="|${author.firstName} ${author.lastName}|">
-                Authors</a>
+            <a th:href="@{'/authors/' + ${author.id}}" th:text="|${author.firstName} ${author.lastName}|">Authors</a>
         </div>
 
         <div class="img-book" th:if="${book.image}">

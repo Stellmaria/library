@@ -66,7 +66,7 @@ public class BookSeriesController {
     @PostMapping("/{id}/update")
     public String update(@PathVariable("id") Integer id, @Validated BookSeriesCreateEditDto dto) {
         return bookSeriesService.update(id, dto)
-                .map(it -> "redirect:/series/bookSeries/{id}")
+                .map(it -> "redirect:/books/series/{id}")
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 

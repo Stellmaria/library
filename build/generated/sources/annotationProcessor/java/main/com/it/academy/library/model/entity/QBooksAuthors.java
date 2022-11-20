@@ -22,25 +22,11 @@ public class QBooksAuthors extends EntityPathBase<BooksAuthors> {
 
     public static final QBooksAuthors booksAuthors = new QBooksAuthors("booksAuthors");
 
-    public final QAbstractAuditingEntity _super = new QAbstractAuditingEntity(this);
-
     public final com.it.academy.library.model.entity.author.QAuthor author;
 
     public final com.it.academy.library.model.entity.book.QBook book;
 
-    //inherited
-    public final DateTimePath<java.time.Instant> createdAt = _super.createdAt;
-
-    //inherited
-    public final StringPath createdBy = _super.createdBy;
-
     public final NumberPath<Long> id = createNumber("id", Long.class);
-
-    //inherited
-    public final DateTimePath<java.time.Instant> modifiedAt = _super.modifiedAt;
-
-    //inherited
-    public final StringPath modifiedBy = _super.modifiedBy;
 
     public QBooksAuthors(String variable) {
         this(BooksAuthors.class, forVariable(variable), INITS);

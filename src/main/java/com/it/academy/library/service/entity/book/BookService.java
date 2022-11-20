@@ -6,6 +6,7 @@ import com.it.academy.library.model.entity.book.Book;
 import com.it.academy.library.model.repository.entity.book.BookRepository;
 import com.it.academy.library.service.ImageService;
 import com.it.academy.library.service.dto.create.book.BookCreateEditDto;
+import com.it.academy.library.service.dto.filter.author.AuthorFilter;
 import com.it.academy.library.service.dto.filter.book.BookFilter;
 import com.it.academy.library.service.dto.filter.book.BookSeriesFilter;
 import com.it.academy.library.service.dto.read.book.BookReadDto;
@@ -64,6 +65,16 @@ public class BookService {
                 .build();
 
         return bookRepository.findAllByBookSeriesFilter(seriesFilter).stream()
+                .map(bookReadMapper::map)
+                .collect(Collectors.toList());
+    }
+
+    public Collection<BookReadDto> findAllByAuthorId(Long id) {
+        var filter = AuthorFilter.builder()
+                .id(id)
+                .build();
+
+        return bookRepository.findAllByAuthorFilter(filter).stream()
                 .map(bookReadMapper::map)
                 .collect(Collectors.toList());
     }

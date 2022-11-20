@@ -240,24 +240,16 @@ CREATE TABLE IF NOT EXISTS books_genres
 (
     id          BIGSERIAL PRIMARY KEY,
     book_id     BIGINT REFERENCES book (id) ON DELETE CASCADE,
-    genre_id    INTEGER REFERENCES book_genre (id) ON DELETE CASCADE,
-    created_at  TIMESTAMP WITHOUT TIME ZONE,
-    modified_at TIMESTAMP WITHOUT TIME ZONE,
-    created_by  VARCHAR(64),
-    modified_by VARCHAR(64)
+    genre_id INTEGER REFERENCES book_genre (id) ON DELETE CASCADE
 );
 --rollback DROP TABLE books_genres;
 
 --changeset stell:17
 CREATE TABLE IF NOT EXISTS books_authors
 (
-    id          BIGSERIAL PRIMARY KEY,
-    book_id     BIGINT REFERENCES book (id) ON DELETE CASCADE,
-    author_id   BIGINT REFERENCES author (id) ON DELETE CASCADE,
-    created_at  TIMESTAMP WITHOUT TIME ZONE,
-    modified_at TIMESTAMP WITHOUT TIME ZONE,
-    created_by  VARCHAR(64),
-    modified_by VARCHAR(64)
+    id        BIGSERIAL PRIMARY KEY,
+    book_id   BIGINT REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    author_id BIGINT REFERENCES author (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 --rollback DROP TABLE books_authors;
 

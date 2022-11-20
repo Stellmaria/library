@@ -4,6 +4,7 @@ import com.it.academy.library.service.dto.PageResponse;
 import com.it.academy.library.service.dto.create.author.AuthorCreateEditDto;
 import com.it.academy.library.service.dto.filter.author.AuthorFilter;
 import com.it.academy.library.service.entity.author.AuthorService;
+import com.it.academy.library.service.entity.book.BookService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 public class AuthorController {
     private final AuthorService authorService;
+    private final BookService bookService;
 
     public String create(@Validated AuthorCreateEditDto author, @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
@@ -54,6 +56,7 @@ public class AuthorController {
         return authorService.findById(id)
                 .map(author -> {
                     model.addAttribute("author", author);
+                    model.addAttribute("books", bookService.findAllByAuthorId(id));
 
                     SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 

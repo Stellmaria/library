@@ -90,6 +90,12 @@
             <p th:text="${author.dateDeath}"></p>
         </div>
 
+        <div class="element" th:each="book : ${books}" th:if="${books != null}">
+            <h3>Book: </h3>
+
+            <a th:href="@{'/books/' + ${book.id}}" th:text="${book.title}">Books</a>
+        </div>
+
         <div class="element" th:if="${author.description != null}">
             <h3>Description: </h3>
 
@@ -97,10 +103,6 @@
         </div>
     </div>
 </main>
-
-<footer>
-    <div th:insert="~{fragments/footer :: footer}"></div>
-</footer>
 
 </body>
 </html>

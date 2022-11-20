@@ -72,12 +72,12 @@ public class AuthorService {
     }
 
     @Transactional(rollbackFor = {Exception.class})
-    public Optional<AuthorReadDto> update(Long id, AuthorCreateEditDto authorDto) {
+    public Optional<AuthorReadDto> update(Long id, AuthorCreateEditDto dto) {
         return authorRepository.findById(id)
                 .map(entity -> {
-                    uploadImage(authorDto.getImagePath());
+                    uploadImage(dto.getImagePath());
 
-                    return authorCreateEditMapper.map(authorDto, entity);
+                    return authorCreateEditMapper.map(dto, entity);
                 })
                 .map(authorRepository::saveAndFlush)
                 .map(authorReadMapper::map);
@@ -100,7 +100,6 @@ public class AuthorService {
                 .orElse(false);
     }
 
-    @SuppressWarnings("unused")
     public Optional<byte[]> findImage(Long id) {
         return authorRepository.findById(id)
                 .map(Author::getImage)

@@ -52,9 +52,9 @@ public class BookSeriesService {
     }
 
     @Transactional(rollbackFor = {Exception.class})
-    public Optional<BookSeriesReadDto> update(Integer id, BookSeriesCreateEditDto bookDto) {
+    public Optional<BookSeriesReadDto> update(Integer id, BookSeriesCreateEditDto dto) {
         return bookSeriesRepository.findById(id)
-                .map(entity -> bookSeriesCreateEditMapper.map(bookDto, entity))
+                .map(entity -> bookSeriesCreateEditMapper.map(dto, entity))
                 .map(bookSeriesRepository::saveAndFlush)
                 .map(bookSeriesReadMapper::map);
     }
