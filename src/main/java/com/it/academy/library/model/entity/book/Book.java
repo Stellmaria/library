@@ -26,6 +26,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.util.Collection;
 import java.util.Objects;
@@ -46,6 +47,7 @@ public class Book extends AbstractAuditingEntity<Long> {
     private Long id;
 
     @Column(nullable = false)
+    @NotBlank
     private String title;
 
     private String subtitle;
@@ -63,9 +65,7 @@ public class Book extends AbstractAuditingEntity<Long> {
     @ISBN(type = ISBN.Type.ISBN_10)
     private String isbn10;
 
-    @Column(name = "isbn_13",
-            length = 15
-    )
+    @Column(name = "isbn_13")
     @ISBN(type = ISBN.Type.ISBN_13)
     private String isbn13;
 
@@ -77,6 +77,7 @@ public class Book extends AbstractAuditingEntity<Long> {
             nullable = false
     )
     @ToString.Exclude
+    @NotBlank
     private BookStatus bookStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -112,7 +113,7 @@ public class Book extends AbstractAuditingEntity<Long> {
     @ToString.Exclude
     private Collection<BookAdditional> bookAdditional;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JoinTable(
@@ -122,7 +123,7 @@ public class Book extends AbstractAuditingEntity<Long> {
     )
     private Collection<Author> authors;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JoinTable(

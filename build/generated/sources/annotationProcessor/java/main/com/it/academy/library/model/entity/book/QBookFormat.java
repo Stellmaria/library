@@ -20,23 +20,9 @@ public class QBookFormat extends EntityPathBase<BookFormat> {
 
     public static final QBookFormat bookFormat = new QBookFormat("bookFormat");
 
-    public final com.it.academy.library.model.entity.QAbstractAuditingEntity _super = new com.it.academy.library.model.entity.QAbstractAuditingEntity(this);
-
     public final CollectionPath<Book, QBook> books = this.<Book, QBook>createCollection("books", Book.class, QBook.class, PathInits.DIRECT2);
 
-    //inherited
-    public final DateTimePath<java.time.Instant> createdAt = _super.createdAt;
-
-    //inherited
-    public final StringPath createdBy = _super.createdBy;
-
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
-
-    //inherited
-    public final DateTimePath<java.time.Instant> modifiedAt = _super.modifiedAt;
-
-    //inherited
-    public final StringPath modifiedBy = _super.modifiedBy;
 
     public final StringPath name = createString("name");
 

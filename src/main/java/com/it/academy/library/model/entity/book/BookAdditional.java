@@ -19,7 +19,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -58,7 +57,6 @@ public class BookAdditional extends AbstractAuditingEntity<Long> {
     @Positive
     private BigDecimal price;
 
-    @NotBlank
     private String link;
 
     @Override

@@ -21,11 +21,7 @@ CREATE TABLE IF NOT EXISTS author
 CREATE TABLE IF NOT EXISTS book_language
 (
     id          SERIAL PRIMARY KEY,
-    name        VARCHAR(64) UNIQUE NOT NULL,
-    created_at  TIMESTAMP WITHOUT TIME ZONE,
-    modified_at TIMESTAMP WITHOUT TIME ZONE,
-    created_by  VARCHAR(64),
-    modified_by VARCHAR(64)
+    name VARCHAR(64) UNIQUE NOT NULL
 );
 --rollback DROP TABLE book_language;
 
@@ -33,11 +29,7 @@ CREATE TABLE IF NOT EXISTS book_language
 CREATE TABLE IF NOT EXISTS book_format
 (
     id          SERIAL PRIMARY KEY,
-    name        VARCHAR(64) UNIQUE NOT NULL,
-    created_at  TIMESTAMP WITHOUT TIME ZONE,
-    modified_at TIMESTAMP WITHOUT TIME ZONE,
-    created_by  VARCHAR(64),
-    modified_by VARCHAR(64)
+    name VARCHAR(64) UNIQUE NOT NULL
 );
 --rollback DROP TABLE book_format;
 
@@ -82,11 +74,7 @@ CREATE TABLE IF NOT EXISTS book_genre
 CREATE TABLE IF NOT EXISTS book_status
 (
     id          SERIAL PRIMARY KEY,
-    name        VARCHAR(64) UNIQUE NOT NULL,
-    created_at  TIMESTAMP WITHOUT TIME ZONE,
-    modified_at TIMESTAMP WITHOUT TIME ZONE,
-    created_by  VARCHAR(64),
-    modified_by VARCHAR(64)
+    name VARCHAR(64) UNIQUE NOT NULL
 );
 --rollback DROP TABLE book_status;
 
@@ -94,11 +82,7 @@ CREATE TABLE IF NOT EXISTS book_status
 CREATE TABLE IF NOT EXISTS user_role
 (
     id          SERIAL PRIMARY KEY,
-    name        VARCHAR(64) UNIQUE NOT NULL,
-    created_at  TIMESTAMP WITHOUT TIME ZONE,
-    modified_at TIMESTAMP WITHOUT TIME ZONE,
-    created_by  VARCHAR(64),
-    modified_by VARCHAR(64)
+    name VARCHAR(64) UNIQUE NOT NULL
 );
 --rollback DROP TABLE user_role;
 
@@ -106,11 +90,7 @@ CREATE TABLE IF NOT EXISTS user_role
 CREATE TABLE IF NOT EXISTS user_status
 (
     id          SERIAL PRIMARY KEY,
-    name        VARCHAR(64) UNIQUE NOT NULL,
-    created_at  TIMESTAMP WITHOUT TIME ZONE,
-    modified_at TIMESTAMP WITHOUT TIME ZONE,
-    created_by  VARCHAR(64),
-    modified_by VARCHAR(64)
+    name VARCHAR(64) UNIQUE NOT NULL
 );
 --rollback DROP TABLE user_status;
 
@@ -142,11 +122,7 @@ CREATE TABLE IF NOT EXISTS users
 CREATE TABLE IF NOT EXISTS order_status
 (
     id          SERIAL PRIMARY KEY,
-    name        VARCHAR(64) UNIQUE NOT NULL,
-    created_at  TIMESTAMP WITHOUT TIME ZONE,
-    modified_at TIMESTAMP WITHOUT TIME ZONE,
-    created_by  VARCHAR(64),
-    modified_by VARCHAR(64)
+    name VARCHAR(64) UNIQUE NOT NULL
 );
 --rollback DROP TABLE order_status;
 
@@ -154,11 +130,7 @@ CREATE TABLE IF NOT EXISTS order_status
 CREATE TABLE IF NOT EXISTS order_type
 (
     id          SERIAL PRIMARY KEY,
-    name        VARCHAR(64) UNIQUE NOT NULL,
-    created_at  TIMESTAMP WITHOUT TIME ZONE,
-    modified_at TIMESTAMP WITHOUT TIME ZONE,
-    created_by  VARCHAR(64),
-    modified_by VARCHAR(64)
+    name VARCHAR(64) UNIQUE NOT NULL
 );
 --rollback DROP TABLE order_type;
 

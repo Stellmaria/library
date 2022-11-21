@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AuthorFilterMapper implements Mapper<Author, AuthorFilter> {
-
     @Override
     public AuthorFilter map(@NotNull Author object) {
         return new AuthorFilter(

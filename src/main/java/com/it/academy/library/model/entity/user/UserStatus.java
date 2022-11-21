@@ -1,6 +1,6 @@
 package com.it.academy.library.model.entity.user;
 
-import com.it.academy.library.model.entity.AbstractAuditingEntity;
+import com.it.academy.library.model.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -34,7 +34,7 @@ import java.util.Objects;
 @ToString
 @Table(name = "user_status")
 @SelectBeforeUpdate
-public class UserStatus extends AbstractAuditingEntity<Integer> {
+public class UserStatus implements BaseEntity<Integer> {
     private static final long serialVersionUID = 9071339450018079685L;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

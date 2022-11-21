@@ -1,73 +1,61 @@
 package com.it.academy.library.service.entity.book;
 
-import com.it.academy.library.mapper.create.book.BookSeriesCreateEditMapper;
-import com.it.academy.library.mapper.read.book.BookSeriesReadMapper;
-import com.it.academy.library.model.repository.entity.book.BookSeriesRepository;
 import com.it.academy.library.service.dto.create.book.BookSeriesCreateEditDto;
 import com.it.academy.library.service.dto.filter.book.BookSeriesFilter;
 import com.it.academy.library.service.dto.read.book.BookSeriesReadDto;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-@Service
-@RequiredArgsConstructor
-@Transactional(readOnly = true)
-public class BookSeriesService {
-    private final BookSeriesRepository bookSeriesRepository;
-    private final BookSeriesReadMapper bookSeriesReadMapper;
-    private final BookSeriesCreateEditMapper bookSeriesCreateEditMapper;
+public interface BookSeriesService {
+    /**
+     * Creation of a new book series.
+     *
+     * @param dto for creating.
+     * @return new series of books.
+     */
+    BookSeriesReadDto create(BookSeriesCreateEditDto dto);
 
-    @Transactional(rollbackFor = {Exception.class})
-    public BookSeriesReadDto create(BookSeriesCreateEditDto dto) {
-        return Optional.of(dto)
-                .map(bookSeriesCreateEditMapper::map)
-                .map(bookSeriesRepository::save)
-                .map(bookSeriesReadMapper::map)
-                .orElseThrow();
-    }
+    /**
+     * Search for a book series by book series id.
+     *
+     * @param id for search.
+     * @return book series.
+     */
+    Optional<BookSeriesReadDto> findById(Integer id);
 
-    public Optional<BookSeriesReadDto> findById(Integer id) {
-        return bookSeriesRepository.findById(id)
-                .map(bookSeriesReadMapper::map);
-    }
+    /**
+     * Search for all series of books.
+     *
+     * @return collection of found book series.
+     */
+    Collection<BookSeriesReadDto> findAll();
 
-    public Collection<BookSeriesReadDto> findAll() {
-        return bookSeriesRepository.findAll().stream()
-                .map(bookSeriesReadMapper::map)
-                .collect(Collectors.toList());
-    }
+    /**
+     * Search for all series of books with filtering.
+     *
+     * @param filter   for search.
+     * @param pageable for search.
+     * @return collection of found book series.
+     */
+    Page<BookSeriesReadDto> findAll(BookSeriesFilter filter, Pageable pageable);
 
-    public Page<BookSeriesReadDto> findAll(BookSeriesFilter filter, Pageable pageable) {
-        var predicate = BookSeriesFilter.queryPredicates(filter);
+    /**
+     * Book series update by book series id.
+     *
+     * @param id  for an update.
+     * @param dto for an update.
+     * @return updated book series.
+     */
+    Optional<BookSeriesReadDto> update(Integer id, BookSeriesCreateEditDto dto);
 
-        return bookSeriesRepository.findAll(predicate, pageable)
-                .map(bookSeriesReadMapper::map);
-    }
-
-    @Transactional(rollbackFor = {Exception.class})
-    public Optional<BookSeriesReadDto> update(Integer id, BookSeriesCreateEditDto dto) {
-        return bookSeriesRepository.findById(id)
-                .map(entity -> bookSeriesCreateEditMapper.map(dto, entity))
-                .map(bookSeriesRepository::saveAndFlush)
-                .map(bookSeriesReadMapper::map);
-    }
-
-    @Transactional(rollbackFor = {Exception.class})
-    public boolean delete(Integer id) {
-        return bookSeriesRepository.findById(id)
-                .map(entity -> {
-                    bookSeriesRepository.delete(entity);
-                    bookSeriesRepository.flush();
-
-                    return true;
-                })
-                .orElse(false);
-    }
+    /**
+     * Deleting a book series by book series id.
+     *
+     * @param id for removing.
+     * @return true - succeeded; false - failed.
+     */
+    boolean delete(Integer id);
 }

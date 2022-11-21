@@ -28,8 +28,7 @@ public class BookSeriesController {
     private final BookService bookService;
 
     @PostMapping
-    public String create(@Validated BookSeriesCreateEditDto dto,
-                         @NotNull BindingResult bindingResult,
+    public String create(@Validated BookSeriesCreateEditDto dto, @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("series", dto);

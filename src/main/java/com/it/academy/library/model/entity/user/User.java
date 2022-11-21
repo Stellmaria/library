@@ -80,6 +80,7 @@ public class User extends AbstractAuditingEntity<Long> {
     @Column(nullable = false)
     @NotBlank
     private String password;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "user_role_id",

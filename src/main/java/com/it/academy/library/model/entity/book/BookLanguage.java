@@ -1,6 +1,6 @@
 package com.it.academy.library.model.entity.book;
 
-import com.it.academy.library.model.entity.AbstractAuditingEntity;
+import com.it.academy.library.model.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -33,7 +33,7 @@ import java.util.Objects;
 @ToString
 @Table(name = "book_language")
 @SelectBeforeUpdate
-public class BookLanguage extends AbstractAuditingEntity<Integer> {
+public class BookLanguage implements BaseEntity<Integer> {
     private static final long serialVersionUID = 3210063186448371800L;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

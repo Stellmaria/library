@@ -45,80 +45,80 @@ VALUES (1, 'Stieg', 'Larsson', '2022-11-1T00:00', 'stell', '1954-9-15',
 SELECT SETVAL('author_id_seq', (SELECT MAX(id) FROM author));
 
 --changeset stell:5
-INSERT INTO book_language (id, name, created_at, created_by)
-VALUES (1, 'English', '2022-11-1T00:00', 'stell'),
-       (2, 'German', '2022-11-1T00:00', 'stell'),
-       (3, 'French', '2022-11-1T00:00', 'stell'),
-       (4, 'Engels', '2022-11-1T00:00', 'stell'),
-       (5, 'Afrikaans', '2022-11-1T00:00', 'stell'),
-       (6, 'Albanian', '2022-11-1T00:00', 'stell'),
-       (7, 'Arabic', '2022-11-1T00:00', 'stell'),
-       (8, 'Armenian', '2022-11-1T00:00', 'stell'),
-       (9, 'Azerbaijani', '2022-11-1T00:00', 'stell'),
-       (10, 'Basque', '2022-11-1T00:00', 'stell'),
-       (11, 'Belarusian', '2022-11-1T00:00', 'stell'),
-       (12, 'Bulgarian', '2022-11-1T00:00', 'stell'),
-       (13, 'Catalan', '2022-11-1T00:00', 'stell'),
-       (14, 'Chinese', '2022-11-1T00:00', 'stell'),
-       (15, 'Croatian', '2022-11-1T00:00', 'stell'),
-       (16, 'Czech', '2022-11-1T00:00', 'stell'),
-       (17, 'Danish', '2022-11-1T00:00', 'stell'),
-       (18, 'Dutch', '2022-11-1T00:00', 'stell'),
-       (19, 'Estonian', '2022-11-1T00:00', 'stell'),
-       (20, 'Filipino', '2022-11-1T00:00', 'stell'),
-       (21, 'Finnish', '2022-11-1T00:00', 'stell'),
-       (22, 'Galician', '2022-11-1T00:00', 'stell'),
-       (23, 'Georgian', '2022-11-1T00:00', 'stell'),
-       (24, 'Greek', '2022-11-1T00:00', 'stell'),
-       (25, 'Hebrew', '2022-11-1T00:00', 'stell'),
-       (26, 'Hindi', '2022-11-1T00:00', 'stell'),
-       (27, 'Hungarian', '2022-11-1T00:00', 'stell'),
-       (28, 'Icelandic', '2022-11-1T00:00', 'stell'),
-       (29, 'Indonesian', '2022-11-1T00:00', 'stell'),
-       (30, 'Irish', '2022-11-1T00:00', 'stell'),
-       (31, 'Italian', '2022-11-1T00:00', 'stell'),
-       (32, 'Japanese', '2022-11-1T00:00', 'stell'),
-       (33, 'Korean', '2022-11-1T00:00', 'stell'),
-       (34, 'Latin', '2022-11-1T00:00', 'stell'),
-       (35, 'Latvian', '2022-11-1T00:00', 'stell'),
-       (36, 'Lithuanian', '2022-11-1T00:00', 'stell'),
-       (37, 'Macedonian', '2022-11-1T00:00', 'stell'),
-       (38, 'Malay', '2022-11-1T00:00', 'stell'),
-       (39, 'Maltese', '2022-11-1T00:00', 'stell'),
-       (40, 'Norwegian', '2022-11-1T00:00', 'stell'),
-       (41, 'Persian', '2022-11-1T00:00', 'stell'),
-       (42, 'Polish', '2022-11-1T00:00', 'stell'),
-       (43, 'Portuguese', '2022-11-1T00:00', 'stell'),
-       (44, 'Romanian', '2022-11-1T00:00', 'stell'),
-       (45, 'Russian', '2022-11-1T00:00', 'stell'),
-       (46, 'Serbian', '2022-11-1T00:00', 'stell'),
-       (47, 'Slovak', '2022-11-1T00:00', 'stell'),
-       (48, 'Slovenian', '2022-11-1T00:00', 'stell'),
-       (49, 'Spanish', '2022-11-1T00:00', 'stell'),
-       (50, 'Swahili', '2022-11-1T00:00', 'stell'),
-       (51, 'Swedish', '2022-11-1T00:00', 'stell'),
-       (52, 'Thai', '2022-11-1T00:00', 'stell'),
-       (53, 'Turkish', '2022-11-1T00:00', 'stell'),
-       (54, 'Ukrainian', '2022-11-1T00:00', 'stell'),
-       (55, 'Urdu', '2022-11-1T00:00', 'stell'),
-       (56, 'Vietnamese', '2022-11-1T00:00', 'stell'),
-       (57, 'Welsh', '2022-11-1T00:00', 'stell'),
-       (58, 'Yiddish', '2022-11-1T00:00', 'stell');
+INSERT INTO book_language (id, name)
+VALUES (1, 'English'),
+       (2, 'German'),
+       (3, 'French'),
+       (4, 'Engels'),
+       (5, 'Afrikaans'),
+       (6, 'Albanian'),
+       (7, 'Arabic'),
+       (8, 'Armenian'),
+       (9, 'Azerbaijani'),
+       (10, 'Basque'),
+       (11, 'Belarusian'),
+       (12, 'Bulgarian'),
+       (13, 'Catalan'),
+       (14, 'Chinese'),
+       (15, 'Croatian'),
+       (16, 'Czech'),
+       (17, 'Danish'),
+       (18, 'Dutch'),
+       (19, 'Estonian'),
+       (20, 'Filipino'),
+       (21, 'Finnish'),
+       (22, 'Galician'),
+       (23, 'Georgian'),
+       (24, 'Greek'),
+       (25, 'Hebrew'),
+       (26, 'Hindi'),
+       (27, 'Hungarian'),
+       (28, 'Icelandic'),
+       (29, 'Indonesian'),
+       (30, 'Irish'),
+       (31, 'Italian'),
+       (32, 'Japanese'),
+       (33, 'Korean'),
+       (34, 'Latin'),
+       (35, 'Latvian'),
+       (36, 'Lithuanian'),
+       (37, 'Macedonian'),
+       (38, 'Malay'),
+       (39, 'Maltese'),
+       (40, 'Norwegian'),
+       (41, 'Persian'),
+       (42, 'Polish'),
+       (43, 'Portuguese'),
+       (44, 'Romanian'),
+       (45, 'Russian'),
+       (46, 'Serbian'),
+       (47, 'Slovak'),
+       (48, 'Slovenian'),
+       (49, 'Spanish'),
+       (50, 'Swahili'),
+       (51, 'Swedish'),
+       (52, 'Thai'),
+       (53, 'Turkish'),
+       (54, 'Ukrainian'),
+       (55, 'Urdu'),
+       (56, 'Vietnamese'),
+       (57, 'Welsh'),
+       (58, 'Yiddish');
 
 --changeset stell:6
 SELECT SETVAL('book_language_id_seq', (SELECT MAX(id) FROM book_language));
 
 --changeset stell:7
-INSERT INTO book_format (id, name, created_at, created_by)
-VALUES (1, 'Mass Market Paperback', '2022-11-1T00:00', 'stell'),
-       (2, 'Hardcover', '2022-11-1T00:00', 'stell'),
-       (3, 'Paperback', '2022-11-1T00:00', 'stell'),
-       (4, 'Ebook', '2022-11-1T00:00', 'stell'),
-       (5, 'Softcover', '2022-11-1T00:00', 'stell'),
-       (6, 'Kindle', '2022-11-1T00:00', 'stell'),
-       (7, 'Magazine', '2022-11-1T00:00', 'stell'),
-       (8, 'Turtleback', '2022-11-1T00:00', 'stell'),
-       (9, 'Audible', '2022-11-1T00:00', 'stell');
+INSERT INTO book_format (id, name)
+VALUES (1, 'Mass Market Paperback'),
+       (2, 'Hardcover'),
+       (3, 'Paperback'),
+       (4, 'Ebook'),
+       (5, 'Softcover'),
+       (6, 'Kindle'),
+       (7, 'Magazine'),
+       (8, 'Turtleback'),
+       (9, 'Audible');
 
 --changeset stell:8
 SELECT SETVAL('book_format_id_seq', (SELECT MAX(id) FROM book_format));
@@ -171,30 +171,30 @@ VALUES (1, 'Business', '2022-11-1T00:00', 'stell'),
 SELECT SETVAL('book_genre_id_seq', (SELECT MAX(id) FROM book_genre));
 
 --changeset stell:15
-INSERT INTO book_status (id, name, created_at, created_by)
-VALUES (1, 'Unconfirmed', '2022-11-1T00:00', 'stell'),
-       (2, 'Reading room', '2022-11-1T00:00', 'stell'),
-       (3, 'Home', '2022-11-1T00:00', 'stell');
+INSERT INTO book_status (id, name)
+VALUES (1, 'Unconfirmed'),
+       (2, 'Reading room'),
+       (3, 'Home');
 
 --changeset stell:16
 SELECT SETVAL('book_status_id_seq', (SELECT MAX(id) FROM book_status));
 
 --changeset stell:17
-INSERT INTO user_role (id, name, created_at, created_by)
-VALUES (1, 'ROLE_GUEST', '2022-11-1T00:00', 'stell'),
-       (2, 'ROLE_ADMIN', '2022-11-1T00:00', 'stell'),
-       (3, 'ROLE_READER', '2022-11-1T00:00', 'stell'),
-       (4, 'ROLE_LIBRARIAN', '2022-11-1T00:00', 'stell');
+INSERT INTO user_role (id, name)
+VALUES (1, 'ROLE_GUEST'),
+       (2, 'ROLE_ADMIN'),
+       (3, 'ROLE_READER'),
+       (4, 'ROLE_LIBRARIAN');
 
 --changeset stell:18
 SELECT SETVAL('user_role_id_seq', (SELECT MAX(id) FROM user_role));
 
 --changeset stell:19
-INSERT INTO user_status (id, name, created_at, created_by)
-VALUES (1, 'Guest', '2022-11-1T00:00', 'stell'),
-       (2, 'Unconfirmed', '2022-11-1T00:00', 'stell'),
-       (3, 'Active', '2022-11-1T00:00', 'stell'),
-       (4, 'Locked', '2022-11-1T00:00', 'stell');
+INSERT INTO user_status (id, name)
+VALUES (1, 'Guest'),
+       (2, 'Unconfirmed'),
+       (3, 'Active'),
+       (4, 'Locked');
 
 --changeset stell:20
 SELECT SETVAL('user_status_id_seq', (SELECT MAX(id) FROM user_status));
@@ -223,20 +223,20 @@ VALUES (1, 'guest', 'Guest', 'Guest', 'guest@gmail.com',
 SELECT SETVAL('users_id_seq', (SELECT MAX(id) FROM users));
 
 --changeset stell:23
-INSERT INTO order_status (id, name, created_at, created_by)
-VALUES (1, 'Unconfirmed', '2022-11-1T00:00', 'stell'),
-       (2, 'Approved', '2022-11-1T00:00', 'stell'),
-       (3, 'Blocked', '2022-11-1T00:00', 'stell');
+INSERT INTO order_status (id, name)
+VALUES (1, 'Unconfirmed'),
+       (2, 'Approved'),
+       (3, 'Blocked');
 
 --changeset stell:24
 SELECT SETVAL('order_status_id_seq', (SELECT MAX(id) FROM order_status));
 
 --changeset stell:25
-INSERT INTO order_type (id, name, created_at, created_by)
-VALUES (1, 'Unconfirmed', '2022-11-1T00:00', 'stell'),
-       (2, 'Cash', '2022-11-1T00:00', 'stell'),
-       (3, 'Online', '2022-11-1T00:00', 'stell'),
-       (4, 'Card', '2022-11-1T00:00', 'stell');
+INSERT INTO order_type (id, name)
+VALUES (1, 'Unconfirmed'),
+       (2, 'Cash'),
+       (3, 'Online'),
+       (4, 'Card');
 
 --changeset stell:26
 SELECT SETVAL('order_type_id_seq', (SELECT MAX(id) FROM order_type));

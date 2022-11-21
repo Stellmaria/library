@@ -3,7 +3,6 @@ package com.it.academy.library.mapper.create;
 import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.model.entity.Author;
 import com.it.academy.library.service.dto.create.AuthorCreateEditDto;
-import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,7 +12,6 @@ import java.util.Optional;
 import static java.util.function.Predicate.not;
 
 @Component
-@RequiredArgsConstructor
 public class AuthorCreateEditMapper implements Mapper<AuthorCreateEditDto, Author> {
     @Override
     public Author map(@NotNull AuthorCreateEditDto fromObject, @NotNull Author toObject) {

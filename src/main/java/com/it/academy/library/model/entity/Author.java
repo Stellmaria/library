@@ -43,6 +43,7 @@ public class Author extends AbstractAuditingEntity<Long> {
             length = 64
     )
     @Size(min = 3, max = 64)
+    @NotBlank
     private String firstName;
 
     @Column(name = "last_name",
@@ -50,9 +51,9 @@ public class Author extends AbstractAuditingEntity<Long> {
             length = 64
     )
     @Size(min = 3, max = 64)
+    @NotBlank
     private String lastName;
 
-    @NotBlank
     private String image;
 
     private LocalDate birthday;

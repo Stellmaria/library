@@ -3,7 +3,7 @@ package com.it.academy.library.http.controller;
 import com.it.academy.library.service.dto.PageResponse;
 import com.it.academy.library.service.dto.create.book.BookCreateEditDto;
 import com.it.academy.library.service.dto.filter.book.BookFilter;
-import com.it.academy.library.service.entity.AuthorService;
+import com.it.academy.library.service.entity.author.AuthorService;
 import com.it.academy.library.service.entity.book.BookFormatService;
 import com.it.academy.library.service.entity.book.BookLanguageService;
 import com.it.academy.library.service.entity.book.BookPublishingHouseService;

@@ -20,21 +20,7 @@ public class QOrderType extends EntityPathBase<OrderType> {
 
     public static final QOrderType orderType = new QOrderType("orderType");
 
-    public final com.it.academy.library.model.entity.QAbstractAuditingEntity _super = new com.it.academy.library.model.entity.QAbstractAuditingEntity(this);
-
-    //inherited
-    public final DateTimePath<java.time.Instant> createdAt = _super.createdAt;
-
-    //inherited
-    public final StringPath createdBy = _super.createdBy;
-
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
-
-    //inherited
-    public final DateTimePath<java.time.Instant> modifiedAt = _super.modifiedAt;
-
-    //inherited
-    public final StringPath modifiedBy = _super.modifiedBy;
 
     public final StringPath name = createString("name");
 

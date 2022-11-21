@@ -30,8 +30,7 @@ public class UserController {
     private final UserStatusService userStatusService;
 
     @PostMapping
-    public String create(@Validated UserCreateEditDto dto,
-                         @NotNull BindingResult bindingResult,
+    public String create(@Validated UserCreateEditDto dto, @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("user", dto);

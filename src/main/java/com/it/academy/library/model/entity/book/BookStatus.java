@@ -1,6 +1,6 @@
 package com.it.academy.library.model.entity.book;
 
-import com.it.academy.library.model.entity.AbstractAuditingEntity;
+import com.it.academy.library.model.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -19,6 +19,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Objects;
@@ -32,7 +33,7 @@ import java.util.Objects;
 @ToString
 @Table(name = "book_status")
 @SelectBeforeUpdate
-public class BookStatus extends AbstractAuditingEntity<Integer> {
+public class BookStatus implements BaseEntity<Integer> {
     private static final long serialVersionUID = 101691816228352749L;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,6 +45,7 @@ public class BookStatus extends AbstractAuditingEntity<Integer> {
             unique = true
     )
     @Size(min = 3, max = 64)
+    @NotBlank
     private String name;
 
     @OneToMany(

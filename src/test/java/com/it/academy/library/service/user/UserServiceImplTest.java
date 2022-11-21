@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RequiredArgsConstructor
 @DisplayName("User service test.")
-class UserServiceTest extends IntegrationTestBase {
+class UserServiceImplTest extends IntegrationTestBase {
     private static final Long USER_ID_4 = 4L;
     private static final Long USER_ID_3 = 3L;
     private static final Long USER_ID_99 = 99L;

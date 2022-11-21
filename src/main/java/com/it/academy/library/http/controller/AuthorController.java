@@ -3,7 +3,7 @@ package com.it.academy.library.http.controller;
 import com.it.academy.library.service.dto.PageResponse;
 import com.it.academy.library.service.dto.create.AuthorCreateEditDto;
 import com.it.academy.library.service.dto.filter.AuthorFilter;
-import com.it.academy.library.service.entity.AuthorService;
+import com.it.academy.library.service.entity.author.AuthorService;
 import com.it.academy.library.service.entity.book.BookService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;

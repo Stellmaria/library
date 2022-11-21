@@ -1,6 +1,6 @@
 package com.it.academy.library.model.entity.user;
 
-import com.it.academy.library.model.entity.AbstractAuditingEntity;
+import com.it.academy.library.model.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -35,7 +35,7 @@ import java.util.Objects;
 @ToString
 @Table(name = "user_role")
 @SelectBeforeUpdate
-public class UserRole extends AbstractAuditingEntity<Integer> implements GrantedAuthority {
+public class UserRole implements GrantedAuthority, BaseEntity<Integer> {
     private static final long serialVersionUID = 1925789169380350073L;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

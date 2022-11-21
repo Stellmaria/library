@@ -1,5 +1,6 @@
-package com.it.academy.library.service;
+package com.it.academy.library.service.image.impl;
 
+import com.it.academy.library.service.image.ImageService;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 
 @Service
-public class ImageService {
+public class ImageServiceImpl implements ImageService {
     private static final String BUCKET = "D:\\java\\home\\melnikova\\dev\\it-academy\\ee\\library\\images";
 
     @SneakyThrows
@@ -24,6 +25,7 @@ public class ImageService {
         }
     }
 
+    @Override
     @SneakyThrows
     public void upload(String imagePath, @NotNull InputStream stream) {
         var path = Path.of(BUCKET, imagePath);
@@ -34,6 +36,7 @@ public class ImageService {
         }
     }
 
+    @Override
     @SneakyThrows
     public Optional<byte[]> getImage(String imagePath) {
         var path = Path.of(BUCKET, imagePath);
