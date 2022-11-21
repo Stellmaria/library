@@ -64,6 +64,23 @@
                 </label>
             </div>
 
+            <div th:each="genre : ${book.genres}">
+                <a th:href="@{'/books/genres/' + ${genre.id}}" th:text="${genre.name}">Genres</a>
+            </div>
+
+            <!--            TODO: fix me-->
+            <div>
+                <label for="genres">Genres:
+                    <select id="genres" multiple="multiple" name="genresId">
+                        <option disabled selected value></option>
+                        <option th:each="genre : ${allGenres}"
+                                th:text="${genre.name}"
+                                th:value="${genre.id}">Genres
+                        </option>
+                    </select>
+                </label>
+            </div>
+
             <div th:if="${book.image}">
                 <img alt="User image" th:src="@{/api/v1/books/{bookId}/image(bookId=${book.id})}">
             </div>
@@ -258,6 +275,12 @@
             <h3>Series: </h3>
 
             <a th:href="@{'/books/series/' + ${book.bookSeries.id}}" th:text="${book.bookSeries.name}"> Series</a>
+        </div>
+
+        <div class="element" th:each="genre : ${book.genres}" th:if="${book.genres != null}">
+            <h3>Genres: </h3>
+
+            <a th:href="@{'/books/genres/' + ${genre.id}}" th:text="${genre.name}">Genre</a>
         </div>
 
         <div class="element" th:each="author : ${book.authors}" th:if="${book.authors != null}">

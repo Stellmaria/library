@@ -41,4 +41,6 @@ public class BookReadDto {
     OrderReadDto order;
 
     Collection<AuthorReadDto> authors;
+
+    Collection<BookGenreReadDto> genres;
 }

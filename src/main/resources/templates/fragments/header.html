@@ -32,14 +32,16 @@
                     </li>
 
                     <li>
-                        <a th:href="@{/books/publishingHouses}">Publishing houses</a>
+                        <a th:href="@{/books/publishingHouses}">Houses</a>
+                    </li>
+
+                    <li>
+                        <a th:href="@{/books/genres}">Genres</a>
                     </li>
                 </ul>
             </nav>
 
             <div class="header-login">
-                <a sec:authorize="!isAuthenticated()" th:href="@{/users/registration}">Registration</a>
-
                 <a class="btn" sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
 
                 <span class="header-login-name" sec:authorize="isAuthenticated()"

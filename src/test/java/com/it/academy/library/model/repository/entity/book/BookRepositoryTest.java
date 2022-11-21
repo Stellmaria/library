@@ -1,7 +1,6 @@
 package com.it.academy.library.model.repository.entity.book;
 
 import com.it.academy.library.mapper.filter.AuthorFilterMapper;
-import com.it.academy.library.mapper.filter.book.BookAdditionalFilterMapper;
 import com.it.academy.library.mapper.filter.book.BookFilterMapper;
 import com.it.academy.library.mapper.filter.book.BookFormatFilterMapper;
 import com.it.academy.library.mapper.filter.book.BookGenreFilterMapper;
@@ -13,7 +12,6 @@ import com.it.academy.library.mapper.filter.order.OrderFilterMapper;
 import com.it.academy.library.mapper.filter.user.UserFilterMapper;
 import com.it.academy.library.model.entity.Author;
 import com.it.academy.library.model.entity.book.Book;
-import com.it.academy.library.model.entity.book.BookAdditional;
 import com.it.academy.library.model.entity.book.BookFormat;
 import com.it.academy.library.model.entity.book.BookGenre;
 import com.it.academy.library.model.entity.book.BookLanguage;
@@ -28,8 +26,6 @@ import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -38,7 +34,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DisplayName("Book repository test.")
 class BookRepositoryTest extends IntegrationTestBase {
     private static final String BOOK_FORMAT_NAME_MASS_MARKET_PAPERBACK = "Mass Market Paperback";
-    private static final BigDecimal BOOK_ADDITIONAL_PRICE_20 = BigDecimal.valueOf(20);
     private static final String BOOK_LANGUAGE_NAME_POLISH = "Polish";
     private static final Long BOOK_ID_4 = 4L;
     private static final Long BOOK_ID_6 = 6L;
@@ -46,7 +41,6 @@ class BookRepositoryTest extends IntegrationTestBase {
     private static final String FIRST_NAME_STIEG = "Stieg";
 
     private final BookRepository bookRepository;
-    private final BookAdditionalFilterMapper bookAdditionalFilterMapper;
     private final AuthorFilterMapper authorFilterMapper;
     private final BookFormatFilterMapper bookFormatFilterMapper;
     private final BookGenreFilterMapper bookGenreFilterMapper;
@@ -283,19 +277,6 @@ class BookRepositoryTest extends IntegrationTestBase {
         var actual = bookRepository.findAllByBookGenreFilter(bookGenreFilterMapper.map(bookGenre));
 
         assertThat(actual).hasSize(6);
-    }
-
-    @Test
-    @DisplayName("Find all book by book additional.")
-    void findAllBookByBookAdditionalFilter() {
-        var bookAdditional = BookAdditional.builder()
-                .price(BOOK_ADDITIONAL_PRICE_20)
-                .build();
-
-        var actual = bookRepository.findAllByBookAdditionalFilter(bookAdditionalFilterMapper.map(
-                bookAdditional));
-
-        assertThat(actual).hasSize(3);
     }
 
     @Test

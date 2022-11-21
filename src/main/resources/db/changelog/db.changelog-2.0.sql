@@ -355,40 +355,6 @@ VALUES (1, (SELECT b.id FROM book b WHERE b.id = 1), (SELECT a.id FROM author a 
 --changeset stell:32
 SELECT SETVAL('books_authors_id_seq', (SELECT MAX(id) FROM books_authors));
 
---changeset stell:33
-INSERT INTO book_additional (id, book_id, volume, serial_no, price, link, created_at, created_by)
-VALUES (1, 1, null, null, 7.99, null, '2022-11-1T00:00', 'stell'),
-       (2, 2, null, null, 6.95, null, '2022-11-1T00:00', 'stell'),
-       (3, 3, null, null, 20.00, null, '2022-11-1T00:00',
-        'stell'),
-       (4, 4, null, null, 18.00, null, '2022-11-1T00:00',
-        'stell'),
-       (5, 5, null, null, 20.00, null, '2022-11-1T00:00',
-        'stell'),
-       (6, 6, null, null, 35.00, null, '2022-11-1T00:00',
-        'stell'),
-       (7, 7, null, null, 28.00, null, '2022-11-1T00:00',
-        'stell'),
-       (8, 8, null, null, 20.00, null, '2022-11-1T00:00',
-        'stell'),
-       (9, 9, null, null, 28.50, null, '2022-11-1T00:00',
-        'stell'),
-       (10, 10, null, null, 24.99, null, '2022-11-1T00:00',
-        'stell'),
-       (11, 11, null, null, 40.00, null, '2022-11-1T00:00',
-        'stell'),
-       (12, 12, null, null, 29.99, null, '2022-11-1T00:00',
-        'stell'),
-       (13, 13, null, null, 30.00, null, '2022-11-1T00:00',
-        'stell'),
-       (14, 14, null, null, 15.00, null, '2022-11-1T00:00',
-        'stell'),
-       (15, 15, null, null, 44.99, null, '2022-11-1T00:00',
-        'stell');
-
---changeset stell:34
-SELECT SETVAL('book_additional_id_seq', (SELECT MAX(id) FROM book_additional));
-
 --changeset stell:35
 INSERT INTO books_genres (id, book_id, genre_id)
 VALUES (1, (SELECT b.id FROM book b WHERE b.id = 1), (SELECT g.id FROM book_genre g WHERE g.id = 8)),

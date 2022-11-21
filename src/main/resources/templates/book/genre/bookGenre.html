@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
-    <title>Book series</title>
+    <title>Book</title>
 
     <!--    Style main-->
     <link rel="stylesheet" th:href="@{/styles/css/main.css}">
@@ -20,11 +19,15 @@
 
 <main>
     <div class="product-element" sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')">
-        <form method="post" th:action="@{/books/series/{seriesId}/update(seriesId=${series.id})}"
-              th:object="${series}">
+        <form method="post" th:action="@{/books/genres/{genreId}/update(genreId=${genre.id})}"
+              th:object="${genre}">
 
             <label for="name"> Name:
                 <input id="name" name="name" th:value="*{name}" type="text">
+            </label><br>
+
+            <label for="description"> Description:
+                <input id="description" name="description" th:value="*{description}" type="text">
             </label><br>
 
             <div class="button">
@@ -35,7 +38,7 @@
         <div class="button-form">
             <div class="button">
                 <form class="button" method="post" sec:authorize="hasRole('ADMIN')"
-                      th:action="@{/books/series/{seriesId}/delete(seriesId=${series.id})}">
+                      th:action="@{/books/genres/{genreId}/delete(genreId=${genre.id})}">
                     <button class="btn" type="submit">Remove</button>
                 </form>
             </div>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+
+    <!--    Style main-->
+    <link rel="stylesheet" th:href="@{/styles/css/main.css}">
+
+    <!--    Style for product-->
+    <link rel="stylesheet" th:href="@{/styles/css/product/product.css}">
+
+    <!--    Style filter-->
+    <link rel="stylesheet" th:href="@{/styles/css/filter.css}">
+</head>
+
+<body>
+
+<header>
+    <div th:insert="~{fragments/header :: header}"></div>
+</header>
+
+<main>
+    <header>
+        <div>
+            <form action="/books/series">
+                <label class="search-label" for="name">
+                    <button class="btn search" type="submit">Filter</button>
+
+                    <input class="search-input" id="name" name="name" placeholder="Search" th:value="${filter.name}"
+                           type="text">
+
+                    <input class="search-input" id="page" name="page" th:value="${genres.metadata.page}" type="number">
+
+                    <input class="search-input" id="size" name="size" th:value="${genres.metadata.size}" type="number">
+
+                    <a class="btn" sec:authorize="hasAnyRole('ADMIN', 'LIBRARIAN')"
+                       th:href="@{/books/genres/addGenre}">
+                        Add new book genre
+                    </a>
+                </label>
+            </form>
+        </div>
+    </header>
+
+    <div>
+        <section class="featured-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-header-title">Book genre</h2>
+                </div>
+
+                <div class="products-wrapper" th:each="genre : ${genres.content}">
+                    <a class="product-link" th:href="@{'/books/genres/' + ${genre.id}}">
+                        <div class="product">
+                            <h4 class="product_title">
+                                <span th:text="${genre.name}"> Book genre</span>
+                            </h4>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+</body>
+</html>

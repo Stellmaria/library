@@ -4,6 +4,7 @@ import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.model.entity.Author;
 import com.it.academy.library.model.entity.book.Book;
 import com.it.academy.library.model.entity.book.BookFormat;
+import com.it.academy.library.model.entity.book.BookGenre;
 import com.it.academy.library.model.entity.book.BookLanguage;
 import com.it.academy.library.model.entity.book.BookPublishingHouse;
 import com.it.academy.library.model.entity.book.BookSeries;
@@ -11,6 +12,7 @@ import com.it.academy.library.model.entity.book.BookStatus;
 import com.it.academy.library.model.entity.order.Order;
 import com.it.academy.library.model.repository.entity.AuthorRepository;
 import com.it.academy.library.model.repository.entity.book.BookFormatRepository;
+import com.it.academy.library.model.repository.entity.book.BookGenreRepository;
 import com.it.academy.library.model.repository.entity.book.BookLanguageRepository;
 import com.it.academy.library.model.repository.entity.book.BookPublishingHouseRepository;
 import com.it.academy.library.model.repository.entity.book.BookSeriesRepository;
@@ -39,6 +41,7 @@ public class BookCreateEditMapper implements Mapper<BookCreateEditDto, Book> {
     private final BookSeriesRepository bookSeriesRepository;
     private final OrderRepository orderRepository;
     private final AuthorRepository authorRepository;
+    private final BookGenreRepository bookGenreRepository;
 
     @Override
     public Book map(BookCreateEditDto fromObject, Book toObject) {
@@ -71,6 +74,18 @@ public class BookCreateEditMapper implements Mapper<BookCreateEditDto, Book> {
         book.setBookSeries(getBookSeries(object.getBookSeriesId()));
         book.setOrder(getOrder(object.getOrderId()));
         book.setAuthors(getAuthors(object));
+        book.setGenres(getGenres(object));
+    }
+
+    private @NotNull Collection<BookGenre> getGenres(@NotNull BookCreateEditDto object) {
+        Collection<BookGenre> bookGenres = new ArrayList<>();
+
+        Objects.requireNonNull(object).getGenresId().stream()
+                .map(aLong -> Optional.of(bookGenreRepository.findById(aLong))
+                        .orElse(null))
+                .forEachOrdered(entity -> entity.ifPresent(bookGenres::add));
+
+        return bookGenres;
     }
 
     private @NotNull Collection<Author> getAuthors(@NotNull BookCreateEditDto object) {
@@ -79,7 +94,7 @@ public class BookCreateEditMapper implements Mapper<BookCreateEditDto, Book> {
         Objects.requireNonNull(object).getAuthorsId().stream()
                 .map(aLong -> Optional.of(authorRepository.findById(aLong))
                         .orElse(null))
-                .forEachOrdered(author -> author.ifPresent(authors::add));
+                .forEachOrdered(entity -> entity.ifPresent(authors::add));
 
         return authors;
     }

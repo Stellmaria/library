@@ -42,7 +42,21 @@ public interface BookService {
      */
     Collection<BookReadDto> findAllBySeriesId(Integer id);
 
+    /**
+     * Search for all books by book publishing house id.
+     *
+     * @param id for search.
+     * @return collection of found books.
+     */
     Collection<BookReadDto> findAllByBookPublishingHouseId(Integer id);
+
+    /**
+     * Search for books by book genre id.
+     *
+     * @param id for search.
+     * @return collection of found books.
+     */
+    Collection<BookReadDto> findAllByBookGenreId(Integer id);
 
     /**
      * Search for all books by author id.

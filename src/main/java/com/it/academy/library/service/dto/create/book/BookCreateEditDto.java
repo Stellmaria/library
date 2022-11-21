@@ -50,4 +50,6 @@ public class BookCreateEditDto {
     private Long orderId;
 
     private Collection<Long> authorsId;
+
+    private Collection<Integer> genresId;
 }

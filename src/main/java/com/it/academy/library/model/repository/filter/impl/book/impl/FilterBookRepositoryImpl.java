@@ -3,7 +3,6 @@ package com.it.academy.library.model.repository.filter.impl.book.impl;
 import com.it.academy.library.model.entity.book.Book;
 import com.it.academy.library.model.repository.filter.impl.book.FilterBookRepository;
 import com.it.academy.library.service.dto.filter.AuthorFilter;
-import com.it.academy.library.service.dto.filter.book.BookAdditionalFilter;
 import com.it.academy.library.service.dto.filter.book.BookFilter;
 import com.it.academy.library.service.dto.filter.book.BookFormatFilter;
 import com.it.academy.library.service.dto.filter.book.BookGenreFilter;
@@ -24,7 +23,6 @@ import static com.it.academy.library.model.entity.QAuthor.author;
 import static com.it.academy.library.model.entity.QBooksAuthors.booksAuthors;
 import static com.it.academy.library.model.entity.QBooksGenres.booksGenres;
 import static com.it.academy.library.model.entity.book.QBook.book;
-import static com.it.academy.library.model.entity.book.QBookAdditional.bookAdditional;
 import static com.it.academy.library.model.entity.book.QBookGenre.bookGenre;
 import static com.it.academy.library.model.entity.order.QOrder.order;
 import static com.it.academy.library.model.entity.user.QUser.user;
@@ -39,15 +37,6 @@ public class FilterBookRepositoryImpl implements FilterBookRepository {
                 .select(book)
                 .from(book)
                 .where(BookFilter.queryPredicates(bookFilter))
-                .fetch();
-    }
-
-    @Override
-    public Collection<Book> findAllByBookAdditionalFilter(@NotNull BookAdditionalFilter bookAdditionalFilter) {
-        return new JPAQuery<Book>(entityManager)
-                .select(book)
-                .from(bookAdditional)
-                .where(BookAdditionalFilter.queryPredicates(bookAdditionalFilter))
                 .fetch();
     }
 

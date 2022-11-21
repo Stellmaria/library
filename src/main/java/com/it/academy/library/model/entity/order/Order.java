@@ -24,7 +24,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Objects;
@@ -51,7 +51,7 @@ public class Order extends AbstractAuditingEntity<Long> {
             nullable = false
     )
     @ToString.Exclude
-    @NotBlank
+    @NotNull
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -60,7 +60,7 @@ public class Order extends AbstractAuditingEntity<Long> {
             nullable = false
     )
     @ToString.Exclude
-    @NotBlank
+    @NotNull
     private OrderStatus orderStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -69,19 +69,19 @@ public class Order extends AbstractAuditingEntity<Long> {
             nullable = false
     )
     @ToString.Exclude
-    @NotBlank
+    @NotNull
     private OrderType orderType;
 
     @Column(name = "order_date",
             nullable = false
     )
-    @NotBlank
+    @NotNull
     private LocalDateTime orderDate;
 
     @Column(name = "return_date",
             nullable = false
     )
-    @NotBlank
+    @NotNull
     private LocalDateTime returnDate;
 
     @OneToMany(

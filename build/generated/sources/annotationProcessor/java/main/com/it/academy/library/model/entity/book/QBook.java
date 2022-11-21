@@ -26,8 +26,6 @@ public class QBook extends EntityPathBase<Book> {
 
     public final CollectionPath<com.it.academy.library.model.entity.Author, com.it.academy.library.model.entity.QAuthor> authors = this.<com.it.academy.library.model.entity.Author, com.it.academy.library.model.entity.QAuthor>createCollection("authors", com.it.academy.library.model.entity.Author.class, com.it.academy.library.model.entity.QAuthor.class, PathInits.DIRECT2);
 
-    public final CollectionPath<BookAdditional, QBookAdditional> bookAdditional = this.<BookAdditional, QBookAdditional>createCollection("bookAdditional", BookAdditional.class, QBookAdditional.class, PathInits.DIRECT2);
-
     public final QBookFormat bookFormat;
 
     public final QBookLanguage bookLanguage;

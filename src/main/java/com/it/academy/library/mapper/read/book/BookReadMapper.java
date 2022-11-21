@@ -6,6 +6,7 @@ import com.it.academy.library.mapper.read.order.OrderReadMapper;
 import com.it.academy.library.model.entity.book.Book;
 import com.it.academy.library.service.dto.read.AuthorReadDto;
 import com.it.academy.library.service.dto.read.book.BookFormatReadDto;
+import com.it.academy.library.service.dto.read.book.BookGenreReadDto;
 import com.it.academy.library.service.dto.read.book.BookLanguageReadDto;
 import com.it.academy.library.service.dto.read.book.BookPublishingHouseReadDto;
 import com.it.academy.library.service.dto.read.book.BookReadDto;
@@ -30,6 +31,7 @@ public class BookReadMapper implements Mapper<Book, BookReadDto> {
     private final BookSeriesReadMapper bookSeriesReadMapper;
     private final OrderReadMapper orderReadMapper;
     private final AuthorReadMapper authorReadMapper;
+    private final BookGenreReadMapper bookGenreReadMapper;
 
     @Override
     public BookReadDto map(@NotNull Book object) {
@@ -48,8 +50,16 @@ public class BookReadMapper implements Mapper<Book, BookReadDto> {
                 getBookPublishingHouse(object),
                 getBookSeries(object),
                 getOrder(object),
-                getAuthors(object)
+                getAuthors(object),
+                getGenres(object)
         );
+    }
+
+    private Collection<BookGenreReadDto> getGenres(@NotNull Book object) {
+        return Optional.of(object.getGenres().stream()
+                        .map(bookGenreReadMapper::map)
+                        .collect(Collectors.toList()))
+                .orElse(null);
     }
 
     private Collection<AuthorReadDto> getAuthors(@NotNull Book object) {

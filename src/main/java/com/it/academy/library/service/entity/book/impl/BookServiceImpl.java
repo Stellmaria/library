@@ -9,6 +9,7 @@ import com.it.academy.library.model.repository.entity.book.BookRepository;
 import com.it.academy.library.service.dto.create.book.BookCreateEditDto;
 import com.it.academy.library.service.dto.filter.AuthorFilter;
 import com.it.academy.library.service.dto.filter.book.BookFilter;
+import com.it.academy.library.service.dto.filter.book.BookGenreFilter;
 import com.it.academy.library.service.dto.filter.book.BookPublishingHouseFilter;
 import com.it.academy.library.service.dto.filter.book.BookSeriesFilter;
 import com.it.academy.library.service.dto.read.book.BookReadDto;
@@ -102,6 +103,20 @@ public class BookServiceImpl implements BookService {
         filter.setId(id);
 
         return bookRepository.findAllByBookPublishingHouseFilter(filter).stream()
+                .map(entity -> {
+                    eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
+
+                    return bookReadMapper.map(entity);
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Collection<BookReadDto> findAllByBookGenreId(Integer id) {
+        var filter = new BookGenreFilter();
+        filter.setId(id);
+
+        return bookRepository.findAllByBookGenreFilter(filter).stream()
                 .map(entity -> {
                     eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
 

@@ -25,7 +25,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.util.Collection;
@@ -103,14 +102,6 @@ public class Book extends AbstractAuditingEntity<Long> {
     @JoinColumn(name = "order_id")
     @ToString.Exclude
     private Order order;
-
-    @OneToMany(
-            mappedBy = "book",
-            cascade = CascadeType.ALL
-    )
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private Collection<BookAdditional> bookAdditional;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude

@@ -5,6 +5,7 @@ import com.it.academy.library.service.dto.create.book.BookCreateEditDto;
 import com.it.academy.library.service.dto.filter.book.BookFilter;
 import com.it.academy.library.service.entity.author.AuthorService;
 import com.it.academy.library.service.entity.book.BookFormatService;
+import com.it.academy.library.service.entity.book.BookGenreService;
 import com.it.academy.library.service.entity.book.BookLanguageService;
 import com.it.academy.library.service.entity.book.BookPublishingHouseService;
 import com.it.academy.library.service.entity.book.BookSeriesService;
@@ -37,6 +38,7 @@ public class BookController {
     private final BookPublishingHouseService bookPublishingHouseService;
     private final BookSeriesService bookSeriesService;
     private final AuthorService authorService;
+    private final BookGenreService bookGenreService;
 
     @PostMapping
     public String create(@Validated BookCreateEditDto dto, @NotNull BindingResult bindingResult,
@@ -73,6 +75,8 @@ public class BookController {
                     model.addAttribute("series", bookSeriesService.findAll());
                     model.addAttribute("authors", authorService.findAllByBookId(id));
                     model.addAttribute("allAuthors", authorService.findAll());
+                    model.addAttribute("allGenres", bookGenreService.findAll());
+                    model.addAttribute("genres", bookGenreService.findAllByBookId(id));
 
                     SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 

@@ -209,21 +209,3 @@ CREATE TABLE IF NOT EXISTS books_authors
     author_id BIGINT REFERENCES author (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 --rollback DROP TABLE books_authors;
-
---changeset stell:18
-CREATE TABLE IF NOT EXISTS book_additional
-(
-    id          BIGSERIAL PRIMARY KEY,
-    book_id     BIGINT UNIQUE,
-    volume      SMALLINT,
-    serial_no   INTEGER,
-    price       DECIMAL,
-    link        VARCHAR(255),
-    created_at  TIMESTAMP WITHOUT TIME ZONE,
-    modified_at TIMESTAMP WITHOUT TIME ZONE,
-    created_by  VARCHAR(64),
-    modified_by VARCHAR(64),
-    FOREIGN KEY (book_id) REFERENCES book (id)
-        ON UPDATE CASCADE ON DELETE SET NULL
-);
---rollback DROP TABLE book_additional;

@@ -2,7 +2,6 @@ package com.it.academy.library.model.repository.filter.impl.book;
 
 import com.it.academy.library.model.entity.book.Book;
 import com.it.academy.library.service.dto.filter.AuthorFilter;
-import com.it.academy.library.service.dto.filter.book.BookAdditionalFilter;
 import com.it.academy.library.service.dto.filter.book.BookFilter;
 import com.it.academy.library.service.dto.filter.book.BookFormatFilter;
 import com.it.academy.library.service.dto.filter.book.BookGenreFilter;
@@ -23,14 +22,6 @@ public interface FilterBookRepository {
      * @return books.
      */
     Collection<Book> findAllByBookFilter(BookFilter bookFilter);
-
-    /**
-     * Search for books by book additional information.
-     *
-     * @param bookAdditionalFilter filter.
-     * @return books.
-     */
-    Collection<Book> findAllByBookAdditionalFilter(BookAdditionalFilter bookAdditionalFilter);
 
     /**
      * Search for books by author's filter.
