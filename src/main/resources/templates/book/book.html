@@ -249,14 +249,15 @@
         <div class="element" th:if="${book.bookPublishingHouse != null}">
             <h3>PublishingHouse: </h3>
 
-            <p th:text="${book.bookPublishingHouse.name}"></p>
+            <a th:href="@{'/books/publishingHouses/' + ${book.bookPublishingHouse.id}}"
+               th:text="${book.bookPublishingHouse.name}">Publishing House
+            </a>
         </div>
 
         <div class="element" th:if="${book.bookSeries != null}">
             <h3>Series: </h3>
 
-            <a th:href="@{'/books/series/' + ${book.bookSeries.id}}" th:text="${book.bookSeries.name}"> Book
-                series</a>
+            <a th:href="@{'/books/series/' + ${book.bookSeries.id}}" th:text="${book.bookSeries.name}"> Series</a>
         </div>
 
         <div class="element" th:each="author : ${book.authors}" th:if="${book.authors != null}">

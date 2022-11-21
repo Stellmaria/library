@@ -77,7 +77,6 @@ public class Book extends AbstractAuditingEntity<Long> {
             nullable = false
     )
     @ToString.Exclude
-    @NotBlank
     private BookStatus bookStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -22,31 +22,31 @@
         <form enctype="multipart/form-data" method="post" th:action="@{/books}" th:object="${book}">
             <label for="title"> Title:
                 <input id="title" name="title" th:value="*{title}" type="text">
-            </label>
+            </label><br>
 
             <label for="subtitle"> Subtitle:
                 <input id="subtitle" name="subtitle" th:value="*{subtitle}" type="text">
-            </label>
+            </label><br>
 
             <label for="year"> Year:
                 <input id="year" name="year" th:value="*{year}" type="number">
-            </label>
+            </label><br>
 
             <label for="pages"> Page:
                 <input id="pages" name="pages" th:value="*{pages}" type="number">
-            </label>
+            </label><br>
 
             <label for="isbn10"> Isbn10:
                 <input id="isbn10" name="isbn10" th:value="*{isbn10}" type="text">
-            </label>
+            </label><br>
 
             <label for="isbn13"> Isbn13:
                 <input id="isbn13" name="isbn13" th:value="*{isbn13}" type="text">
-            </label>
+            </label><br>
 
             <label for="image"> Image:
                 <input id="image" name="image" type="file">
-            </label>
+            </label><br>
 
             <div>
                 <label for="bookStatus">Status:
@@ -129,7 +129,13 @@
                 <div class="button-form">
                     <button class="btn" type="submit">Add new book</button>
 
-                    <a class="btn btn-big" th:href="@{/books/series/addSeries/}">Add new book series</a>
+                    <a class="btn" th:href="@{/books/series/addSeries/}">Add new book series</a>
+
+                    <a class="btn" th:href="@{/authors/addAuthor}">Add new author</a>
+
+                    <a class="btn" th:href="@{/books/publishingHouses/addPublishingHouses}">
+                        Add new publishing houses
+                    </a>
                 </div>
             </div>
         </form>

@@ -41,7 +41,7 @@ public class UserController {
 
         userService.create(dto);
 
-        return "redirect:/";
+        return "redirect:/login";
     }
 
     @GetMapping

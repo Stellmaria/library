@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Book series</title>
@@ -10,6 +9,9 @@
 
     <!--    Style for product-->
     <link rel="stylesheet" th:href="@{/styles/css/product/product.css}">
+
+    <!--    Style filter-->
+    <link rel="stylesheet" th:href="@{/styles/css/filter.css}">
 </head>
 
 <body>
@@ -19,7 +21,52 @@
 </header>
 
 <main>
+    <header>
+        <div>
+            <form action="/books/publishingHouses">
+                <label class="search-label" for="name">
+                    <button class="btn search" type="submit">Filter</button>
 
+                    <input class="search-input" id="name" name="name" placeholder="Search" th:value="${filter.name}"
+                           type="text">
+
+                    <input class="search-input" id="page" name="page" th:value="${publishingHouses.metadata.page}"
+                           type="number">
+
+                    <input class="search-input" id="size" name="size" th:value="${publishingHouses.metadata.size}"
+                           type="number">
+
+                    <a class="btn" sec:authorize="hasAnyRole('ADMIN', 'LIBRARIAN')"
+                       th:href="@{/books/publishingHouses/addPublishingHouses}">Add new book publishing house
+                    </a>
+                </label>
+            </form>
+        </div>
+    </header>
+
+    <div>
+        <section class="featured-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-header-title">Publishing houses</h2>
+
+                    <div class="section-header-description">
+                        <p>World of Reading</p>
+                    </div>
+                </div>
+
+                <div class="products-wrapper" th:each="publishingHouse : ${publishingHouses.content}">
+                    <a class="product-link" th:href="@{'/books/publishingHouses/' + ${publishingHouse.id}}">
+                        <div class="product">
+                            <h4 class="product_title">
+                                <span th:text="${publishingHouse.name}"> Publishing house</span>
+                            </h4>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
 </main>
 
 <main>

@@ -35,7 +35,7 @@ public class AuthorController {
             redirectAttributes.addFlashAttribute("author", dto);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
 
-            return "redirect:/author/addAuthor";
+            return "redirect:/authors/addAuthor";
         }
 
         authorService.create(dto);

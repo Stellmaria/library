@@ -120,6 +120,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
+    @Transactional(rollbackFor = {Exception.class})
     public boolean delete(Long id) {
         return authorRepository.findById(id)
                 .map(entity -> {

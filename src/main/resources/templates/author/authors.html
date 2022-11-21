@@ -34,10 +34,7 @@
 
                     <input class="search-input" id="page" name="page" th:value="${authors.metadata.page}" type="number">
 
-                    <input class="search-input" id="size" name="size" th:value="${authors.metadata.size}" type="number">
-
-                    <a class="btn" sec:authorize="hasAnyRole('ADMIN', 'LIBRARIAN')"
-                       th:href="@{/authors/addAuthor}">
+                    <a class="btn" sec:authorize="hasAnyRole('ADMIN', 'LIBRARIAN')" th:href="@{/authors/addAuthor}">
                         Add author
                     </a>
                 </label>

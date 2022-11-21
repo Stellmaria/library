@@ -23,12 +23,16 @@
                         <a th:href="@{/books/series}">Series</a>
                     </li>
 
-                    <li sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')">
+                    <li sec:authorize="hasRole('ADMIN')">
                         <a th:href="@{/users}">Users</a>
                     </li>
 
                     <li>
                         <a th:href="@{/authors}">Authors</a>
+                    </li>
+
+                    <li>
+                        <a th:href="@{/books/publishingHouses}">Publishing houses</a>
                     </li>
                 </ul>
             </nav>

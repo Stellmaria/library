@@ -19,9 +19,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(urlConfig -> urlConfig
                         .antMatchers("/login", "/users/registration", "v3/api-docs/**", "/swagger-ui/**",
                                 "/styles/css/**", "/images/**", "/js/**", "/").permitAll()
-                        .antMatchers("/users/{\\d+}/delete").hasRole("ADMIN")
-                        .antMatchers("/admin/**").hasAuthority("ADMIN")
-                        .antMatchers("/users").hasAnyRole("ADMIN", "LIBRARIAN")
+                        .antMatchers("/users/{\\d+}/delete", "/users").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .logout(logout -> logout

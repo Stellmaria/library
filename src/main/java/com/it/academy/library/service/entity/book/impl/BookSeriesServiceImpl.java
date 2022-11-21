@@ -67,7 +67,6 @@ public class BookSeriesServiceImpl implements BookSeriesService {
     }
 
     @Override
-
     public Page<BookSeriesReadDto> findAll(BookSeriesFilter filter, Pageable pageable) {
         return bookSeriesRepository.findAll(BookSeriesFilter.queryPredicates(filter), pageable)
                 .map(entity -> {

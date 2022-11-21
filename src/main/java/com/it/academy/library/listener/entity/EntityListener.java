@@ -8,13 +8,19 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class EntityListener {
+    private static final String ANSI_RED = "\u001B[31m";
+    private static final String ANSI_GREEN = "\u001B[32m";
+    private static final String ANSI_BLUE = "\u001B[34m";
+    private static final String ANSI_RESET = "\u001B[0m";
 
     @EventListener
     public void acceptEntityRead(@NotNull EntityEvent entityEvent) {
         if (entityEvent.getAccessType() != AccessType.READ) {
-            log.warn("Entity type: " + entityEvent.getAccessType() + "\n" + entityEvent);
+            log.warn(ANSI_GREEN + "Entity type: " + ANSI_RED + entityEvent.getAccessType() + "\n" + ANSI_RESET +
+                    entityEvent);
         } else {
-            log.info("Entity type: " + entityEvent.getAccessType() + "\n" + entityEvent);
+            log.info(ANSI_GREEN + "Entity type: " + ANSI_BLUE + entityEvent.getAccessType() + "\n" + ANSI_RESET +
+                    entityEvent);
         }
     }
 }

@@ -42,6 +42,8 @@ public interface BookService {
      */
     Collection<BookReadDto> findAllBySeriesId(Integer id);
 
+    Collection<BookReadDto> findAllByBookPublishingHouseId(Integer id);
+
     /**
      * Search for all books by author id.
      *

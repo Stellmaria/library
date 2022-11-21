@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
                     return userCreateEditMapper.map(entity);
                 })
                 .map(entity -> {
-                    eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
+                    eventPublisher.publishEvent(new EntityEvent(entity, AccessType.CREATE));
 
                     return userRepository.save(entity);
                 })

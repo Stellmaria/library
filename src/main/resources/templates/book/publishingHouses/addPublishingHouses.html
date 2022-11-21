@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <title>Add series</title>
@@ -20,14 +19,14 @@
 
 <main>
     <div class="product-element" sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')">
-        <form method="post" th:action="@{/books/series}" th:object="${series}">
+        <form method="post" th:action="@{/books/publishingHouses}" th:object="${publishingHouses}">
             <label for="name"> Name:
                 <input id="name" name="name" th:value="*{name}" type="text">
             </label><br>
 
             <div class="last">
                 <div class="button-form">
-                    <button class="btn" type="submit">Add new book series</button>
+                    <button class="btn" type="submit">Add new book publishing house</button>
                 </div>
             </div>
 

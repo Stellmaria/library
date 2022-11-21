@@ -22,50 +22,40 @@
 </header>
 
 <main>
-    <header>
-        <div>
-            <form action="/books/series">
-                <label class="search-label" for="name">
-                    <button class="btn search" type="submit">Filter</button>
+    <div class="product-element" sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')">
+        <form method="post"
+              th:action="@{/books/publishingHouses/{publishingHousesId}/update(publishingHousesId=${publishingHouse.id})}"
+              th:object="${publishingHouse}">
 
-                    <input class="search-input" id="name" name="name" placeholder="Search" th:value="${filter.name}"
-                           type="text">
+            <label for="name"> Name:
+                <input id="name" name="name" th:value="*{name}" type="text">
+            </label><br>
 
-                    <input class="search-input" id="page" name="page" th:value="${series.metadata.page}" type="number">
-
-                    <input class="search-input" id="size" name="size" th:value="${series.metadata.size}" type="number">
-
-                    <a class="btn" sec:authorize="hasAnyRole('ADMIN', 'LIBRARIAN')"
-                       th:href="@{/books/series/addSeries}">
-                        Add book series
-                    </a>
-                </label>
-            </form>
-        </div>
-    </header>
-
-    <div>
-        <section class="featured-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-header-title">Book series</h2>
-
-                    <div class="section-header-description">
-                        <p>Drop everything... and read!</p>
-                    </div>
-                </div>
-
-                <div class="products-wrapper" th:each="bookSeries : ${series.content}">
-                    <a class="product-link" th:href="@{'/books/series/' + ${bookSeries.id}}">
-                        <div class="product">
-                            <h4 class="product_title">
-                                <span th:text="${bookSeries.name}"> Book series</span>
-                            </h4>
-                        </div>
-                    </a>
-                </div>
+            <div class="button">
+                <button class="btn" type="submit">Update</button>
             </div>
-        </section>
+        </form>
+
+        <div class="button-form">
+            <div class="button">
+                <form class="button" method="post" sec:authorize="hasRole('ADMIN')"
+                      th:action="@{/books/publishingHouses/{publishingHousesId}/delete(publishingHousesId=${publishingHouse.id})}">
+                    <button class="btn" type="submit">Remove</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<main>
+    <div class="product-element" sec:authorize="hasAnyRole('READER', 'GUSET')">
+        <div th:each="book : ${books}">
+            <div class="element">
+                <h3>Book: </h3>
+
+                <a th:href="@{'/books/' + ${book.id}}" th:text="${book.title}">Books</a>
+            </div>
+        </div>
     </div>
 </main>
 
