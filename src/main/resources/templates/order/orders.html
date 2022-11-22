@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Authors</title>
+
+    <!--    Style main-->
+    <link rel="stylesheet" th:href="@{/styles/css/main.css}">
+
+    <!--    Style for product-->
+    <link rel="stylesheet" th:href="@{/styles/css/product/product.css}">
+
+    <!--    Style filter-->
+    <link rel="stylesheet" th:href="@{/styles/css/filter.css}">
+</head>
+<body>
+
+<header>
+    <div th:insert="~{fragments/header :: header}"></div>
+</header>
+
+<main>
+    <header>
+        <div>
+            <form action="/orders">
+                <label class="search-label" for="orderDate">
+                    <button class="btn search" type="submit">Filter</button>
+
+                    <input class="search-input" id="orderDate" name="orderDate" placeholder="Order date"
+                           th:value="${filter.orderDate}" type="date">
+
+                    <input class="search-input" id="returnDate" name="returnDate" placeholder="Return date"
+                           th:value="${filter.returnDate}" type="date">
+
+                    <input class="search-input" id="page" name="page" th:value="${orders.metadata.page}" type="number">
+
+                    <input class="search-input" id="size" name="size" th:value="${orders.metadata.size}"
+                           type="number">
+                </label>
+            </form>
+        </div>
+    </header>
+
+    <div class="product-container">
+        <section class="featured-section">
+            <div class="container">
+                <div class="products-wrapper" th:each="order : ${orders.content}">
+                    <a class="product-link" th:href="@{'/orders/' + ${order.id}}">
+                        <div class="product">
+                            <h4 class="product_title">
+                                <span th:text="${order.orderDate}">Order date</span>
+                            </h4>
+
+                            <h4 class="product_title">
+                                <span th:text="|${order.user.firstName} ${order.user.lastName}|">Return date</span>
+                            </h4>
+
+                            <h4 class="product_title">
+                                <span th:text="${order.orderStatus.name}">Status</span>
+                            </h4>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+</main>
+
+</body>
+</html>
