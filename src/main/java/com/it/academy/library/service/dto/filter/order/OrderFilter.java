@@ -33,8 +33,6 @@ public class OrderFilter {
 
     private OrderStatusFilter orderStatus;
 
-    private OrderTypeFilter orderType;
-
     private LocalDateTime orderDate;
 
     private LocalDateTime returnDate;
@@ -55,8 +53,6 @@ public class OrderFilter {
                 .add(getUserBirthday(orderFilter), order.user.birthday::eq)
                 .add(getOrderStatusId(orderFilter), order.orderStatus.id::eq)
                 .add(getOrderStatusName(orderFilter), order.orderStatus.name::containsIgnoreCase)
-                .add(getOrderTypeId(orderFilter), order.orderType.id::eq)
-                .add(getOrderTypeName(orderFilter), order.orderType.name::containsIgnoreCase)
                 .add(orderFilter.getOrderDate(), order.orderDate::eq)
                 .add(orderFilter.getReturnDate(), order.returnDate::eq)
                 .build();
@@ -140,20 +136,6 @@ public class OrderFilter {
     private static Long getUserId(@NotNull OrderFilter orderFilter) {
         return Optional.ofNullable(orderFilter.getUser())
                 .map(UserFilter::getId)
-                .orElse(null);
-    }
-
-    @Nullable
-    private static String getOrderTypeName(@NotNull OrderFilter orderFilter) {
-        return Optional.ofNullable(orderFilter.getOrderType())
-                .map(OrderTypeFilter::getName)
-                .orElse(null);
-    }
-
-    @Nullable
-    private static Integer getOrderTypeId(@NotNull OrderFilter orderFilter) {
-        return Optional.ofNullable(orderFilter.getOrderType())
-                .map(OrderTypeFilter::getId)
                 .orElse(null);
     }
 

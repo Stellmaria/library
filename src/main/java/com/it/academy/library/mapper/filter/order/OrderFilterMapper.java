@@ -5,7 +5,6 @@ import com.it.academy.library.mapper.filter.user.UserFilterMapper;
 import com.it.academy.library.model.entity.order.Order;
 import com.it.academy.library.service.dto.filter.order.OrderFilter;
 import com.it.academy.library.service.dto.filter.order.OrderStatusFilter;
-import com.it.academy.library.service.dto.filter.order.OrderTypeFilter;
 import com.it.academy.library.service.dto.filter.user.UserFilter;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -19,7 +18,6 @@ import java.util.Optional;
 public class OrderFilterMapper implements Mapper<Order, OrderFilter> {
     private final UserFilterMapper userFilterMapper;
     private final OrderStatusFilterMapper orderStatusFilterMapper;
-    private final OrderTypeFilterMapper orderTypeFilterMapper;
 
     @Override
     public OrderFilter map(@NotNull Order object) {
@@ -27,17 +25,9 @@ public class OrderFilterMapper implements Mapper<Order, OrderFilter> {
                 object.getId(),
                 getUser(object),
                 getOrderStatus(object),
-                getOrderType(object),
                 object.getOrderDate(),
                 object.getReturnDate()
         );
-    }
-
-    @Nullable
-    private OrderTypeFilter getOrderType(@NotNull Order object) {
-        return Optional.ofNullable(object.getOrderType())
-                .map(orderTypeFilterMapper::map)
-                .orElse(null);
     }
 
     @Nullable

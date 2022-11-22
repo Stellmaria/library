@@ -25,7 +25,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.util.Collection;
 import java.util.Objects;
@@ -46,7 +45,6 @@ public class Book extends AbstractAuditingEntity<Long> {
     private Long id;
 
     @Column(nullable = false)
-    @NotBlank
     private String title;
 
     private String subtitle;

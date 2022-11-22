@@ -17,7 +17,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Collection;
@@ -43,7 +42,6 @@ public class Author extends AbstractAuditingEntity<Long> {
             length = 64
     )
     @Size(min = 3, max = 64)
-    @NotBlank
     private String firstName;
 
     @Column(name = "last_name",
@@ -51,7 +49,6 @@ public class Author extends AbstractAuditingEntity<Long> {
             length = 64
     )
     @Size(min = 3, max = 64)
-    @NotBlank
     private String lastName;
 
     private String image;

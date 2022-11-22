@@ -44,8 +44,6 @@ public class QOrder extends EntityPathBase<Order> {
 
     public final QOrderStatus orderStatus;
 
-    public final QOrderType orderType;
-
     public final DateTimePath<java.time.LocalDateTime> returnDate = createDateTime("returnDate", java.time.LocalDateTime.class);
 
     public final com.it.academy.library.model.entity.user.QUser user;
@@ -69,7 +67,6 @@ public class QOrder extends EntityPathBase<Order> {
     public QOrder(Class<? extends Order> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.orderStatus = inits.isInitialized("orderStatus") ? new QOrderStatus(forProperty("orderStatus")) : null;
-        this.orderType = inits.isInitialized("orderType") ? new QOrderType(forProperty("orderType")) : null;
         this.user = inits.isInitialized("user") ? new com.it.academy.library.model.entity.user.QUser(forProperty("user"), inits.get("user")) : null;
     }
 

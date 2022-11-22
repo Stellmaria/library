@@ -4,7 +4,6 @@ import com.it.academy.library.model.entity.book.Book;
 import com.it.academy.library.querydsl.QueryPredicates;
 import com.it.academy.library.service.dto.filter.order.OrderFilter;
 import com.it.academy.library.service.dto.filter.order.OrderStatusFilter;
-import com.it.academy.library.service.dto.filter.order.OrderTypeFilter;
 import com.it.academy.library.service.dto.filter.user.UserFilter;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
@@ -82,27 +81,9 @@ public class BookFilter {
                 .add(getBirthday(bookFilter), book.order.user.birthday::eq)
                 .add(getOrderStatusId(bookFilter), book.order.orderStatus.id::eq)
                 .add(getOrderStatusName(bookFilter), book.order.orderStatus.name::containsIgnoreCase)
-                .add(getOrderTypeId(bookFilter), book.order.orderType.id::eq)
-                .add(getOrderTypeName(bookFilter), book.order.orderType.name::containsIgnoreCase)
                 .add(getOrderDate(bookFilter), book.order.orderDate::eq)
                 .add(getOrderReturnDate(bookFilter), book.order.returnDate::eq)
                 .build();
-    }
-
-    @Nullable
-    private static String getOrderTypeName(@NotNull BookFilter bookFilter) {
-        return Optional.ofNullable(bookFilter.getOrder())
-                .map(OrderFilter::getOrderType)
-                .map(OrderTypeFilter::getName)
-                .orElse(null);
-    }
-
-    @Nullable
-    private static Integer getOrderTypeId(@NotNull BookFilter bookFilter) {
-        return Optional.ofNullable(bookFilter.getOrder())
-                .map(OrderFilter::getOrderType)
-                .map(OrderTypeFilter::getId)
-                .orElse(null);
     }
 
     @Nullable

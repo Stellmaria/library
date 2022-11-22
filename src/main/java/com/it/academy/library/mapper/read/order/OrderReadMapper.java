@@ -5,7 +5,6 @@ import com.it.academy.library.mapper.read.user.UserReadMapper;
 import com.it.academy.library.model.entity.order.Order;
 import com.it.academy.library.service.dto.read.order.OrderReadDto;
 import com.it.academy.library.service.dto.read.order.OrderStatusReadDto;
-import com.it.academy.library.service.dto.read.order.OrderTypeReadDto;
 import com.it.academy.library.service.dto.read.user.UserReadDto;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -18,7 +17,6 @@ import java.util.Optional;
 public class OrderReadMapper implements Mapper<Order, OrderReadDto> {
     private final UserReadMapper userReadMapper;
     private final OrderStatusReadMapper orderStatusReadMapper;
-    private final OrderTypeReadMapper orderTypeReadMapper;
 
     @Override
     public OrderReadDto map(@NotNull Order object) {
@@ -26,7 +24,6 @@ public class OrderReadMapper implements Mapper<Order, OrderReadDto> {
                 object.getId(),
                 getUser(object),
                 getOrderStatus(object),
-                getOrderType(object),
                 object.getOrderDate(),
                 object.getReturnDate()
         );
@@ -35,12 +32,6 @@ public class OrderReadMapper implements Mapper<Order, OrderReadDto> {
     private OrderStatusReadDto getOrderStatus(@NotNull Order object) {
         return Optional.ofNullable(object.getOrderStatus())
                 .map(orderStatusReadMapper::map)
-                .orElse(null);
-    }
-
-    private OrderTypeReadDto getOrderType(@NotNull Order object) {
-        return Optional.ofNullable(object.getOrderType())
-                .map(orderTypeReadMapper::map)
                 .orElse(null);
     }
 

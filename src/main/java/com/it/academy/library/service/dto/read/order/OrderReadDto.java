@@ -17,8 +17,6 @@ public class OrderReadDto {
 
     OrderStatusReadDto orderStatus;
 
-    OrderTypeReadDto orderType;
-
     LocalDateTime orderDate;
 
     LocalDateTime returnDate;

@@ -24,7 +24,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Collection;
@@ -51,7 +50,6 @@ public class User extends AbstractAuditingEntity<Long> {
             unique = true
     )
     @Size(min = 3, max = 50)
-    @NotBlank
     private String username;
 
     @Column(name = "first_name",
@@ -59,7 +57,6 @@ public class User extends AbstractAuditingEntity<Long> {
             length = 99
     )
     @Size(min = 3, max = 99)
-    @NotBlank
     private String firstName;
 
     @Column(name = "last_name",
@@ -67,7 +64,6 @@ public class User extends AbstractAuditingEntity<Long> {
             length = 99
     )
     @Size(min = 3, max = 99)
-    @NotBlank
     private String lastName;
 
     @Column(nullable = false,
@@ -78,7 +74,6 @@ public class User extends AbstractAuditingEntity<Long> {
     private String email;
 
     @Column(nullable = false)
-    @NotBlank
     private String password;
 
     @ManyToOne(fetch = FetchType.LAZY)

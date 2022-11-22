@@ -20,7 +20,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Collection;
@@ -48,7 +47,6 @@ public class UserRole implements GrantedAuthority, BaseEntity<Integer> {
     )
     @NotNull
     @Size(min = 3, max = 64)
-    @NotBlank
     private String name;
 
     @OneToMany(

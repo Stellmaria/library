@@ -126,21 +126,12 @@ CREATE TABLE IF NOT EXISTS order_status
 );
 --rollback DROP TABLE order_status;
 
---changeset stell:13
-CREATE TABLE IF NOT EXISTS order_type
-(
-    id          SERIAL PRIMARY KEY,
-    name VARCHAR(64) UNIQUE NOT NULL
-);
---rollback DROP TABLE order_type;
-
 --changeset stell:14
 CREATE TABLE IF NOT EXISTS orders
 (
     id              BIGSERIAL PRIMARY KEY,
     user_id         BIGINT  DEFAULT 1 NOT NULL,
     order_status_id INTEGER DEFAULT 1 NOT NULL,
-    order_type_id   INTEGER DEFAULT 1 NOT NULL,
     order_date      TIMESTAMP         NOT NULL,
     return_date     TIMESTAMP         NOT NULL,
     created_at      TIMESTAMP WITHOUT TIME ZONE,
@@ -150,8 +141,6 @@ CREATE TABLE IF NOT EXISTS orders
     FOREIGN KEY (user_id) REFERENCES users (id)
         ON UPDATE CASCADE ON DELETE SET DEFAULT,
     FOREIGN KEY (order_status_id) REFERENCES order_status (id)
-        ON UPDATE CASCADE ON DELETE SET DEFAULT,
-    FOREIGN KEY (order_type_id) REFERENCES order_type (id)
         ON UPDATE CASCADE ON DELETE SET DEFAULT
 );
 --rollback DROP TABLE orders;

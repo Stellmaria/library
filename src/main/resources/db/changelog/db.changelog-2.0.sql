@@ -231,25 +231,15 @@ VALUES (1, 'Unconfirmed'),
 --changeset stell:24
 SELECT SETVAL('order_status_id_seq', (SELECT MAX(id) FROM order_status));
 
---changeset stell:25
-INSERT INTO order_type (id, name)
-VALUES (1, 'Unconfirmed'),
-       (2, 'Cash'),
-       (3, 'Online'),
-       (4, 'Card');
-
---changeset stell:26
-SELECT SETVAL('order_type_id_seq', (SELECT MAX(id) FROM order_type));
-
 --changeset stell:27
-INSERT INTO orders (id, user_id, order_status_id, order_type_id, order_date, return_date, created_at, created_by)
-VALUES (1, 3, 3, 3, '2022-10-23T10:00', '2022-10-17T10:00',
+INSERT INTO orders (id, user_id, order_status_id, order_date, return_date, created_at, created_by)
+VALUES (1, 3, 3, '2022-10-23T10:00', '2022-10-17T10:00',
         '2022-10-23T10:00', 'stell'),
-       (2, 2, 1, 2, '2022-10-23T14:35', '2022-11-23T14:35',
+       (2, 2, 1, '2022-10-23T14:35', '2022-11-23T14:35',
         '2022-10-23T14:35', 'stell'),
-       (3, 3, 3, 1, '2022-10-24T14:35', '2022-11-1T15:00',
+       (3, 3, 3, '2022-10-24T14:35', '2022-11-1T15:00',
         '2022-10-24T14:35', 'stell'),
-       (4, 4, 2, 1, '2022-10-25T18:00', '2022-10-29T11:45',
+       (4, 4, 2, '2022-10-25T18:00', '2022-10-29T11:45',
         '2022-10-25T18:00', 'stell');
 
 --changeset stell:28

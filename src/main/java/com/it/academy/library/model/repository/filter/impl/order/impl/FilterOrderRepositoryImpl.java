@@ -4,7 +4,6 @@ import com.it.academy.library.model.entity.order.Order;
 import com.it.academy.library.model.repository.filter.impl.order.FilterOrderRepository;
 import com.it.academy.library.service.dto.filter.order.OrderFilter;
 import com.it.academy.library.service.dto.filter.order.OrderStatusFilter;
-import com.it.academy.library.service.dto.filter.order.OrderTypeFilter;
 import com.it.academy.library.service.dto.filter.user.UserFilter;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
@@ -43,15 +42,6 @@ public class FilterOrderRepositoryImpl implements FilterOrderRepository {
                 .select(order)
                 .from(order)
                 .where(OrderStatusFilter.queryPredicates(orderStatusFilter))
-                .fetch();
-    }
-
-    @Override
-    public Collection<Order> findAllByOrderTypeFilter(@NotNull OrderTypeFilter orderTypeFilter) {
-        return new JPAQuery<Order>(entityManager)
-                .select(order)
-                .from(order)
-                .where(OrderTypeFilter.queryPredicates(orderTypeFilter))
                 .fetch();
     }
 }
