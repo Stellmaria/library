@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -58,8 +57,6 @@ public class AuthorController {
                 .map(author -> {
                     model.addAttribute("author", author);
                     model.addAttribute("books", bookService.findAllByAuthorId(id));
-
-                    SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 
                     return "author/author";
                 })
