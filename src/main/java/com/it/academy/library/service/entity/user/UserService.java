@@ -49,6 +49,7 @@ public interface UserService extends UserDetailsService {
      * @param username for search.
      * @return user.
      */
+    @SuppressWarnings("unused")
     Optional<UserReadDto> findByUsername(String username);
 
     /**

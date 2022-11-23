@@ -45,6 +45,10 @@
     transition: opacity 0.2s ease-in;
 }
 
+.product-bloc {
+    padding-bottom: 15px;
+}
+
 .product-link:hover {
     opacity: 0.8;
 }

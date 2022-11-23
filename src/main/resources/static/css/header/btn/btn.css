@@ -20,3 +20,9 @@
     opacity: 0.8;
     color: var(--header-color);
 }
+
+.link {
+    padding-bottom: 15px;
+    display: flex;
+    justify-content: center;
+}

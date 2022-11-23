@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+
+    <!--    Style main-->
+    <link rel="stylesheet" th:href="@{/styles/css/main.css}">
+
+    <!--    Style for product-->
+    <link rel="stylesheet" th:href="@{/styles/css/product/product.css}">
+</head>
+<body>
+
+<header>
+    <div th:insert="~{fragments/header :: header}"></div>
+</header>
+
+<main>
+    <header>
+        <div class="product-container">
+            <section class="featured-section">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-header-title" sec:authorize="isAuthenticated()">
+                            <span sec:authentication="name"></span>'s Shopping Cart
+                        </h2>
+                    </div>
+
+                    <p class="section-header-title" th:if="${outOfStockMessage}" th:utext="${outOfStockMessage}"></p>
+
+                    <div class="products-wrapper" th:each="book : ${books.entrySet()}">
+                        <div class="product">
+                            <a class="product-link" th:href="@{'/books/' + ${book.getKey().id}}">
+                                <div class="product-bloc">
+                                    <img alt="Product image" class="product-image" th:if="${book.getKey().image}"
+                                         th:src="@{/api/v1/books/{bookId}/image(bookId=${book.getKey().id})}">
+
+                                    <h4 class="product_title">
+                                        <span th:text="${book.getKey().title}">Title</span>
+                                    </h4>
+
+                                    <span th:text="|Quantity: ${book.getValue()}|"></span>
+                                </div>
+                            </a>
+
+                            <a class="link" th:href="@{'/orders/cart/removeBook/{id}'(id=${book.getKey().id})}">
+                                <button class="btn" type="button">Remove</button>
+                            </a>
+
+                            <a class="link" th:href="@{'/orders/cart/create'}">
+                                <button class="btn" type="button">Checkout</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </header>
+</main>
+
+</body>
+</html>

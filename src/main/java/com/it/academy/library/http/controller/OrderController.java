@@ -1,8 +1,11 @@
 package com.it.academy.library.http.controller;
 
+import com.it.academy.library.exception.NotEnoughProductsInStockException;
 import com.it.academy.library.service.dto.PageResponse;
 import com.it.academy.library.service.dto.create.OrderCreateEditDto;
 import com.it.academy.library.service.dto.filter.order.OrderFilter;
+import com.it.academy.library.service.entity.CartServiceImpl;
+import com.it.academy.library.service.entity.book.BookService;
 import com.it.academy.library.service.entity.order.OrderService;
 import com.it.academy.library.service.entity.order.OrderStatusService;
 import com.it.academy.library.service.entity.user.UserService;
@@ -18,6 +21,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/orders")
@@ -26,6 +32,8 @@ public class OrderController {
     private final OrderService orderService;
     private final OrderStatusService orderStatusService;
     private final UserService userService;
+    private final BookService bookService;
+    private final CartServiceImpl cartService;
 
     @GetMapping
     public String findAll(@NotNull Model model, OrderFilter filter, Pageable pageable) {
@@ -62,5 +70,41 @@ public class OrderController {
         }
 
         return "redirect:/orders";
+    }
+
+    @GetMapping("/cart")
+    public String cart(@NotNull Model model) {
+        model.addAttribute("books", cartService.getBooks());
+
+        return "order/cart";
+    }
+
+    @GetMapping("/cart/addBook/{id}")
+    public String addBookToCart(@PathVariable("id") Long id) {
+        return bookService.findById(id)
+                .map(cartService::addBook)
+                .map(it -> "redirect:/orders/cart")
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/cart/removeBook/{id}")
+    public String removeBook(@PathVariable("id") Long id) {
+        return bookService.findById(id)
+                .map(cartService::removeBook)
+                .map(it -> "redirect:/orders/cart")
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("cart/create")
+    public String create(RedirectAttributes redirectAttributes, @NotNull Principal principal) {
+        try {
+            cartService.checkout(userService.findByUsername(principal.getName()).orElse(null));
+        } catch (NotEnoughProductsInStockException e) {
+            redirectAttributes.addFlashAttribute("outOfStockMessage", e.getMessage());
+
+            return "redirect:/orders/cart";
+        }
+
+        return "redirect:/books";
     }
 }

@@ -48,19 +48,13 @@
             <div class="header-login">
                 <a class="btn" sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
 
-                <span class="header-login-name" sec:authorize="isAuthenticated()"
-                      th:text="${#authentication.principal.username}">Login
-                </span>
+                <span class="header-login-name" sec:authentication="name" sec:authorize="isAuthenticated()">Login</span>
 
                 <form action="/logout" method="post" sec:authorize="isAuthenticated()">
                     <button class="btn" type="submit">Logout</button>
                 </form>
 
-                <!--                Cart-->
-                <a class="cart" href="#">
-                    <!--                    COUNT-->
-                    <span class="cart-number">3</span>
-
+                <a class="cart" th:href="@{/orders/cart}">
                     <img alt="Cart" th:src="@{/images/home/icon/cart2.svg}">
                 </a>
             </div>

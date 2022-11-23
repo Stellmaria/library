@@ -1,7 +1,7 @@
 package com.it.academy.library.mapper.convert.book;
 
 import com.it.academy.library.mapper.Mapper;
-import com.it.academy.library.mapper.convert.author.AuthorMapper;
+import com.it.academy.library.mapper.convert.AuthorMapper;
 import com.it.academy.library.mapper.convert.order.OrderMapper;
 import com.it.academy.library.model.entity.book.Book;
 import com.it.academy.library.service.dto.read.book.BookReadDto;

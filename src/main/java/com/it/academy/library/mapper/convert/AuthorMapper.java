@@ -1,4 +1,4 @@
-package com.it.academy.library.mapper.convert.author;
+package com.it.academy.library.mapper.convert;
 
 import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.model.entity.Author;

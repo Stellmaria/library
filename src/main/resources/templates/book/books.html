@@ -63,9 +63,17 @@
                             <h4 class="product_title">
                                 <span th:text="${book.title}">Title</span>
                             </h4>
-
                         </div>
                     </a>
+
+                    <div>
+                        <a class="link" sec:authorize="isAuthenticated()"
+                           th:href="@{'/orders/cart/addBook/{id}'(id=${book.id})}">
+                            <button class="btn" type="button">Add to cart</button>
+                        </a>
+
+                        <span th:text="|In store: ${book.quantity}|"></span>
+                    </div>
                 </div>
             </div>
         </section>
