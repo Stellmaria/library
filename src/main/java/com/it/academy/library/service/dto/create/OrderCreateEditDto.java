@@ -1,7 +1,7 @@
 package com.it.academy.library.service.dto.create;
 
 import com.it.academy.library.model.entity.order.Order;
-import lombok.Value;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -9,15 +9,15 @@ import java.time.LocalDateTime;
 /**
  * A DTO for the {@link Order} entity.
  */
-@Value
+@Data
 public class OrderCreateEditDto {
-    Long userId;
+    private Long userId;
 
-    Integer orderStatusId;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    LocalDateTime orderDate;
+    private Integer orderStatusId;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    LocalDateTime returnDate;
+    private LocalDateTime orderDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime returnDate;
 }

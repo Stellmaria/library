@@ -105,6 +105,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<UserReadDto> findByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .map(entity -> {
+                    eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
+
+                    return userReadMapper.map(entity);
+                });
+    }
+
+    @Override
     @Transactional(rollbackFor = {Exception.class})
     public Optional<UserReadDto> update(Long id, UserCreateEditDto dto) {
         return userRepository.findById(id)

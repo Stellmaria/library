@@ -44,6 +44,14 @@ public interface UserService extends UserDetailsService {
     Optional<UserReadDto> findById(Long id);
 
     /**
+     * Search for a user by user username.
+     *
+     * @param username for search.
+     * @return user.
+     */
+    Optional<UserReadDto> findByUsername(String username);
+
+    /**
      * Update user by user id.
      *
      * @param id  to update.

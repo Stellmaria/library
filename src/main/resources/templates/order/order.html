@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Author</title>
@@ -18,11 +18,78 @@
 </header>
 
 <main>
+    <div class="product-element" sec:authorize="hasRole('ADMIN')">
+        <form method="post" th:action="@{/orders/{orderId}/update(orderId=${order.id})}" th:object="${order}">
+            <label for="status">Status
+                <select id="status" name="orderStatusId">
+                    <option th:each="status : ${statuses}"
+                            th:selected="${status.id == order.orderStatus.id}"
+                            th:text="${status.name}"
+                            th:value="${status.id}">
+                    </option>
+                </select>
+            </label><br>
 
+            <label for="user">User
+                <select id="user" name="userId">
+                    <option th:each="user : ${users}"
+                            th:selected="${user.id == order.user.id}"
+                            th:text="${user.username}"
+                            th:value="${user.id}">
+                    </option>
+                </select>
+            </label><br>
+
+            <label for="orderDate">Order date
+                <input id="orderDate" name="orderDate" th:value="*{orderDate}" type="datetime-local">
+            </label><br>
+
+            <label for="returnDate">Return date
+                <input id="returnDate" name="returnDate" th:value="*{returnDate}" type="datetime-local">
+            </label><br>
+
+            <div class="button">
+                <button class="btn" type="submit">Update</button>
+            </div>
+        </form>
+
+        <div class="button-form">
+            <div class="button">
+                <form class="button" method="post" sec:authorize="hasRole('ADMIN')"
+                      th:action="@{/orders/{orderId}/delete(orderId=${order.id})}">
+                    <button class="btn" type="submit">Remove</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </main>
 
 <main>
+    <div class="product-element" th:object="${order}">
+        <div class="element">
+            <h3>User: </h3>
 
+            <a th:href="@{'/users/' + *{user.id}}" th:text="|*{user.firstName} *{user.lastName}|"></a>
+        </div>
+
+        <div class="element">
+            <h3>Status:</h3>
+
+            <p th:text="*{orderStatus.name}">Status</p>
+        </div>
+
+        <div class="element">
+            <h3>Order date:</h3>
+
+            <p th:text="*{orderDate}">Order date</p>
+        </div>
+
+        <div class="element">
+            <h3>Return date:</h3>
+
+            <p th:text="*{returnDate}">Return date</p>
+        </div>
+    </div>
 </main>
 
 </body>

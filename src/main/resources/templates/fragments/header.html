@@ -19,7 +19,7 @@
                         <a th:href="@{/books}">Books</a>
                     </li>
 
-                    <li>
+                    <li sec:authorize="!hasRole('ADMIN')">
                         <a th:href="@{/books/series}">Series</a>
                     </li>
 
@@ -31,12 +31,16 @@
                         <a th:href="@{/authors}">Authors</a>
                     </li>
 
-                    <li>
+                    <li sec:authorize="!hasRole('ADMIN')">
                         <a th:href="@{/books/publishingHouses}">Houses</a>
                     </li>
 
-                    <li>
+                    <li sec:authorize="!hasRole('ADMIN')">
                         <a th:href="@{/books/genres}">Genres</a>
+                    </li>
+
+                    <li sec:authorize="hasRole('ADMIN')">
+                        <a th:href="@{/orders/}">Orders</a>
                     </li>
                 </ul>
             </nav>
