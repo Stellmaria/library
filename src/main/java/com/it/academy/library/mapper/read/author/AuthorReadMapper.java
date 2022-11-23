@@ -1,4 +1,4 @@
-package com.it.academy.library.mapper.read;
+package com.it.academy.library.mapper.read.author;
 
 import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.model.entity.Author;

@@ -1,7 +1,7 @@
 package com.it.academy.library.mapper.read.book;
 
 import com.it.academy.library.mapper.Mapper;
-import com.it.academy.library.mapper.read.AuthorReadMapper;
+import com.it.academy.library.mapper.read.author.AuthorReadMapper;
 import com.it.academy.library.mapper.read.order.OrderReadMapper;
 import com.it.academy.library.model.entity.book.Book;
 import com.it.academy.library.service.dto.read.AuthorReadDto;
@@ -40,6 +40,7 @@ public class BookReadMapper implements Mapper<Book, BookReadDto> {
                 object.getTitle(),
                 object.getSubtitle(),
                 object.getYear(),
+                object.getQuantity(),
                 object.getPages(),
                 object.getIsbn10(),
                 object.getIsbn13(),

@@ -20,6 +20,8 @@ public class BookReadDto {
 
     Integer year;
 
+    Long quantity;
+
     Short pages;
 
     String isbn10;

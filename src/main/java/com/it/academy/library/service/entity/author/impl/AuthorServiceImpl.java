@@ -3,7 +3,7 @@ package com.it.academy.library.service.entity.author.impl;
 import com.it.academy.library.listener.entity.AccessType;
 import com.it.academy.library.listener.entity.EntityEvent;
 import com.it.academy.library.mapper.create.AuthorCreateEditMapper;
-import com.it.academy.library.mapper.read.AuthorReadMapper;
+import com.it.academy.library.mapper.read.author.AuthorReadMapper;
 import com.it.academy.library.model.entity.Author;
 import com.it.academy.library.model.repository.entity.AuthorRepository;
 import com.it.academy.library.service.dto.create.AuthorCreateEditDto;

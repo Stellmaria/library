@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS author
 --changeset stell:3
 CREATE TABLE IF NOT EXISTS book_language
 (
-    id          SERIAL PRIMARY KEY,
+    id   SERIAL PRIMARY KEY,
     name VARCHAR(64) UNIQUE NOT NULL
 );
 --rollback DROP TABLE book_language;
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS book_language
 --changeset stell:4
 CREATE TABLE IF NOT EXISTS book_format
 (
-    id          SERIAL PRIMARY KEY,
+    id   SERIAL PRIMARY KEY,
     name VARCHAR(64) UNIQUE NOT NULL
 );
 --rollback DROP TABLE book_format;
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS book_genre
 --changeset stell:8
 CREATE TABLE IF NOT EXISTS book_status
 (
-    id          SERIAL PRIMARY KEY,
+    id   SERIAL PRIMARY KEY,
     name VARCHAR(64) UNIQUE NOT NULL
 );
 --rollback DROP TABLE book_status;
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS book_status
 --changeset stell:9
 CREATE TABLE IF NOT EXISTS user_role
 (
-    id          SERIAL PRIMARY KEY,
+    id   SERIAL PRIMARY KEY,
     name VARCHAR(64) UNIQUE NOT NULL
 );
 --rollback DROP TABLE user_role;
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS user_role
 --changeset stell:10
 CREATE TABLE IF NOT EXISTS user_status
 (
-    id          SERIAL PRIMARY KEY,
+    id   SERIAL PRIMARY KEY,
     name VARCHAR(64) UNIQUE NOT NULL
 );
 --rollback DROP TABLE user_status;
@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS users
 --changeset stell:12
 CREATE TABLE IF NOT EXISTS order_status
 (
-    id          SERIAL PRIMARY KEY,
+    id   SERIAL PRIMARY KEY,
     name VARCHAR(64) UNIQUE NOT NULL
 );
 --rollback DROP TABLE order_status;
@@ -152,6 +152,7 @@ CREATE TABLE IF NOT EXISTS book
     title                    VARCHAR(255)      NOT NULL,
     subtitle                 VARCHAR(255),
     year                     INTEGER,
+    quantity                 BIGINT,
     pages                    SMALLINT,
     isbn_10                  VARCHAR(10),
     isbn_13                  VARCHAR(15),

@@ -35,6 +35,8 @@ public class BookFilter {
 
     private Integer year;
 
+    private Long quantity;
+
     private Short pages;
 
     private String isbn10;
@@ -59,6 +61,7 @@ public class BookFilter {
                 .add(bookFilter.getTitle(), book.title::containsIgnoreCase)
                 .add(bookFilter.getSubtitle(), book.subtitle::containsIgnoreCase)
                 .add(bookFilter.getYear(), book.year::eq)
+                .add(bookFilter.getQuantity(), book.quantity::eq)
                 .add(bookFilter.getPages(), book.pages::eq)
                 .add(bookFilter.getIsbn10(), book.isbn10::containsIgnoreCase)
                 .add(bookFilter.getIsbn13(), book.isbn13::containsIgnoreCase)

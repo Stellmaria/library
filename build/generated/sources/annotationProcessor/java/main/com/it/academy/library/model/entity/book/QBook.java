@@ -62,6 +62,8 @@ public class QBook extends EntityPathBase<Book> {
 
     public final NumberPath<Short> pages = createNumber("pages", Short.class);
 
+    public final NumberPath<Long> quantity = createNumber("quantity", Long.class);
+
     public final StringPath subtitle = createString("subtitle");
 
     public final StringPath title = createString("title");

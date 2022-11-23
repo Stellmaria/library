@@ -27,6 +27,9 @@ public class BookCreateEditDto {
     private Integer year;
 
     @Positive
+    private Long quantity;
+
+    @Positive
     private Short pages;
 
     @ISBN(type = ISBN.Type.ISBN_10)
