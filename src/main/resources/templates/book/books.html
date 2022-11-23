@@ -54,7 +54,7 @@
                     </div>
                 </div>
 
-                <div class="products-wrapper" th:each="book : ${books.content}">
+                <div class="products-wrapper" th:each="book : ${books.content}" th:if="${book.quantity  != 0}">
                     <a class="product-link" th:href="@{'/books/' + ${book.id}}">
                         <div class="product">
                             <img alt="Product image" class="product-image" th:if="${book.image}"
@@ -67,12 +67,14 @@
                         </div>
                     </a>
 
-                    <div class="col-md-9" th:inline="text">In Stock: [[${book.quantity}]]</div>
+                    <div th:inline="text">
+                        <span th:text="|In Stock: ${book.quantity}|"></span>
+                    </div>
 
-                    <a class="col-md-1" sec:authorize="isAuthenticated()"
-                       th:href="@{'/shoppingCart/addProduct/{id}'(id=${book.id})}" th:if="${book.quantity}>0">
+                    <a sec:authorize="isAuthenticated()"
+                       th:href="@{'/shoppingCart/addProduct/{id}'(id=${book.id})}" th:if="${book.quantity} > 0">
 
-                        <button class="btn btn-primary" th:text="Buy" type="button">Buy</button>
+                        <button class="btn" th:text="Buy" type="button">Buy</button>
                     </a>
                 </div>
             </div>

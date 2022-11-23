@@ -46,18 +46,15 @@ public class ShoppingCartService {
     }
 
     public void checkout() throws NotEnoughProductsInStockException {
-        Book book;
-
         for (Map.Entry<Book, Long> entry : books.entrySet()) {
-            book = bookRepository.findById(entry.getKey().getId())
-                    .orElse(null);
-            assert book != null;
+            var book = bookRepository.findById(entry.getKey().getId());
+            assert book.isPresent();
 
-            if (book.getQuantity() < entry.getValue()) {
-                throw new NotEnoughProductsInStockException(book);
+            if (book.get().getQuantity() < entry.getValue()) {
+                throw new NotEnoughProductsInStockException(book.get());
             }
 
-            entry.getKey().setQuantity(book.getQuantity() - entry.getValue());
+            entry.getKey().setQuantity(book.get().getQuantity() - entry.getValue());
         }
 
         bookRepository.saveAll(books.keySet());

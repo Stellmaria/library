@@ -53,7 +53,6 @@ public class Book extends AbstractAuditingEntity<Long> {
     @Positive
     private Integer year;
 
-    @Positive
     private Long quantity;
 
     @Positive

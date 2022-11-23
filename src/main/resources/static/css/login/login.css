@@ -8,8 +8,9 @@ font-family: 'Ubuntu', sans-serif;
 :root {
     --login-hover: #8a3b40;
     --login-color: #fff;
-    --rainbow: linear-gradient(to right, #9B7EE4, #68E9E9, #FBFF15, #41E7E7, #E603B4,
-    #4EF0F0, #98FF12, #2CF5F5, #E603B4, #ba551f) 0 0;
+    --rainbow: linear-gradient(
+            to right, #9B7EE4, #68E9E9, #FBFF15, #41E7E7, #E603B4, #4EF0F0, #98FF12, #2CF5F5, #E603B4, #ba551f
+    ) 0 0;
 }
 
 * {
