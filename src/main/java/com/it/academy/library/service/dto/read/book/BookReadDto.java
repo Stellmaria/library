@@ -5,6 +5,7 @@ import com.it.academy.library.service.dto.read.AuthorReadDto;
 import com.it.academy.library.service.dto.read.order.OrderReadDto;
 import lombok.Value;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 /**
@@ -45,4 +46,8 @@ public class BookReadDto {
     Collection<AuthorReadDto> authors;
 
     Collection<BookGenreReadDto> genres;
+
+    LocalDateTime createAt;
+
+    String createBy;
 }

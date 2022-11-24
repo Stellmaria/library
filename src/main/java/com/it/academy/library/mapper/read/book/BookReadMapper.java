@@ -17,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -52,7 +54,9 @@ public class BookReadMapper implements Mapper<Book, BookReadDto> {
                 getBookSeries(object),
                 getOrder(object),
                 getAuthors(object),
-                getGenres(object)
+                getGenres(object),
+                LocalDateTime.ofInstant(object.getCreatedAt(), ZoneOffset.UTC),
+                object.getCreatedBy()
         );
     }
 

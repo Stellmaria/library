@@ -1,8 +1,9 @@
-package com.it.academy.library.service.entity;
+package com.it.academy.library.service.entity.order.impl;
 
 import com.it.academy.library.exception.NotEnoughProductsInStockException;
 import com.it.academy.library.mapper.convert.book.BookMapper;
 import com.it.academy.library.mapper.convert.user.UserMapper;
+import com.it.academy.library.mapper.filter.order.OrderFilterMapper;
 import com.it.academy.library.model.entity.book.Book;
 import com.it.academy.library.model.entity.order.Order;
 import com.it.academy.library.model.entity.order.OrderStatus;
@@ -10,6 +11,7 @@ import com.it.academy.library.model.repository.entity.book.BookRepository;
 import com.it.academy.library.model.repository.entity.order.OrderRepository;
 import com.it.academy.library.service.dto.read.book.BookReadDto;
 import com.it.academy.library.service.dto.read.user.UserReadDto;
+import com.it.academy.library.service.entity.order.CartService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -23,17 +25,20 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 @Transactional
 @RequiredArgsConstructor
-public class CartServiceImpl {
+public class CartServiceImpl implements CartService {
     private final BookRepository bookRepository;
     private final OrderRepository orderRepository;
 
     private final BookMapper bookMapper;
     private final UserMapper userMapper;
+    private final OrderFilterMapper orderFilterMapper;
+
     @Getter
     private final Map<Book, Long> books = new HashMap<>();
 
@@ -62,31 +67,46 @@ public class CartServiceImpl {
     }
 
     public void checkout(UserReadDto user) throws NotEnoughProductsInStockException {
+        var order = new Order();
+
         for (Map.Entry<Book, Long> entry : books.entrySet()) {
-            var book = bookRepository.findById(entry.getKey().getId());
-            assert book.isPresent();
+            var book = bookRepository.findById(entry.getKey().getId()).orElse(null);
 
-            if (book.get().getQuantity() < entry.getValue()) {
-                throw new NotEnoughProductsInStockException(book.get());
+            if (Objects.requireNonNull(book).getQuantity() < entry.getValue()) {
+                throw new NotEnoughProductsInStockException(book);
             }
+            entry.getKey().setQuantity(book.getQuantity() - entry.getValue());
 
-            entry.getKey().setQuantity(book.get().getQuantity() - entry.getValue());
+            order.setId(getOrderId(user));
+            entry.getKey().setOrder(order);
         }
         bookRepository.saveAllAndFlush(books.keySet());
-        orderRepository.saveAndFlush(getOrder(user));
 
         books.clear();
+    }
+
+    private Long getOrderId(UserReadDto user) {
+        var orderFilter = orderFilterMapper.map(orderRepository.saveAndFlush(getOrder(user)));
+
+        return Objects.requireNonNull(orderRepository.findAllByOrderFilter(orderFilter).stream()
+                        .findFirst()
+                        .orElse(null))
+                .getId();
     }
 
     private @NotNull Order getOrder(UserReadDto user) {
         var order = new Order();
 
+        var now = LocalDateTime.now();
+        var date = LocalDateTime.of(
+                now.getYear(), now.getMonth(), now.getDayOfMonth(), now.getHour(), now.getMinute()
+        );
+
         order.setUser(userMapper.map(user));
         order.setOrderStatus(OrderStatus.builder().id(1).build());
-        var orderDate = LocalDateTime.now();
-        order.setOrderDate(orderDate);
-        order.setReturnDate(orderDate.plusMonths(1));
-        order.setCreatedAt(orderDate.toInstant(ZoneOffset.UTC));
+        order.setOrderDate(date);
+        order.setReturnDate(date.plusMonths(1));
+        order.setCreatedAt(date.toInstant(ZoneOffset.UTC));
         order.setCreatedBy(user.getUsername());
 
         return order;

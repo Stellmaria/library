@@ -4,8 +4,8 @@ import com.it.academy.library.exception.NotEnoughProductsInStockException;
 import com.it.academy.library.service.dto.PageResponse;
 import com.it.academy.library.service.dto.create.OrderCreateEditDto;
 import com.it.academy.library.service.dto.filter.order.OrderFilter;
-import com.it.academy.library.service.entity.CartServiceImpl;
 import com.it.academy.library.service.entity.book.BookService;
+import com.it.academy.library.service.entity.order.CartService;
 import com.it.academy.library.service.entity.order.OrderService;
 import com.it.academy.library.service.entity.order.OrderStatusService;
 import com.it.academy.library.service.entity.user.UserService;
@@ -33,7 +33,7 @@ public class OrderController {
     private final OrderStatusService orderStatusService;
     private final UserService userService;
     private final BookService bookService;
-    private final CartServiceImpl cartService;
+    private final CartService cartService;
 
     @GetMapping
     public String findAll(@NotNull Model model, OrderFilter filter, Pageable pageable) {
