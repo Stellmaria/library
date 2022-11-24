@@ -24,6 +24,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/orders")
@@ -55,6 +56,16 @@ public class OrderController {
                     return "order/order";
                 })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/order")
+    public String findOrder(@NotNull Model model, @NotNull Principal principal) {
+        var userId = Objects.requireNonNull(userService.findByUsername(principal.getName()).orElse(null))
+                .getId();
+
+        model.addAttribute("orders", orderService.findByUserId(userId));
+
+        return "order/order";
     }
 
     @PostMapping("/{id}/update")

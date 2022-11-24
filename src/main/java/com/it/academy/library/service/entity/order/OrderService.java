@@ -42,6 +42,8 @@ public interface OrderService {
      */
     Page<OrderReadDto> findAll(OrderFilter filter, Pageable pageable);
 
+    Collection<OrderReadDto> findByUserId(Long id);
+
     /**
      * Updating an order by order ID.
      *

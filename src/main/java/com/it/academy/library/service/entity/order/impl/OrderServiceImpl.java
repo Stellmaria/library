@@ -7,6 +7,7 @@ import com.it.academy.library.mapper.read.order.OrderReadMapper;
 import com.it.academy.library.model.repository.entity.order.OrderRepository;
 import com.it.academy.library.service.dto.create.OrderCreateEditDto;
 import com.it.academy.library.service.dto.filter.order.OrderFilter;
+import com.it.academy.library.service.dto.filter.user.UserFilter;
 import com.it.academy.library.service.dto.read.order.OrderReadDto;
 import com.it.academy.library.service.entity.order.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -53,6 +54,20 @@ public class OrderServiceImpl implements OrderService {
 
                     return orderReadMapper.map(entity);
                 });
+    }
+
+    @Override
+    public Collection<OrderReadDto> findByUserId(Long id) {
+        var filer = new UserFilter();
+        filer.setId(id);
+
+        return orderRepository.findAllByUserFilter(filer).stream()
+                .map(entity -> {
+                    eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
+
+                    return orderReadMapper.map(entity);
+                })
+                .collect(Collectors.toList());
     }
 
     @Override
