@@ -45,6 +45,7 @@
 }
 
 .header-login {
+    padding-right: 30px;
     display: flex;
     align-items: center;
     margin-left: auto;
@@ -68,4 +69,29 @@
 .cart:hover, a.cart:hover {
     opacity: 0.8;
     color: var(--header-color);
+}
+
+nav ul {
+    text-align: center;
+}
+
+.dropdown-menu {
+    position: absolute;
+    visibility: hidden;
+    background-color: white;
+    z-index: 10;
+}
+
+.dropdown-menu p {
+    padding: 7px 0 7px 15px;
+    width: 250px;
+    text-align: left;
+    border: 1px solid black;
+    margin: 0;
+}
+
+nav li:hover > .dropdown-menu {
+    visibility: visible;
+    display: flex;
+    flex-direction: column;
 }

@@ -48,6 +48,14 @@
                 <input id="returnDate" name="returnDate" th:value="*{returnDate}" type="datetime-local">
             </label><br>
 
+            <div th:each="book : ${books}">
+                <a th:href="@{'/books/' + ${book.id}}">
+                    <span th:text="${book.title}">Title</span>
+
+                    <!--                    <span th:number="${book.quantity}">Quantity</span>-->
+                </a>
+            </div>
+
             <div class="button">
                 <button class="btn" type="submit">Update</button>
             </div>
@@ -88,6 +96,12 @@
             <h3>Return date:</h3>
 
             <p th:text="*{returnDate}">Return date</p>
+        </div>
+
+        <div class="element" th:each="book : ${books}">
+            <h3>Title:</h3>
+
+            <a th:href="@{'/books/' + ${book.id}}" th:text="${book.title}"></a>
         </div>
     </div>
 </main>

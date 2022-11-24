@@ -12,6 +12,7 @@ import com.it.academy.library.service.dto.filter.book.BookFilter;
 import com.it.academy.library.service.dto.filter.book.BookGenreFilter;
 import com.it.academy.library.service.dto.filter.book.BookPublishingHouseFilter;
 import com.it.academy.library.service.dto.filter.book.BookSeriesFilter;
+import com.it.academy.library.service.dto.filter.order.OrderFilter;
 import com.it.academy.library.service.dto.read.book.BookReadDto;
 import com.it.academy.library.service.entity.book.BookService;
 import com.it.academy.library.service.image.ImageService;
@@ -89,6 +90,19 @@ public class BookServiceImpl implements BookService {
         filter.setId(id);
 
         return bookRepository.findAllByBookSeriesFilter(filter).stream()
+                .map(entity -> {
+                    eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
+
+                    return bookReadMapper.map(entity);
+                })
+                .collect(Collectors.toList());
+    }
+
+    public Collection<BookReadDto> findAllByOrderId(Long id) {
+        var filter = new OrderFilter();
+        filter.setId(id);
+
+        return bookRepository.findAllByOrderFilter(filter).stream()
                 .map(entity -> {
                     eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
 

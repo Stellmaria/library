@@ -50,6 +50,7 @@ public class OrderController {
                     model.addAttribute("order", dto);
                     model.addAttribute("statuses", orderStatusService.findAll());
                     model.addAttribute("users", userService.findAll());
+                    model.addAttribute("books", bookService.findAllByOrderId(id));
 
                     return "order/order";
                 })

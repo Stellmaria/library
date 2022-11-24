@@ -67,6 +67,14 @@ public interface BookService {
     Collection<BookReadDto> findAllByAuthorId(Long id);
 
     /**
+     * Search for all books by order id.
+     *
+     * @param id for search.
+     * @return collection of found books.
+     */
+    Collection<BookReadDto> findAllByOrderId(Long id);
+
+    /**
      * Book search by book id.
      *
      * @param id for search.
