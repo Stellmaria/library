@@ -1,6 +1,6 @@
 package com.it.academy.library.service.entity.order.impl;
 
-import com.it.academy.library.exception.NotEnoughProductsInStockException;
+import com.it.academy.library.exception.NotBookException;
 import com.it.academy.library.listener.entity.AccessType;
 import com.it.academy.library.listener.entity.EntityEvent;
 import com.it.academy.library.mapper.convert.book.BookMapper;
@@ -71,40 +71,41 @@ public class CartServiceImpl implements CartService {
         return books;
     }
 
-    public void checkout(UserReadDto user) throws NotEnoughProductsInStockException {
-        var order = new Order();
-        order.setId(getOrderId(user));
+    public void checkout(UserReadDto user) throws NotBookException {
+        var order = Order.builder()
+                .id(getNewOrder(user).getId())
+                .build();
 
         for (Map.Entry<Book, Long> entry : books.entrySet()) {
             var book = bookRepository.findById(entry.getKey().getId()).orElse(null);
             eventPublisher.publishEvent(new EntityEvent(book, AccessType.READ));
 
             if (Objects.requireNonNull(book).getQuantity() < entry.getValue()) {
-                throw new NotEnoughProductsInStockException(book);
+                throw new NotBookException(book);
             }
             entry.getKey().setQuantity(book.getQuantity() - entry.getValue());
             entry.getKey().setOrder(order);
         }
         bookRepository.saveAllAndFlush(books.keySet());
-        eventPublisher.publishEvent(new EntityEvent(books.keySet(), AccessType.CREATE));
+        eventPublisher.publishEvent(new EntityEvent(books.keySet(), AccessType.UPDATE));
 
         books.clear();
     }
 
-    private Long getOrderId(UserReadDto user) {
+    private Order getNewOrder(UserReadDto user) {
         var order = orderRepository.saveAndFlush(createOrder(user));
         eventPublisher.publishEvent(new EntityEvent(order, AccessType.CREATE));
 
         var orderFilter = orderFilterMapper.map(order);
 
-        return Objects.requireNonNull(orderRepository.findAllByOrderFilter(orderFilter).stream()
+        return Objects.requireNonNull(
+                orderRepository.findAllByOrderFilter(orderFilter).stream()
                         .findFirst()
-                        .orElse(null))
-                .getId();
+                        .orElse(null)
+        );
     }
 
     private @NotNull Order createOrder(UserReadDto user) {
-        var order = new Order();
         var orderStatus = OrderStatus.builder()
                 .id(1)
                 .build();
@@ -112,6 +113,7 @@ public class CartServiceImpl implements CartService {
         var date = LocalDateTime.of(
                 now.getYear(), now.getMonth(), now.getDayOfMonth(), now.getHour(), now.getMinute()
         );
+        var order = new Order();
 
         order.setUser(userMapper.map(user));
         order.setOrderStatus(orderStatus);

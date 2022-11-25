@@ -42,12 +42,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username)
+        var filter = UserFilter.builder()
+                .username(username)
+                .build();
+
+        return userRepository.findAllByUserFilter(filter).stream()
                 .map(user -> new org.springframework.security.core.userdetails.User(
                         user.getUsername(),
                         user.getPassword(),
                         Collections.singleton(user.getUserRole())
                 ))
+                .findFirst()
                 .orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: " + username));
     }
 
@@ -106,12 +111,32 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<UserReadDto> findByUsername(String username) {
-        return userRepository.findByUsername(username)
+        var filter = UserFilter.builder()
+                .username(username)
+                .build();
+
+        return userRepository.findAllByUserFilter(filter).stream()
                 .map(entity -> {
                     eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
 
                     return userReadMapper.map(entity);
-                });
+                })
+                .findFirst();
+    }
+
+    @Override
+    public Optional<UserReadDto> findByEmail(String email) {
+        var filter = UserFilter.builder()
+                .email(email)
+                .build();
+
+        return userRepository.findAllByUserFilter(filter).stream()
+                .map(entity -> {
+                    eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
+
+                    return userReadMapper.map(entity);
+                })
+                .findFirst();
     }
 
     @Override

@@ -28,8 +28,15 @@ public class BookPublishingHouseController {
     private final BookService bookService;
 
     @PostMapping
-    public String create(@Validated BookPublishingHouseCreateEditDto dto, @NotNull BindingResult bindingResult,
+    public String create(@Validated @NotNull BookPublishingHouseCreateEditDto dto, @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
+        if (bookPublishingHouseService.findByName(dto.getName()).isPresent()) {
+            bindingResult.rejectValue(
+                    "name", "error.bookPublishingHouse",
+                    "A publishing house with the same name already exists."
+            );
+        }
+
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("publishingHouse", dto);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());

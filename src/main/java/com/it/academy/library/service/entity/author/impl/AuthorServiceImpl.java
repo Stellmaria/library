@@ -68,6 +68,22 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
+    public Optional<AuthorReadDto> findByFullName(String firstName, String lastName) {
+        var filter = AuthorFilter.builder()
+                .lastName(lastName)
+                .firstName(firstName)
+                .build();
+
+        return authorRepository.findAllByAuthorFilter(filter).stream()
+                .map(entity -> {
+                    eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
+
+                    return authorReadMapper.map(entity);
+                })
+                .findFirst();
+    }
+
+    @Override
     public Collection<AuthorReadDto> findAll() {
         return authorRepository.findAll().stream()
                 .map(entity -> {
@@ -90,8 +106,9 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Collection<AuthorReadDto> findAllByBookId(Long id) {
-        var filter = new BookFilter();
-        filter.setId(id);
+        var filter = BookFilter.builder()
+                .id(id)
+                .build();
 
         return authorRepository.findAllByBookFilter(filter).stream()
                 .map(entity -> {

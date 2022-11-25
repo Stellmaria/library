@@ -10,11 +10,9 @@ import org.springframework.stereotype.Component;
 public class OrderStatusMapper implements Mapper<OrderStatusReadDto, OrderStatus> {
     @Override
     public OrderStatus map(@NotNull OrderStatusReadDto object) {
-        var orderStatus = new OrderStatus();
-
-        orderStatus.setId(object.getId());
-        orderStatus.setName(object.getName());
-
-        return orderStatus;
+        return OrderStatus.builder()
+                .id(object.getId())
+                .name(object.getName())
+                .build();
     }
 }

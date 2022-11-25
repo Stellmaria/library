@@ -22,9 +22,11 @@
             <h1>Signup</h1>
         </div>
 
-        <form method="post" th:action="@{/users}" th:object="${user}">
+        <form action="#" method="post" role="form" th:action="@{/users}" th:object="${user}">
             <div class="input-area">
                 <label for="username">Login
+                    <label th:errors="*{username}" th:if="${#fields.hasErrors('username')}"></label>
+
                     <input autocomplete="off" id="username" name="username" required th:value="*{username}" type="text">
                 </label>
             </div>
@@ -44,6 +46,8 @@
 
             <div class="input-area">
                 <label for="email">Email
+                    <label th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></label>
+
                     <input autocomplete="off" id="email" name="email" required th:value="*{email}" type="email">
                 </label>
             </div>
@@ -55,17 +59,21 @@
             </div>
 
             <div class="button-area">
-                <button type="submit" class="login-btn">Login</button>
+                <button class="signup-btn" type="submit">Signup</button>
             </div>
 
-            <div class="form-toggle-area">
-                <p>Have an account?
-                    <span id="toggle-login">
-                        <a th:href="@{/login}">Login now</a>
-                    </span>
-                </p>
+            <div class="error" th:if="${errors}">
+                <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Error message</p>
             </div>
         </form>
+
+        <div class="form-toggle-area">
+            <p>Have an account?
+                <span id="toggle-login">
+                        <a th:href="@{/login}">Login now</a>
+                </span>
+            </p>
+        </div>
     </div>
 </div>
 

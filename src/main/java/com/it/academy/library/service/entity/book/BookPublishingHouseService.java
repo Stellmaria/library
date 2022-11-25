@@ -34,6 +34,14 @@ public interface BookPublishingHouseService {
     Optional<BookPublishingHouseReadDto> findById(Integer id);
 
     /**
+     * Search for a book publisher by book publisher name.
+     *
+     * @param name for search.
+     * @return book publishing house.
+     */
+    Optional<BookPublishingHouseReadDto> findByName(String name);
+
+    /**
      * Search for a book publisher by book publisher ID with filtering.
      *
      * @param filter   for search.

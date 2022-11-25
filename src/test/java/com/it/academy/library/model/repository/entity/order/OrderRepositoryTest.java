@@ -34,6 +34,7 @@ class OrderRepositoryTest extends IntegrationTestBase {
     private static final Long ORDER_ID_2 = 2L;
 
     private final OrderRepository orderRepository;
+
     private final OrderFilterMapper orderFilterMapper;
     private final OrderStatusFilterMapper orderStatusFilterMapper;
     private final UserFilterMapper userFilterMapper;

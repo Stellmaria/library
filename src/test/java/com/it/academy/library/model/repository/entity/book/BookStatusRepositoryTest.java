@@ -19,6 +19,7 @@ class BookStatusRepositoryTest extends IntegrationTestBase {
     private static final Integer BOOK_STATUS_ID_4 = 4;
 
     private final BookStatusRepository bookStatusRepository;
+
     private final BookStatusFilterMapper bookStatusFilterMapper;
 
     @Test

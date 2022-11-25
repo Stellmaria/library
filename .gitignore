@@ -4,6 +4,7 @@
 
 # Log file
 *.log
+*.qz
 
 # BlueJ files
 *.ctxt
@@ -120,3 +121,4 @@ gradle-app.setting
 /build/generated-snippets/
 /build/reports/
 /build/test-results/
+/web.log.*.gz

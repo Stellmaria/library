@@ -12,22 +12,17 @@ public class BookPublishingHouseCreateEditMapper
     @Override
     public BookPublishingHouse map(@NotNull BookPublishingHouseCreateEditDto fromObject,
                                    @NotNull BookPublishingHouse toObject) {
-        copy(fromObject, toObject);
-
-        return toObject;
+        return create(fromObject);
     }
 
     @Override
     public BookPublishingHouse map(@NotNull BookPublishingHouseCreateEditDto object) {
-        var bookPublishingHouse = new BookPublishingHouse();
-
-        copy(object, bookPublishingHouse);
-
-        return bookPublishingHouse;
+        return create(object);
     }
 
-    private void copy(@NotNull BookPublishingHouseCreateEditDto object,
-                      @NotNull BookPublishingHouse bookPublishingHouse) {
-        bookPublishingHouse.setName(object.getName());
+    private BookPublishingHouse create(@NotNull BookPublishingHouseCreateEditDto object) {
+        return BookPublishingHouse.builder()
+                .name(object.getName())
+                .build();
     }
 }

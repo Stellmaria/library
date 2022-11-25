@@ -56,6 +56,21 @@ public class BookPublishingHouseServiceImpl implements BookPublishingHouseServic
     }
 
     @Override
+    public Optional<BookPublishingHouseReadDto> findByName(String name) {
+        var filter = BookPublishingHouseFilter.builder()
+                .name(name)
+                .build();
+
+        return bookPublishingHouseRepository.findAllByBookPublishingHouseFilter(filter).stream()
+                .map(entity -> {
+                    eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
+
+                    return bookPublishingHouseReadMapper.map(entity);
+                })
+                .findFirst();
+    }
+
+    @Override
     public Collection<BookPublishingHouseReadDto> findAll() {
         return bookPublishingHouseRepository.findAll().stream()
                 .map(entity -> {

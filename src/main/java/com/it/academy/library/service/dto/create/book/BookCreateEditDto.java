@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.ISBN;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.Collection;
 
@@ -18,24 +19,30 @@ import java.util.Collection;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookCreateEditDto {
-    @NotBlank
+    @NotBlank(message = "The title must not be empty.")
     private String title;
 
     private String subtitle;
 
-    @Positive
+    @Positive(message = "The year must not be negative number.")
     private Integer year;
 
-    @Positive
+    @Positive(message = "The number must not be negative number.")
     private Long quantity;
 
-    @Positive
+    @Positive(message = "Pages must not be a negative number.")
     private Short pages;
 
-    @ISBN(type = ISBN.Type.ISBN_10)
+    @ISBN(
+            type = ISBN.Type.ISBN_10,
+            message = "ISBN 10 incorrect."
+    )
     private String isbn10;
 
-    @ISBN(type = ISBN.Type.ISBN_13)
+    @ISBN(
+            type = ISBN.Type.ISBN_13,
+            message = "ISBN 13 incorrect."
+    )
     private String isbn13;
 
     private MultipartFile image;
@@ -52,7 +59,9 @@ public class BookCreateEditDto {
 
     private Long orderId;
 
+    @NotNull(message = "A book must have at least one author.")
     private Collection<Long> authorsId;
 
+    @NotNull(message = "The book must have at least one genre.")
     private Collection<Integer> genresId;
 }

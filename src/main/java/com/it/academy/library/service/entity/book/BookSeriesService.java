@@ -27,6 +27,14 @@ public interface BookSeriesService {
     Optional<BookSeriesReadDto> findById(Integer id);
 
     /**
+     * Search for a book series by book series name.
+     *
+     * @param name for search.
+     * @return book series.
+     */
+    Optional<BookSeriesReadDto> findByName(String name);
+
+    /**
      * Search for all series of books.
      *
      * @return collection of found book series.

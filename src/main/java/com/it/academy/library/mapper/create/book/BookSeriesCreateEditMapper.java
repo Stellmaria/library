@@ -10,21 +10,17 @@ import org.springframework.stereotype.Component;
 public class BookSeriesCreateEditMapper implements Mapper<BookSeriesCreateEditDto, BookSeries> {
     @Override
     public BookSeries map(@NotNull BookSeriesCreateEditDto fromObject, @NotNull BookSeries toObject) {
-        copy(fromObject, toObject);
-
-        return toObject;
+        return create(fromObject);
     }
 
     @Override
     public BookSeries map(@NotNull BookSeriesCreateEditDto object) {
-        var bookSeries = new BookSeries();
-
-        copy(object, bookSeries);
-
-        return bookSeries;
+        return create(object);
     }
 
-    private void copy(@NotNull BookSeriesCreateEditDto object, @NotNull BookSeries bookSeries) {
-        bookSeries.setName(object.getName());
+    private BookSeries create(@NotNull BookSeriesCreateEditDto object) {
+        return BookSeries.builder()
+                .name(object.getName())
+                .build();
     }
 }

@@ -43,12 +43,20 @@ public interface BookGenreService {
     Page<BookGenreReadDto> findAll(BookGenreFilter filter, Pageable pageable);
 
     /**
-     * Search all book genres by book id .
+     * Search all book genres by book id.
      *
      * @param id for search.
      * @return a collection of all found book genres.
      */
     Collection<BookGenreReadDto> findAllByBookId(Long id);
+
+    /**
+     * Search all book genres by book name.
+     *
+     * @param name for search.
+     * @return book genre.
+     */
+    Optional<BookGenreReadDto> findByName(String name);
 
     /**
      * Book genre update by book genre id.

@@ -106,4 +106,28 @@ public interface BookService {
      * @return book cover.
      */
     Optional<byte[]> findImage(Long id);
+
+    /**
+     * Search for a book by book title.
+     *
+     * @param title for search.
+     * @return book.
+     */
+    Optional<BookReadDto> findByTitle(String title);
+
+    /**
+     * Search all books by user id.
+     *
+     * @param id for search.
+     * @return collection of found books.
+     */
+    Collection<BookReadDto> findAllByUserId(Long id);
+
+    /**
+     * Search all books on order by user id.
+     *
+     * @param id for search.
+     * @return collection of found books.
+     */
+    Collection<BookReadDto> findAllByUserIdAndOrder(Long id);
 }

@@ -1,6 +1,6 @@
 package com.it.academy.library.http.controller;
 
-import com.it.academy.library.exception.NotEnoughProductsInStockException;
+import com.it.academy.library.exception.NotBookException;
 import com.it.academy.library.service.dto.PageResponse;
 import com.it.academy.library.service.dto.create.OrderCreateEditDto;
 import com.it.academy.library.service.dto.filter.order.OrderFilter;
@@ -36,6 +36,19 @@ public class OrderController {
     private final BookService bookService;
     private final CartService cartService;
 
+    @GetMapping("cart/create")
+    public String create(RedirectAttributes redirectAttributes, @NotNull Principal principal) {
+        try {
+            cartService.checkout(userService.findByUsername(principal.getName()).orElse(null));
+        } catch (NotBookException e) {
+            redirectAttributes.addFlashAttribute("outOfStockMessage", e.getMessage());
+
+            return "redirect:/orders/cart";
+        }
+
+        return "redirect:/books";
+    }
+
     @GetMapping
     public String findAll(@NotNull Model model, OrderFilter filter, Pageable pageable) {
         model.addAttribute("orders", PageResponse.of(orderService.findAll(filter, pageable)));
@@ -51,21 +64,10 @@ public class OrderController {
                     model.addAttribute("order", dto);
                     model.addAttribute("statuses", orderStatusService.findAll());
                     model.addAttribute("users", userService.findAll());
-                    model.addAttribute("books", bookService.findAllByOrderId(id));
 
                     return "order/order";
                 })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    }
-
-    @GetMapping("/order")
-    public String findOrder(@NotNull Model model, @NotNull Principal principal) {
-        var userId = Objects.requireNonNull(userService.findByUsername(principal.getName()).orElse(null))
-                .getId();
-
-        model.addAttribute("orders", orderService.findByUserId(userId));
-
-        return "order/order";
     }
 
     @PostMapping("/{id}/update")
@@ -107,16 +109,12 @@ public class OrderController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("cart/create")
-    public String create(RedirectAttributes redirectAttributes, @NotNull Principal principal) {
-        try {
-            cartService.checkout(userService.findByUsername(principal.getName()).orElse(null));
-        } catch (NotEnoughProductsInStockException e) {
-            redirectAttributes.addFlashAttribute("outOfStockMessage", e.getMessage());
+    @GetMapping("/order")
+    public String findOrder(@NotNull Model model, @NotNull Principal principal) {
+        var user = Objects.requireNonNull(userService.findByUsername(principal.getName()).orElse(null));
 
-            return "redirect:/orders/cart";
-        }
+        model.addAttribute("orders", orderService.findByUserId(user.getId()));
 
-        return "redirect:/books";
+        return "order/order";
     }
 }

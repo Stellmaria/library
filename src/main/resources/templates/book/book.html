@@ -23,6 +23,8 @@
               th:object="${book}">
 
             <label for="title"> Title:
+                <label th:errors="*{title}" th:if="${#fields.hasErrors('title')}"></label>
+
                 <input id="title" name="title" th:value="*{title}" type="text">
             </label><br>
 
@@ -38,6 +40,10 @@
                 <input id="pages" name="pages" th:value="*{pages}" type="number">
             </label><br>
 
+            <label for="quantity"> Quantity:
+                <input id="quantity" name="quantity" th:value="*{quantity}" type="number">
+            </label><br>
+
             <label for="isbn10"> Isbn10:
                 <input id="isbn10" name="isbn10" th:value="*{isbn10}" type="text">
             </label><br>
@@ -51,7 +57,6 @@
                     Authors</a>
             </div>
 
-            <!--            TODO: fix me-->
             <div>
                 <label for="authors">Authors:
                     <select id="authors" multiple="multiple" name="authorsId">
@@ -68,7 +73,6 @@
                 <a th:href="@{'/books/genres/' + ${genre.id}}" th:text="${genre.name}">Genres</a>
             </div>
 
-            <!--            TODO: fix me-->
             <div>
                 <label for="genres">Genres:
                     <select id="genres" multiple="multiple" name="genresId">
@@ -200,6 +204,10 @@
             <div class="button">
                 <button class="btn" type="submit">Update</button>
             </div>
+
+            <div th:if="${errors}">
+                <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Error message</p>
+            </div>
         </form>
 
         <div class="button-form">
@@ -237,6 +245,12 @@
             <h3>Page: </h3>
 
             <p th:text="${book.pages}"></p>
+        </div>
+
+        <div class="element">
+            <h3>Quantity: </h3>
+
+            <p th:text="${book.quantity}"></p>
         </div>
 
         <div class="element" th:if="${book.isbn10 != null}">

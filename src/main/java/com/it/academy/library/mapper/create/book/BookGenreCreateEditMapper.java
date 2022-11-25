@@ -10,22 +10,18 @@ import org.springframework.stereotype.Component;
 public class BookGenreCreateEditMapper implements Mapper<BookGenreCreateEditDto, BookGenre> {
     @Override
     public BookGenre map(@NotNull BookGenreCreateEditDto fromObject, @NotNull BookGenre toObject) {
-        copy(fromObject, toObject);
-
-        return toObject;
+        return create(fromObject);
     }
 
     @Override
-    public BookGenre map(@NotNull BookGenreCreateEditDto object) {
-        var bookGenre = new BookGenre();
-
-        copy(object, bookGenre);
-
-        return bookGenre;
+    public BookGenre map(@NotNull BookGenreCreateEditDto fromObject) {
+        return create(fromObject);
     }
 
-    private void copy(@NotNull BookGenreCreateEditDto object, @NotNull BookGenre bookGenre) {
-        bookGenre.setName(object.getName());
-        bookGenre.setDescription(object.getDescription());
+    private BookGenre create(@NotNull BookGenreCreateEditDto fromObject) {
+        return BookGenre.builder()
+                .name(fromObject.getName())
+                .description(fromObject.getDescription())
+                .build();
     }
 }

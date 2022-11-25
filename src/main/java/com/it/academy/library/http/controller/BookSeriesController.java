@@ -28,8 +28,15 @@ public class BookSeriesController {
     private final BookService bookService;
 
     @PostMapping
-    public String create(@Validated BookSeriesCreateEditDto dto, @NotNull BindingResult bindingResult,
+    public String create(@Validated @NotNull BookSeriesCreateEditDto dto, @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
+        if (bookSeriesService.findByName(dto.getName()).isPresent()) {
+            bindingResult.rejectValue(
+                    "name", "error.bookSeries",
+                    "A book series with the same name already exists."
+            );
+        }
+
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("series", dto);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());

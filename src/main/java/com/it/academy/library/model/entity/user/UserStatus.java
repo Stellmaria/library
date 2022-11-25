@@ -20,7 +20,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -45,7 +44,6 @@ public class UserStatus implements BaseEntity<Integer> {
             unique = true
     )
     @NotNull
-    @Size(min = 3, max = 64)
     private String name;
 
     @OneToMany(

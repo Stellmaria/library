@@ -10,16 +10,14 @@ import org.springframework.stereotype.Component;
 public class AuthorMapper implements Mapper<AuthorReadDto, Author> {
     @Override
     public Author map(@NotNull AuthorReadDto object) {
-        var author = new Author();
-
-        author.setId(object.getId());
-        author.setFirstName(object.getFirstName());
-        author.setLastName(object.getLastName());
-        author.setBirthday(object.getBirthday());
-        author.setDateDeath(object.getDateDeath());
-        author.setDescription(object.getDescription());
-        author.setImage(object.getImage());
-
-        return author;
+        return Author.builder()
+                .id(object.getId())
+                .firstName(object.getFirstName())
+                .lastName(object.getLastName())
+                .birthday(object.getBirthday())
+                .dateDeath(object.getDateDeath())
+                .description(object.getDescription())
+                .image(object.getImage())
+                .build();
     }
 }

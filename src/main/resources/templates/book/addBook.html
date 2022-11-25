@@ -21,6 +21,8 @@
     <div class="product-element" sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')">
         <form enctype="multipart/form-data" method="post" th:action="@{/books}" th:object="${book}">
             <label for="title"> Title:
+                <label th:errors="*{title}" th:if="${#fields.hasErrors('title')}"></label>
+
                 <input id="title" name="title" th:value="*{title}" type="text">
             </label><br>
 
@@ -29,11 +31,19 @@
             </label><br>
 
             <label for="year"> Year:
+                <label th:errors="*{year}" th:if="${#fields.hasErrors('year')}"></label>
+
                 <input id="year" name="year" th:value="*{year}" type="number">
             </label><br>
 
             <label for="pages"> Page:
                 <input id="pages" name="pages" th:value="*{pages}" type="number">
+            </label><br>
+
+            <label for="quantity"> Quantity:
+                <label th:errors="*{quantity}" th:if="${#fields.hasErrors('quantity')}"></label>
+
+                <input id="quantity" name="quantity" th:value="*{quantity}" type="number">
             </label><br>
 
             <label for="isbn10"> Isbn10:
@@ -47,19 +57,6 @@
             <label for="image"> Image:
                 <input id="image" name="image" type="file">
             </label><br>
-
-            <div>
-                <label for="bookStatus">Status:
-                    <select id="bookStatus" name="bookStatusId">
-                        <option disabled selected value></option>
-                        <option th:each="bookStatus : ${statuses}"
-                                th:selected="${bookStatus.id == book.bookStatusId}"
-                                th:text="${bookStatus.name}"
-                                th:value="${bookStatus.id}">Status
-                        </option>
-                    </select>
-                </label>
-            </div>
 
             <div>
                 <label for="bookLanguage">Language:
@@ -117,9 +114,23 @@
                 <label for="authors">Authors:
                     <select id="authors" multiple name="authorsId">
                         <option disabled selected value></option>
+
                         <option th:each="author : ${authors}"
                                 th:text="|${author.firstName} ${author.lastName}|"
                                 th:value="${author.id}">Authors
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            <div>
+                <label for="genres">Genres:
+                    <select id="genres" multiple name="genresId">
+                        <option disabled selected value></option>
+
+                        <option th:each="genre : ${genres}"
+                                th:text="${genre.name}"
+                                th:value="${genre.id}">Authors
                         </option>
                     </select>
                 </label>
@@ -140,11 +151,11 @@
                     <a class="btn" th:href="@{/books/genres/addGenre}">Add new genre</a>
                 </div>
             </div>
-        </form>
 
-        <div th:if="${errors}">
-            <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Error message</p>
-        </div>
+            <div th:if="${errors}">
+                <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Error message</p>
+            </div>
+        </form>
     </div>
 </main>
 

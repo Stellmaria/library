@@ -69,9 +69,9 @@ public class BookGenreServiceImpl implements BookGenreService {
 
     @Override
     public Collection<BookGenreReadDto> findAllByBookId(Long id) {
-        var filter = new BookFilter();
-        filter.setId(id);
-
+        var filter = BookFilter.builder()
+                .id(id)
+                .build();
 
         return bookGenreRepository.findAllByBookFilter(filter).stream()
                 .map(entity -> {
@@ -80,6 +80,21 @@ public class BookGenreServiceImpl implements BookGenreService {
                     return bookGenreReadMapper.map(entity);
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<BookGenreReadDto> findByName(String name) {
+        var filter = BookGenreFilter.builder()
+                .name(name)
+                .build();
+
+        return bookGenreRepository.findAllByBookGenreFilter(filter).stream()
+                .map(entity -> {
+                    eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
+
+                    return bookGenreReadMapper.map(entity);
+                })
+                .findFirst();
     }
 
     @Override

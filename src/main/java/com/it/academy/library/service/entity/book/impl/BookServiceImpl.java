@@ -13,6 +13,7 @@ import com.it.academy.library.service.dto.filter.book.BookGenreFilter;
 import com.it.academy.library.service.dto.filter.book.BookPublishingHouseFilter;
 import com.it.academy.library.service.dto.filter.book.BookSeriesFilter;
 import com.it.academy.library.service.dto.filter.order.OrderFilter;
+import com.it.academy.library.service.dto.filter.user.UserFilter;
 import com.it.academy.library.service.dto.read.book.BookReadDto;
 import com.it.academy.library.service.entity.book.BookService;
 import com.it.academy.library.service.image.ImageService;
@@ -86,8 +87,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Collection<BookReadDto> findAllBySeriesId(Integer id) {
-        var filter = new BookSeriesFilter();
-        filter.setId(id);
+        var filter = BookSeriesFilter.builder()
+                .id(id)
+                .build();
 
         return bookRepository.findAllByBookSeriesFilter(filter).stream()
                 .map(entity -> {
@@ -99,8 +101,9 @@ public class BookServiceImpl implements BookService {
     }
 
     public Collection<BookReadDto> findAllByOrderId(Long id) {
-        var filter = new OrderFilter();
-        filter.setId(id);
+        var filter = OrderFilter.builder()
+                .id(id)
+                .build();
 
         return bookRepository.findAllByOrderFilter(filter).stream()
                 .map(entity -> {
@@ -113,8 +116,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Collection<BookReadDto> findAllByBookPublishingHouseId(Integer id) {
-        var filter = new BookPublishingHouseFilter();
-        filter.setId(id);
+        var filter = BookPublishingHouseFilter.builder()
+                .id(id)
+                .build();
 
         return bookRepository.findAllByBookPublishingHouseFilter(filter).stream()
                 .map(entity -> {
@@ -127,8 +131,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Collection<BookReadDto> findAllByBookGenreId(Integer id) {
-        var filter = new BookGenreFilter();
-        filter.setId(id);
+        var filter = BookGenreFilter.builder()
+                .id(id)
+                .build();
 
         return bookRepository.findAllByBookGenreFilter(filter).stream()
                 .map(entity -> {
@@ -141,8 +146,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Collection<BookReadDto> findAllByAuthorId(Long id) {
-        var filter = new AuthorFilter();
-        filter.setId(id);
+        var filter = AuthorFilter.builder()
+                .id(id)
+                .build();
 
         return bookRepository.findAllByAuthorFilter(filter).stream()
                 .map(entity -> {
@@ -201,5 +207,46 @@ public class BookServiceImpl implements BookService {
                 .map(Book::getImage)
                 .filter(StringUtils::hasText)
                 .flatMap(imageService::getImage);
+    }
+
+    @Override
+    public Optional<BookReadDto> findByTitle(String title) {
+        var filter = BookFilter.builder()
+                .title(title)
+                .build();
+
+        return bookRepository.findAllByBookFilter(filter).stream()
+                .map(entity -> {
+                    eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
+
+                    return bookReadMapper.map(entity);
+                })
+                .findFirst();
+    }
+
+    @Override
+    public Collection<BookReadDto> findAllByUserId(Long id) {
+        var filter = UserFilter.builder()
+                .id(id)
+                .build();
+
+        return bookRepository.findAllByUserFilter(filter).stream()
+                .map(entity -> {
+                    eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
+
+                    return bookReadMapper.map(entity);
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Collection<BookReadDto> findAllByUserIdAndOrder(Long id) {
+        return bookRepository.findAllByOrderForUser(id).stream()
+                .map(entity -> {
+                    eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
+
+                    return bookReadMapper.map(entity);
+                })
+                .collect(Collectors.toList());
     }
 }

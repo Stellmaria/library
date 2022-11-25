@@ -24,7 +24,9 @@ import com.it.academy.library.model.repository.entity.IntegrationTestBase;
 import com.it.academy.library.util.ConstantUtil;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -32,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RequiredArgsConstructor
 @DisplayName("Book repository test.")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class BookRepositoryTest extends IntegrationTestBase {
     private static final String BOOK_FORMAT_NAME_MASS_MARKET_PAPERBACK = "Mass Market Paperback";
     private static final String BOOK_LANGUAGE_NAME_POLISH = "Polish";
@@ -39,8 +42,10 @@ class BookRepositoryTest extends IntegrationTestBase {
     private static final Long BOOK_ID_6 = 6L;
     private static final String BOOK_SERIES_MILLENNIUM = "Millennium";
     private static final String FIRST_NAME_STIEG = "Stieg";
+    public static final Long QUANTITY_4 = 4L;
 
     private final BookRepository bookRepository;
+
     private final AuthorFilterMapper authorFilterMapper;
     private final BookFormatFilterMapper bookFormatFilterMapper;
     private final BookGenreFilterMapper bookGenreFilterMapper;
@@ -88,6 +93,7 @@ class BookRepositoryTest extends IntegrationTestBase {
                 .bookPublishingHouse(bookPublishingHouse)
                 .bookSeries(bookSeries)
                 .order(order)
+                .quantity(QUANTITY_4)
                 .build();
 
         var actual = bookRepository.save(book);
@@ -301,5 +307,14 @@ class BookRepositoryTest extends IntegrationTestBase {
         var actual = bookRepository.findAllByBookFilter(bookFilterMapper.map(book));
 
         assertThat(actual).hasSize(1);
+    }
+
+    @Test
+    @DisplayName("Find all book by user id.")
+    @org.junit.jupiter.api.Order(1)
+    void findAllBookByOrderId() {
+        var actual = bookRepository.findAllByOrderForUser(3L);
+
+        assertThat(actual).hasSize(4);
     }
 }

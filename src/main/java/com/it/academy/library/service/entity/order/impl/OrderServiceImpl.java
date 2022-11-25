@@ -58,8 +58,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Collection<OrderReadDto> findByUserId(Long id) {
-        var filer = new UserFilter();
-        filer.setId(id);
+        var filer = UserFilter.builder()
+                .id(id)
+                .build();
 
         return orderRepository.findAllByUserFilter(filer).stream()
                 .map(entity -> {

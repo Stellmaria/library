@@ -27,6 +27,15 @@ public interface AuthorService {
     Optional<AuthorReadDto> findById(Long id);
 
     /**
+     * Search for an author by author first name and last name.
+     *
+     * @param firstName for search.
+     * @param lastName  for search.
+     * @return author.
+     */
+    Optional<AuthorReadDto> findByFullName(String firstName, String lastName);
+
+    /**
      * Search for all authors.
      *
      * @return collection of found authors.

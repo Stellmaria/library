@@ -10,11 +10,9 @@ import org.springframework.stereotype.Component;
 public class BookSeriesMapper implements Mapper<BookSeriesReadDto, BookSeries> {
     @Override
     public BookSeries map(@NotNull BookSeriesReadDto object) {
-        var bookSeries = new BookSeries();
-
-        bookSeries.setId(object.getId());
-        bookSeries.setName(object.getName());
-
-        return bookSeries;
+        return BookSeries.builder()
+                .id(object.getId())
+                .name(object.getName())
+                .build();
     }
 }

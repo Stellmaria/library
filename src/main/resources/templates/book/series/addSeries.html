@@ -22,6 +22,8 @@
     <div class="product-element" sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')">
         <form method="post" th:action="@{/books/series}" th:object="${series}">
             <label for="name"> Name:
+                <label th:errors="*{name}" th:if="${#fields.hasErrors('name')}"></label>
+
                 <input id="name" name="name" th:value="*{name}" type="text">
             </label><br>
 

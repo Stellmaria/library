@@ -20,6 +20,7 @@ class OrderStatusRepositoryTest extends IntegrationTestBase {
     private static final Integer ORDER_STATUS_ID_3 = 3;
 
     private final OrderStatusRepository orderStatusRepository;
+
     private final OrderStatusFilterMapper orderStatusFilterMapper;
 
     @Test

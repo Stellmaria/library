@@ -10,11 +10,9 @@ import org.springframework.stereotype.Component;
 public class BookLanguageMapper implements Mapper<BookLanguageReadDto, BookLanguage> {
     @Override
     public BookLanguage map(@NotNull BookLanguageReadDto object) {
-        var bookLanguage = new BookLanguage();
-
-        bookLanguage.setName(object.getName());
-        bookLanguage.setId(object.getId());
-
-        return bookLanguage;
+        return BookLanguage.builder()
+                .id(object.getId())
+                .name(object.getName())
+                .build();
     }
 }

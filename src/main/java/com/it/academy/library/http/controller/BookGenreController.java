@@ -28,8 +28,14 @@ public class BookGenreController {
     private final BookService bookService;
 
     @PostMapping
-    public String create(@Validated BookGenreCreateEditDto dto, @NotNull BindingResult bindingResult,
+    public String create(@Validated @NotNull BookGenreCreateEditDto dto, @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
+        if (bookGenreService.findByName(dto.getName()).isPresent()) {
+            bindingResult.rejectValue(
+                    "name", "error.bookGenre", "There is already a book genre with that name."
+            );
+        }
+
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("genre", dto);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());

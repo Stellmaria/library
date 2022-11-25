@@ -82,7 +82,7 @@ public class BookCreateEditMapper implements Mapper<BookCreateEditDto, Book> {
         Collection<BookGenre> bookGenres = new ArrayList<>();
 
         Objects.requireNonNull(object).getGenresId().stream()
-                .map(aLong -> Optional.of(bookGenreRepository.findById(aLong))
+                .map(it -> Optional.of(bookGenreRepository.findById(it))
                         .orElse(null))
                 .forEachOrdered(entity -> entity.ifPresent(bookGenres::add));
 
@@ -93,7 +93,7 @@ public class BookCreateEditMapper implements Mapper<BookCreateEditDto, Book> {
         Collection<Author> authors = new ArrayList<>();
 
         Objects.requireNonNull(object).getAuthorsId().stream()
-                .map(aLong -> Optional.of(authorRepository.findById(aLong))
+                .map(it -> Optional.of(authorRepository.findById(it))
                         .orElse(null))
                 .forEachOrdered(entity -> entity.ifPresent(authors::add));
 

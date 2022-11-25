@@ -10,12 +10,10 @@ import org.springframework.stereotype.Component;
 public class BookGenreMapper implements Mapper<BookGenreReadDto, BookGenre> {
     @Override
     public BookGenre map(@NotNull BookGenreReadDto object) {
-        var bookGenre = new BookGenre();
-
-        bookGenre.setId(object.getId());
-        bookGenre.setName(object.getName());
-        bookGenre.setDescription(object.getDescription());
-
-        return bookGenre;
+        return BookGenre.builder()
+                .id(object.getId())
+                .name(object.getName())
+                .description(object.getDescription())
+                .build();
     }
 }

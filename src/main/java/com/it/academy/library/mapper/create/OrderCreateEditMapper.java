@@ -21,25 +21,21 @@ public class OrderCreateEditMapper implements Mapper<OrderCreateEditDto, Order> 
 
     @Override
     public Order map(@NotNull OrderCreateEditDto fromObject, @NotNull Order toObject) {
-        copy(fromObject, toObject);
-
-        return toObject;
+        return create(fromObject);
     }
 
     @Override
     public Order map(@NotNull OrderCreateEditDto object) {
-        var order = new Order();
-
-        copy(object, order);
-
-        return order;
+        return create(object);
     }
 
-    private void copy(@NotNull OrderCreateEditDto object, @NotNull Order order) {
-        order.setUser(getUser(object.getUserId()));
-        order.setOrderStatus(getOrderStatus(object.getOrderStatusId()));
-        order.setOrderDate(object.getOrderDate());
-        order.setReturnDate(object.getReturnDate());
+    private Order create(@NotNull OrderCreateEditDto object) {
+        return Order.builder()
+                .returnDate(object.getReturnDate())
+                .orderStatus(getOrderStatus(object.getOrderStatusId()))
+                .user(getUser(object.getUserId()))
+                .orderDate(object.getOrderDate())
+                .build();
     }
 
     private User getUser(Long id) {
