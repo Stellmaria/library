@@ -40,17 +40,19 @@
                 </select>
             </label><br>
 
-            <label for="orderDate">Order date:
+            <label for="orderDate">Order date
                 <input id="orderDate" name="orderDate" th:value="*{orderDate}" type="datetime-local">
             </label><br>
 
-            <label for="returnDate">Return date:
+            <label for="returnDate">Return date
                 <input id="returnDate" name="returnDate" th:value="*{returnDate}" type="datetime-local">
             </label><br>
 
             <div th:each="book : ${books}">
                 <a th:href="@{'/books/' + ${book.id}}">
                     <span th:text="${book.title}">Title</span>
+
+                    <!--                    <span th:number="${book.quantity}">Quantity</span>-->
                 </a>
             </div>
 
@@ -71,7 +73,7 @@
 </main>
 
 <main>
-    <div class="product-element" sec:authorize="hasRole('LIBRARIAN')" th:object="${order}">
+    <div class="product-element" th:object="${order}">
         <div class="element">
             <h3>User: </h3>
 
@@ -102,30 +104,6 @@
             <a th:href="@{'/books/' + ${book.id}}" th:text="${book.title}"></a>
         </div>
     </div>
-</main>
-
-<main sec:authorize="hasRole('READER')">
-    <div class="product-element" th:each="order : ${orders}">
-        <div class="element">
-            <h3>Status:</h3>
-
-            <p th:text="${order.orderStatus.name}">Status</p>
-        </div>
-
-        <div class="element">
-            <h3>Order date:</h3>
-
-            <p th:text="${order.orderDate}">Order date</p>
-        </div>
-
-        <div class="element">
-            <h3>Return date:</h3>
-
-            <p th:text="${order.returnDate}">Return date</p>
-        </div>
-        <br>
-    </div>
-    <br>
 </main>
 
 </body>
