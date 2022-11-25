@@ -30,12 +30,7 @@ public class BookSeriesController {
     @PostMapping
     public String create(@Validated @NotNull BookSeriesCreateEditDto dto, @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
-        if (bookSeriesService.findByName(dto.getName()).isPresent()) {
-            bindingResult.rejectValue(
-                    "name", "error.bookSeries",
-                    "A book series with the same name already exists."
-            );
-        }
+        validate(dto, bindingResult);
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("series", dto);
@@ -70,7 +65,17 @@ public class BookSeriesController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable("id") Integer id, @Validated BookSeriesCreateEditDto dto) {
+    public String update(@PathVariable("id") Integer id, @Validated @NotNull BookSeriesCreateEditDto dto,
+                         @NotNull BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        validate(dto, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("series", dto);
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+
+            return "redirect:/books/series/{id}";
+        }
+
         return bookSeriesService.update(id, dto)
                 .map(it -> "redirect:/books/series/{id}")
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -90,5 +95,14 @@ public class BookSeriesController {
         model.addAttribute("series", dto);
 
         return "book/series/addSeries";
+    }
+
+    private void validate(@NotNull BookSeriesCreateEditDto dto, @NotNull BindingResult bindingResult) {
+        if (bookSeriesService.findByName(dto.getName()).isPresent()) {
+            bindingResult.rejectValue(
+                    "name", "error.bookSeries",
+                    "A book series with the same name already exists."
+            );
+        }
     }
 }

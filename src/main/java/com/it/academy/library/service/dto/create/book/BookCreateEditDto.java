@@ -30,9 +30,6 @@ public class BookCreateEditDto {
     @Positive(message = "The quantity must not be negative number.")
     private Long quantity;
 
-    @Positive(message = "The number must not be negative number.")
-    private Short pages;
-
     @ISBN(
             type = ISBN.Type.ISBN_10,
             message = "ISBN 10 incorrect."

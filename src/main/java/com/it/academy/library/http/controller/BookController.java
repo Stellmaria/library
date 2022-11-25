@@ -89,7 +89,15 @@ public class BookController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable("id") Long id, @Validated BookCreateEditDto dto) {
+    public String update(@PathVariable("id") Long id, @Validated BookCreateEditDto dto,
+                         @NotNull BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("book", dto);
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+
+            return "redirect:/books/{id}";
+        }
+
         return bookService.update(id, dto)
                 .map(it -> "redirect:/books/{id}")
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));

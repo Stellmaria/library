@@ -43,7 +43,6 @@ public class BookReadMapper implements Mapper<Book, BookReadDto> {
                 object.getSubtitle(),
                 object.getYear(),
                 object.getQuantity(),
-                object.getPages(),
                 object.getIsbn10(),
                 object.getIsbn13(),
                 object.getImage(),

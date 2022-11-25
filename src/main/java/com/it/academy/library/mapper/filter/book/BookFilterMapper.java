@@ -35,7 +35,6 @@ public class BookFilterMapper implements Mapper<Book, BookFilter> {
                 object.getSubtitle(),
                 object.getYear(),
                 object.getQuantity(),
-                object.getPages(),
                 object.getIsbn10(),
                 object.getIsbn13(),
                 getBookStatus(object),

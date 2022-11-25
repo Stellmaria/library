@@ -23,8 +23,6 @@ public class BookReadDto {
 
     Long quantity;
 
-    Short pages;
-
     String isbn10;
 
     String isbn13;

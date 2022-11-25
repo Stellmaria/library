@@ -37,11 +37,6 @@ public class UserController {
                     .rejectValue("email", "error.user",
                             "There is already a user registered with the email provided");
         }
-        if (userService.findByUsername(dto.getUsername()).isPresent()) {
-            bindingResult
-                    .rejectValue("username", "error.user",
-                            "There is already a user registered with the username provided");
-        }
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("user", dto);
@@ -54,6 +49,7 @@ public class UserController {
 
         return "redirect:/login";
     }
+
 
     @GetMapping
     public String findAll(@NotNull Model model, UserFilter filter, Pageable pageable) {
@@ -77,7 +73,7 @@ public class UserController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable("id") Long id, @Validated UserCreateEditDto dto) {
+    public String update(@PathVariable("id") Long id, @Validated @NotNull UserCreateEditDto dto) {
         return userService.update(id, dto)
                 .map(it -> "redirect:/users/{id}")
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -90,14 +86,5 @@ public class UserController {
         }
 
         return "redirect:/users";
-    }
-
-    @GetMapping("/registration")
-    public String registration(@NotNull Model model, UserCreateEditDto user) {
-        model.addAttribute("user", user);
-        model.addAttribute("roles", userRoleService.findAll());
-        model.addAttribute("statuses", userStatusService.findAll());
-
-        return "user/registration";
     }
 }

@@ -24,6 +24,8 @@
               th:object="${series}">
 
             <label for="name"> Name:
+                <label th:errors="*{name}" th:if="${#fields.hasErrors('name')}"></label>
+
                 <input id="name" name="name" th:value="*{name}" type="text">
             </label><br>
 
@@ -39,6 +41,10 @@
                     <button class="btn" type="submit">Remove</button>
                 </form>
             </div>
+        </div>
+
+        <div th:if="${errors}">
+            <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Error message</p>
         </div>
     </div>
 </main>

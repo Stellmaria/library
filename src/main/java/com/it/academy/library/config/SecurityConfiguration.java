@@ -17,14 +17,13 @@ public class SecurityConfiguration {
         http
                 .csrf().disable()
                 .authorizeHttpRequests(urlConfig -> urlConfig
-                        .antMatchers("/login", "/users/registration", "v3/api-docs/**", "/swagger-ui/**",
+                        .antMatchers("/login", "/registration", "v3/api-docs/**", "/swagger-ui/**",
                                 "/styles/css/**", "/images/**", "/js/**", "/").permitAll()
                         .antMatchers("/users/{\\d+}/delete", "/users").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/")
                         .deleteCookies("JSESSIONID")
                 )
                 .formLogin(login -> login

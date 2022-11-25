@@ -45,7 +45,6 @@ public class BookMapper implements Mapper<BookReadDto, Book> {
         book.setSubtitle(object.getSubtitle());
         book.setYear(object.getYear());
         book.setQuantity(object.getQuantity());
-        book.setPages(object.getPages());
         book.setIsbn10(object.getIsbn10());
         book.setIsbn13(object.getIsbn13());
         book.setImage(object.getImage());

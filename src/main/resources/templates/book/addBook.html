@@ -34,10 +34,6 @@
                 <input id="year" name="year" th:value="*{year}" type="number">
             </label><br>
 
-            <label for="pages"> Page:
-                <input id="pages" name="pages" th:value="*{pages}" type="number">
-            </label><br>
-
             <label for="quantity"> Quantity:
                 <label th:errors="*{quantity}" th:if="${#fields.hasErrors('quantity')}"></label>
 

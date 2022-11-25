@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset stell:2
+--changeset stell:1
 CREATE TABLE IF NOT EXISTS author
 (
     id          BIGSERIAL PRIMARY KEY,
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS author
 );
 --rollback DROP TABLE author;
 
---changeset stell:3
+--changeset stell:2
 CREATE TABLE IF NOT EXISTS book_language
 (
     id   SERIAL PRIMARY KEY,
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS book_language
 );
 --rollback DROP TABLE book_language;
 
---changeset stell:4
+--changeset stell:3
 CREATE TABLE IF NOT EXISTS book_format
 (
     id   SERIAL PRIMARY KEY,
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS book_format
 );
 --rollback DROP TABLE book_format;
 
---changeset stell:5
+--changeset stell:4
 CREATE TABLE IF NOT EXISTS book_publishing_house
 (
     id          SERIAL PRIMARY KEY,
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS book_publishing_house
 );
 --rollback DROP TABLE book_publishing_house;
 
---changeset stell:6
+--changeset stell:5
 CREATE TABLE IF NOT EXISTS book_series
 (
     id          SERIAL PRIMARY KEY,
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS book_series
 );
 --rollback DROP TABLE book_series;
 
---changeset stell:7
+--changeset stell:6
 CREATE TABLE IF NOT EXISTS book_genre
 (
     id          SERIAL PRIMARY KEY,
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS book_genre
 );
 --rollback DROP TABLE book_genre;
 
---changeset stell:8
+--changeset stell:7
 CREATE TABLE IF NOT EXISTS book_status
 (
     id   SERIAL PRIMARY KEY,
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS book_status
 );
 --rollback DROP TABLE book_status;
 
---changeset stell:9
+--changeset stell:8
 CREATE TABLE IF NOT EXISTS user_role
 (
     id   SERIAL PRIMARY KEY,
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS user_role
 );
 --rollback DROP TABLE user_role;
 
---changeset stell:10
+--changeset stell:9
 CREATE TABLE IF NOT EXISTS user_status
 (
     id   SERIAL PRIMARY KEY,
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS user_status
 );
 --rollback DROP TABLE user_status;
 
---changeset stell:11
+--changeset stell:10
 CREATE TABLE IF NOT EXISTS users
 (
     id             BIGSERIAL PRIMARY KEY,
@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS users
 );
 --rollback DROP TABLE users;
 
---changeset stell:12
+--changeset stell:11
 CREATE TABLE IF NOT EXISTS order_status
 (
     id   SERIAL PRIMARY KEY,
@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS order_status
 );
 --rollback DROP TABLE order_status;
 
---changeset stell:14
+--changeset stell:12
 CREATE TABLE IF NOT EXISTS orders
 (
     id              BIGSERIAL PRIMARY KEY,
@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS orders
 );
 --rollback DROP TABLE orders;
 
---changeset stell:15
+--changeset stell:13
 CREATE TABLE IF NOT EXISTS book
 (
     id                       BIGSERIAL PRIMARY KEY,
@@ -153,7 +153,6 @@ CREATE TABLE IF NOT EXISTS book
     subtitle                 VARCHAR(255),
     year                     INTEGER,
     quantity                 BIGINT              NOT NULL,
-    pages                    SMALLINT,
     isbn_10                  VARCHAR(10),
     isbn_13                  VARCHAR(15),
     image                    VARCHAR(255),
@@ -182,7 +181,7 @@ CREATE TABLE IF NOT EXISTS book
 );
 --rollback DROP TABLE book;
 
---changeset stell:16
+--changeset stell:14
 CREATE TABLE IF NOT EXISTS books_genres
 (
     id       BIGSERIAL PRIMARY KEY,
@@ -191,7 +190,7 @@ CREATE TABLE IF NOT EXISTS books_genres
 );
 --rollback DROP TABLE books_genres;
 
---changeset stell:17
+--changeset stell:15
 CREATE TABLE IF NOT EXISTS books_authors
 (
     id        BIGSERIAL PRIMARY KEY,

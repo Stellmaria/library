@@ -34,10 +34,6 @@
                 <input id="year" name="year" th:value="*{year}" type="number">
             </label><br>
 
-            <label for="pages"> Page:
-                <input id="pages" name="pages" th:value="*{pages}" type="number">
-            </label><br>
-
             <label for="quantity"> Quantity:
                 <input id="quantity" name="quantity" th:value="*{quantity}" type="number">
             </label><br>
@@ -212,6 +208,10 @@
                 </form>
             </div>
         </div>
+
+        <div th:if="${errors}">
+            <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Error message</p>
+        </div>
     </div>
 </main>
 
@@ -233,12 +233,6 @@
             <h3>Year: </h3>
 
             <p th:text="${book.year}"></p>
-        </div>
-
-        <div class="element" th:if="${book.pages != null}">
-            <h3>Page: </h3>
-
-            <p th:text="${book.pages}"></p>
         </div>
 
         <div class="element">

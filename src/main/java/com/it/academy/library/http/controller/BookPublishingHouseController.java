@@ -73,7 +73,22 @@ public class BookPublishingHouseController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable("id") Integer id, @Validated BookPublishingHouseCreateEditDto dto) {
+    public String update(@PathVariable("id") Integer id, @Validated @NotNull BookPublishingHouseCreateEditDto dto,
+                         @NotNull BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bookPublishingHouseService.findByName(dto.getName()).isPresent()) {
+            bindingResult.rejectValue(
+                    "name", "error.bookPublishingHouse",
+                    "A publishing house with the same name already exists."
+            );
+        }
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("publishingHouse", dto);
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+
+            return "redirect:/books/publishingHouses/{id}";
+        }
+
         return bookPublishingHouseService.update(id, dto)
                 .map(it -> "redirect:/books/publishingHouses/{id}")
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
