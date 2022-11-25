@@ -3,6 +3,8 @@ package com.it.academy.library.mapper.convert.order;
 import com.it.academy.library.mapper.Mapper;
 import com.it.academy.library.mapper.convert.user.UserMapper;
 import com.it.academy.library.model.entity.order.Order;
+import com.it.academy.library.model.entity.order.OrderStatus;
+import com.it.academy.library.model.entity.user.User;
 import com.it.academy.library.service.dto.read.order.OrderReadDto;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -18,20 +20,24 @@ public class OrderMapper implements Mapper<OrderReadDto, Order> {
 
     @Override
     public Order map(@NotNull OrderReadDto object) {
-        var order = new Order();
+        return Order.builder()
+                .id(object.getId())
+                .user(getUser(object))
+                .orderStatus(getOrderStatus(object))
+                .orderDate(object.getOrderDate())
+                .returnDate(object.getReturnDate())
+                .build();
+    }
 
-        order.setId(object.getId());
-        order.setUser(Optional.ofNullable(object.getUser())
+    private User getUser(@NotNull OrderReadDto object) {
+        return Optional.ofNullable(object.getUser())
                 .map(userMapper::map)
-                .orElse(null)
-        );
-        order.setOrderStatus(Optional.ofNullable(object.getOrderStatus())
-                .map(orderStatusMapper::map)
-                .orElse(null)
-        );
-        order.setOrderDate(order.getOrderDate());
-        order.setReturnDate(object.getReturnDate());
+                .orElse(null);
+    }
 
-        return order;
+    private OrderStatus getOrderStatus(@NotNull OrderReadDto object) {
+        return Optional.ofNullable(object.getOrderStatus())
+                .map(orderStatusMapper::map)
+                .orElse(null);
     }
 }

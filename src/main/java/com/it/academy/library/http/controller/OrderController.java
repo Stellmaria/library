@@ -24,6 +24,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/orders")
@@ -34,6 +35,19 @@ public class OrderController {
     private final UserService userService;
     private final BookService bookService;
     private final CartService cartService;
+
+    @GetMapping("cart/create")
+    public String create(RedirectAttributes redirectAttributes, @NotNull Principal principal) {
+        try {
+            cartService.checkout(userService.findByUsername(principal.getName()).orElse(null));
+        } catch (NotEnoughProductsInStockException e) {
+            redirectAttributes.addFlashAttribute("outOfStockMessage", e.getMessage());
+
+            return "redirect:/orders/cart";
+        }
+
+        return "redirect:/books";
+    }
 
     @GetMapping
     public String findAll(@NotNull Model model, OrderFilter filter, Pageable pageable) {
@@ -96,16 +110,13 @@ public class OrderController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("cart/create")
-    public String create(RedirectAttributes redirectAttributes, @NotNull Principal principal) {
-        try {
-            cartService.checkout(userService.findByUsername(principal.getName()).orElse(null));
-        } catch (NotEnoughProductsInStockException e) {
-            redirectAttributes.addFlashAttribute("outOfStockMessage", e.getMessage());
+    @GetMapping("/order")
+    public String findOrder(@NotNull Model model, @NotNull Principal principal) {
+        var userId = Objects.requireNonNull(userService.findByUsername(principal.getName()).orElse(null))
+                .getId();
 
-            return "redirect:/orders/cart";
-        }
+        model.addAttribute("orders", orderService.findByUserId(userId));
 
-        return "redirect:/books";
+        return "order/order";
     }
 }

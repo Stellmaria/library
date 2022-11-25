@@ -68,10 +68,33 @@ public class BookGenreServiceImpl implements BookGenreService {
     }
 
     @Override
+    public Page<BookGenreReadDto> findAll(BookGenreFilter filter, Pageable pageable) {
+        return bookGenreRepository.findAll(BookGenreFilter.queryPredicates(filter), pageable)
+                .map(entity -> {
+                    eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
+
+                    return bookGenreReadMapper.map(entity);
+                });
+    }
+
+    @Override
+    public Optional<BookGenreReadDto> findByName(String name) {
+        var filter = new BookGenreFilter();
+        filter.setName(name);
+
+        return bookGenreRepository.findAllByBookGenreFilter(filter).stream()
+                .map(entity -> {
+                    eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
+
+                    return bookGenreReadMapper.map(entity);
+                })
+                .findFirst();
+    }
+
+    @Override
     public Collection<BookGenreReadDto> findAllByBookId(Long id) {
         var filter = new BookFilter();
         filter.setId(id);
-
 
         return bookGenreRepository.findAllByBookFilter(filter).stream()
                 .map(entity -> {
@@ -80,16 +103,6 @@ public class BookGenreServiceImpl implements BookGenreService {
                     return bookGenreReadMapper.map(entity);
                 })
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public Page<BookGenreReadDto> findAll(BookGenreFilter filter, Pageable pageable) {
-        return bookGenreRepository.findAll(BookGenreFilter.queryPredicates(filter), pageable)
-                .map(entity -> {
-                    eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
-
-                    return bookGenreReadMapper.map(entity);
-                });
     }
 
     @Override

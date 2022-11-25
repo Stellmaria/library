@@ -64,6 +64,16 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public Optional<BookReadDto> findById(Long id) {
+        return bookRepository.findById(id)
+                .map(entity -> {
+                    eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
+
+                    return bookReadMapper.map(entity);
+                });
+    }
+
+    @Override
     public Collection<BookReadDto> findAll() {
         return bookRepository.findAll().stream()
                 .map(entity -> {
@@ -153,14 +163,19 @@ public class BookServiceImpl implements BookService {
                 .collect(Collectors.toList());
     }
 
+
     @Override
-    public Optional<BookReadDto> findById(Long id) {
-        return bookRepository.findById(id)
+    public Optional<BookReadDto> findByTitle(String title) {
+        var filter = new BookFilter();
+        filter.setTitle(title);
+
+        return bookRepository.findAllByBookFilter(filter).stream()
                 .map(entity -> {
                     eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
 
                     return bookReadMapper.map(entity);
-                });
+                })
+                .findFirst();
     }
 
     @Override

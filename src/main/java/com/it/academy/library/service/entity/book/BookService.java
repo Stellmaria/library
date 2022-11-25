@@ -19,6 +19,14 @@ public interface BookService {
     BookReadDto create(BookCreateEditDto dto);
 
     /**
+     * Book search by book id.
+     *
+     * @param id for search.
+     * @return book.
+     */
+    Optional<BookReadDto> findById(Long id);
+
+    /**
      * Search all books.
      *
      * @return collection of found books.
@@ -75,12 +83,12 @@ public interface BookService {
     Collection<BookReadDto> findAllByOrderId(Long id);
 
     /**
-     * Book search by book id.
+     * Search for a book by book title.
      *
-     * @param id for search.
+     * @param title for search.
      * @return book.
      */
-    Optional<BookReadDto> findById(Long id);
+    Optional<BookReadDto> findByTitle(String title);
 
     /**
      * Book update by book id.

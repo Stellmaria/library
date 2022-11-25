@@ -11,7 +11,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -58,7 +57,6 @@ public class OrderFilter {
                 .build();
     }
 
-    @Nullable
     private static String getUserStatusName(@NotNull OrderFilter orderFilter) {
         return Optional.ofNullable(orderFilter.getUser())
                 .map(UserFilter::getUserStatus)
@@ -66,7 +64,6 @@ public class OrderFilter {
                 .orElse(null);
     }
 
-    @Nullable
     private static String getUserRoleName(@NotNull OrderFilter orderFilter) {
         return Optional.ofNullable(orderFilter.getUser())
                 .map(UserFilter::getUserRole)
@@ -74,7 +71,6 @@ public class OrderFilter {
                 .orElse(null);
     }
 
-    @Nullable
     private static Integer getUserStatusId(@NotNull OrderFilter orderFilter) {
         return Optional.ofNullable(orderFilter.getUser())
                 .map(UserFilter::getUserStatus)
@@ -82,7 +78,6 @@ public class OrderFilter {
                 .orElse(null);
     }
 
-    @Nullable
     private static Integer getUserRoleId(@NotNull OrderFilter orderFilter) {
         return Optional.ofNullable(orderFilter.getUser())
                 .map(UserFilter::getUserRole)
@@ -90,63 +85,54 @@ public class OrderFilter {
                 .orElse(null);
     }
 
-    @Nullable
     private static LocalDate getUserBirthday(@NotNull OrderFilter orderFilter) {
         return Optional.ofNullable(orderFilter.getUser())
                 .map(UserFilter::getBirthday)
                 .orElse(null);
     }
 
-    @Nullable
     private static String getUserPassword(@NotNull OrderFilter orderFilter) {
         return Optional.ofNullable(orderFilter.getUser())
                 .map(UserFilter::getPassword)
                 .orElse(null);
     }
 
-    @Nullable
     private static String getUserEmail(@NotNull OrderFilter orderFilter) {
         return Optional.ofNullable(orderFilter.getUser())
                 .map(UserFilter::getEmail)
                 .orElse(null);
     }
 
-    @Nullable
     private static String getUserLastName(@NotNull OrderFilter orderFilter) {
         return Optional.ofNullable(orderFilter.getUser())
                 .map(UserFilter::getLastName)
                 .orElse(null);
     }
 
-    @Nullable
     private static String getUSerFirstName(@NotNull OrderFilter orderFilter) {
         return Optional.ofNullable(orderFilter.getUser())
                 .map(UserFilter::getFirstName)
                 .orElse(null);
     }
 
-    @Nullable
     private static String getUsername(@NotNull OrderFilter orderFilter) {
         return Optional.ofNullable(orderFilter.getUser())
                 .map(UserFilter::getUsername)
                 .orElse(null);
     }
 
-    @Nullable
     private static Long getUserId(@NotNull OrderFilter orderFilter) {
         return Optional.ofNullable(orderFilter.getUser())
                 .map(UserFilter::getId)
                 .orElse(null);
     }
 
-    @Nullable
     private static String getOrderStatusName(@NotNull OrderFilter orderFilter) {
         return Optional.ofNullable(orderFilter.getOrderStatus())
                 .map(OrderStatusFilter::getName)
                 .orElse(null);
     }
 
-    @Nullable
     private static Integer getOrderStatusId(@NotNull OrderFilter orderFilter) {
         return Optional.ofNullable(orderFilter.getOrderStatus())
                 .map(OrderStatusFilter::getId)

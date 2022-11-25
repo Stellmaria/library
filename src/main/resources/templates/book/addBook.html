@@ -21,6 +21,8 @@
     <div class="product-element" sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')">
         <form enctype="multipart/form-data" method="post" th:action="@{/books}" th:object="${book}">
             <label for="title"> Title:
+                <label th:errors="*{title}" th:if="${#fields.hasErrors('title')}"></label>
+
                 <input id="title" name="title" th:value="*{title}" type="text">
             </label><br>
 
@@ -36,6 +38,12 @@
                 <input id="pages" name="pages" th:value="*{pages}" type="number">
             </label><br>
 
+            <label for="quantity"> Quantity:
+                <label th:errors="*{quantity}" th:if="${#fields.hasErrors('quantity')}"></label>
+
+                <input id="quantity" name="quantity" th:value="*{quantity}" type="number">
+            </label><br>
+
             <label for="isbn10"> Isbn10:
                 <input id="isbn10" name="isbn10" th:value="*{isbn10}" type="text">
             </label><br>
@@ -49,22 +57,10 @@
             </label><br>
 
             <div>
-                <label for="bookStatus">Status:
-                    <select id="bookStatus" name="bookStatusId">
-                        <option disabled selected value></option>
-                        <option th:each="bookStatus : ${statuses}"
-                                th:selected="${bookStatus.id == book.bookStatusId}"
-                                th:text="${bookStatus.name}"
-                                th:value="${bookStatus.id}">Status
-                        </option>
-                    </select>
-                </label>
-            </div>
-
-            <div>
                 <label for="bookLanguage">Language:
                     <select id="bookLanguage" name="bookLanguageId">
                         <option disabled selected value></option>
+
                         <option th:each="bookLanguage : ${languages}"
                                 th:selected="${bookLanguage.id == book.bookLanguageId}"
                                 th:text="${bookLanguage.name}"
@@ -78,6 +74,7 @@
                 <label for="bookFormat">Format:
                     <select id="bookFormat" name="bookFormatId">
                         <option disabled selected value></option>
+
                         <option th:each="bookFormat : ${formats}"
                                 th:selected="${bookFormat.id == book.bookFormatId}"
                                 th:text="${bookFormat.name}"
@@ -91,6 +88,7 @@
                 <label for="bookPublishingHouse">Publishing House:
                     <select id="bookPublishingHouse" name="bookPublishingHouseId">
                         <option disabled selected value></option>
+
                         <option th:each="bookPublishingHouse : ${houses}"
                                 th:selected="${bookPublishingHouse.id == book.bookPublishingHouseId}"
                                 th:text="${bookPublishingHouse.name}"
@@ -104,6 +102,7 @@
                 <label for="bookSeries">Series:
                     <select id="bookSeries" name="bookSeriesId">
                         <option disabled selected value></option>
+
                         <option th:each="bookSeries : ${series}"
                                 th:selected="${bookSeries.id == book.bookSeriesId}"
                                 th:text="${bookSeries.name}"
@@ -117,9 +116,23 @@
                 <label for="authors">Authors:
                     <select id="authors" multiple name="authorsId">
                         <option disabled selected value></option>
+
                         <option th:each="author : ${authors}"
                                 th:text="|${author.firstName} ${author.lastName}|"
                                 th:value="${author.id}">Authors
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            <div>
+                <label for="genres">Genres:
+                    <select id="genres" multiple name="genresId">
+                        <option disabled selected value></option>
+
+                        <option th:each="genre : ${genres}"
+                                th:text="${genre.name}"
+                                th:value="${genre.id}">Authors
                         </option>
                     </select>
                 </label>

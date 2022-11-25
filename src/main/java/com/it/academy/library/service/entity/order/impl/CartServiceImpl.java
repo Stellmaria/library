@@ -73,7 +73,7 @@ public class CartServiceImpl implements CartService {
 
     public void checkout(UserReadDto user) throws NotEnoughProductsInStockException {
         var order = new Order();
-        order.setId(getOrderId(user));
+        order.setId(createNewOrder(user).getId());
 
         for (Map.Entry<Book, Long> entry : books.entrySet()) {
             var book = bookRepository.findById(entry.getKey().getId()).orElse(null);
@@ -91,27 +91,28 @@ public class CartServiceImpl implements CartService {
         books.clear();
     }
 
-    private Long getOrderId(UserReadDto user) {
+    private Order createNewOrder(UserReadDto user) {
         var order = orderRepository.saveAndFlush(createOrder(user));
         eventPublisher.publishEvent(new EntityEvent(order, AccessType.CREATE));
 
         var orderFilter = orderFilterMapper.map(order);
 
         return Objects.requireNonNull(orderRepository.findAllByOrderFilter(orderFilter).stream()
-                        .findFirst()
-                        .orElse(null))
-                .getId();
+                .findFirst()
+                .orElse(null));
     }
 
     private @NotNull Order createOrder(UserReadDto user) {
-        var order = new Order();
-        var orderStatus = OrderStatus.builder()
-                .id(1)
-                .build();
         var now = LocalDateTime.now();
         var date = LocalDateTime.of(
                 now.getYear(), now.getMonth(), now.getDayOfMonth(), now.getHour(), now.getMinute()
         );
+
+        var orderStatus = OrderStatus.builder()
+                .id(1)
+                .build();
+
+        var order = new Order();
 
         order.setUser(userMapper.map(user));
         order.setOrderStatus(orderStatus);

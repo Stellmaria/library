@@ -23,8 +23,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Objects;
@@ -49,28 +47,24 @@ public class User extends AbstractAuditingEntity<Long> {
             length = 50,
             unique = true
     )
-    @Size(min = 3, max = 50)
     private String username;
 
     @Column(name = "first_name",
             nullable = false,
             length = 99
     )
-    @Size(min = 3, max = 99)
     private String firstName;
 
     @Column(name = "last_name",
             nullable = false,
             length = 99
     )
-    @Size(min = 3, max = 99)
     private String lastName;
 
     @Column(nullable = false,
             length = 50,
             unique = true
     )
-    @Email
     private String email;
 
     @Column(nullable = false)

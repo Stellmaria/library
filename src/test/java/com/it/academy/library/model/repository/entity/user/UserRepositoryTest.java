@@ -24,7 +24,9 @@ class UserRepositoryTest extends IntegrationTestBase {
     private static final Long USER_ID_4 = 4L;
     private static final String EMAIL_EXAMPLE_COM = "email@example.com";
     private static final String TEST_GMAIL_COM = "test@gmail.com";
+
     private final UserRepository userRepository;
+
     private final UserFilterMapper userFilterMapper;
     private final UserRoleFilterMapper userRoleFilterMapper;
     private final UserStatusFilterMapper userStatusFilterMapper;

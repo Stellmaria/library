@@ -11,7 +11,11 @@ import javax.validation.constraints.Size;
  */
 @Value
 public class BookSeriesCreateEditDto {
-    @NotBlank
-    @Size(min = 3, max = 64)
+    @NotBlank(message = "The book series name cannot be empty.")
+    @Size(
+            min = 1,
+            max = 64,
+            message = "The name of a book series cannot be less than 1 character and more than 64 characters."
+    )
     String name;
 }

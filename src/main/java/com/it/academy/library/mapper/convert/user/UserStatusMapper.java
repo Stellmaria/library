@@ -10,11 +10,9 @@ import org.springframework.stereotype.Component;
 public class UserStatusMapper implements Mapper<UserStatusReadDto, UserStatus> {
     @Override
     public UserStatus map(@NotNull UserStatusReadDto object) {
-        var userStatus = new UserStatus();
-
-        userStatus.setId(object.getId());
-        userStatus.setName(object.getName());
-
-        return userStatus;
+        return UserStatus.builder()
+                .id(object.getId())
+                .name(object.getName())
+                .build();
     }
 }

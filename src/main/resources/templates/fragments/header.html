@@ -36,6 +36,12 @@
                             <a th:href="@{/orders/}">Orders</a>
                         </p>
                     </li>
+
+                    <li>
+                        <p sec:authorize="hasRole('READER')">
+                            <a th:href="@{/orders/order}">Orders</a>
+                        </p>
+                    </li>
                 </ul>
             </nav>
 

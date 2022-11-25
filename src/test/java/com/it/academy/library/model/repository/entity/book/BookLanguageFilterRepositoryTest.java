@@ -18,6 +18,7 @@ class BookLanguageFilterRepositoryTest extends IntegrationTestBase {
     private static final String BOOK_LANGUAGE_FRAGMENT_NAME_IAN = "ian";
 
     private final BookLanguageRepository bookLanguageRepository;
+
     private final BookLanguageFilterMapper bookLanguageFilterMapper;
 
     @Test

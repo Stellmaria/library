@@ -19,6 +19,7 @@ class BookFormatFilterRepositoryTest extends IntegrationTestBase {
     private static final String BOOK_FORMAT_FRAGMENT_NAME_VER = "ver";
 
     private final BookFormatRepository bookFormatRepository;
+
     private final BookFormatFilterMapper bookFormatFilterMapper;
 
     @Test

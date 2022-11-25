@@ -41,6 +41,7 @@ class BookRepositoryTest extends IntegrationTestBase {
     private static final String FIRST_NAME_STIEG = "Stieg";
 
     private final BookRepository bookRepository;
+
     private final AuthorFilterMapper authorFilterMapper;
     private final BookFormatFilterMapper bookFormatFilterMapper;
     private final BookGenreFilterMapper bookGenreFilterMapper;

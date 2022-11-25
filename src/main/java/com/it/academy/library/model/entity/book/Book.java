@@ -12,7 +12,6 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.SelectBeforeUpdate;
-import org.hibernate.validator.constraints.ISBN;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,7 +24,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Positive;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -44,28 +42,27 @@ public class Book extends AbstractAuditingEntity<Long> {
     @Id
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false,
+            unique = true
+    )
     private String title;
 
     private String subtitle;
 
     @Column(length = 4)
-    @Positive
     private Integer year;
 
+    @Column(nullable = false)
     private Long quantity;
 
-    @Positive
     private Short pages;
 
     @Column(name = "isbn_10",
             length = 10
     )
-    @ISBN(type = ISBN.Type.ISBN_10)
     private String isbn10;
 
     @Column(name = "isbn_13")
-    @ISBN(type = ISBN.Type.ISBN_13)
     private String isbn13;
 
     private String image;

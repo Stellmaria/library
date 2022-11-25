@@ -102,6 +102,23 @@ public class AuthorServiceImpl implements AuthorService {
                 .collect(Collectors.toList());
     }
 
+
+    @Override
+    public Optional<AuthorReadDto> findByFullName(String firstName, String lastName) {
+        var filter = AuthorFilter.builder()
+                .lastName(lastName)
+                .firstName(firstName)
+                .build();
+
+        return authorRepository.findAllByAuthorFilter(filter).stream()
+                .map(entity -> {
+                    eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
+
+                    return authorReadMapper.map(entity);
+                })
+                .findFirst();
+    }
+
     @Override
     @Transactional(rollbackFor = {Exception.class})
     public Optional<AuthorReadDto> update(Long id, AuthorCreateEditDto dto) {

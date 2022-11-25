@@ -18,12 +18,19 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthorCreateEditDto {
-    @NotBlank
-    @Size(min = 3, max = 64)
+    @NotBlank(message = "The first name must not be empty.")
+    @Size(
+            min = 1,
+            max = 64,
+            message = "The first name must not be less than one character and greater than 64 characters."
+    )
     private String firstName;
 
-    @NotBlank
-    @Size(min = 3, max = 64)
+    @Size(
+            min = 1,
+            max = 64,
+            message = "The last name must not be less than one character and greater than 64 characters."
+    )
     private String lastName;
 
     private MultipartFile image;

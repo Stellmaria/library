@@ -10,11 +10,9 @@ import org.springframework.stereotype.Component;
 public class BookFormatMapper implements Mapper<BookFormatReadDto, BookFormat> {
     @Override
     public BookFormat map(@NotNull BookFormatReadDto object) {
-        var bookFormat = new BookFormat();
-
-        bookFormat.setId(object.getId());
-        bookFormat.setName(object.getName());
-
-        return bookFormat;
+        return BookFormat.builder()
+                .id(object.getId())
+                .name(object.getName())
+                .build();
     }
 }

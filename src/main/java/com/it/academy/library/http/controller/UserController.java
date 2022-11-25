@@ -30,8 +30,19 @@ public class UserController {
     private final UserStatusService userStatusService;
 
     @PostMapping
-    public String create(@Validated UserCreateEditDto dto, @NotNull BindingResult bindingResult,
+    public String create(@Validated @NotNull UserCreateEditDto dto, @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
+        if (userService.findByEmail(dto.getEmail()).isPresent()) {
+            bindingResult
+                    .rejectValue("email", "error.user",
+                            "There is already a user registered with the email provided");
+        }
+        if (userService.findByUsername(dto.getUsername()).isPresent()) {
+            bindingResult
+                    .rejectValue("username", "error.user",
+                            "There is already a user registered with the username provided");
+        }
+
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("user", dto);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());

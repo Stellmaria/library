@@ -19,6 +19,7 @@ class UserStatusRepositoryTest extends IntegrationTestBase {
     private static final Integer USER_STATUS_ID_4 = 4;
 
     private final UserStatusRepository userStatusRepository;
+
     private final UserStatusFilterMapper userStatusFilterMapper;
 
     @Test

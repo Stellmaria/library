@@ -149,15 +149,15 @@ CREATE TABLE IF NOT EXISTS orders
 CREATE TABLE IF NOT EXISTS book
 (
     id                       BIGSERIAL PRIMARY KEY,
-    title                    VARCHAR(255)      NOT NULL,
+    title                    VARCHAR(255) UNIQUE NOT NULL,
     subtitle                 VARCHAR(255),
     year                     INTEGER,
-    quantity                 BIGINT,
+    quantity                 BIGINT              NOT NULL,
     pages                    SMALLINT,
     isbn_10                  VARCHAR(10),
     isbn_13                  VARCHAR(15),
     image                    VARCHAR(255),
-    book_status_id           INTEGER DEFAULT 1 NOT NULL,
+    book_status_id           INTEGER DEFAULT 1   NOT NULL,
     book_language_id         INTEGER,
     book_format_id           INTEGER,
     book_publishing_house_id INTEGER,

@@ -20,6 +20,14 @@ public interface UserService extends UserDetailsService {
     UserReadDto create(UserCreateEditDto dto);
 
     /**
+     * Search for a user by user id.
+     *
+     * @param id for search.
+     * @return user.
+     */
+    Optional<UserReadDto> findById(Long id);
+
+    /**
      * Search for all users with filtering.
      *
      * @param filter   for search.
@@ -36,21 +44,20 @@ public interface UserService extends UserDetailsService {
     Collection<UserReadDto> findAll();
 
     /**
-     * Search for a user by user id.
-     *
-     * @param id for search.
-     * @return user.
-     */
-    Optional<UserReadDto> findById(Long id);
-
-    /**
      * Search for a user by user username.
      *
      * @param username for search.
      * @return user.
      */
-    @SuppressWarnings("unused")
     Optional<UserReadDto> findByUsername(String username);
+
+    /**
+     * Search for a user by user username.
+     *
+     * @param email for search.
+     * @return user.
+     */
+    Optional<UserReadDto> findByEmail(String email);
 
     /**
      * Update user by user id.

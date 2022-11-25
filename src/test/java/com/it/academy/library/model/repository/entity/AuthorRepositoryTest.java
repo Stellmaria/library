@@ -25,6 +25,7 @@ class AuthorRepositoryTest extends IntegrationTestBase {
     private static final Long AUTHOR_ID_15 = 15L;
 
     private final AuthorRepository authorRepository;
+
     private final AuthorFilterMapper authorFilterMapper;
     private final BookFilterMapper bookFilterMapper;
 

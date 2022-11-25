@@ -19,6 +19,7 @@ class UserRoleRepositoryTest extends IntegrationTestBase {
     private static final Integer USER_ROLE_ID_5 = 5;
 
     private final UserRoleRepository userRoleRepository;
+
     private final UserRoleFilterMapper userRoleFilterMapper;
 
     @Test

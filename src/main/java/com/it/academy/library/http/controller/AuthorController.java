@@ -28,8 +28,19 @@ public class AuthorController {
     private final BookService bookService;
 
     @PostMapping
-    public String create(@Validated AuthorCreateEditDto dto, @NotNull BindingResult bindingResult,
+    public String create(@Validated @NotNull AuthorCreateEditDto dto, @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
+        if (authorService.findByFullName(dto.getFirstName(), dto.getLastName()).isPresent()) {
+            bindingResult.rejectValue(
+                    "firstName", "error.author",
+                    "The author already exists with the given surname."
+            );
+            bindingResult.rejectValue(
+                    "lastName", "error.author",
+                    "The author already exists with the given name."
+            );
+        }
+
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("author", dto);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
@@ -40,7 +51,6 @@ public class AuthorController {
         authorService.create(dto);
 
         return "redirect:/authors";
-
     }
 
     @GetMapping

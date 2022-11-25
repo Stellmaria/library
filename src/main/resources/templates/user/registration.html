@@ -25,6 +25,8 @@
         <form method="post" th:action="@{/users}" th:object="${user}">
             <div class="input-area">
                 <label for="username">Login
+                    <label th:errors="*{username}" th:if="${#fields.hasErrors('username')}"></label>
+
                     <input autocomplete="off" id="username" name="username" required th:value="*{username}" type="text">
                 </label>
             </div>
@@ -44,6 +46,8 @@
 
             <div class="input-area">
                 <label for="email">Email
+                    <label th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></label>
+
                     <input autocomplete="off" id="email" name="email" required th:value="*{email}" type="email">
                 </label>
             </div>

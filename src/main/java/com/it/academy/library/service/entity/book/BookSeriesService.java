@@ -43,6 +43,14 @@ public interface BookSeriesService {
     Page<BookSeriesReadDto> findAll(BookSeriesFilter filter, Pageable pageable);
 
     /**
+     * Search for a book series by book series name.
+     *
+     * @param name for search.
+     * @return book series.
+     */
+    Optional<BookSeriesReadDto> findByName(String name);
+
+    /**
      * Book series update by book series id.
      *
      * @param id  for an update.

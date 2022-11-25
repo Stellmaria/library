@@ -11,7 +11,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -89,7 +88,6 @@ public class BookFilter {
                 .build();
     }
 
-    @Nullable
     private static String getOrderStatusName(@NotNull BookFilter bookFilter) {
         return Optional.ofNullable(bookFilter.getOrder())
                 .map(OrderFilter::getOrderStatus)
@@ -97,7 +95,6 @@ public class BookFilter {
                 .orElse(null);
     }
 
-    @Nullable
     private static Integer getOrderStatusId(@NotNull BookFilter bookFilter) {
         return Optional.ofNullable(bookFilter.getOrder())
                 .map(OrderFilter::getOrderStatus)
@@ -105,7 +102,6 @@ public class BookFilter {
                 .orElse(null);
     }
 
-    @Nullable
     private static LocalDate getBirthday(@NotNull BookFilter bookFilter) {
         return Optional.ofNullable(bookFilter.getOrder())
                 .map(OrderFilter::getUser)
@@ -113,7 +109,6 @@ public class BookFilter {
                 .orElse(null);
     }
 
-    @Nullable
     private static String getUserPassword(@NotNull BookFilter bookFilter) {
         return Optional.ofNullable(bookFilter.getOrder())
                 .map(OrderFilter::getUser)
@@ -121,7 +116,6 @@ public class BookFilter {
                 .orElse(null);
     }
 
-    @Nullable
     private static String getUserLastName(@NotNull BookFilter bookFilter) {
         return Optional.ofNullable(bookFilter.getOrder())
                 .map(OrderFilter::getUser)
@@ -129,7 +123,6 @@ public class BookFilter {
                 .orElse(null);
     }
 
-    @Nullable
     private static String getUserFirstName(@NotNull BookFilter bookFilter) {
         return Optional.ofNullable(bookFilter.getOrder())
                 .map(OrderFilter::getUser)
@@ -137,7 +130,6 @@ public class BookFilter {
                 .orElse(null);
     }
 
-    @Nullable
     private static String getUsername(@NotNull BookFilter bookFilter) {
         return Optional.ofNullable(bookFilter.getOrder())
                 .map(OrderFilter::getUser)
@@ -145,7 +137,6 @@ public class BookFilter {
                 .orElse(null);
     }
 
-    @Nullable
     private static Long getUserId(@NotNull BookFilter bookFilter) {
         return Optional.ofNullable(bookFilter.getOrder())
                 .map(OrderFilter::getUser)
@@ -153,91 +144,78 @@ public class BookFilter {
                 .orElse(null);
     }
 
-    @Nullable
     private static LocalDateTime getOrderReturnDate(@NotNull BookFilter bookFilter) {
         return Optional.ofNullable(bookFilter.getOrder())
                 .map(OrderFilter::getReturnDate)
                 .orElse(null);
     }
 
-    @Nullable
     private static LocalDateTime getOrderDate(@NotNull BookFilter bookFilter) {
         return Optional.ofNullable(bookFilter.getOrder())
                 .map(OrderFilter::getOrderDate)
                 .orElse(null);
     }
 
-    @Nullable
     private static Long getOrderId(@NotNull BookFilter bookFilter) {
         return Optional.ofNullable(bookFilter.getOrder())
                 .map(OrderFilter::getId)
                 .orElse(null);
     }
 
-    @Nullable
     private static String getBookSeriesName(@NotNull BookFilter bookFilter) {
         return Optional.ofNullable(bookFilter.getBookSeries())
                 .map(BookSeriesFilter::getName)
                 .orElse(null);
     }
 
-    @Nullable
     private static Integer getBookSeriesId(@NotNull BookFilter bookFilter) {
         return Optional.ofNullable(bookFilter.getBookSeries())
                 .map(BookSeriesFilter::getId)
                 .orElse(null);
     }
 
-    @Nullable
     private static String getBookPublishingHouseName(@NotNull BookFilter bookFilter) {
         return Optional.ofNullable(bookFilter.getBookPublishingHouse())
                 .map(BookPublishingHouseFilter::getName)
                 .orElse(null);
     }
 
-    @Nullable
     private static Integer getBookPublishingHouseId(@NotNull BookFilter bookFilter) {
         return Optional.ofNullable(bookFilter.getBookPublishingHouse())
                 .map(BookPublishingHouseFilter::getId)
                 .orElse(null);
     }
 
-    @Nullable
     private static String getBookFormatName(@NotNull BookFilter bookFilter) {
         return Optional.ofNullable(bookFilter.getBookFormat())
                 .map(BookFormatFilter::getName)
                 .orElse(null);
     }
 
-    @Nullable
     private static Integer getBookFormatId(@NotNull BookFilter bookFilter) {
         return Optional.ofNullable(bookFilter.getBookFormat())
                 .map(BookFormatFilter::getId)
                 .orElse(null);
     }
 
-    @Nullable
     private static String getBookLanguageName(@NotNull BookFilter bookFilter) {
         return Optional.ofNullable(bookFilter.getBookLanguage())
                 .map(BookLanguageFilter::getName)
                 .orElse(null);
     }
 
-    @Nullable
     private static Integer getBookLanguageId(@NotNull BookFilter bookFilter) {
         return Optional.ofNullable(bookFilter.getBookLanguage())
                 .map(BookLanguageFilter::getId)
                 .orElse(null);
     }
 
-    @Nullable
     private static String getBookStatusName(@NotNull BookFilter bookFilter) {
         return Optional.ofNullable(bookFilter.getBookStatus())
                 .map(BookStatusFilter::getName)
                 .orElse(null);
     }
 
-    @Nullable
     private static Integer getBookStatusId(@NotNull BookFilter bookFilter) {
         return Optional.ofNullable(bookFilter.getBookStatus())
                 .map(BookStatusFilter::getId)

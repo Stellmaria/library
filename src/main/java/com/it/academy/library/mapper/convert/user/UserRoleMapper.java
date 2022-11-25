@@ -10,11 +10,9 @@ import org.springframework.stereotype.Component;
 public class UserRoleMapper implements Mapper<UserRoleReadDto, UserRole> {
     @Override
     public UserRole map(@NotNull UserRoleReadDto object) {
-        var userRole = new UserRole();
-
-        userRole.setId(object.getId());
-        userRole.setName(object.getName());
-
-        return userRole;
+        return UserRole.builder()
+                .id(object.getId())
+                .name(object.getName())
+                .build();
     }
 }

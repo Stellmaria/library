@@ -20,6 +20,7 @@ class BookSeriesRepositoryTest extends IntegrationTestBase {
     private static final Integer BOOK_SERIES_ID_2 = 2;
 
     private final BookSeriesRepository bookSeriesRepository;
+
     private final BookSeriesFilterMapper bookSeriesFilterMapper;
 
     @Test

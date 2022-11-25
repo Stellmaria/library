@@ -38,6 +38,10 @@
                 <input id="pages" name="pages" th:value="*{pages}" type="number">
             </label><br>
 
+            <label for="quantity"> Quantity:
+                <input id="quantity" name="quantity" th:value="*{quantity}" type="number">
+            </label><br>
+
             <label for="isbn10"> Isbn10:
                 <input id="isbn10" name="isbn10" th:value="*{isbn10}" type="text">
             </label><br>
@@ -51,7 +55,6 @@
                     Authors</a>
             </div>
 
-            <!--            TODO: fix me-->
             <div>
                 <label for="authors">Authors:
                     <select id="authors" multiple="multiple" name="authorsId">
@@ -68,7 +71,6 @@
                 <a th:href="@{'/books/genres/' + ${genre.id}}" th:text="${genre.name}">Genres</a>
             </div>
 
-            <!--            TODO: fix me-->
             <div>
                 <label for="genres">Genres:
                     <select id="genres" multiple="multiple" name="genresId">
@@ -237,6 +239,12 @@
             <h3>Page: </h3>
 
             <p th:text="${book.pages}"></p>
+        </div>
+
+        <div class="element">
+            <h3>Quantity: </h3>
+
+            <p th:text="${book.quantity}"></p>
         </div>
 
         <div class="element" th:if="${book.isbn10 != null}">

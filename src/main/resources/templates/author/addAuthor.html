@@ -21,10 +21,14 @@
     <div class="product-element" sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')">
         <form enctype="multipart/form-data" method="post" th:action="@{/authors/}" th:object="${author}">
             <label for="firstName"> First name:
+                <label th:errors="*{firstName}" th:if="${#fields.hasErrors('firstName')}"></label>
+
                 <input id="firstName" name="firstName" th:value="*{firstName}" type="text">
             </label><br>
 
             <label for="lastName"> Last name:
+                <label th:errors="*{lastName}" th:if="${#fields.hasErrors('lastName')}"></label>
+
                 <input id="lastName" name="lastName" th:value="*{lastName}" type="text">
             </label><br>
 

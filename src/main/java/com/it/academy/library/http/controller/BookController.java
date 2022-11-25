@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,8 +40,14 @@ public class BookController {
     private final BookGenreService bookGenreService;
 
     @PostMapping
-    public String create(@Validated BookCreateEditDto dto, @NotNull BindingResult bindingResult,
+    public String create(@Validated @NotNull BookCreateEditDto dto, @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
+        if (bookService.findByTitle(dto.getTitle()).isPresent()) {
+            bindingResult.rejectValue(
+                    "title", "error.book", "A book with this title already exists."
+            );
+        }
+
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("book", dto);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
@@ -78,8 +83,6 @@ public class BookController {
                     model.addAttribute("allGenres", bookGenreService.findAll());
                     model.addAttribute("genres", bookGenreService.findAllByBookId(id));
 
-                    SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-
                     return "book/book";
                 })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -110,6 +113,7 @@ public class BookController {
         model.addAttribute("houses", bookPublishingHouseService.findAll());
         model.addAttribute("series", bookSeriesService.findAll());
         model.addAttribute("authors", authorService.findAll());
+        model.addAttribute("genres", bookGenreService.findAll());
 
         return "book/addBook";
     }

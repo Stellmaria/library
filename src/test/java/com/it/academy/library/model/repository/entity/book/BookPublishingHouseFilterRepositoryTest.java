@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DisplayName("Book publishing house repository test.")
 class BookPublishingHouseFilterRepositoryTest extends IntegrationTestBase {
     private final BookPublishingHouseRepository bookPublishingHouseRepository;
+
     private final BookPublishingHouseFilterMapper bookPublishingHouseFilterMapper;
 
     @Test

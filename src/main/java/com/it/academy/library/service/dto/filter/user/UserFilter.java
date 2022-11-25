@@ -8,7 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -57,28 +56,24 @@ public class UserFilter {
                 .build();
     }
 
-    @Nullable
     private static String getUserStatusName(@NotNull UserFilter userFilter) {
         return Optional.ofNullable(userFilter.getUserStatus())
                 .map(UserStatusFilter::getName)
                 .orElse(null);
     }
 
-    @Nullable
     private static Integer getUserStatusId(@NotNull UserFilter userFilter) {
         return Optional.ofNullable(userFilter.getUserStatus())
                 .map(UserStatusFilter::getId)
                 .orElse(null);
     }
 
-    @Nullable
     private static String getUserRoleName(@NotNull UserFilter userFilter) {
         return Optional.ofNullable(userFilter.getUserRole())
                 .map(UserRoleFilter::getName)
                 .orElse(null);
     }
 
-    @Nullable
     private static Integer getUserRoleId(@NotNull UserFilter userFilter) {
         return Optional.ofNullable(userFilter.getUserRole())
                 .map(UserRoleFilter::getId)

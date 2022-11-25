@@ -21,6 +21,7 @@ class BookGenreFilterRepositoryTest extends IntegrationTestBase {
     private static final Integer BOOK_GENRE_ID_4 = 4;
 
     private final BookGenreRepository bookGenreRepository;
+
     private final BookGenreFilterMapper bookGenreFilterMapper;
     private final BookFilterMapper bookFilterMapper;
 

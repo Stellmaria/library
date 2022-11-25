@@ -76,6 +76,22 @@ public class BookSeriesServiceImpl implements BookSeriesService {
                 });
     }
 
+
+    @Override
+    public Optional<BookSeriesReadDto> findByName(String name) {
+        var filter = BookSeriesFilter.builder()
+                .name(name)
+                .build();
+
+        return bookSeriesRepository.findAllByBookSeriesFilter(filter).stream()
+                .map(entity -> {
+                    eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
+
+                    return bookSeriesReadMapper.map(entity);
+                })
+                .findFirst();
+    }
+
     @Override
     @Transactional(rollbackFor = {Exception.class})
     public Optional<BookSeriesReadDto> update(Integer id, BookSeriesCreateEditDto dto) {

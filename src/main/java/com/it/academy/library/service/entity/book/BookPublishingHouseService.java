@@ -43,6 +43,14 @@ public interface BookPublishingHouseService {
     Page<BookPublishingHouseReadDto> findAll(BookPublishingHouseFilter filter, Pageable pageable);
 
     /**
+     * Search for a book publisher by book publisher name.
+     *
+     * @param name for search.
+     * @return book publishing house.
+     */
+    Optional<BookPublishingHouseReadDto> findByName(String name);
+
+    /**
      * Book publisher update by book publishing house id.
      *
      * @param id  for an update.
