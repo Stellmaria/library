@@ -10,7 +10,11 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +25,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import static org.springframework.http.ResponseEntity.notFound;
 
 @Controller
 @RequestMapping("/users")
@@ -50,6 +56,7 @@ public class UserController {
     public String findAll(@NotNull Model model, UserFilter filter, Pageable pageable) {
         model.addAttribute("users", PageResponse.of(userService.findAll(filter, pageable)));
         model.addAttribute("filter", filter);
+        model.addAttribute("allUsers", userService.findAll());
 
         return "user/users";
     }
@@ -61,6 +68,7 @@ public class UserController {
                     model.addAttribute("user", dto);
                     model.addAttribute("roles", userRoleService.findAll());
                     model.addAttribute("statuses", userStatusService.findAll());
+                    model.addAttribute("users", userService.findAll());
 
                     return "user/user";
                 })
@@ -75,7 +83,7 @@ public class UserController {
             return view;
         }
 
-        return userService.update(id, dto)
+        return userService.update(id, dto, SecurityContextHolder.getContext().getAuthentication())
                 .map(it -> "redirect:/users/{id}")
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
@@ -87,6 +95,16 @@ public class UserController {
         }
 
         return "redirect:/users";
+    }
+
+    @GetMapping(value = "/{id}/avatar")
+    public ResponseEntity<byte[]> findAvatar(@PathVariable("id") Long id) {
+        return userService.findAvatar(id)
+                .map(it -> ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .contentLength(it.length)
+                        .body(it))
+                .orElseGet(notFound()::build);
     }
 
     private void validate(@NotNull UserCreateEditDto dto, @NotNull BindingResult bindingResult) {

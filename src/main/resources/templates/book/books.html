@@ -16,8 +16,68 @@
 
 <body>
 
-<header>
-    <div th:insert="~{fragments/header :: header}"></div>
+<header class="header">
+    <div class="container">
+        <div class="header-row">
+            <div class="header-logo">
+                <a th:href="@{/}">Library</a>
+            </div>
+
+            <nav class="header-nav">
+                <ul>
+                    <li>
+                        <a th:href="@{/books}">Books</a>
+                        <div class="dropdown-menu">
+                            <p><a th:href="@{/books/series}">Series</a></p>
+                            <p><a th:href="@{/authors}">Authors</a></p>
+                            <p><a th:href="@{/books/publishingHouses}">Houses</a></p>
+                            <p><a th:href="@{/books/genres}">Genres</a></p>
+                        </div>
+                    </li>
+
+                    <li sec:authorize="hasAnyRole('READER', 'LIBRARIAN')" th:each="user : ${users}">
+                        <p th:if="${#authentication.getName() == user.username}">
+                            <a th:href="@{/users/{userId}/(userId=${user.id})}">Account</a>
+                        </p>
+                    </li>
+
+                    <li sec:authorize="hasRole('READER')">
+                        <p>
+                            <a th:href="@{/orders/order}">Orders</a>
+                        </p>
+                    </li>
+
+                    <li sec:authorize="hasRole('ADMIN')">
+                        <p>
+                            <a th:href="@{/users/}">Users</a>
+                        </p>
+                    </li>
+
+                    <li sec:authorize="hasRole('ADMIN')">
+                        <p>
+                            <a th:href="@{/orders/}">Orders</a>
+                        </p>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="header-login">
+                <a class="btn" sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
+
+                <span class="header-login-name" sec:authentication="name" sec:authorize="isAuthenticated()">
+                    Username
+                </span>
+
+                <form action="/logout" method="post" sec:authorize="isAuthenticated()">
+                    <button class="btn" type="submit">Logout</button>
+                </form>
+
+                <a class="cart" th:href="@{/orders/cart}">
+                    <img alt="Cart" th:src="@{/images/home/icon/cart2.svg}">
+                </a>
+            </div>
+        </div>
+    </div>
 </header>
 
 <main>
@@ -29,6 +89,9 @@
 
                     <input class="search-input" id="title" name="title" placeholder="Search" th:value="${filter.title}"
                            type="text">
+
+                    <input class="search-input" id="year" name="year" placeholder="Year" th:value="${filter.year}"
+                           type="number">
 
                     <input class="search-input" id="page" name="page" th:value="${books.metadata.page}" type="number">
 
@@ -58,7 +121,7 @@
                     <a class="product-link" th:href="@{'/books/' + ${book.id}}">
                         <div class="product">
                             <img alt="Product image" class="product-image" th:if="${book.image}"
-                                 th:src="@{/api/v1/books/{bookId}/image(bookId=${book.id})}">
+                                 th:src="@{/books/{bookId}/image(bookId=${book.id})}">
 
                             <h4 class="product_title">
                                 <span th:text="${book.title}">Title</span>
@@ -71,8 +134,6 @@
                            th:href="@{'/orders/cart/addBook/{id}'(id=${book.id})}">
                             <button class="btn" type="button">Add to cart</button>
                         </a>
-
-                        <span th:text="|In store: ${book.quantity}|"></span>
                     </div>
                 </div>
             </div>

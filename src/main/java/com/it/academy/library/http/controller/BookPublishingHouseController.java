@@ -5,6 +5,7 @@ import com.it.academy.library.service.dto.create.book.BookPublishingHouseCreateE
 import com.it.academy.library.service.dto.filter.book.BookPublishingHouseFilter;
 import com.it.academy.library.service.entity.book.BookPublishingHouseService;
 import com.it.academy.library.service.entity.book.BookService;
+import com.it.academy.library.service.entity.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class BookPublishingHouseController {
     private final BookPublishingHouseService bookPublishingHouseService;
     private final BookService bookService;
+    private final UserService userService;
 
     @PostMapping
     public String create(@Validated @NotNull BookPublishingHouseCreateEditDto dto, @NotNull BindingResult bindingResult,
@@ -51,6 +53,7 @@ public class BookPublishingHouseController {
                 "publishingHouses", PageResponse.of(bookPublishingHouseService.findAll(filter, pageable))
         );
         model.addAttribute("filter", filter);
+        model.addAttribute("users", userService.findAll());
 
         return "book/publishingHouses/publishingHouses";
     }
@@ -61,6 +64,7 @@ public class BookPublishingHouseController {
                 .map(dto -> {
                     model.addAttribute("publishingHouse", dto);
                     model.addAttribute("books", bookService.findAllByBookPublishingHouseId(id));
+                    model.addAttribute("users", userService.findAll());
 
                     return "book/publishingHouses/publishingHouse";
                 })
@@ -103,6 +107,7 @@ public class BookPublishingHouseController {
     @GetMapping("/addPublishingHouses")
     public String addBook(@NotNull Model model, BookPublishingHouseCreateEditDto dto) {
         model.addAttribute("publishingHouses", dto);
+        model.addAttribute("users", userService.findAll());
 
         return "book/publishingHouses/addPublishingHouses";
     }

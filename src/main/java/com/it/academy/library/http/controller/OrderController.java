@@ -53,6 +53,7 @@ public class OrderController {
     public String findAll(@NotNull Model model, OrderFilter filter, Pageable pageable) {
         model.addAttribute("orders", PageResponse.of(orderService.findAll(filter, pageable)));
         model.addAttribute("filter", filter);
+        model.addAttribute("users", userService.findAll());
 
         return "order/orders";
     }
@@ -65,6 +66,7 @@ public class OrderController {
                     model.addAttribute("statuses", orderStatusService.findAll());
                     model.addAttribute("users", userService.findAll());
                     model.addAttribute("books", bookService.findAllByOrderId(id));
+                    model.addAttribute("users", userService.findAll());
 
                     return "order/order";
                 })
@@ -90,6 +92,7 @@ public class OrderController {
     @GetMapping("/cart")
     public String cart(@NotNull Model model) {
         model.addAttribute("books", cartService.getBooks());
+        model.addAttribute("users", userService.findAll());
 
         return "order/cart";
     }

@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -32,8 +33,10 @@ public class OrderFilter {
 
     private OrderStatusFilter orderStatus;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime orderDate;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime returnDate;
 
     public static Predicate queryPredicates(@NotNull OrderFilter orderFilter) {

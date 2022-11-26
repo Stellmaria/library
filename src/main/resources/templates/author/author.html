@@ -13,8 +13,68 @@
 
 <body>
 
-<header>
-    <div th:insert="~{fragments/header :: header}"></div>
+<header class="header">
+    <div class="container">
+        <div class="header-row">
+            <div class="header-logo">
+                <a th:href="@{/}">Library</a>
+            </div>
+
+            <nav class="header-nav">
+                <ul>
+                    <li>
+                        <a th:href="@{/books}">Books</a>
+                        <div class="dropdown-menu">
+                            <p><a th:href="@{/books/series}">Series</a></p>
+                            <p><a th:href="@{/authors}">Authors</a></p>
+                            <p><a th:href="@{/books/publishingHouses}">Houses</a></p>
+                            <p><a th:href="@{/books/genres}">Genres</a></p>
+                        </div>
+                    </li>
+
+                    <li sec:authorize="hasAnyRole('READER', 'LIBRARIAN')" th:each="user : ${users}">
+                        <p th:if="${#authentication.getName() == user.username}">
+                            <a th:href="@{/users/{userId}/(userId=${user.id})}">Account</a>
+                        </p>
+                    </li>
+
+                    <li sec:authorize="hasRole('READER')">
+                        <p>
+                            <a th:href="@{/orders/order}">Orders</a>
+                        </p>
+                    </li>
+
+                    <li sec:authorize="hasRole('ADMIN')">
+                        <p>
+                            <a th:href="@{/users/}">Users</a>
+                        </p>
+                    </li>
+
+                    <li sec:authorize="hasRole('ADMIN')">
+                        <p>
+                            <a th:href="@{/orders/}">Orders</a>
+                        </p>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="header-login">
+                <a class="btn" sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
+
+                <span class="header-login-name" sec:authentication="name" sec:authorize="isAuthenticated()">
+                    Username
+                </span>
+
+                <form action="/logout" method="post" sec:authorize="isAuthenticated()">
+                    <button class="btn" type="submit">Logout</button>
+                </form>
+
+                <a class="cart" th:href="@{/orders/cart}">
+                    <img alt="Cart" th:src="@{/images/home/icon/cart2.svg}">
+                </a>
+            </div>
+        </div>
+    </div>
 </header>
 
 <main>
@@ -30,7 +90,7 @@
             </label><br>
 
             <div th:if="${author.image}">
-                <img alt="Author image" th:src="@{/api/v1/authors/{authorId}/image(authorId=${author.id})}">
+                <img alt="Author image" th:src="@{/authors/{authorId}/image(authorId=${author.id})}">
             </div>
 
             <label for="image"> Image:
@@ -78,7 +138,7 @@
         </div>
 
         <div class="img-book" th:if="${author.image}">
-            <img alt="book image" th:src="@{/api/v1/authors/{authorId}/image(authorId=${author.id})}">
+            <img alt="book image" th:src="@{/authors/{authorId}/image(authorId=${author.id})}">
         </div>
 
         <div class="element" th:if="${author.birthday != null}">

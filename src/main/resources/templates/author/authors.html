@@ -15,8 +15,68 @@
 </head>
 <body>
 
-<header>
-    <div th:insert="~{fragments/header :: header}"></div>
+<header class="header">
+    <div class="container">
+        <div class="header-row">
+            <div class="header-logo">
+                <a th:href="@{/}">Library</a>
+            </div>
+
+            <nav class="header-nav">
+                <ul>
+                    <li>
+                        <a th:href="@{/books}">Books</a>
+                        <div class="dropdown-menu">
+                            <p><a th:href="@{/books/series}">Series</a></p>
+                            <p><a th:href="@{/authors}">Authors</a></p>
+                            <p><a th:href="@{/books/publishingHouses}">Houses</a></p>
+                            <p><a th:href="@{/books/genres}">Genres</a></p>
+                        </div>
+                    </li>
+
+                    <li sec:authorize="hasAnyRole('READER', 'LIBRARIAN')" th:each="user : ${users}">
+                        <p th:if="${#authentication.getName() == user.username}">
+                            <a th:href="@{/users/{userId}/(userId=${user.id})}">Account</a>
+                        </p>
+                    </li>
+
+                    <li sec:authorize="hasRole('READER')">
+                        <p>
+                            <a th:href="@{/orders/order}">Orders</a>
+                        </p>
+                    </li>
+
+                    <li sec:authorize="hasRole('ADMIN')">
+                        <p>
+                            <a th:href="@{/users/}">Users</a>
+                        </p>
+                    </li>
+
+                    <li sec:authorize="hasRole('ADMIN')">
+                        <p>
+                            <a th:href="@{/orders/}">Orders</a>
+                        </p>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="header-login">
+                <a class="btn" sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
+
+                <span class="header-login-name" sec:authentication="name" sec:authorize="isAuthenticated()">
+                    Username
+                </span>
+
+                <form action="/logout" method="post" sec:authorize="isAuthenticated()">
+                    <button class="btn" type="submit">Logout</button>
+                </form>
+
+                <a class="cart" th:href="@{/orders/cart}">
+                    <img alt="Cart" th:src="@{/images/home/icon/cart2.svg}">
+                </a>
+            </div>
+        </div>
+    </div>
 </header>
 
 <main>
@@ -32,7 +92,15 @@
                     <input class="search-input" id="lastName" name="lastName" placeholder="Last name"
                            th:value="${filter.lastName}" type="text">
 
+                    <input class="search-input" id="birthday" name="birthday" placeholder="Birthday"
+                           th:value="${filter.birthday}" type="date">
+
+                    <input class="search-input" id="dateDeath" name="dateDeath" placeholder="Date death"
+                           th:value="${filter.dateDeath}" type="date">
+
                     <input class="search-input" id="page" name="page" th:value="${authors.metadata.page}" type="number">
+
+                    <input class="search-input" id="size" name="size" th:value="${authors.metadata.size}" type="number">
 
                     <a class="btn" sec:authorize="hasAnyRole('ADMIN', 'LIBRARIAN')" th:href="@{/authors/addAuthor}">
                         Add author
@@ -57,7 +125,7 @@
                     <a class="product-link" th:href="@{'/authors/' + ${author.id}}">
                         <div class="product">
                             <img alt="Product image" class="product-image" th:if="${author.image}"
-                                 th:src="@{/api/v1/authors/{authorId}/image(authorId=${author.id})}">
+                                 th:src="@{/authors/{authorId}/image(authorId=${author.id})}">
 
                             <h4 class="product_title">
                                 <span th:text="|${author.firstName} ${author.lastName}|"> Book series</span>

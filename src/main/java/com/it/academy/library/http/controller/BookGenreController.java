@@ -5,6 +5,7 @@ import com.it.academy.library.service.dto.create.book.BookGenreCreateEditDto;
 import com.it.academy.library.service.dto.filter.book.BookGenreFilter;
 import com.it.academy.library.service.entity.book.BookGenreService;
 import com.it.academy.library.service.entity.book.BookService;
+import com.it.academy.library.service.entity.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class BookGenreController {
     private final BookGenreService bookGenreService;
     private final BookService bookService;
+    private final UserService userService;
 
     @PostMapping
     public String create(@Validated @NotNull BookGenreCreateEditDto dto, @NotNull BindingResult bindingResult,
@@ -47,6 +49,7 @@ public class BookGenreController {
     public String findAll(@NotNull Model model, BookGenreFilter filter, Pageable pageable) {
         model.addAttribute("genres", PageResponse.of(bookGenreService.findAll(filter, pageable)));
         model.addAttribute("filter", filter);
+        model.addAttribute("users", userService.findAll());
 
         return "book/genre/bookGenres";
     }
@@ -57,6 +60,7 @@ public class BookGenreController {
                 .map(dto -> {
                     model.addAttribute("genre", dto);
                     model.addAttribute("books", bookService.findAllByBookGenreId(id));
+                    model.addAttribute("users", userService.findAll());
 
                     return "book/genre/bookGenre";
                 })
@@ -90,6 +94,7 @@ public class BookGenreController {
     @GetMapping("/addGenre")
     public String addBook(@NotNull Model model, BookGenreCreateEditDto dto) {
         model.addAttribute("genre", dto);
+        model.addAttribute("users", userService.findAll());
 
         return "book/genre/addBookGenre";
     }

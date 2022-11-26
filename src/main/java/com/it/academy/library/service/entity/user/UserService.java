@@ -5,6 +5,7 @@ import com.it.academy.library.service.dto.filter.user.UserFilter;
 import com.it.academy.library.service.dto.read.user.UserReadDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.Collection;
@@ -66,7 +67,7 @@ public interface UserService extends UserDetailsService {
      * @param dto for an update.
      * @return updated user.
      */
-    Optional<UserReadDto> update(Long id, UserCreateEditDto dto);
+    Optional<UserReadDto> update(Long id, UserCreateEditDto dto, Authentication authentication);
 
     /**
      * Deleting a user by user id.

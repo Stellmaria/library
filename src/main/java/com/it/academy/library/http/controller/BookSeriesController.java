@@ -5,6 +5,7 @@ import com.it.academy.library.service.dto.create.book.BookSeriesCreateEditDto;
 import com.it.academy.library.service.dto.filter.book.BookSeriesFilter;
 import com.it.academy.library.service.entity.book.BookSeriesService;
 import com.it.academy.library.service.entity.book.BookService;
+import com.it.academy.library.service.entity.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class BookSeriesController {
     private final BookSeriesService bookSeriesService;
     private final BookService bookService;
+    private final UserService userService;
 
     @PostMapping
     public String create(@Validated @NotNull BookSeriesCreateEditDto dto, @NotNull BindingResult bindingResult,
@@ -48,6 +50,7 @@ public class BookSeriesController {
     public String findAll(@NotNull Model model, BookSeriesFilter filter, Pageable pageable) {
         model.addAttribute("series", PageResponse.of(bookSeriesService.findAll(filter, pageable)));
         model.addAttribute("filter", filter);
+        model.addAttribute("users", userService.findAll());
 
         return "book/series/series";
     }
@@ -58,6 +61,7 @@ public class BookSeriesController {
                 .map(dto -> {
                     model.addAttribute("series", dto);
                     model.addAttribute("books", bookService.findAllBySeriesId(id));
+                    model.addAttribute("users", userService.findAll());
 
                     return "book/series/bookSeries";
                 })
@@ -91,6 +95,7 @@ public class BookSeriesController {
     @GetMapping("/addSeries")
     public String addBook(@NotNull Model model, BookSeriesCreateEditDto dto) {
         model.addAttribute("series", dto);
+        model.addAttribute("users", userService.findAll());
 
         return "book/series/addSeries";
     }
