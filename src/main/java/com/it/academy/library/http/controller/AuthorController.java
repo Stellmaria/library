@@ -7,6 +7,7 @@ import com.it.academy.library.service.entity.author.AuthorService;
 import com.it.academy.library.service.entity.book.BookService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -30,28 +31,16 @@ public class AuthorController {
     @PostMapping
     public String create(@Validated @NotNull AuthorCreateEditDto dto, @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
-        if (authorService.findByFullName(dto.getFirstName(), dto.getLastName()).isPresent()) {
-            bindingResult.rejectValue(
-                    "firstName", "error.author",
-                    "The author already exists with the given surname."
-            );
-            bindingResult.rejectValue(
-                    "lastName", "error.author",
-                    "The author already exists with the given name."
-            );
-        }
-
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("author", dto);
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-
-            return "redirect:/authors/addAuthor";
+        var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/authors/addAuthor");
+        if (view != null) {
+            return view;
         }
 
         authorService.create(dto);
 
         return "redirect:/authors";
     }
+
 
     @GetMapping
     public String findAll(@NotNull Model model, AuthorFilter filter, Pageable pageable) {
@@ -74,7 +63,13 @@ public class AuthorController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable("id") Long id, @Validated AuthorCreateEditDto dto) {
+    public String update(@PathVariable("id") Long id, @Validated AuthorCreateEditDto dto,
+                         @NotNull BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/authors/{id}");
+        if (view != null) {
+            return view;
+        }
+
         return authorService.update(id, dto)
                 .map(it -> "redirect:/authors/{id}")
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -94,5 +89,16 @@ public class AuthorController {
         model.addAttribute("author", dto);
 
         return "author/addAuthor";
+    }
+
+    private @Nullable String checkError(@NotNull AuthorCreateEditDto dto, @NotNull BindingResult bindingResult,
+                                        RedirectAttributes redirectAttributes, String page) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("author", dto);
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+
+            return page;
+        }
+        return null;
     }
 }

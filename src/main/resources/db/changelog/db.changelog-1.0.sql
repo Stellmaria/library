@@ -62,7 +62,6 @@ CREATE TABLE IF NOT EXISTS book_genre
 (
     id          SERIAL PRIMARY KEY,
     name        VARCHAR(64) UNIQUE NOT NULL,
-    description VARCHAR(255),
     created_at  TIMESTAMP WITHOUT TIME ZONE,
     modified_at TIMESTAMP WITHOUT TIME ZONE,
     created_by  VARCHAR(64),
@@ -149,14 +148,14 @@ CREATE TABLE IF NOT EXISTS orders
 CREATE TABLE IF NOT EXISTS book
 (
     id                       BIGSERIAL PRIMARY KEY,
-    title                    VARCHAR(255) UNIQUE NOT NULL,
+    title                    VARCHAR(255)      NOT NULL,
     subtitle                 VARCHAR(255),
     year                     INTEGER,
-    quantity                 BIGINT              NOT NULL,
+    quantity                 BIGINT            NOT NULL,
     isbn_10                  VARCHAR(10),
     isbn_13                  VARCHAR(15),
     image                    VARCHAR(255),
-    book_status_id           INTEGER DEFAULT 1   NOT NULL,
+    book_status_id           INTEGER DEFAULT 1 NOT NULL,
     book_language_id         INTEGER,
     book_format_id           INTEGER,
     book_publishing_house_id INTEGER,

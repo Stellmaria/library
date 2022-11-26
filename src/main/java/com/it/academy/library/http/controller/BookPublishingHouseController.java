@@ -7,6 +7,7 @@ import com.it.academy.library.service.entity.book.BookPublishingHouseService;
 import com.it.academy.library.service.entity.book.BookService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -30,24 +31,18 @@ public class BookPublishingHouseController {
     @PostMapping
     public String create(@Validated @NotNull BookPublishingHouseCreateEditDto dto, @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
-        if (bookPublishingHouseService.findByName(dto.getName()).isPresent()) {
-            bindingResult.rejectValue(
-                    "name", "error.bookPublishingHouse",
-                    "A publishing house with the same name already exists."
-            );
-        }
+        validateName(dto, bindingResult);
 
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("publishingHouse", dto);
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-
-            return "redirect:/books/publishingHouses/addPublishingHouses";
+        var view = checkError(
+                dto, bindingResult, redirectAttributes, "redirect:/books/publishingHouses/addPublishingHouses"
+        );
+        if (view != null) {
+            return view;
         }
 
         bookPublishingHouseService.create(dto);
 
-        return "redirect:/authors";
-
+        return "redirect:/books/publishingHouses";
     }
 
     @GetMapping
@@ -75,11 +70,13 @@ public class BookPublishingHouseController {
     @PostMapping("/{id}/update")
     public String update(@PathVariable("id") Integer id, @Validated @NotNull BookPublishingHouseCreateEditDto dto,
                          @NotNull BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        if (bookPublishingHouseService.findByName(dto.getName()).isPresent()) {
-            bindingResult.rejectValue(
-                    "name", "error.bookPublishingHouse",
-                    "A publishing house with the same name already exists."
-            );
+        validateName(dto, bindingResult);
+
+        var view = checkError(
+                dto, bindingResult, redirectAttributes, "redirect:/books/publishingHouses/{id}"
+        );
+        if (view != null) {
+            return view;
         }
 
         if (bindingResult.hasErrors()) {
@@ -108,5 +105,26 @@ public class BookPublishingHouseController {
         model.addAttribute("publishingHouses", dto);
 
         return "book/publishingHouses/addPublishingHouses";
+    }
+
+    private void validateName(@NotNull BookPublishingHouseCreateEditDto dto, @NotNull BindingResult bindingResult) {
+        if (bookPublishingHouseService.findByName(dto.getName()).isPresent()) {
+            bindingResult.rejectValue(
+                    "name", "error.bookPublishingHouse",
+                    "A publishing house with the same name already exists."
+            );
+        }
+    }
+
+    private @Nullable String checkError(@NotNull BookPublishingHouseCreateEditDto dto,
+                                        @NotNull BindingResult bindingResult, RedirectAttributes redirectAttributes,
+                                        String page) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("publishingHouse", dto);
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+
+            return page;
+        }
+        return null;
     }
 }

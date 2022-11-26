@@ -112,10 +112,10 @@ public class OrderController {
 
     @GetMapping("/order")
     public String findOrder(@NotNull Model model, @NotNull Principal principal) {
-        var userId = Objects.requireNonNull(userService.findByUsername(principal.getName()).orElse(null))
-                .getId();
+        var user = Objects.requireNonNull(userService.findByUsername(principal.getName())
+                .orElse(null));
 
-        model.addAttribute("orders", orderService.findByUserId(userId));
+        model.addAttribute("orders", orderService.findByUserId(user.getId()));
 
         return "order/order";
     }

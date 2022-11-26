@@ -18,6 +18,4 @@ public class BookGenreCreateEditDto {
             message = "The genre name cannot be less than 1 character and more than 64 characters."
     )
     String name;
-
-    String description;
 }

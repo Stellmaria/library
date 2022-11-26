@@ -12,8 +12,7 @@ public class BookGenreReadMapper implements Mapper<BookGenre, BookGenreReadDto> 
     public BookGenreReadDto map(@NotNull BookGenre object) {
         return new BookGenreReadDto(
                 object.getId(),
-                object.getName(),
-                object.getDescription()
+                object.getName()
         );
     }
 }

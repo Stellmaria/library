@@ -22,6 +22,8 @@
               th:action="@{/users/{userId}/update(userId=${user.id})}" th:object="${user}">
 
             <label for="username"> Login:
+                <label th:errors="*{username}" th:if="${#fields.hasErrors('username')}"></label>
+
                 <input id="username" name="username" th:value="*{username}" type="text">
             </label><br>
 
@@ -38,6 +40,8 @@
             </label><br>
 
             <label for="email"> Email:
+                <label th:errors="*{email}" th:if="${#fields.hasErrors('email')}"></label>
+
                 <input id="email" name="email" th:value="*{email}" type="text">
             </label><br>
 

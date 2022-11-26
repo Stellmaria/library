@@ -42,9 +42,7 @@ public class Book extends AbstractAuditingEntity<Long> {
     @Id
     private Long id;
 
-    @Column(nullable = false,
-            unique = true
-    )
+    @Column(nullable = false)
     private String title;
 
     private String subtitle;

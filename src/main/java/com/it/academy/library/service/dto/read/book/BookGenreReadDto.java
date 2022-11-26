@@ -11,6 +11,4 @@ public class BookGenreReadDto {
     Integer id;
 
     String name;
-
-    String description;
 }

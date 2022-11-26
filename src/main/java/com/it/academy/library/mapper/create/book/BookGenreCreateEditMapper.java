@@ -26,6 +26,5 @@ public class BookGenreCreateEditMapper implements Mapper<BookGenreCreateEditDto,
 
     private void copy(@NotNull BookGenreCreateEditDto object, @NotNull BookGenre bookGenre) {
         bookGenre.setName(object.getName());
-        bookGenre.setDescription(object.getDescription());
     }
 }

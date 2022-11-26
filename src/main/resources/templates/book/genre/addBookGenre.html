@@ -21,11 +21,9 @@
     <div class="product-element" sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')">
         <form method="post" th:action="@{/books/genres}" th:object="${genre}">
             <label for="name"> Name:
-                <input id="name" name="name" th:value="*{name}" type="text">
-            </label><br>
+                <label th:errors="*{name}" th:if="${#fields.hasErrors('name')}"></label>
 
-            <label for="description"> Description:
-                <input id="description" name="description" th:value="*{description}" type="text">
+                <input id="name" name="name" th:value="*{name}" type="text">
             </label><br>
 
             <div class="last">

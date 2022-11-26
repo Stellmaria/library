@@ -12,8 +12,7 @@ public class BookGenreFilterMapper implements Mapper<BookGenre, BookGenreFilter>
     public BookGenreFilter map(@NotNull BookGenre object) {
         return new BookGenreFilter(
                 object.getId(),
-                object.getName(),
-                object.getDescription()
+                object.getName()
         );
     }
 }

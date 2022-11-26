@@ -23,17 +23,19 @@
               th:object="${genre}">
 
             <label for="name"> Name:
-                <input id="name" name="name" th:value="*{name}" type="text">
-            </label><br>
+                <label th:errors="*{name}" th:if="${#fields.hasErrors('name')}"></label>
 
-            <label for="description"> Description:
-                <input id="description" name="description" th:value="*{description}" type="text">
+                <input id="name" name="name" th:value="*{name}" type="text">
             </label><br>
 
             <div class="button">
                 <button class="btn" type="submit">Update</button>
             </div>
         </form>
+
+        <div th:if="${errors}">
+            <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Error message</p>
+        </div>
 
         <div class="button-form">
             <div class="button">

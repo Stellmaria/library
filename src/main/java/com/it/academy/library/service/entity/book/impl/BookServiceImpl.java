@@ -163,21 +163,6 @@ public class BookServiceImpl implements BookService {
                 .collect(Collectors.toList());
     }
 
-
-    @Override
-    public Optional<BookReadDto> findByTitle(String title) {
-        var filter = new BookFilter();
-        filter.setTitle(title);
-
-        return bookRepository.findAllByBookFilter(filter).stream()
-                .map(entity -> {
-                    eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
-
-                    return bookReadMapper.map(entity);
-                })
-                .findFirst();
-    }
-
     @Override
     @Transactional(rollbackFor = {Exception.class})
     public Optional<BookReadDto> update(Long id, BookCreateEditDto dto) {

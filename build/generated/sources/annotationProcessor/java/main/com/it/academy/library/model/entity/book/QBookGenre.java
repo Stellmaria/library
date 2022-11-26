@@ -30,8 +30,6 @@ public class QBookGenre extends EntityPathBase<BookGenre> {
     //inherited
     public final StringPath createdBy = _super.createdBy;
 
-    public final StringPath description = createString("description");
-
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
 
     //inherited

@@ -8,6 +8,7 @@ import com.it.academy.library.service.entity.user.UserService;
 import com.it.academy.library.service.entity.user.UserStatusService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -32,17 +33,11 @@ public class UserController {
     @PostMapping
     public String create(@Validated @NotNull UserCreateEditDto dto, @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
-        if (userService.findByEmail(dto.getEmail()).isPresent()) {
-            bindingResult
-                    .rejectValue("email", "error.user",
-                            "There is already a user registered with the email provided");
-        }
+        validate(dto, bindingResult);
 
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("user", dto);
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-
-            return "redirect:/users/registration";
+        var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/users/registration");
+        if (view != null) {
+            return view;
         }
 
         userService.create(dto);
@@ -73,7 +68,13 @@ public class UserController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable("id") Long id, @Validated @NotNull UserCreateEditDto dto) {
+    public String update(@PathVariable("id") Long id, @Validated @NotNull UserCreateEditDto dto,
+                         @NotNull BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/users/{id}");
+        if (view != null) {
+            return view;
+        }
+
         return userService.update(id, dto)
                 .map(it -> "redirect:/users/{id}")
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -86,5 +87,29 @@ public class UserController {
         }
 
         return "redirect:/users";
+    }
+
+    private void validate(@NotNull UserCreateEditDto dto, @NotNull BindingResult bindingResult) {
+        if (userService.findByEmail(dto.getEmail()).isPresent()) {
+            bindingResult
+                    .rejectValue("email", "error.user",
+                            "There is already a user registered with the email provided");
+        }
+        if (userService.findByEmail(dto.getEmail()).isPresent()) {
+            bindingResult
+                    .rejectValue("username", "error.user",
+                            "There is already a user registered with the username provided");
+        }
+    }
+
+    private @Nullable String checkError(@NotNull UserCreateEditDto dto, @NotNull BindingResult bindingResult,
+                                        RedirectAttributes redirectAttributes, String page) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("user", dto);
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+
+            return page;
+        }
+        return null;
     }
 }

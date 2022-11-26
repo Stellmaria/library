@@ -13,7 +13,6 @@ public class BookGenreMapper implements Mapper<BookGenreReadDto, BookGenre> {
         return BookGenre.builder()
                 .id(object.getId())
                 .name(object.getName())
-                .description(object.getDescription())
                 .build();
     }
 }

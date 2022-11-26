@@ -21,7 +21,6 @@
     <div class="product-element" sec:authorize="hasAnyRole('ADMIN','LIBRARIAN')">
         <form enctype="multipart/form-data" method="post"
               th:action="@{/authors/{authorId}/update(authorId=${author.id})}" th:object="${author}">
-
             <label for="firstName"> First name:
                 <input id="firstName" name="firstName" th:value="*{firstName}" type="text">
             </label><br>
@@ -54,6 +53,10 @@
                 <button class="btn" type="submit">Update</button>
             </div>
         </form>
+
+        <div th:if="${errors}">
+            <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Error message</p>
+        </div>
 
         <div class="button-form">
             <div class="button">

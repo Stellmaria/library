@@ -43,8 +43,6 @@ public class BookGenre extends AbstractAuditingEntity<Integer> {
     )
     private String name;
 
-    private String description;
-
     @ManyToMany(mappedBy = "genres")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

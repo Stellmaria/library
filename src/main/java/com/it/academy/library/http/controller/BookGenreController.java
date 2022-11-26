@@ -7,6 +7,7 @@ import com.it.academy.library.service.entity.book.BookGenreService;
 import com.it.academy.library.service.entity.book.BookService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -30,17 +31,11 @@ public class BookGenreController {
     @PostMapping
     public String create(@Validated @NotNull BookGenreCreateEditDto dto, @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
-        if (bookGenreService.findByName(dto.getName()).isPresent()) {
-            bindingResult.rejectValue(
-                    "name", "error.bookGenre", "There is already a book genre with that name."
-            );
-        }
+        validateName(dto, bindingResult);
 
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("genre", dto);
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-
-            return "redirect:/books/genres/addGenre";
+        var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/books/genres/addGenre");
+        if (view != null) {
+            return view;
         }
 
         bookGenreService.create(dto);
@@ -69,7 +64,15 @@ public class BookGenreController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable("id") Integer id, @Validated BookGenreCreateEditDto dto) {
+    public String update(@PathVariable("id") Integer id, @Validated @NotNull BookGenreCreateEditDto dto,
+                         @NotNull BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        validateName(dto, bindingResult);
+
+        var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/books/genres/{id}");
+        if (view != null) {
+            return view;
+        }
+
         return bookGenreService.update(id, dto)
                 .map(it -> "redirect:/books/genres/{id}")
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -89,5 +92,25 @@ public class BookGenreController {
         model.addAttribute("genre", dto);
 
         return "book/genre/addBookGenre";
+    }
+
+    private @Nullable String checkError(@NotNull BookGenreCreateEditDto dto, @NotNull BindingResult bindingResult,
+                                        RedirectAttributes redirectAttributes, String page) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("genre", dto);
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+
+            return page;
+        }
+        return null;
+    }
+
+    private void validateName(@NotNull BookGenreCreateEditDto dto, @NotNull BindingResult bindingResult) {
+        if (bookGenreService.findByName(dto.getName()).isPresent()) {
+            bindingResult.rejectValue(
+                    "name", "error.bookGenre",
+                    "There is already a book genre with that name."
+            );
+        }
     }
 }

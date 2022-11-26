@@ -83,14 +83,6 @@ public interface BookService {
     Collection<BookReadDto> findAllByOrderId(Long id);
 
     /**
-     * Search for a book by book title.
-     *
-     * @param title for search.
-     * @return book.
-     */
-    Optional<BookReadDto> findByTitle(String title);
-
-    /**
      * Book update by book id.
      *
      * @param id  for an update.

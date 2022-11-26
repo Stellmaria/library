@@ -7,6 +7,7 @@ import com.it.academy.library.service.entity.book.BookSeriesService;
 import com.it.academy.library.service.entity.book.BookService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -30,19 +31,18 @@ public class BookSeriesController {
     @PostMapping
     public String create(@Validated @NotNull BookSeriesCreateEditDto dto, @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
-        validate(dto, bindingResult);
+        validateName(dto, bindingResult);
 
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("series", dto);
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-
-            return "redirect:/books/series/addSeries";
+        var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/books/series/addSeries");
+        if (view != null) {
+            return view;
         }
 
         bookSeriesService.create(dto);
 
         return "redirect:/books/series";
     }
+
 
     @GetMapping
     public String findAll(@NotNull Model model, BookSeriesFilter filter, Pageable pageable) {
@@ -67,13 +67,11 @@ public class BookSeriesController {
     @PostMapping("/{id}/update")
     public String update(@PathVariable("id") Integer id, @Validated @NotNull BookSeriesCreateEditDto dto,
                          @NotNull BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        validate(dto, bindingResult);
+        validateName(dto, bindingResult);
 
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("series", dto);
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-
-            return "redirect:/books/series/{id}";
+        var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/books/series/{id}");
+        if (view != null) {
+            return view;
         }
 
         return bookSeriesService.update(id, dto)
@@ -97,12 +95,23 @@ public class BookSeriesController {
         return "book/series/addSeries";
     }
 
-    private void validate(@NotNull BookSeriesCreateEditDto dto, @NotNull BindingResult bindingResult) {
+    private void validateName(@NotNull BookSeriesCreateEditDto dto, @NotNull BindingResult bindingResult) {
         if (bookSeriesService.findByName(dto.getName()).isPresent()) {
             bindingResult.rejectValue(
                     "name", "error.bookSeries",
                     "A book series with the same name already exists."
             );
         }
+    }
+
+    private @Nullable String checkError(@NotNull BookSeriesCreateEditDto dto, @NotNull BindingResult bindingResult,
+                                        RedirectAttributes redirectAttributes, String page) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("series", dto);
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+
+            return page;
+        }
+        return null;
     }
 }

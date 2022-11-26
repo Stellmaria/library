@@ -13,6 +13,7 @@ import com.it.academy.library.service.entity.book.BookService;
 import com.it.academy.library.service.entity.book.BookStatusService;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -42,17 +43,9 @@ public class BookController {
     @PostMapping
     public String create(@Validated @NotNull BookCreateEditDto dto, @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
-        if (bookService.findByTitle(dto.getTitle()).isPresent()) {
-            bindingResult.rejectValue(
-                    "title", "error.book", "A book with this title already exists."
-            );
-        }
-
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("book", dto);
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-
-            return "redirect:/books/addBook";
+        var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/books/addBook");
+        if (view != null) {
+            return view;
         }
 
         bookService.create(dto);
@@ -91,11 +84,9 @@ public class BookController {
     @PostMapping("/{id}/update")
     public String update(@PathVariable("id") Long id, @Validated BookCreateEditDto dto,
                          @NotNull BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("book", dto);
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-
-            return "redirect:/books/{id}";
+        var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/books/{id}");
+        if (view != null) {
+            return view;
         }
 
         return bookService.update(id, dto)
@@ -124,5 +115,16 @@ public class BookController {
         model.addAttribute("genres", bookGenreService.findAll());
 
         return "book/addBook";
+    }
+
+    private @Nullable String checkError(@NotNull BookCreateEditDto dto, @NotNull BindingResult bindingResult,
+                                        RedirectAttributes redirectAttributes, String page) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("book", dto);
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+
+            return page;
+        }
+        return null;
     }
 }
