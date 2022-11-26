@@ -11,14 +11,6 @@ import java.util.Optional;
 
 public interface OrderService {
     /**
-     * Creating a new order.
-     *
-     * @param dto for creating.
-     * @return new order.
-     */
-    OrderReadDto create(OrderCreateEditDto dto);
-
-    /**
      * Search for an order by order id.
      *
      * @param id for search.

@@ -27,13 +27,6 @@ public interface BookService {
     Optional<BookReadDto> findById(Long id);
 
     /**
-     * Search all books.
-     *
-     * @return collection of found books.
-     */
-    Collection<BookReadDto> findAll();
-
-    /**
      * Search for all books with filtering.
      *
      * @param filter   for search.

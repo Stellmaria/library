@@ -82,6 +82,7 @@ public class CartServiceImpl implements CartService {
             if (Objects.requireNonNull(book).getQuantity() < entry.getValue()) {
                 throw new NotEnoughProductsInStockException(book);
             }
+
             entry.getKey().setQuantity(book.getQuantity() - entry.getValue());
             entry.getKey().setOrder(order);
         }

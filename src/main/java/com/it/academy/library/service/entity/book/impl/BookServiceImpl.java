@@ -74,17 +74,6 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Collection<BookReadDto> findAll() {
-        return bookRepository.findAll().stream()
-                .map(entity -> {
-                    eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
-
-                    return bookReadMapper.map(entity);
-                })
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public Page<BookReadDto> findAll(BookFilter filter, Pageable pageable) {
         return bookRepository.findAll(BookFilter.queryPredicates(filter), pageable)
                 .map(entity -> {

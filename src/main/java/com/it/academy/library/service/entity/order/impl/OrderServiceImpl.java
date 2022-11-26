@@ -33,20 +33,6 @@ public class OrderServiceImpl implements OrderService {
     private final OrderReadMapper orderReadMapper;
 
     @Override
-    @Transactional(rollbackFor = {Exception.class})
-    public OrderReadDto create(OrderCreateEditDto dto) {
-        return Optional.of(dto)
-                .map(orderCreateEditMapper::map)
-                .map(entity -> {
-                    eventPublisher.publishEvent(new EntityEvent(entity, AccessType.CREATE));
-
-                    return orderRepository.save(entity);
-                })
-                .map(orderReadMapper::map)
-                .orElseThrow();
-    }
-
-    @Override
     public Optional<OrderReadDto> findById(Long id) {
         return orderRepository.findById(id)
                 .map(entity -> {
