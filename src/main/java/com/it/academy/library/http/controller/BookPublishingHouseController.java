@@ -123,12 +123,12 @@ public class BookPublishingHouseController {
 
     private @Nullable String checkError(@NotNull BookPublishingHouseCreateEditDto dto,
                                         @NotNull BindingResult bindingResult, RedirectAttributes redirectAttributes,
-                                        String page) {
+                                        String view) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("publishingHouse", dto);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
 
-            return page;
+            return view;
         }
         return null;
     }

@@ -100,12 +100,12 @@ public class BookGenreController {
     }
 
     private @Nullable String checkError(@NotNull BookGenreCreateEditDto dto, @NotNull BindingResult bindingResult,
-                                        RedirectAttributes redirectAttributes, String page) {
+                                        RedirectAttributes redirectAttributes, String view) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("genre", dto);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
 
-            return page;
+            return view;
         }
         return null;
     }

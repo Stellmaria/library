@@ -113,7 +113,7 @@ public class UserController {
                     .rejectValue("email", "error.user",
                             "There is already a user registered with the email provided");
         }
-        if (userService.findByEmail(dto.getEmail()).isPresent()) {
+        if (userService.findByUsername(dto.getUsername()).isPresent()) {
             bindingResult
                     .rejectValue("username", "error.user",
                             "There is already a user registered with the username provided");
@@ -121,12 +121,12 @@ public class UserController {
     }
 
     private @Nullable String checkError(@NotNull UserCreateEditDto dto, @NotNull BindingResult bindingResult,
-                                        RedirectAttributes redirectAttributes, String page) {
+                                        RedirectAttributes redirectAttributes, String view) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("user", dto);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
 
-            return page;
+            return view;
         }
         return null;
     }

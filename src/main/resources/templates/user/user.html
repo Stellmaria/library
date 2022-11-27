@@ -88,7 +88,7 @@
 </header>
 
 <main>
-    <div class="product-element">
+    <div class="product-element" sec:authorize="hasAnyRole('ADMIN','READER')">
         <form enctype="multipart/form-data" method="post"
               th:action="@{/users/{userId}/update(userId=${user.id})}" th:object="${user}">
 
@@ -164,6 +164,40 @@
 
         <div class="error" th:if="${errors}">
             <p style="color: red" th:each="error : ${errors}" th:text="${error.defaultMessage}">Error message</p>
+        </div>
+    </div>
+</main>
+
+<main>
+    <div class="product-element" sec:authorize="hasRole('LIBRARIAN')">
+        <div class="element">
+            <h3>Username: </h3>
+
+            <p th:text="${user.username}"></p>
+        </div>
+
+        <div class="element">
+            <h3>First name: </h3>
+
+            <p th:text="${user.firstName}"></p>
+        </div>
+
+        <div class="element">
+            <h3>Last name: </h3>
+
+            <p th:text="${user.lastName}"></p>
+        </div>
+
+        <div class="element">
+            <h3>Email: </h3>
+
+            <p th:text="${user.email}"></p>
+        </div>
+
+        <div class="element">
+            <h3>Status: </h3>
+
+            <p th:text="${user.userStatus.name}"></p>
         </div>
     </div>
 </main>

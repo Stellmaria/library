@@ -112,12 +112,12 @@ public class AuthorController {
     }
 
     private @Nullable String checkError(@NotNull AuthorCreateEditDto dto, @NotNull BindingResult bindingResult,
-                                        RedirectAttributes redirectAttributes, String page) {
+                                        RedirectAttributes redirectAttributes, String view) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("author", dto);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
 
-            return page;
+            return view;
         }
         return null;
     }

@@ -138,12 +138,12 @@ public class BookController {
     }
 
     private @Nullable String checkError(@NotNull BookCreateEditDto dto, @NotNull BindingResult bindingResult,
-                                        RedirectAttributes redirectAttributes, String page) {
+                                        RedirectAttributes redirectAttributes, String view) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("book", dto);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
 
-            return page;
+            return view;
         }
         return null;
     }
