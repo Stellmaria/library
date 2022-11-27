@@ -87,7 +87,7 @@ public class CartServiceImpl implements CartService {
             entry.getKey().setOrder(order);
         }
         bookRepository.saveAllAndFlush(books.keySet());
-        eventPublisher.publishEvent(new EntityEvent(books.keySet(), AccessType.CREATE));
+        eventPublisher.publishEvent(new EntityEvent(books.keySet(), AccessType.UPDATE));
 
         books.clear();
     }
@@ -109,9 +109,8 @@ public class CartServiceImpl implements CartService {
                 now.getYear(), now.getMonth(), now.getDayOfMonth(), now.getHour(), now.getMinute()
         );
 
-        var orderStatus = OrderStatus.builder()
-                .id(1)
-                .build();
+        var orderStatus = new OrderStatus();
+        orderStatus.setId(1);
 
         var order = new Order();
 

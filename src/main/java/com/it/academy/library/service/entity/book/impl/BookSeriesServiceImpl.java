@@ -79,9 +79,8 @@ public class BookSeriesServiceImpl implements BookSeriesService {
 
     @Override
     public Optional<BookSeriesReadDto> findByName(String name) {
-        var filter = BookSeriesFilter.builder()
-                .name(name)
-                .build();
+        var filter = new BookSeriesFilter();
+        filter.setName(name);
 
         return bookSeriesRepository.findAllByBookSeriesFilter(filter).stream()
                 .map(entity -> {

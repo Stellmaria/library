@@ -78,9 +78,8 @@ public class BookPublishingHouseServiceImpl implements BookPublishingHouseServic
 
     @Override
     public Optional<BookPublishingHouseReadDto> findByName(String name) {
-        var filter = BookPublishingHouseFilter.builder()
-                .name(name)
-                .build();
+        var filter = new BookPublishingHouseFilter();
+        filter.setName(name);
 
         return bookPublishingHouseRepository.findAllByBookPublishingHouseFilter(filter).stream()
                 .map(entity -> {
