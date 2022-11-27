@@ -1,6 +1,6 @@
 package com.it.academy.library.service.entity.order;
 
-import com.it.academy.library.exception.NotEnoughProductsInStockException;
+import com.it.academy.library.exception.NotEnoughBooksInStockException;
 import com.it.academy.library.model.entity.book.Book;
 import com.it.academy.library.service.dto.read.book.BookReadDto;
 import com.it.academy.library.service.dto.read.user.UserReadDto;
@@ -28,10 +28,10 @@ public interface CartService {
      * Validation of the order with the number of books from the database.
      *
      * @param user for check.
-     * @throws NotEnoughProductsInStockException if the quantity does not match,
-     *                                           it gives an error with a description of the problem.
+     * @throws NotEnoughBooksInStockException if the quantity does not match,
+     *                                        it gives an error with a description of the problem.
      */
-    void checkout(UserReadDto user) throws NotEnoughProductsInStockException;
+    void checkout(UserReadDto user) throws NotEnoughBooksInStockException;
 
     /**
      * Getter.

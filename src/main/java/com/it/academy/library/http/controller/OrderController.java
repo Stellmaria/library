@@ -1,6 +1,6 @@
 package com.it.academy.library.http.controller;
 
-import com.it.academy.library.exception.NotEnoughProductsInStockException;
+import com.it.academy.library.exception.NotEnoughBooksInStockException;
 import com.it.academy.library.service.dto.PageResponse;
 import com.it.academy.library.service.dto.create.OrderCreateEditDto;
 import com.it.academy.library.service.dto.filter.order.OrderFilter;
@@ -40,7 +40,7 @@ public class OrderController {
     public String create(RedirectAttributes redirectAttributes, @NotNull Principal principal) {
         try {
             cartService.checkout(userService.findByUsername(principal.getName()).orElse(null));
-        } catch (NotEnoughProductsInStockException e) {
+        } catch (NotEnoughBooksInStockException e) {
             redirectAttributes.addFlashAttribute("outOfStockMessage", e.getMessage());
 
             return "redirect:/orders/cart";

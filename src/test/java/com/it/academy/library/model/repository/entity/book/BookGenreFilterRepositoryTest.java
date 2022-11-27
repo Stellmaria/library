@@ -31,7 +31,6 @@ class BookGenreFilterRepositoryTest extends IntegrationTestBase {
         var expectedCount = bookGenreRepository.count() + 1;
         var bookGenre = BookGenre.builder()
                 .name(ConstantUtil.NEW + ConstantUtil.SAVE)
-                .description(ConstantUtil.NEW + ConstantUtil.SAVE)
                 .build();
 
         var actual = bookGenreRepository.save(bookGenre);
@@ -39,8 +38,7 @@ class BookGenreFilterRepositoryTest extends IntegrationTestBase {
 
         assertAll(
                 () -> assertEquals(expectedCount, actualCount),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getName()),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getDescription())
+                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getName())
         );
     }
 
@@ -62,15 +60,11 @@ class BookGenreFilterRepositoryTest extends IntegrationTestBase {
 
         bookGenre.ifPresent(it -> {
             it.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            it.setDescription(ConstantUtil.NEW + ConstantUtil.UPDATE);
             bookGenreRepository.save(it);
         });
         var actual = bookGenreRepository.findById(BOOK_GENRE_ID_2);
 
-        actual.ifPresent(it -> {
-            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getName());
-            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getDescription());
-        });
+        actual.ifPresent(it -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getName()));
     }
 
     @Test

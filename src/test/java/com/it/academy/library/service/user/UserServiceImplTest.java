@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import static com.it.academy.library.util.ConstantUtil.UPDATE;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -25,6 +26,7 @@ class UserServiceImplTest extends IntegrationTestBase {
     private static final Integer USER_STATUS_ID_1 = 1;
     private static final String TEST_EMAIL_EXAMPLE_COM = "test_email@example.com";
     private static final String EMAIL_TEST_EXAMPLE_COM = "email_test@example.com";
+
 
     private final UserService userService;
 
@@ -71,7 +73,9 @@ class UserServiceImplTest extends IntegrationTestBase {
                 new MockMultipartFile("test", new byte[0])
         );
 
-        var actual = userService.update(USER_ID_4, user);
+        var actual = userService.update(
+                USER_ID_4, user, SecurityContextHolder.getContext().getAuthentication()
+        );
 
         actual.ifPresent(it -> {
             assertEquals(UPDATE + ConstantUtil.NEW, actual.get().getUsername());

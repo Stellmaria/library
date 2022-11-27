@@ -1,6 +1,6 @@
 package com.it.academy.library.service.entity.order.impl;
 
-import com.it.academy.library.exception.NotEnoughProductsInStockException;
+import com.it.academy.library.exception.NotEnoughBooksInStockException;
 import com.it.academy.library.listener.entity.AccessType;
 import com.it.academy.library.listener.entity.EntityEvent;
 import com.it.academy.library.mapper.convert.book.BookMapper;
@@ -71,7 +71,7 @@ public class CartServiceImpl implements CartService {
         return books;
     }
 
-    public void checkout(UserReadDto user) throws NotEnoughProductsInStockException {
+    public void checkout(UserReadDto user) throws NotEnoughBooksInStockException {
         var order = new Order();
         order.setId(createNewOrder(user).getId());
 
@@ -80,7 +80,7 @@ public class CartServiceImpl implements CartService {
             eventPublisher.publishEvent(new EntityEvent(book, AccessType.READ));
 
             if (Objects.requireNonNull(book).getQuantity() < entry.getValue()) {
-                throw new NotEnoughProductsInStockException(book);
+                throw new NotEnoughBooksInStockException(book);
             }
 
             entry.getKey().setQuantity(book.getQuantity() - entry.getValue());
