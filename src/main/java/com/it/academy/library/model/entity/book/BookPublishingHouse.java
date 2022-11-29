@@ -38,7 +38,8 @@ public class BookPublishingHouse extends AbstractAuditingEntity<Integer> {
     @Id
     private Integer id;
 
-    @Column(nullable = false,
+    @Column(
+            nullable = false,
             length = 64,
             unique = true
     )

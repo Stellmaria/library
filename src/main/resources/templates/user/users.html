@@ -41,21 +41,15 @@
                     </li>
 
                     <li sec:authorize="hasRole('READER')">
-                        <p>
-                            <a th:href="@{/orders/order}">Orders</a>
-                        </p>
+                        <p><a th:href="@{/orders/userOrders}">Orders</a></p>
                     </li>
 
                     <li sec:authorize="hasRole('ADMIN')">
-                        <p>
-                            <a th:href="@{/users/}">Users</a>
-                        </p>
+                        <p><a th:href="@{/users/}">Users</a></p>
                     </li>
 
-                    <li sec:authorize="hasRole('ADMIN')">
-                        <p>
-                            <a th:href="@{/orders/}">Orders</a>
-                        </p>
+                    <li sec:authorize="hasAnyRole('ADMIN', 'LIBRARIAN')">
+                        <p><a th:href="@{/orders/}">Orders</a></p>
                     </li>
                 </ul>
             </nav>

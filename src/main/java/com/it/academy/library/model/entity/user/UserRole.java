@@ -39,7 +39,8 @@ public class UserRole implements GrantedAuthority, BaseEntity<Integer> {
     @Id
     private Integer id;
 
-    @Column(nullable = false,
+    @Column(
+            nullable = false,
             length = 64,
             unique = true
     )

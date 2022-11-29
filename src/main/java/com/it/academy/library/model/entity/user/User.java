@@ -43,25 +43,29 @@ public class User extends AbstractAuditingEntity<Long> {
     @Id
     private Long id;
 
-    @Column(nullable = false,
+    @Column(
+            nullable = false,
             length = 50,
             unique = true
     )
     private String username;
 
-    @Column(name = "first_name",
+    @Column(
+            name = "first_name",
             nullable = false,
             length = 99
     )
     private String firstName;
 
-    @Column(name = "last_name",
+    @Column(
+            name = "last_name",
             nullable = false,
             length = 99
     )
     private String lastName;
 
-    @Column(nullable = false,
+    @Column(
+            nullable = false,
             length = 50,
             unique = true
     )

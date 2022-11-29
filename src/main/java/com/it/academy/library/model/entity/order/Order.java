@@ -60,12 +60,14 @@ public class Order extends AbstractAuditingEntity<Long> {
     @ToString.Exclude
     private OrderStatus orderStatus;
 
-    @Column(name = "order_date",
+    @Column(
+            name = "order_date",
             nullable = false
     )
     private LocalDateTime orderDate;
 
-    @Column(name = "return_date",
+    @Column(
+            name = "return_date",
             nullable = false
     )
     private LocalDateTime returnDate;

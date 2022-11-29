@@ -152,12 +152,10 @@ public class UserServiceImpl implements UserService {
                     var admin = authentication.getAuthorities().stream()
                             .anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN"));
                     if (!admin) {
-                        var userStatus = UserStatus.builder()
-                                .id(3)
-                                .build();
-                        var userRole = UserRole.builder()
-                                .id(3)
-                                .build();
+                        var userStatus = new UserStatus();
+                        userStatus.setId(3);
+                        var userRole = new UserRole();
+                        userRole.setId(3);
 
                         entity.setUserRole(userRole);
                         entity.setUserStatus(userStatus);

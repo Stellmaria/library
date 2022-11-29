@@ -22,13 +22,13 @@ class BookStatusRepositoryTest extends IntegrationTestBase {
 
     private final BookStatusFilterMapper bookStatusFilterMapper;
 
+    private final BookStatus bookStatus = new BookStatus();
+
     @Test
     @DisplayName("Save book status.")
     void saveBookStatus() {
         var expectedCount = bookStatusRepository.count() + 1;
-        var bookStatus = BookStatus.builder()
-                .name(ConstantUtil.NEW + ConstantUtil.SAVE)
-                .build();
+        bookStatus.setName(ConstantUtil.NEW + ConstantUtil.SAVE);
 
         var actual = bookStatusRepository.save(bookStatus);
         var actualCount = bookStatusRepository.count();
@@ -70,12 +70,11 @@ class BookStatusRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find book status by book status filter.")
     void findAllBookStatusByBookStatusFilter() {
-        var bookStatus = BookStatus.builder()
-                .name(ConstantUtil.BOOK_STATUS_NAME_READING_ROOM)
-                .build();
+        bookStatus.setName(ConstantUtil.BOOK_STATUS_NAME_READING_ROOM);
 
-        var actual = bookStatusRepository.findAllByBookStatusFilter(bookStatusFilterMapper.map(
-                bookStatus));
+        var actual = bookStatusRepository.findAllByBookStatusFilter(
+                bookStatusFilterMapper.map(bookStatus)
+        );
 
         assertThat(actual).hasSize(1);
     }

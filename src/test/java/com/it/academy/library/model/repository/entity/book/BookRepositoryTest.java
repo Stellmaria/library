@@ -183,12 +183,12 @@ class BookRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book by book language filter.")
     void findAllBookByBooksLanguageFilter() {
-        var bookLanguage = BookLanguage.builder()
-                .name(BOOK_LANGUAGE_NAME_POLISH)
-                .build();
+        var bookLanguage = new BookLanguage();
+        bookLanguage.setName(BOOK_LANGUAGE_NAME_POLISH);
 
-        var actual = bookRepository.findAllByBookLanguageFilter(bookLanguageFilterMapper.map(
-                bookLanguage));
+        var actual = bookRepository.findAllByBookLanguageFilter(
+                bookLanguageFilterMapper.map(bookLanguage)
+        );
 
         assertThat(actual).hasSize(2);
     }
@@ -196,11 +196,12 @@ class BookRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book by book format filter.")
     void findAllBookByBookFormatFilter() {
-        var bookFormat = BookFormat.builder()
-                .name(BOOK_FORMAT_NAME_MASS_MARKET_PAPERBACK)
-                .build();
+        var bookFormat = new BookFormat();
+        bookFormat.setName(BOOK_FORMAT_NAME_MASS_MARKET_PAPERBACK);
 
-        var actual = bookRepository.findAllByBookFormatFilter(bookFormatFilterMapper.map(bookFormat));
+        var actual = bookRepository.findAllByBookFormatFilter(
+                bookFormatFilterMapper.map(bookFormat)
+        );
 
         assertThat(actual).hasSize(1);
     }
@@ -208,12 +209,12 @@ class BookRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book by book publishing house filter.")
     void findAllBookByBookPublishingHouseFilter() {
-        var bookPublishingHouse = BookPublishingHouse.builder()
-                .name(ConstantUtil.BOOK_PUBLISHING_HOUSE_FRAGMENT_NAME_BOOKS)
-                .build();
+        var bookPublishingHouse = new BookPublishingHouse();
+        bookPublishingHouse.setName(ConstantUtil.BOOK_PUBLISHING_HOUSE_FRAGMENT_NAME_BOOKS);
 
         var actual = bookRepository.findAllByBookPublishingHouseFilter(
-                bookPublishingHouseFilterMapper.map(bookPublishingHouse));
+                bookPublishingHouseFilterMapper.map(bookPublishingHouse)
+        );
 
         assertThat(actual).hasSize(3);
     }
@@ -221,11 +222,12 @@ class BookRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book by book status filter.")
     void findAllBookByBookStatusFilter() {
-        var bookStatus = BookStatus.builder()
-                .name(ConstantUtil.BOOK_STATUS_NAME_READING_ROOM)
-                .build();
+        var bookStatus = new BookStatus();
+        bookStatus.setName(ConstantUtil.BOOK_STATUS_NAME_READING_ROOM);
 
-        var actual = bookRepository.findAllByBookStatusFilter(bookStatusFilterMapper.map(bookStatus));
+        var actual = bookRepository.findAllByBookStatusFilter(
+                bookStatusFilterMapper.map(bookStatus)
+        );
 
         assertThat(actual).isEmpty();
     }
@@ -233,11 +235,12 @@ class BookRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book by book series filter.")
     void findAllBookByBookSeriesFilter() {
-        var bookSeries = BookSeries.builder()
-                .name(BOOK_SERIES_MILLENNIUM)
-                .build();
+        var bookSeries = new BookSeries();
+        bookSeries.setName(BOOK_SERIES_MILLENNIUM);
 
-        var actual = bookRepository.findAllByBookSeriesFilter(bookSeriesFilterMapper.map(bookSeries));
+        var actual = bookRepository.findAllByBookSeriesFilter(
+                bookSeriesFilterMapper.map(bookSeries)
+        );
 
         assertThat(actual).hasSize(4);
     }
@@ -245,11 +248,12 @@ class BookRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book by order filter.")
     void findAllBookByOrderFilter() {
-        var order = Order.builder()
-                .orderDate(ConstantUtil.ORDER_DATE_10)
-                .build();
+        var order = new Order();
+        order.setOrderDate(ConstantUtil.ORDER_DATE_10);
 
-        var actual = bookRepository.findAllByOrderFilter(orderFilterMapper.map(order));
+        var actual = bookRepository.findAllByOrderFilter(
+                orderFilterMapper.map(order)
+        );
 
         assertThat(actual).hasSize(1);
     }
@@ -257,11 +261,12 @@ class BookRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book by user filter.")
     void findAllBookByUserFilter() {
-        var user = User.builder()
-                .firstName(ConstantUtil.USER_FIRST_NAME_SVETA)
-                .build();
+        var user = new User();
+        user.setFirstName(ConstantUtil.USER_FIRST_NAME_SVETA);
 
-        var actual = bookRepository.findAllByUserFilter(userFilterMapper.map(user));
+        var actual = bookRepository.findAllByUserFilter(
+                userFilterMapper.map(user)
+        );
 
         assertThat(actual).hasSize(1);
     }
@@ -269,11 +274,12 @@ class BookRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book by book genre filter.")
     void findAllBookByGenreFilter() {
-        var bookGenre = BookGenre.builder()
-                .name(ConstantUtil.BOOK_GENRE_FRAGMENT_NAME_SS)
-                .build();
+        var bookGenre = new BookGenre();
+        bookGenre.setName(ConstantUtil.BOOK_GENRE_FRAGMENT_NAME_SS);
 
-        var actual = bookRepository.findAllByBookGenreFilter(bookGenreFilterMapper.map(bookGenre));
+        var actual = bookRepository.findAllByBookGenreFilter(
+                bookGenreFilterMapper.map(bookGenre)
+        );
 
         assertThat(actual).hasSize(6);
     }
@@ -281,11 +287,12 @@ class BookRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book by author filter.")
     void findAllBookByAuthorFilter() {
-        var author = Author.builder()
-                .firstName(FIRST_NAME_STIEG)
-                .build();
+        var author = new Author();
+        author.setFirstName(FIRST_NAME_STIEG);
 
-        var actual = bookRepository.findAllByAuthorFilter(authorFilterMapper.map(author));
+        var actual = bookRepository.findAllByAuthorFilter(
+                authorFilterMapper.map(author)
+        );
 
         assertThat(actual).hasSize(4);
     }
@@ -293,11 +300,12 @@ class BookRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book by book filter.")
     void findAllBookByBookFilter() {
-        var book = Book.builder()
-                .title(ConstantUtil.BOOK_TITLE_FRAGMENT_PHP)
-                .build();
+        var book = new Book();
+        book.setTitle(ConstantUtil.BOOK_TITLE_FRAGMENT_PHP);
 
-        var actual = bookRepository.findAllByBookFilter(bookFilterMapper.map(book));
+        var actual = bookRepository.findAllByBookFilter(
+                bookFilterMapper.map(book)
+        );
 
         assertThat(actual).hasSize(1);
     }

@@ -36,13 +36,15 @@ public class Author extends AbstractAuditingEntity<Long> {
     @Id
     private Long id;
 
-    @Column(name = "first_name",
+    @Column(
+            name = "first_name",
             nullable = false,
             length = 64
     )
     private String firstName;
 
-    @Column(name = "last_name",
+    @Column(
+            name = "last_name",
             nullable = false,
             length = 64
     )

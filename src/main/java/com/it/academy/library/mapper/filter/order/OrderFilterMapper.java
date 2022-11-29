@@ -8,7 +8,6 @@ import com.it.academy.library.service.dto.filter.order.OrderStatusFilter;
 import com.it.academy.library.service.dto.filter.user.UserFilter;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -30,14 +29,12 @@ public class OrderFilterMapper implements Mapper<Order, OrderFilter> {
         );
     }
 
-    @Nullable
     private OrderStatusFilter getOrderStatus(@NotNull Order object) {
         return Optional.ofNullable(object.getOrderStatus())
                 .map(orderStatusFilterMapper::map)
                 .orElse(null);
     }
 
-    @Nullable
     private UserFilter getUser(@NotNull Order object) {
         return Optional.ofNullable(object.getUser())
                 .map(userFilterMapper::map)

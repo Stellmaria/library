@@ -37,7 +37,8 @@ public class UserController {
     private final UserStatusService userStatusService;
 
     @PostMapping
-    public String create(@Validated @NotNull UserCreateEditDto dto, @NotNull BindingResult bindingResult,
+    public String create(@Validated @NotNull UserCreateEditDto dto,
+                         @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
         validate(dto, bindingResult);
 
@@ -50,7 +51,6 @@ public class UserController {
 
         return "redirect:/login";
     }
-
 
     @GetMapping
     public String findAll(@NotNull Model model, UserFilter filter, Pageable pageable) {
@@ -76,8 +76,10 @@ public class UserController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable("id") Long id, @Validated @NotNull UserCreateEditDto dto,
-                         @NotNull BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String update(@PathVariable("id") Long id,
+                         @Validated @NotNull UserCreateEditDto dto,
+                         @NotNull BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes) {
         var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/users/{id}");
         if (view != null) {
             return view;
@@ -109,19 +111,23 @@ public class UserController {
 
     private void validate(@NotNull UserCreateEditDto dto, @NotNull BindingResult bindingResult) {
         if (userService.findByEmail(dto.getEmail()).isPresent()) {
-            bindingResult
-                    .rejectValue("email", "error.user",
-                            "There is already a user registered with the email provided");
+            bindingResult.rejectValue(
+                    "email", "error.user",
+                    "There is already a user registered with the email provided"
+            );
         }
         if (userService.findByUsername(dto.getUsername()).isPresent()) {
-            bindingResult
-                    .rejectValue("username", "error.user",
-                            "There is already a user registered with the username provided");
+            bindingResult.rejectValue(
+                    "username", "error.user",
+                    "There is already a user registered with the username provided"
+            );
         }
     }
 
-    private @Nullable String checkError(@NotNull UserCreateEditDto dto, @NotNull BindingResult bindingResult,
-                                        RedirectAttributes redirectAttributes, String view) {
+    private @Nullable String checkError(@NotNull UserCreateEditDto dto,
+                                        @NotNull BindingResult bindingResult,
+                                        RedirectAttributes redirectAttributes,
+                                        String view) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("user", dto);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());

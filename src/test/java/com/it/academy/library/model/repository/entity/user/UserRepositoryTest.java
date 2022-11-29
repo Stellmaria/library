@@ -119,11 +119,12 @@ class UserRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all user by user role filter.")
     void findAllUserByUserRoleFilter() {
-        var userRole = UserRole.builder()
-                .name(ConstantUtil.USER_ROLE_NAME_READER)
-                .build();
+        var userRole = new UserRole();
+        userRole.setName(ConstantUtil.USER_ROLE_NAME_READER);
 
-        var actual = userRepository.findAllByUserRoleFilter(userRoleFilterMapper.map(userRole));
+        var actual = userRepository.findAllByUserRoleFilter(
+                userRoleFilterMapper.map(userRole)
+        );
 
         assertThat(actual).hasSize(2);
     }
@@ -131,22 +132,25 @@ class UserRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all user by user status filter.")
     void findAllUserByUserStatusFilter() {
-        var userStatus = UserStatus.builder()
-                .name(ConstantUtil.USER_STATUS_NAME_GUEST)
-                .build();
+        var userStatus = new UserStatus();
+        userStatus.setName(ConstantUtil.USER_STATUS_NAME_GUEST);
 
-        var actual = userRepository.findAllByUserStatusFilter(userStatusFilterMapper.map(userStatus));
+        var actual = userRepository.findAllByUserStatusFilter(
+                userStatusFilterMapper.map(userStatus)
+        );
+
         assertThat(actual).hasSize(1);
     }
 
     @Test
     @DisplayName("Find all user by user filter.")
     void findAllUserByUserFilter() {
-        var user = User.builder()
-                .firstName(ConstantUtil.USER_FIRST_NAME_SVETA)
-                .build();
+        var user = new User();
+        user.setFirstName(ConstantUtil.USER_FIRST_NAME_SVETA);
 
-        var actual = userRepository.findAllByUserFilter(userFilterMapper.map(user));
+        var actual = userRepository.findAllByUserFilter(
+                userFilterMapper.map(user)
+        );
 
         assertThat(actual).hasSize(1);
     }

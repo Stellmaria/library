@@ -31,7 +31,8 @@ public class BookPublishingHouseController {
     private final UserService userService;
 
     @PostMapping
-    public String create(@Validated @NotNull BookPublishingHouseCreateEditDto dto, @NotNull BindingResult bindingResult,
+    public String create(@Validated @NotNull BookPublishingHouseCreateEditDto dto,
+                         @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
         validateName(dto, bindingResult);
 
@@ -72,8 +73,10 @@ public class BookPublishingHouseController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable("id") Integer id, @Validated @NotNull BookPublishingHouseCreateEditDto dto,
-                         @NotNull BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String update(@PathVariable("id") Integer id,
+                         @Validated @NotNull BookPublishingHouseCreateEditDto dto,
+                         @NotNull BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes) {
         validateName(dto, bindingResult);
 
         var view = checkError(
@@ -122,7 +125,8 @@ public class BookPublishingHouseController {
     }
 
     private @Nullable String checkError(@NotNull BookPublishingHouseCreateEditDto dto,
-                                        @NotNull BindingResult bindingResult, RedirectAttributes redirectAttributes,
+                                        @NotNull BindingResult bindingResult,
+                                        RedirectAttributes redirectAttributes,
                                         String view) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("publishingHouse", dto);

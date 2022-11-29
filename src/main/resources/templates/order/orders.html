@@ -28,8 +28,11 @@
                         <a th:href="@{/books}">Books</a>
                         <div class="dropdown-menu">
                             <p><a th:href="@{/books/series}">Series</a></p>
+
                             <p><a th:href="@{/authors}">Authors</a></p>
+
                             <p><a th:href="@{/books/publishingHouses}">Houses</a></p>
+
                             <p><a th:href="@{/books/genres}">Genres</a></p>
                         </div>
                     </li>
@@ -41,21 +44,15 @@
                     </li>
 
                     <li sec:authorize="hasRole('READER')">
-                        <p>
-                            <a th:href="@{/orders/order}">Orders</a>
-                        </p>
+                        <p><a th:href="@{/orders/userOrders}">Orders</a></p>
                     </li>
 
                     <li sec:authorize="hasRole('ADMIN')">
-                        <p>
-                            <a th:href="@{/users/}">Users</a>
-                        </p>
+                        <p><a th:href="@{/users/}">Users</a></p>
                     </li>
 
-                    <li sec:authorize="hasRole('ADMIN')">
-                        <p>
-                            <a th:href="@{/orders/}">Orders</a>
-                        </p>
+                    <li sec:authorize="hasAnyRole('ADMIN', 'LIBRARIAN')">
+                        <p><a th:href="@{/orders/}">Orders</a></p>
                     </li>
                 </ul>
             </nav>
@@ -94,8 +91,7 @@
 
                     <input class="search-input" id="page" name="page" th:value="${orders.metadata.page}" type="number">
 
-                    <input class="search-input" id="size" name="size" th:value="${orders.metadata.size}"
-                           type="number">
+                    <input class="search-input" id="size" name="size" th:value="${orders.metadata.size}" type="number">
                 </label>
             </form>
         </div>

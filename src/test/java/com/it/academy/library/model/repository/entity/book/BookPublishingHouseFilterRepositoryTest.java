@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
-
 import static com.it.academy.library.util.ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -22,13 +20,13 @@ class BookPublishingHouseFilterRepositoryTest extends IntegrationTestBase {
 
     private final BookPublishingHouseFilterMapper bookPublishingHouseFilterMapper;
 
+    private final BookPublishingHouse bookPublishingHouse = new BookPublishingHouse();
+
     @Test
     @DisplayName("Save book publishing house.")
     void saveBookPublishingHouse() {
         var expectedCount = bookPublishingHouseRepository.count() + 1;
-        var bookPublishingHouse = BookPublishingHouse.builder()
-                .name(ConstantUtil.NEW + ConstantUtil.SAVE)
-                .build();
+        bookPublishingHouse.setName(ConstantUtil.NEW + ConstantUtil.SAVE);
 
         var actual = bookPublishingHouseRepository.save(bookPublishingHouse);
         var actualCount = bookPublishingHouseRepository.count();
@@ -53,8 +51,8 @@ class BookPublishingHouseFilterRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Update book publishing house.")
     void updateBookPublishingHouse() {
-        Optional<BookPublishingHouse> bookPublishingHouse;
-        bookPublishingHouse = bookPublishingHouseRepository.findById(BOOK_PUBLISHING_HOUSE_ID_1);
+        var bookPublishingHouse =
+                bookPublishingHouseRepository.findById(BOOK_PUBLISHING_HOUSE_ID_1);
 
         bookPublishingHouse.ifPresent(it -> {
             it.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
@@ -71,13 +69,11 @@ class BookPublishingHouseFilterRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book publishing house by book publishing house.")
     void findAllBookPublishingHouseByBookPublishingHouseFilter() {
-        var bookPublishingHouse = BookPublishingHouse.builder()
-                .name(ConstantUtil.BOOK_PUBLISHING_HOUSE_FRAGMENT_NAME_BOOKS)
-                .build();
+        bookPublishingHouse.setName(ConstantUtil.BOOK_PUBLISHING_HOUSE_FRAGMENT_NAME_BOOKS);
 
         var actual = bookPublishingHouseRepository.findAllByBookPublishingHouseFilter(
-                bookPublishingHouseFilterMapper.map(
-                        bookPublishingHouse));
+                bookPublishingHouseFilterMapper.map(bookPublishingHouse)
+        );
 
         assertThat(actual).hasSize(3);
     }

@@ -26,8 +26,11 @@
                         <a th:href="@{/books}">Books</a>
                         <div class="dropdown-menu">
                             <p><a th:href="@{/books/series}">Series</a></p>
+
                             <p><a th:href="@{/authors}">Authors</a></p>
+
                             <p><a th:href="@{/books/publishingHouses}">Houses</a></p>
+
                             <p><a th:href="@{/books/genres}">Genres</a></p>
                         </div>
                     </li>
@@ -39,21 +42,15 @@
                     </li>
 
                     <li sec:authorize="hasRole('READER')">
-                        <p>
-                            <a th:href="@{/orders/order}">Orders</a>
-                        </p>
+                        <p><a th:href="@{/orders/userOrders}">Orders</a></p>
                     </li>
 
                     <li sec:authorize="hasRole('ADMIN')">
-                        <p>
-                            <a th:href="@{/users/}">Users</a>
-                        </p>
+                        <p><a th:href="@{/users/}">Users</a></p>
                     </li>
 
-                    <li sec:authorize="hasRole('ADMIN')">
-                        <p>
-                            <a th:href="@{/orders/}">Orders</a>
-                        </p>
+                    <li sec:authorize="hasAnyRole('ADMIN', 'LIBRARIAN')">
+                        <p><a th:href="@{/orders/}">Orders</a></p>
                     </li>
                 </ul>
             </nav>
@@ -76,6 +73,7 @@
         </div>
     </div>
 </header>
+
 <main>
     <div class="product-element" sec:authorize="hasRole('ADMIN')">
         <form method="post" th:action="@{/orders/{orderId}/update(orderId=${order.id})}" th:object="${order}">
@@ -167,12 +165,16 @@
     <div class="product-element" th:each="order : ${orders}">
         <div class="element">
             <h3>Status:</h3>
+
             <p th:text="${order.orderStatus.name}">Status</p>
         </div>
+
         <div class="element">
             <h3>Order date:</h3>
+
             <p th:text="${order.orderDate}">Order date</p>
         </div>
+
         <div class="element">
             <h3>Return date:</h3>
 
@@ -180,7 +182,6 @@
         </div>
         <br>
     </div>
-    <br>
 </main>
 
 </body>

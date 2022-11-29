@@ -57,6 +57,12 @@ public class BookServiceImpl implements BookService {
                 .map(entity -> {
                     eventPublisher.publishEvent(new EntityEvent(entity, AccessType.CREATE));
 
+                    if (entity.getImage() == null) {
+                        entity.setImage("cover_0.jpg");
+                    } else {
+                        entity.setImage(entity.getImage());
+                    }
+
                     return bookRepository.save(entity);
                 })
                 .map(bookReadMapper::map)

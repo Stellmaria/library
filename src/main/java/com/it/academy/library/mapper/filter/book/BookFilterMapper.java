@@ -12,7 +12,6 @@ import com.it.academy.library.service.dto.filter.book.BookStatusFilter;
 import com.it.academy.library.service.dto.filter.order.OrderFilter;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -46,42 +45,36 @@ public class BookFilterMapper implements Mapper<Book, BookFilter> {
         );
     }
 
-    @Nullable
     private OrderFilter getOrder(@NotNull Book object) {
         return Optional.ofNullable(object.getOrder())
                 .map(orderFilterMapper::map)
                 .orElse(null);
     }
 
-    @Nullable
     private BookSeriesFilter getBookSeries(@NotNull Book object) {
         return Optional.ofNullable(object.getBookSeries())
                 .map(bookSeriesFilterMapper::map)
                 .orElse(null);
     }
 
-    @Nullable
     private BookPublishingHouseFilter getBookPublishingHouse(@NotNull Book object) {
         return Optional.ofNullable(object.getBookPublishingHouse())
                 .map(bookPublishingHouseFilterMapper::map)
                 .orElse(null);
     }
 
-    @Nullable
     private BookFormatFilter getBookFormat(@NotNull Book object) {
         return Optional.ofNullable(object.getBookFormat())
                 .map(bookFormatFilterMapper::map)
                 .orElse(null);
     }
 
-    @Nullable
     private BookLanguageFilter getBookLanguage(@NotNull Book object) {
         return Optional.ofNullable(object.getBookLanguage())
                 .map(bookLanguageFilterMapper::map)
                 .orElse(null);
     }
 
-    @Nullable
     private BookStatusFilter getBookStatus(@NotNull Book object) {
         return Optional.ofNullable(object.getBookStatus())
                 .map(bookStatusFilterMapper::map)

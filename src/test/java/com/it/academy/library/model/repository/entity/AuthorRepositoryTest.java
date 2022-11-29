@@ -97,11 +97,12 @@ class AuthorRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all author by author filter.")
     void findAllAuthorByAuthorFilter() {
-        var author = Author.builder()
-                .firstName(AUTHOR_FIRST_NAME_JAMES)
-                .build();
+        var author = new Author();
+        author.setFirstName(AUTHOR_FIRST_NAME_JAMES);
 
-        var actual = authorRepository.findAllByAuthorFilter(authorFilterMapper.map(author));
+        var actual = authorRepository.findAllByAuthorFilter(
+                authorFilterMapper.map(author)
+        );
 
         assertThat(actual).hasSize(1);
     }
@@ -109,11 +110,12 @@ class AuthorRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all author by book filter.")
     void findAllAuthorByBookFilter() {
-        var book = Book.builder()
-                .title(ConstantUtil.BOOK_TITLE_FRAGMENT_PHP)
-                .build();
+        var book = new Book();
+        book.setTitle(ConstantUtil.BOOK_TITLE_FRAGMENT_PHP);
 
-        var actual = authorRepository.findAllByBookFilter(bookFilterMapper.map(book));
+        var actual = authorRepository.findAllByBookFilter(
+                bookFilterMapper.map(book)
+        );
 
         assertThat(actual).hasSize(2);
     }

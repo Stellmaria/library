@@ -111,11 +111,12 @@ class OrderRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all order by user filter.")
     void findAllOrderByUserFilter() {
-        var user = User.builder()
-                .firstName(USER_FIRST_NAME_SERGEY)
-                .build();
+        var user = new User();
+        user.setFirstName(USER_FIRST_NAME_SERGEY);
 
-        var actual = orderRepository.findAllByUserFilter(userFilterMapper.map(user));
+        var actual = orderRepository.findAllByUserFilter(
+                userFilterMapper.map(user)
+        );
 
         assertThat(actual).hasSize(1);
     }
@@ -123,11 +124,12 @@ class OrderRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all order by order filter.")
     void findAllOrderByOrderFilter() {
-        var order = Order.builder()
-                .orderDate(ORDER_DATE_25)
-                .build();
+        var order = new Order();
+        order.setOrderDate(ORDER_DATE_25);
 
-        var actual = orderRepository.findAllByOrderFilter(orderFilterMapper.map(order));
+        var actual = orderRepository.findAllByOrderFilter(
+                orderFilterMapper.map(order)
+        );
 
         assertThat(actual).hasSize(1);
     }
@@ -135,12 +137,12 @@ class OrderRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find orders by order status.")
     void findAllByStatus() {
-        var orderStatus = OrderStatus.builder()
-                .name(ORDER_STATUS_NAME_APPROVED)
-                .build();
+        var orderStatus = new OrderStatus();
+        orderStatus.setName(ORDER_STATUS_NAME_APPROVED);
 
-        var actual = orderRepository.findAllByOrderStatusFilter(orderStatusFilterMapper.map(
-                orderStatus));
+        var actual = orderRepository.findAllByOrderStatusFilter(
+                orderStatusFilterMapper.map(orderStatus)
+        );
 
         assertThat(actual).hasSize(1);
     }

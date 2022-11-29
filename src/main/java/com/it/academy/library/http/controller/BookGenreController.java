@@ -31,7 +31,8 @@ public class BookGenreController {
     private final UserService userService;
 
     @PostMapping
-    public String create(@Validated @NotNull BookGenreCreateEditDto dto, @NotNull BindingResult bindingResult,
+    public String create(@Validated @NotNull BookGenreCreateEditDto dto,
+                         @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
         validateName(dto, bindingResult);
 
@@ -68,8 +69,10 @@ public class BookGenreController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable("id") Integer id, @Validated @NotNull BookGenreCreateEditDto dto,
-                         @NotNull BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String update(@PathVariable("id") Integer id,
+                         @Validated @NotNull BookGenreCreateEditDto dto,
+                         @NotNull BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes) {
         validateName(dto, bindingResult);
 
         var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/books/genres/{id}");
@@ -99,8 +102,10 @@ public class BookGenreController {
         return "book/genre/addBookGenre";
     }
 
-    private @Nullable String checkError(@NotNull BookGenreCreateEditDto dto, @NotNull BindingResult bindingResult,
-                                        RedirectAttributes redirectAttributes, String view) {
+    private @Nullable String checkError(@NotNull BookGenreCreateEditDto dto,
+                                        @NotNull BindingResult bindingResult,
+                                        RedirectAttributes redirectAttributes,
+                                        String view) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("genre", dto);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
@@ -110,7 +115,8 @@ public class BookGenreController {
         return null;
     }
 
-    private void validateName(@NotNull BookGenreCreateEditDto dto, @NotNull BindingResult bindingResult) {
+    private void validateName(@NotNull BookGenreCreateEditDto dto,
+                              @NotNull BindingResult bindingResult) {
         if (bookGenreService.findByName(dto.getName()).isPresent()) {
             bindingResult.rejectValue(
                     "name", "error.bookGenre",

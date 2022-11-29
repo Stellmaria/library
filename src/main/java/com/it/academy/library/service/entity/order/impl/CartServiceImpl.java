@@ -100,7 +100,8 @@ public class CartServiceImpl implements CartService {
 
         return Objects.requireNonNull(orderRepository.findAllByOrderFilter(orderFilter).stream()
                 .findFirst()
-                .orElse(null));
+                .orElse(null)
+        );
     }
 
     private @NotNull Order createOrder(UserReadDto user) {

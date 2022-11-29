@@ -48,7 +48,8 @@ public class BookController {
     private final UserService userService;
 
     @PostMapping
-    public String create(@Validated @NotNull BookCreateEditDto dto, @NotNull BindingResult bindingResult,
+    public String create(@Validated @NotNull BookCreateEditDto dto,
+                         @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
         var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/books/addBook");
         if (view != null) {
@@ -91,8 +92,10 @@ public class BookController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable("id") Long id, @Validated BookCreateEditDto dto,
-                         @NotNull BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String update(@PathVariable("id") Long id,
+                         @Validated BookCreateEditDto dto,
+                         @NotNull BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes) {
         var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/books/{id}");
         if (view != null) {
             return view;
@@ -137,8 +140,10 @@ public class BookController {
                 .orElseGet(notFound()::build);
     }
 
-    private @Nullable String checkError(@NotNull BookCreateEditDto dto, @NotNull BindingResult bindingResult,
-                                        RedirectAttributes redirectAttributes, String view) {
+    private @Nullable String checkError(@NotNull BookCreateEditDto dto,
+                                        @NotNull BindingResult bindingResult,
+                                        RedirectAttributes redirectAttributes,
+                                        String view) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("book", dto);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());

@@ -27,7 +27,6 @@ class UserServiceImplTest extends IntegrationTestBase {
     private static final String TEST_EMAIL_EXAMPLE_COM = "test_email@example.com";
     private static final String EMAIL_TEST_EXAMPLE_COM = "email_test@example.com";
 
-
     private final UserService userService;
 
     @Test

@@ -29,7 +29,9 @@ public class BookSeriesReadMapper implements Mapper<BookSeries, BookSeriesReadDt
     }
 
     private Collection<Book> getBooks(@NotNull BookSeries object) {
-        return Optional.of(bookRepository.findAllByBookSeriesFilter(bookSeriesFilterMapper.map(object)))
+        var seriesFilter = bookSeriesFilterMapper.map(object);
+
+        return Optional.of(bookRepository.findAllByBookSeriesFilter(seriesFilter))
                 .orElse(null);
     }
 }

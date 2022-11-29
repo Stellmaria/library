@@ -23,13 +23,13 @@ class BookSeriesRepositoryTest extends IntegrationTestBase {
 
     private final BookSeriesFilterMapper bookSeriesFilterMapper;
 
+    private final BookSeries bookSeries = new BookSeries();
+
     @Test
     @DisplayName("Save book series.")
     void saveBookSeries() {
         var expectedCount = bookSeriesRepository.count() + 1;
-        var bookSeries = BookSeries.builder()
-                .name(ConstantUtil.NEW + ConstantUtil.SAVE)
-                .build();
+        bookSeries.setName(ConstantUtil.NEW + ConstantUtil.SAVE);
 
         var actual = bookSeriesRepository.save(bookSeries);
         var actualCount = bookSeriesRepository.count();
@@ -71,12 +71,11 @@ class BookSeriesRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book by book series filter.")
     void findAllBookByBookSeriesFilter() {
-        var bookSeries = BookSeries.builder()
-                .name(BOOK_SERIES_DARK_TOWN)
-                .build();
+        bookSeries.setName(BOOK_SERIES_DARK_TOWN);
 
-        var actual = bookSeriesRepository.findAllByBookSeriesFilter(bookSeriesFilterMapper.map(
-                bookSeries));
+        var actual = bookSeriesRepository.findAllByBookSeriesFilter(
+                bookSeriesFilterMapper.map(bookSeries)
+        );
 
         assertThat(actual).hasSize(1);
     }

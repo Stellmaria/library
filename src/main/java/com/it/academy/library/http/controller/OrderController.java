@@ -113,7 +113,7 @@ public class OrderController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/order")
+    @GetMapping("/userOrders")
     public String findOrder(@NotNull Model model, @NotNull Principal principal) {
         var user = Objects.requireNonNull(userService.findByUsername(principal.getName())
                 .orElse(null));

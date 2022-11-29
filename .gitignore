@@ -122,3 +122,5 @@ gradle-app.setting
 /build/test-results/
 /web.log.*.gz
 /web.log.*.tmp
+/web_test.*.gz
+/web_test.*.tmp

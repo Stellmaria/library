@@ -25,14 +25,12 @@ public class ConstantUtil {
 
     public static final String BOOK_TITLE_FRAGMENT_PHP = "PHP";
     public static final Integer BOOK_YEAR_2023 = 2023;
-    public static final Short BOOK_PAGE_200 = 200;
     public static final String ISBN_13 = "978-5699383719";
     public static final String ISBN_10 = "5699383719";
 
     public static final Long ORDER_ID_4 = 4L;
     public static final LocalDateTime ORDER_DATE_10 =
             LocalDateTime.of(2022, 10, 23, 14, 35);
-    public static final String ORDER_TYPE_NAME_UNCONFIRMED = "Unconfirmed";
 
     public static final Long USER_ID_5 = 5L;
     public static final LocalDate USER_BIRTHDAY = LocalDate.of(2000, 1, 10);

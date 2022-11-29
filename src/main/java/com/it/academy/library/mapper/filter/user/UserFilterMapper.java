@@ -7,7 +7,6 @@ import com.it.academy.library.service.dto.filter.user.UserRoleFilter;
 import com.it.academy.library.service.dto.filter.user.UserStatusFilter;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -33,14 +32,12 @@ public class UserFilterMapper implements Mapper<User, UserFilter> {
         );
     }
 
-    @Nullable
     private UserStatusFilter getUserStatus(@NotNull User object) {
         return Optional.ofNullable(object.getUserStatus())
                 .map(userStatusFilterMapper::map)
                 .orElse(null);
     }
 
-    @Nullable
     private UserRoleFilter getUserRole(@NotNull User object) {
         return Optional.ofNullable(object.getUserRole())
                 .map(userRoleFilterMapper::map)

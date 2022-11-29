@@ -22,13 +22,13 @@ class UserStatusRepositoryTest extends IntegrationTestBase {
 
     private final UserStatusFilterMapper userStatusFilterMapper;
 
+    private final UserStatus userStatus = new UserStatus();
+
     @Test
     @DisplayName("Save user status.")
     void saveUserStatus() {
         var expectedCount = userStatusRepository.count() + 1;
-        var userStatus = UserStatus.builder()
-                .name(ConstantUtil.NEW + ConstantUtil.SAVE)
-                .build();
+        userStatus.setName(ConstantUtil.NEW + ConstantUtil.SAVE);
 
         var actual = userStatusRepository.save(userStatus);
         var actualCount = userStatusRepository.count();
@@ -70,12 +70,11 @@ class UserStatusRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all user status by user status filter.")
     void findAllByUserStatusFilter() {
-        var userStatus = UserStatus.builder()
-                .name(ConstantUtil.USER_STATUS_NAME_GUEST)
-                .build();
+        userStatus.setName(ConstantUtil.USER_STATUS_NAME_GUEST);
 
-        var actual = userStatusRepository.findAllByUserStatusFilter(userStatusFilterMapper.map(
-                userStatus));
+        var actual = userStatusRepository.findAllByUserStatusFilter(
+                userStatusFilterMapper.map(userStatus)
+        );
 
         assertThat(actual).hasSize(1);
     }

@@ -36,7 +36,8 @@ public class AuthorController {
     private final UserService userService;
 
     @PostMapping
-    public String create(@Validated @NotNull AuthorCreateEditDto dto, @NotNull BindingResult bindingResult,
+    public String create(@Validated @NotNull AuthorCreateEditDto dto,
+                         @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
         var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/authors/addAuthor");
         if (view != null) {
@@ -72,8 +73,10 @@ public class AuthorController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable("id") Long id, @Validated AuthorCreateEditDto dto,
-                         @NotNull BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String update(@PathVariable("id") Long id,
+                         @Validated AuthorCreateEditDto dto,
+                         @NotNull BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes) {
         var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/authors/{id}");
         if (view != null) {
             return view;
@@ -111,8 +114,10 @@ public class AuthorController {
         return "author/addAuthor";
     }
 
-    private @Nullable String checkError(@NotNull AuthorCreateEditDto dto, @NotNull BindingResult bindingResult,
-                                        RedirectAttributes redirectAttributes, String view) {
+    private @Nullable String checkError(@NotNull AuthorCreateEditDto dto,
+                                        @NotNull BindingResult bindingResult,
+                                        RedirectAttributes redirectAttributes,
+                                        String view) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("author", dto);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
