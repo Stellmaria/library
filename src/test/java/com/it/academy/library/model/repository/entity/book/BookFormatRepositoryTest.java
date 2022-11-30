@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RequiredArgsConstructor
 @DisplayName("Book format repository test.")
-class BookFormatFilterRepositoryTest extends IntegrationTestBase {
+class BookFormatRepositoryTest extends IntegrationTestBase {
     private static final Integer BOOK_FORMAT_ID_9 = 9;
     private static final String BOOK_FORMAT_FRAGMENT_NAME_VER = "ver";
 
@@ -35,7 +35,7 @@ class BookFormatFilterRepositoryTest extends IntegrationTestBase {
 
         assertAll(
                 () -> assertEquals(expectedCount, actualCount),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getName())
+                () -> assertEquals(bookFormat.getName(), actual.getName())
         );
     }
 
@@ -55,27 +55,31 @@ class BookFormatFilterRepositoryTest extends IntegrationTestBase {
     void updateBookFormat() {
         var bookFormat = bookFormatRepository.findById(ConstantUtil.BOOK_FORMAT_ID_4);
 
-        bookFormat.ifPresent(it -> {
-            it.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            bookFormatRepository.save(it);
+        bookFormat.ifPresent(entity -> {
+            entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
+
+            bookFormatRepository.save(entity);
         });
         var actual = bookFormatRepository.findById(ConstantUtil.BOOK_FORMAT_ID_4);
 
-        actual.ifPresent(it -> {
-            assertEquals(ConstantUtil.BOOK_FORMAT_ID_4, it.getId());
-            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getName());
-        });
+        actual.ifPresent(entity ->
+                assertAll(
+                        () -> assertEquals(ConstantUtil.BOOK_FORMAT_ID_4, entity.getId()),
+                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName())
+                )
+        );
     }
 
     @Test
     @DisplayName("Find all book format by book format filter.")
     void findAllBookFormatByBookFormatFilter() {
+        var expected = 2;
         bookFormat.setName(BOOK_FORMAT_FRAGMENT_NAME_VER);
 
         var actual = bookFormatRepository.findAllByBookFormatFilter(
                 bookFormatFilterMapper.map(bookFormat)
         );
 
-        assertThat(actual).hasSize(2);
+        assertThat(actual).hasSize(expected);
     }
 }

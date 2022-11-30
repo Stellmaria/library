@@ -9,14 +9,4 @@ public interface BookRepository extends
         JpaRepository<Book, Long>,
         FilterBookRepository,
         QuerydslPredicateExecutor<Book> {
-
-//     TODO: !
-//    @Query(value = "SELECT * " +
-//            "FROM book " +
-//            "WHERE order_id IN (SELECT orders.id " +
-//            "                   FROM orders " +
-//            "                   WHERE user_id = ?1)",
-//            nativeQuery = true
-//    )
-//    Collection<Book> findAllByOrderForUser(Long id);
 }

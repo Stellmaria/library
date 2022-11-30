@@ -35,7 +35,7 @@ class BookStatusRepositoryTest extends IntegrationTestBase {
 
         assertAll(
                 () -> assertEquals(expectedCount, actualCount),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getName())
+                () -> assertEquals(bookStatus.getName(), actual.getName())
         );
     }
 
@@ -54,28 +54,32 @@ class BookStatusRepositoryTest extends IntegrationTestBase {
     @DisplayName("Update book status.")
     void updateBookStatus() {
         var bookStatus = bookStatusRepository.findById(BOOK_STATUS_ID_3);
+        bookStatus.ifPresent(entity -> {
+            entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
 
-        bookStatus.ifPresent(it -> {
-            it.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            bookStatusRepository.save(it);
+            bookStatusRepository.save(entity);
         });
+
         var actual = bookStatusRepository.findById(BOOK_STATUS_ID_3);
 
-        actual.ifPresent(it -> {
-            assertEquals(BOOK_STATUS_ID_3, it.getId());
-            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getName());
-        });
+        actual.ifPresent(entity ->
+                assertAll(
+                        () -> assertEquals(BOOK_STATUS_ID_3, entity.getId()),
+                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName())
+                )
+        );
     }
 
     @Test
     @DisplayName("Find book status by book status filter.")
     void findAllBookStatusByBookStatusFilter() {
+        var expected = 1;
         bookStatus.setName(ConstantUtil.BOOK_STATUS_NAME_READING_ROOM);
 
         var actual = bookStatusRepository.findAllByBookStatusFilter(
                 bookStatusFilterMapper.map(bookStatus)
         );
 
-        assertThat(actual).hasSize(1);
+        assertThat(actual).hasSize(expected);
     }
 }

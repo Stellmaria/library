@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,8 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @RequiredArgsConstructor
 @DisplayName("Author repository test.")
 class AuthorRepositoryTest extends IntegrationTestBase {
-    private static final LocalDate AUTHOR_BIRTHDAY = LocalDate.of(2000, 1, 1);
-    private static final LocalDate AUTHOR_DATE_DEATH = LocalDate.of(3000, 1, 1);
     private static final String AUTHOR_FIRST_NAME_JAMES = "James";
     private static final Long AUTHOR_ID_2 = 2L;
     private static final Long AUTHOR_ID_15 = 15L;
@@ -37,8 +33,8 @@ class AuthorRepositoryTest extends IntegrationTestBase {
                 .firstName(ConstantUtil.NEW + ConstantUtil.SAVE)
                 .lastName(ConstantUtil.NEW + ConstantUtil.SAVE)
                 .image(ConstantUtil.NEW + ConstantUtil.SAVE)
-                .birthday(AUTHOR_BIRTHDAY)
-                .dateDeath(AUTHOR_DATE_DEATH)
+                .birthday(ConstantUtil.AUTHOR_BIRTHDAY)
+                .dateDeath(ConstantUtil.AUTHOR_DATE_DEATH)
                 .description(ConstantUtil.NEW + ConstantUtil.SAVE)
                 .build();
 
@@ -47,12 +43,12 @@ class AuthorRepositoryTest extends IntegrationTestBase {
 
         assertAll(
                 () -> assertEquals(expectedCount, actualCount),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getFirstName()),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getLastName()),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getImage()),
-                () -> assertEquals(AUTHOR_BIRTHDAY, actual.getBirthday()),
-                () -> assertEquals(AUTHOR_DATE_DEATH, actual.getDateDeath()),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getDescription())
+                () -> assertEquals(author.getFirstName(), actual.getFirstName()),
+                () -> assertEquals(author.getLastName(), actual.getLastName()),
+                () -> assertEquals(author.getImage(), actual.getImage()),
+                () -> assertEquals(author.getBirthday(), actual.getBirthday()),
+                () -> assertEquals(author.getDateDeath(), actual.getDateDeath()),
+                () -> assertEquals(author.getDescription(), actual.getDescription())
         );
     }
 
@@ -72,31 +68,35 @@ class AuthorRepositoryTest extends IntegrationTestBase {
     void updateAuthor() {
         var author = authorRepository.findById(AUTHOR_ID_15);
 
-        author.ifPresent(it -> {
-            it.setFirstName(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            it.setLastName(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            it.setImage(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            it.setBirthday(AUTHOR_BIRTHDAY);
-            it.setDateDeath(AUTHOR_DATE_DEATH);
-            it.setDescription(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            authorRepository.save(it);
+        author.ifPresent(entity -> {
+            entity.setFirstName(ConstantUtil.NEW + ConstantUtil.UPDATE);
+            entity.setLastName(ConstantUtil.NEW + ConstantUtil.UPDATE);
+            entity.setImage(ConstantUtil.NEW + ConstantUtil.UPDATE);
+            entity.setBirthday(ConstantUtil.AUTHOR_BIRTHDAY);
+            entity.setDateDeath(ConstantUtil.AUTHOR_DATE_DEATH);
+            entity.setDescription(ConstantUtil.NEW + ConstantUtil.UPDATE);
+
+            authorRepository.save(entity);
         });
         var actual = authorRepository.findById(AUTHOR_ID_15);
 
-        actual.ifPresent(it -> {
-            assertEquals(AUTHOR_ID_15, it.getId());
-            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getFirstName());
-            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getLastName());
-            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getImage());
-            assertEquals(AUTHOR_BIRTHDAY, it.getBirthday());
-            assertEquals(AUTHOR_DATE_DEATH, it.getDateDeath());
-            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getDescription());
-        });
+        actual.ifPresent(entity ->
+                assertAll(
+                        () -> assertEquals(AUTHOR_ID_15, entity.getId()),
+                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getFirstName()),
+                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getLastName()),
+                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getImage()),
+                        () -> assertEquals(ConstantUtil.AUTHOR_BIRTHDAY, entity.getBirthday()),
+                        () -> assertEquals(ConstantUtil.AUTHOR_DATE_DEATH, entity.getDateDeath()),
+                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getDescription())
+                )
+        );
     }
 
     @Test
     @DisplayName("Find all author by author filter.")
     void findAllAuthorByAuthorFilter() {
+        var expected = 1;
         var author = new Author();
         author.setFirstName(AUTHOR_FIRST_NAME_JAMES);
 
@@ -104,12 +104,13 @@ class AuthorRepositoryTest extends IntegrationTestBase {
                 authorFilterMapper.map(author)
         );
 
-        assertThat(actual).hasSize(1);
+        assertThat(actual).hasSize(expected);
     }
 
     @Test
     @DisplayName("Find all author by book filter.")
     void findAllAuthorByBookFilter() {
+        var expected = 2;
         var book = new Book();
         book.setTitle(ConstantUtil.BOOK_TITLE_FRAGMENT_PHP);
 
@@ -117,6 +118,6 @@ class AuthorRepositoryTest extends IntegrationTestBase {
                 bookFilterMapper.map(book)
         );
 
-        assertThat(actual).hasSize(2);
+        assertThat(actual).hasSize(expected);
     }
 }

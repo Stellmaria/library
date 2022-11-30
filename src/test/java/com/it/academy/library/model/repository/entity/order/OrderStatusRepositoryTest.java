@@ -36,7 +36,7 @@ class OrderStatusRepositoryTest extends IntegrationTestBase {
 
         assertAll(
                 () -> assertEquals(expectedCount, actualCount),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getName())
+                () -> assertEquals(orderStatus.getName(), actual.getName())
         );
     }
 
@@ -45,16 +45,19 @@ class OrderStatusRepositoryTest extends IntegrationTestBase {
     void update() {
         var orderStatus = orderStatusRepository.findById(ORDER_STATUS_ID_2);
 
-        orderStatus.ifPresent(it -> {
-            it.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            orderStatusRepository.save(it);
+        orderStatus.ifPresent(entity -> {
+            entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
+
+            orderStatusRepository.save(entity);
         });
         var actual = orderStatusRepository.findById(ORDER_STATUS_ID_2);
 
-        actual.ifPresent(it -> {
-            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getName());
-            assertEquals(ORDER_STATUS_ID_2, it.getId());
-        });
+        actual.ifPresent(entity ->
+                assertAll(
+                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName()),
+                        () -> assertEquals(ORDER_STATUS_ID_2, entity.getId())
+                )
+        );
     }
 
     @Test
@@ -71,12 +74,13 @@ class OrderStatusRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all order status by order status filter.")
     void findAllOrderStatusByOrderStatusFilter() {
+        var expected = 1;
         orderStatus.setName(ORDER_STATUS_NAME_UNCONFIRMED);
 
         var actual = orderStatusRepository.findAllByOrderStatusFilter(
                 orderStatusFilterMapper.map(orderStatus)
         );
 
-        assertThat(actual).hasSize(1);
+        assertThat(actual).hasSize(expected);
     }
 }

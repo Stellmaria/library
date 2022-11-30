@@ -35,7 +35,7 @@ class UserStatusRepositoryTest extends IntegrationTestBase {
 
         assertAll(
                 () -> assertEquals(expectedCount, actualCount),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getName())
+                () -> assertEquals(userStatus.getName(), actual.getName())
         );
     }
 
@@ -44,16 +44,19 @@ class UserStatusRepositoryTest extends IntegrationTestBase {
     void updateUserStatus() {
         var userStatus = userStatusRepository.findById(USER_STATUS_ID_3);
 
-        userStatus.ifPresent(it -> {
-            it.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            userStatusRepository.save(it);
+        userStatus.ifPresent(entity -> {
+            entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
+
+            userStatusRepository.save(entity);
         });
         var actual = userStatusRepository.findById(USER_STATUS_ID_3);
 
-        actual.ifPresent(it -> {
-            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getName());
-            assertEquals(USER_STATUS_ID_3, it.getId());
-        });
+        actual.ifPresent(entity ->
+                assertAll(
+                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName()),
+                        () -> assertEquals(USER_STATUS_ID_3, entity.getId())
+                )
+        );
     }
 
     @Test
@@ -70,12 +73,13 @@ class UserStatusRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all user status by user status filter.")
     void findAllByUserStatusFilter() {
+        var expected = 1;
         userStatus.setName(ConstantUtil.USER_STATUS_NAME_GUEST);
 
         var actual = userStatusRepository.findAllByUserStatusFilter(
                 userStatusFilterMapper.map(userStatus)
         );
 
-        assertThat(actual).hasSize(1);
+        assertThat(actual).hasSize(expected);
     }
 }

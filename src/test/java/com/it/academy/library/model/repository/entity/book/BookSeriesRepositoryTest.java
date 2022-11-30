@@ -36,7 +36,7 @@ class BookSeriesRepositoryTest extends IntegrationTestBase {
 
         assertAll(
                 () -> assertEquals(expectedCount, actualCount),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getName())
+                () -> assertEquals(bookSeries.getName(), actual.getName())
         );
     }
 
@@ -55,28 +55,32 @@ class BookSeriesRepositoryTest extends IntegrationTestBase {
     @DisplayName("Update book series.")
     void updateBookSeries() {
         var bookSeries = bookSeriesRepository.findById(BOOK_SERIES_ID_2);
+        bookSeries.ifPresent(entity -> {
+            entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
 
-        bookSeries.ifPresent(it -> {
-            it.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            bookSeriesRepository.save(it);
+            bookSeriesRepository.save(entity);
         });
+
         var actual = bookSeriesRepository.findById(BOOK_SERIES_ID_2);
 
-        actual.ifPresent(it -> {
-            assertEquals(BOOK_SERIES_ID_2, it.getId());
-            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getName());
-        });
+        actual.ifPresent(entity ->
+                assertAll(
+                        () -> assertEquals(BOOK_SERIES_ID_2, entity.getId()),
+                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName())
+                )
+        );
     }
 
     @Test
     @DisplayName("Find all book by book series filter.")
     void findAllBookByBookSeriesFilter() {
+        var expected = 1;
         bookSeries.setName(BOOK_SERIES_DARK_TOWN);
 
         var actual = bookSeriesRepository.findAllByBookSeriesFilter(
                 bookSeriesFilterMapper.map(bookSeries)
         );
 
-        assertThat(actual).hasSize(1);
+        assertThat(actual).hasSize(expected);
     }
 }

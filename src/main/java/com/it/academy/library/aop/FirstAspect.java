@@ -26,10 +26,10 @@ public class FirstAspect {
 
     @Before(
             value = "anyFindByIdServiceMethod()" +
-                    " && args(id)" +
-                    " && target(service)" +
-                    " && this(serviceProxy)" +
-                    " && @within(transactional)",
+                    "&& args(id)" +
+                    "&& target(service)" +
+                    "&& this(serviceProxy)" +
+                    "&& @within(transactional)",
             argNames = "joinPoint,id,service,serviceProxy,transactional"
     )
     public void addLogging(JoinPoint joinPoint,
@@ -42,7 +42,7 @@ public class FirstAspect {
 
     @AfterReturning(
             value = "anyFindByIdServiceMethod()" +
-                    " && target(service)",
+                    "&& target(service)",
             returning = "result",
             argNames = "result,service"
     )
@@ -52,7 +52,7 @@ public class FirstAspect {
 
     @AfterThrowing(
             value = "anyFindByIdServiceMethod()" +
-                    " && target(service)",
+                    "&& target(service)",
             throwing = "exception"
     )
     public void addLoggingAfterThrowing(@NotNull Throwable exception, Object service) {

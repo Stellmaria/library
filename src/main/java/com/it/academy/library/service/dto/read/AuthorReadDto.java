@@ -1,26 +1,30 @@
 package com.it.academy.library.service.dto.read;
 
 import com.it.academy.library.model.entity.Author;
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 /**
  * A DTO for the {@link Author} entity.
  */
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class AuthorReadDto {
-    Long id;
+    private Long id;
 
-    String firstName;
+    private String firstName;
 
-    String lastName;
+    private String lastName;
 
-    String image;
+    private String image;
 
-    LocalDate birthday;
+    private LocalDate birthday;
 
-    LocalDate dateDeath;
+    private LocalDate dateDeath;
 
-    String description;
+    private String description;
 }

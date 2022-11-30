@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RequiredArgsConstructor
 @DisplayName("Book publishing house repository test.")
-class BookPublishingHouseFilterRepositoryTest extends IntegrationTestBase {
+class BookPublishingHouseRepositoryTest extends IntegrationTestBase {
     private final BookPublishingHouseRepository bookPublishingHouseRepository;
 
     private final BookPublishingHouseFilterMapper bookPublishingHouseFilterMapper;
@@ -33,7 +33,7 @@ class BookPublishingHouseFilterRepositoryTest extends IntegrationTestBase {
 
         assertAll(
                 () -> assertEquals(expectedCount, actualCount),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getName())
+                () -> assertEquals(bookPublishingHouse.getName(), actual.getName())
         );
     }
 
@@ -54,27 +54,31 @@ class BookPublishingHouseFilterRepositoryTest extends IntegrationTestBase {
         var bookPublishingHouse =
                 bookPublishingHouseRepository.findById(BOOK_PUBLISHING_HOUSE_ID_1);
 
-        bookPublishingHouse.ifPresent(it -> {
-            it.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            bookPublishingHouseRepository.save(it);
+        bookPublishingHouse.ifPresent(entity -> {
+            entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
+
+            bookPublishingHouseRepository.save(entity);
         });
         var actual = bookPublishingHouseRepository.findById(BOOK_PUBLISHING_HOUSE_ID_1);
 
-        actual.ifPresent(it -> {
-            assertEquals(BOOK_PUBLISHING_HOUSE_ID_1, it.getId());
-            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getName());
-        });
+        actual.ifPresent(entity ->
+                assertAll(
+                        () -> assertEquals(BOOK_PUBLISHING_HOUSE_ID_1, entity.getId()),
+                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName())
+                )
+        );
     }
 
     @Test
     @DisplayName("Find all book publishing house by book publishing house.")
     void findAllBookPublishingHouseByBookPublishingHouseFilter() {
+        var expected = 3;
         bookPublishingHouse.setName(ConstantUtil.BOOK_PUBLISHING_HOUSE_FRAGMENT_NAME_BOOKS);
 
         var actual = bookPublishingHouseRepository.findAllByBookPublishingHouseFilter(
                 bookPublishingHouseFilterMapper.map(bookPublishingHouse)
         );
 
-        assertThat(actual).hasSize(3);
+        assertThat(actual).hasSize(expected);
     }
 }

@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RequiredArgsConstructor
 @DisplayName("Book genre repository test.")
-class BookGenreFilterRepositoryTest extends IntegrationTestBase {
+class BookGenreRepositoryTest extends IntegrationTestBase {
     private static final Integer BOOK_GENRE_ID_2 = 2;
     private static final Integer BOOK_GENRE_ID_4 = 4;
 
@@ -38,7 +38,7 @@ class BookGenreFilterRepositoryTest extends IntegrationTestBase {
 
         assertAll(
                 () -> assertEquals(expectedCount, actualCount),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getName())
+                () -> assertEquals(bookGenre.getName(), actual.getName())
         );
     }
 
@@ -58,18 +58,24 @@ class BookGenreFilterRepositoryTest extends IntegrationTestBase {
     void updateBookGenre() {
         var bookGenre = bookGenreRepository.findById(BOOK_GENRE_ID_2);
 
-        bookGenre.ifPresent(it -> {
-            it.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            bookGenreRepository.save(it);
+        bookGenre.ifPresent(entity -> {
+            entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
+
+            bookGenreRepository.save(entity);
         });
         var actual = bookGenreRepository.findById(BOOK_GENRE_ID_2);
 
-        actual.ifPresent(it -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getName()));
+        actual.ifPresent(entity ->
+                assertEquals(
+                        ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName()
+                )
+        );
     }
 
     @Test
     @DisplayName("Find all book genre by book filter.")
     void findAllBookGenreByBookFilter() {
+        var expected = 2;
         var book = new Book();
         book.setTitle(ConstantUtil.BOOK_TITLE_FRAGMENT_PHP);
 
@@ -77,18 +83,19 @@ class BookGenreFilterRepositoryTest extends IntegrationTestBase {
                 bookFilterMapper.map(book)
         );
 
-        assertThat(actual).hasSize(2);
+        assertThat(actual).hasSize(expected);
     }
 
     @Test
     @DisplayName("Find all book genre by book genre filter.")
     void findAllBookGenreByBookGenreFilter() {
+        var expected = 2;
         bookGenre.setName(ConstantUtil.BOOK_GENRE_FRAGMENT_NAME_SS);
 
         var actual = bookGenreRepository.findAllByBookGenreFilter(
                 bookGenreFilterMapper.map(bookGenre)
         );
 
-        assertThat(actual).hasSize(2);
+        assertThat(actual).hasSize(expected);
     }
 }

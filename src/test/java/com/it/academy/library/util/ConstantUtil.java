@@ -40,6 +40,11 @@ public class ConstantUtil {
 
     public static final String USER_STATUS_NAME_GUEST = "Guest";
 
+    public static final String NAME_IMAGE_TEST = "test";
+
+    public static final LocalDate AUTHOR_BIRTHDAY = LocalDate.of(2000, 1, 1);
+    public static final LocalDate AUTHOR_DATE_DEATH = LocalDate.of(3000, 1, 1);
+
     public static final String NEW = "NEW ";
     public static final String UPDATE = "UPDATE";
     public static final String SAVE = "SAVE";

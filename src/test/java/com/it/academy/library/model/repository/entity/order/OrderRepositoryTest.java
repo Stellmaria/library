@@ -43,15 +43,9 @@ class OrderRepositoryTest extends IntegrationTestBase {
     @DisplayName("Save order.")
     void saveOrder() {
         var expectedCount = orderRepository.count() + 1;
-        var user = User.builder()
-                .id(ConstantUtil.USER_ID_5)
-                .build();
-        var orderStatus = OrderStatus.builder()
-                .id(ORDER_STATUS_ID_1)
-                .build();
         var order = Order.builder()
-                .user(user)
-                .orderStatus(orderStatus)
+                .user(getUser())
+                .orderStatus(getOrderStatus())
                 .orderDate(ORDER_DATE_11)
                 .returnDate(ORDER_RETURN_DATE_21)
                 .build();
@@ -61,40 +55,37 @@ class OrderRepositoryTest extends IntegrationTestBase {
 
         assertAll(
                 () -> assertEquals(expectedCount, actualCount),
-                () -> assertEquals(ConstantUtil.USER_ID_5, actual.getUser().getId()),
-                () -> assertEquals(ORDER_STATUS_ID_1, actual.getOrderStatus().getId()),
-                () -> assertEquals(ORDER_DATE_11, actual.getOrderDate()),
-                () -> assertEquals(ORDER_RETURN_DATE_21, actual.getReturnDate())
+                () -> assertEquals(order.getUser().getId(), actual.getUser().getId()),
+                () -> assertEquals(order.getOrderStatus().getId(), actual.getOrderStatus().getId()),
+                () -> assertEquals(order.getOrderDate(), actual.getOrderDate()),
+                () -> assertEquals(order.getReturnDate(), actual.getReturnDate())
         );
     }
 
     @Test
     @DisplayName("Update order.")
     void updateOrder() {
-        var user = User.builder()
-                .id(ConstantUtil.USER_ID_5)
-                .build();
-        var orderStatus = OrderStatus.builder()
-                .id(ORDER_STATUS_ID_1)
-                .build();
         var order = orderRepository.findById(ORDER_ID_3);
 
-        order.ifPresent(it -> {
-            it.setUser(user);
-            it.setOrderStatus(orderStatus);
-            it.setOrderDate(ConstantUtil.ORDER_DATE_10);
-            it.setReturnDate(ORDER_RETURN_DATE_21);
-            orderRepository.save(it);
+        order.ifPresent(entity -> {
+            entity.setUser(getUser());
+            entity.setOrderStatus(getOrderStatus());
+            entity.setOrderDate(ConstantUtil.ORDER_DATE_10);
+            entity.setReturnDate(ORDER_RETURN_DATE_21);
+
+            orderRepository.save(entity);
         });
         var actual = orderRepository.findById(ORDER_ID_3);
 
-        actual.ifPresent(it -> {
-            assertEquals(ConstantUtil.USER_ID_5, it.getUser().getId());
-            assertEquals(ORDER_STATUS_ID_1, it.getOrderStatus().getId());
-            assertEquals(ConstantUtil.ORDER_DATE_10, it.getOrderDate());
-            assertEquals(ORDER_RETURN_DATE_21, it.getReturnDate());
-            assertEquals(ORDER_ID_3, it.getId());
-        });
+        actual.ifPresent(entity ->
+                assertAll(
+                        () -> assertEquals(ConstantUtil.USER_ID_5, entity.getUser().getId()),
+                        () -> assertEquals(ORDER_STATUS_ID_1, entity.getOrderStatus().getId()),
+                        () -> assertEquals(ConstantUtil.ORDER_DATE_10, entity.getOrderDate()),
+                        () -> assertEquals(ORDER_RETURN_DATE_21, entity.getReturnDate()),
+                        () -> assertEquals(ORDER_ID_3, entity.getId())
+                )
+        );
     }
 
     @Test
@@ -111,6 +102,7 @@ class OrderRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all order by user filter.")
     void findAllOrderByUserFilter() {
+        var expected = 1;
         var user = new User();
         user.setFirstName(USER_FIRST_NAME_SERGEY);
 
@@ -118,12 +110,13 @@ class OrderRepositoryTest extends IntegrationTestBase {
                 userFilterMapper.map(user)
         );
 
-        assertThat(actual).hasSize(1);
+        assertThat(actual).hasSize(expected);
     }
 
     @Test
     @DisplayName("Find all order by order filter.")
     void findAllOrderByOrderFilter() {
+        var expected = 1;
         var order = new Order();
         order.setOrderDate(ORDER_DATE_25);
 
@@ -131,12 +124,13 @@ class OrderRepositoryTest extends IntegrationTestBase {
                 orderFilterMapper.map(order)
         );
 
-        assertThat(actual).hasSize(1);
+        assertThat(actual).hasSize(expected);
     }
 
     @Test
     @DisplayName("Find orders by order status.")
     void findAllByStatus() {
+        var expected = 1;
         var orderStatus = new OrderStatus();
         orderStatus.setName(ORDER_STATUS_NAME_APPROVED);
 
@@ -144,6 +138,18 @@ class OrderRepositoryTest extends IntegrationTestBase {
                 orderStatusFilterMapper.map(orderStatus)
         );
 
-        assertThat(actual).hasSize(1);
+        assertThat(actual).hasSize(expected);
+    }
+
+    private OrderStatus getOrderStatus() {
+        return OrderStatus.builder()
+                .id(OrderRepositoryTest.ORDER_STATUS_ID_1)
+                .build();
+    }
+
+    private User getUser() {
+        return User.builder()
+                .id(ConstantUtil.USER_ID_5)
+                .build();
     }
 }

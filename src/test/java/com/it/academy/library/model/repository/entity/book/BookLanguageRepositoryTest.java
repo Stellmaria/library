@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RequiredArgsConstructor
 @DisplayName("Book repository test.")
-class BookLanguageFilterRepositoryTest extends IntegrationTestBase {
+class BookLanguageRepositoryTest extends IntegrationTestBase {
     private static final String BOOK_LANGUAGE_FRAGMENT_NAME_IAN = "ian";
 
     private final BookLanguageRepository bookLanguageRepository;
@@ -34,7 +34,7 @@ class BookLanguageFilterRepositoryTest extends IntegrationTestBase {
 
         assertAll(
                 () -> assertEquals(expectedCount, actualCount),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getName())
+                () -> assertEquals(bookLanguage.getName(), actual.getName())
         );
     }
 
@@ -54,27 +54,31 @@ class BookLanguageFilterRepositoryTest extends IntegrationTestBase {
     void updateBookLanguage() {
         var bookLanguage = bookLanguageRepository.findById(ConstantUtil.BOOK_LANGUAGE_ID_13);
 
-        bookLanguage.ifPresent(it -> {
-            it.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            bookLanguageRepository.save(it);
+        bookLanguage.ifPresent(entity -> {
+            entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
+
+            bookLanguageRepository.save(entity);
         });
         var actual = bookLanguageRepository.findById(ConstantUtil.BOOK_LANGUAGE_ID_13);
 
-        actual.ifPresent(it -> {
-            assertEquals(ConstantUtil.BOOK_LANGUAGE_ID_13, it.getId());
-            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getName());
-        });
+        actual.ifPresent(entity ->
+                assertAll(
+                        () -> assertEquals(ConstantUtil.BOOK_LANGUAGE_ID_13, entity.getId()),
+                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName())
+                )
+        );
     }
 
     @Test
     @DisplayName("Find all book language by book language filter.")
     void findAllBookLanguageByBookLanguageFilter() {
+        var expected = 21;
         bookLanguage.setName(BOOK_LANGUAGE_FRAGMENT_NAME_IAN);
 
         var actual = bookLanguageRepository.findAllByBookLanguageFilter(
                 bookLanguageFilterMapper.map(bookLanguage)
         );
 
-        assertThat(actual).hasSize(21);
+        assertThat(actual).hasSize(expected);
     }
 }

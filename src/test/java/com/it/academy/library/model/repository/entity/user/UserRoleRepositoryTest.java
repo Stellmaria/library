@@ -35,7 +35,7 @@ class UserRoleRepositoryTest extends IntegrationTestBase {
 
         assertAll(
                 () -> assertEquals(expectedCount, actualCount),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getName())
+                () -> assertEquals(userRole.getName(), actual.getName())
         );
     }
 
@@ -44,16 +44,19 @@ class UserRoleRepositoryTest extends IntegrationTestBase {
     void updateUserRole() {
         var userRole = userRoleRepository.findById(USER_ROLE_ID_4);
 
-        userRole.ifPresent(it -> {
-            it.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            userRoleRepository.save(it);
+        userRole.ifPresent(entity -> {
+            entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
+
+            userRoleRepository.save(entity);
         });
         var actual = userRoleRepository.findById(USER_ROLE_ID_4);
 
-        actual.ifPresent(it -> {
-            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getName());
-            assertEquals(USER_ROLE_ID_4, it.getId());
-        });
+        actual.ifPresent(entity ->
+                assertAll(
+                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName()),
+                        () -> assertEquals(USER_ROLE_ID_4, entity.getId())
+                )
+        );
     }
 
     @Test
@@ -70,12 +73,13 @@ class UserRoleRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find user role by user role filter.")
     void findAllUserRoleByUserRoleFilter() {
+        var expected = 1;
         userRole.setName(ConstantUtil.USER_ROLE_NAME_READER);
 
         var actual = userRoleRepository.findAllByUserRoleFilter(
                 userRoleFilterMapper.map(userRole)
         );
 
-        assertThat(actual).hasSize(1);
+        assertThat(actual).hasSize(expected);
     }
 }

@@ -35,20 +35,14 @@ class UserRepositoryTest extends IntegrationTestBase {
     @DisplayName("Save user.")
     void saveUser() {
         var expectedCount = userRepository.count() + 1;
-        var userRole = UserRole.builder()
-                .id(USER_ROLE_ID_2)
-                .build();
-        var userStatus = UserStatus.builder()
-                .id(USER_STATUS_ID_2)
-                .build();
         var user = User.builder()
                 .username(ConstantUtil.NEW + ConstantUtil.SAVE)
                 .firstName(ConstantUtil.NEW + ConstantUtil.SAVE)
                 .lastName(ConstantUtil.NEW + ConstantUtil.SAVE)
                 .email(EMAIL_EXAMPLE_COM)
                 .password(ConstantUtil.NEW + ConstantUtil.SAVE)
-                .userRole(userRole)
-                .userStatus(userStatus)
+                .userRole(getUserRole())
+                .userStatus(getUserStatus())
                 .birthday(ConstantUtil.USER_BIRTHDAY)
                 .build();
 
@@ -57,52 +51,49 @@ class UserRepositoryTest extends IntegrationTestBase {
 
         assertAll(
                 () -> assertEquals(expectedCount, actualCount),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getUsername()),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getFirstName()),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getLastName()),
-                () -> assertEquals(EMAIL_EXAMPLE_COM, actual.getEmail()),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getPassword()),
-                () -> assertEquals(USER_ROLE_ID_2, actual.getUserRole().getId()),
-                () -> assertEquals(USER_STATUS_ID_2, actual.getUserStatus().getId()),
-                () -> assertEquals(ConstantUtil.USER_BIRTHDAY, actual.getBirthday())
+                () -> assertEquals(user.getUsername(), actual.getUsername()),
+                () -> assertEquals(user.getFirstName(), actual.getFirstName()),
+                () -> assertEquals(user.getLastName(), actual.getLastName()),
+                () -> assertEquals(user.getEmail(), actual.getEmail()),
+                () -> assertEquals(user.getPassword(), actual.getPassword()),
+                () -> assertEquals(user.getUserRole().getId(), actual.getUserRole().getId()),
+                () -> assertEquals(user.getUserStatus().getId(), actual.getUserStatus().getId()),
+                () -> assertEquals(user.getBirthday(), actual.getBirthday())
         );
     }
 
     @Test
     @DisplayName("Update user.")
     void update() {
-        var userRole = UserRole.builder()
-                .id(USER_ROLE_ID_2)
-                .build();
-        var userStatus = UserStatus.builder()
-                .id(USER_STATUS_ID_2)
-                .build();
         var user = userRepository.findById(ConstantUtil.USER_ID_5);
 
-        user.ifPresent(it -> {
-            it.setLastName(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            it.setFirstName(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            it.setUsername(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            it.setEmail(TEST_GMAIL_COM);
-            it.setPassword(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            it.setUserRole(userRole);
-            it.setUserStatus(userStatus);
-            it.setBirthday(ConstantUtil.USER_BIRTHDAY);
-            userRepository.save(it);
+        user.ifPresent(entity -> {
+            entity.setLastName(ConstantUtil.NEW + ConstantUtil.UPDATE);
+            entity.setFirstName(ConstantUtil.NEW + ConstantUtil.UPDATE);
+            entity.setUsername(ConstantUtil.NEW + ConstantUtil.UPDATE);
+            entity.setEmail(TEST_GMAIL_COM);
+            entity.setPassword(ConstantUtil.NEW + ConstantUtil.UPDATE);
+            entity.setUserRole(getUserRole());
+            entity.setUserStatus(getUserStatus());
+            entity.setBirthday(ConstantUtil.USER_BIRTHDAY);
+
+            userRepository.save(entity);
         });
         var actual = userRepository.findById(ConstantUtil.USER_ID_5);
 
-        actual.ifPresent(it -> {
-            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getUsername());
-            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getFirstName());
-            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getLastName());
-            assertEquals(TEST_GMAIL_COM, it.getEmail());
-            assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, it.getPassword());
-            assertEquals(USER_ROLE_ID_2, it.getUserRole().getId());
-            assertEquals(USER_STATUS_ID_2, it.getUserStatus().getId());
-            assertEquals(ConstantUtil.USER_ID_5, it.getId());
-            assertEquals(ConstantUtil.USER_BIRTHDAY, it.getBirthday());
-        });
+        actual.ifPresent(entity ->
+                assertAll(
+                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getUsername()),
+                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getFirstName()),
+                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getLastName()),
+                        () -> assertEquals(TEST_GMAIL_COM, entity.getEmail()),
+                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getPassword()),
+                        () -> assertEquals(USER_ROLE_ID_2, entity.getUserRole().getId()),
+                        () -> assertEquals(USER_STATUS_ID_2, entity.getUserStatus().getId()),
+                        () -> assertEquals(ConstantUtil.USER_ID_5, entity.getId()),
+                        () -> assertEquals(ConstantUtil.USER_BIRTHDAY, entity.getBirthday())
+                )
+        );
     }
 
     @Test
@@ -119,6 +110,7 @@ class UserRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all user by user role filter.")
     void findAllUserByUserRoleFilter() {
+        var expected = 2;
         var userRole = new UserRole();
         userRole.setName(ConstantUtil.USER_ROLE_NAME_READER);
 
@@ -126,12 +118,13 @@ class UserRepositoryTest extends IntegrationTestBase {
                 userRoleFilterMapper.map(userRole)
         );
 
-        assertThat(actual).hasSize(2);
+        assertThat(actual).hasSize(expected);
     }
 
     @Test
     @DisplayName("Find all user by user status filter.")
     void findAllUserByUserStatusFilter() {
+        var expected = 1;
         var userStatus = new UserStatus();
         userStatus.setName(ConstantUtil.USER_STATUS_NAME_GUEST);
 
@@ -139,12 +132,13 @@ class UserRepositoryTest extends IntegrationTestBase {
                 userStatusFilterMapper.map(userStatus)
         );
 
-        assertThat(actual).hasSize(1);
+        assertThat(actual).hasSize(expected);
     }
 
     @Test
     @DisplayName("Find all user by user filter.")
     void findAllUserByUserFilter() {
+        var expected = 1;
         var user = new User();
         user.setFirstName(ConstantUtil.USER_FIRST_NAME_SVETA);
 
@@ -152,6 +146,18 @@ class UserRepositoryTest extends IntegrationTestBase {
                 userFilterMapper.map(user)
         );
 
-        assertThat(actual).hasSize(1);
+        assertThat(actual).hasSize(expected);
+    }
+
+    private UserStatus getUserStatus() {
+        return UserStatus.builder()
+                .id(UserRepositoryTest.USER_STATUS_ID_2)
+                .build();
+    }
+
+    private UserRole getUserRole() {
+        return UserRole.builder()
+                .id(UserRepositoryTest.USER_ROLE_ID_2)
+                .build();
     }
 }
