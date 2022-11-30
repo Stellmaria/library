@@ -1,10 +1,10 @@
 package com.it.academy.library.model.repository.entity.book;
 
+import com.it.academy.library.IntegrationTestBase;
 import com.it.academy.library.mapper.filter.book.BookFilterMapper;
 import com.it.academy.library.mapper.filter.book.BookGenreFilterMapper;
 import com.it.academy.library.model.entity.book.Book;
 import com.it.academy.library.model.entity.book.BookGenre;
-import com.it.academy.library.model.repository.entity.IntegrationTestBase;
 import com.it.academy.library.util.ConstantUtil;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
@@ -53,18 +53,19 @@ class BookGenreRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Update book genre.")
     void updateBookGenre() {
-        var bookGenre = bookGenreRepository.findById(ConstantUtil.BOOK_GENRE_ID_2);
+        var bookGenre = bookGenreRepository.findById(ConstantUtil.BOOK_GENRE_ID_7);
 
         bookGenre.ifPresent(entity -> {
             entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
 
             bookGenreRepository.save(entity);
         });
-        var actual = bookGenreRepository.findById(ConstantUtil.BOOK_GENRE_ID_2);
+        var actual = bookGenreRepository.findById(ConstantUtil.BOOK_GENRE_ID_7);
 
         actual.ifPresent(entity ->
-                assertEquals(
-                        ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName()
+                assertAll(
+                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName()),
+                        () -> assertEquals(ConstantUtil.BOOK_GENRE_ID_7, entity.getId())
                 )
         );
     }
