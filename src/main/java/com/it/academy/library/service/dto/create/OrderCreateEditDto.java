@@ -2,9 +2,7 @@ package com.it.academy.library.service.dto.create;
 
 import com.it.academy.library.model.entity.order.Order;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -12,10 +10,8 @@ import java.time.LocalDateTime;
 /**
  * A DTO for the {@link Order} entity.
  */
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Getter
 public class OrderCreateEditDto {
     private Long userId;
 

@@ -245,4 +245,14 @@ class BookServiceImplTest extends IntegrationTestBase {
                 () -> assertFalse(bookService.delete(ConstantUtil.BOOK_ID_99))
         );
     }
+
+    @Test
+    @DisplayName("Find book image.")
+    void findImage() {
+        var expected = 32241;
+
+        var actual = bookService.findImage(ConstantUtil.BOOK_ID_1);
+
+        actual.ifPresent(entity -> assertEquals(expected, entity.length));
+    }
 }

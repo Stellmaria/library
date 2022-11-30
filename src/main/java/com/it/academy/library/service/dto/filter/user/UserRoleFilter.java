@@ -4,9 +4,7 @@ import com.it.academy.library.model.entity.user.UserRole;
 import com.it.academy.library.querydsl.QueryPredicates;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
 import static com.it.academy.library.model.entity.user.QUserRole.userRole;
@@ -14,10 +12,8 @@ import static com.it.academy.library.model.entity.user.QUserRole.userRole;
 /**
  * A DTO for the {@link UserRole} entity.
  */
-@Data
-@NoArgsConstructor
+@Getter
 @AllArgsConstructor
-@Builder
 public class UserRoleFilter {
     private Integer id;
 

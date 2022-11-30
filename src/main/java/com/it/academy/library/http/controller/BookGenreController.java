@@ -76,13 +76,13 @@ public class BookGenreController {
         validateName(dto, bindingResult);
 
         var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/books/genres/{id}");
-        if (view != null) {
-            return view;
-        }
 
-        return bookGenreService.update(id, dto)
-                .map(it -> "redirect:/books/genres/{id}")
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return view != null
+                ? view
+                : bookGenreService.update(id, dto)
+                        .map(it -> "redirect:/books/genres/{id}")
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
     }
 
     @PostMapping("/{id}/delete")
@@ -119,8 +119,7 @@ public class BookGenreController {
                               @NotNull BindingResult bindingResult) {
         if (bookGenreService.findByName(dto.getName()).isPresent()) {
             bindingResult.rejectValue(
-                    "name", "error.bookGenre",
-                    "There is already a book genre with that name."
+                    "name", "error.bookGenre", "There is already a book genre with that name."
             );
         }
     }

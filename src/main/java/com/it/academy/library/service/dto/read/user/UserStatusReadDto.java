@@ -1,14 +1,18 @@
 package com.it.academy.library.service.dto.read.user;
 
 import com.it.academy.library.model.entity.user.UserStatus;
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 
 /**
  * A DTO for the {@link UserStatus} entity.
  */
-@Value
+@Data
+@AllArgsConstructor
+@Builder
 public class UserStatusReadDto {
-    Integer id;
+    private Integer id;
 
-    String name;
+    private String name;
 }

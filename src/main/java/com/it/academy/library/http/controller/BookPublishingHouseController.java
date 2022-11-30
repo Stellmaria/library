@@ -39,6 +39,7 @@ public class BookPublishingHouseController {
         var view = checkError(
                 dto, bindingResult, redirectAttributes, "redirect:/books/publishingHouses/addPublishingHouses"
         );
+
         if (view != null) {
             return view;
         }
@@ -82,20 +83,13 @@ public class BookPublishingHouseController {
         var view = checkError(
                 dto, bindingResult, redirectAttributes, "redirect:/books/publishingHouses/{id}"
         );
-        if (view != null) {
-            return view;
-        }
 
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("publishingHouse", dto);
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+        return view != null
+                ? view
+                : bookPublishingHouseService.update(id, dto)
+                        .map(it -> "redirect:/books/publishingHouses/{id}")
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-            return "redirect:/books/publishingHouses/{id}";
-        }
-
-        return bookPublishingHouseService.update(id, dto)
-                .map(it -> "redirect:/books/publishingHouses/{id}")
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/{id}/delete")

@@ -3,7 +3,6 @@ package com.it.academy.library.service.dto.create;
 import com.it.academy.library.model.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
 import org.postgresql.util.LruCache;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,7 +18,6 @@ import java.time.LocalDate;
  */
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @FieldNameConstants
 public class UserCreateEditDto {
     @NotBlank(message = "The username cannot be empty.")

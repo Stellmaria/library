@@ -77,13 +77,13 @@ public class BookSeriesController {
         validateName(dto, bindingResult);
 
         var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/books/series/{id}");
-        if (view != null) {
-            return view;
-        }
 
-        return bookSeriesService.update(id, dto)
-                .map(it -> "redirect:/books/series/{id}")
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return view != null
+                ? view
+                : bookSeriesService.update(id, dto)
+                        .map(it -> "redirect:/books/series/{id}")
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
     }
 
     @PostMapping("/{id}/delete")

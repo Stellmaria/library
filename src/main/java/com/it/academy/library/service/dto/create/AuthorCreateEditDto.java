@@ -2,8 +2,7 @@ package com.it.academy.library.service.dto.create;
 
 import com.it.academy.library.model.entity.Author;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,9 +13,8 @@ import java.time.LocalDate;
 /**
  * A DTO for the {@link Author} entity.
  */
-@Data
 @AllArgsConstructor
-@NoArgsConstructor
+@Getter
 public class AuthorCreateEditDto {
     @NotBlank(message = "The first name must not be empty.")
     @Size(

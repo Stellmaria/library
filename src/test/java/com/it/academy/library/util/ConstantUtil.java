@@ -14,7 +14,13 @@ import com.it.academy.library.service.dto.read.AuthorReadDto;
 import com.it.academy.library.service.dto.read.book.BookGenreReadDto;
 import com.it.academy.library.service.dto.read.book.BookLanguageReadDto;
 import com.it.academy.library.service.dto.read.book.BookSeriesReadDto;
+import com.it.academy.library.service.dto.read.order.OrderStatusReadDto;
+import com.it.academy.library.service.dto.read.user.UserReadDto;
+import com.it.academy.library.service.dto.read.user.UserRoleReadDto;
+import com.it.academy.library.service.dto.read.user.UserStatusReadDto;
 import lombok.experimental.UtilityClass;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -89,9 +95,11 @@ public class ConstantUtil {
     public static final String BOOK_DARK_TOWN_COVER = "cover_22.jpeg";
     public static final String BOOK_COVER_IMAGE_NAME_0 = "cover_0.jpg";
 
+    public static final Long ORDER_ID_1 = 1L;
     public static final Long ORDER_ID_2 = 2L;
     public static final Long ORDER_ID_3 = 3L;
     public static final Long ORDER_ID_4 = 4L;
+    public static final Long ORDER_ID_99 = 99L;
     public static final LocalDateTime ORDER_DATE_2022_10_11_T_14_35 = LocalDateTime.of(
             2022, 10, 11, 14, 35
     );
@@ -104,6 +112,18 @@ public class ConstantUtil {
     public static final LocalDateTime ORDER_RETURN_DATE_2022_10_21_T_18_05 = LocalDateTime.of(
             2022, 10, 21, 18, 5
     );
+    public static final LocalDateTime ORDER_1_ORDER_DATE = LocalDateTime.of(
+            2022, 10, 23, 10, 0, 0
+    );
+    public static final LocalDateTime ORDER_1_RETURN_DATE = LocalDateTime.of(
+            2022, 10, 17, 10, 0, 0
+    );
+    public static final LocalDateTime ORDER_NEW_ORDER_DATE = LocalDateTime.of(
+            2022, 11, 30, 18, 0
+    );
+    public static final LocalDateTime ORDER_NEW_RETURN_DATE = LocalDateTime.of(
+            2022, 12, 30, 18, 0
+    );
 
     public static final Integer ORDER_STATUS_ID_1 = 1;
     public static final Integer ORDER_STATUS_ID_2 = 2;
@@ -111,25 +131,41 @@ public class ConstantUtil {
     public static final String ORDER_STATUS_NAME_UNCONFIRMED = "Unconfirmed";
     public static final String ORDER_STATUS_NAME_APPROVED = "Approved";
 
+    public static final Long USER_ID_2 = 2L;
     public static final Long USER_ID_3 = 3L;
     public static final Long USER_ID_4 = 4L;
     public static final Long USER_ID_5 = 5L;
     public static final Long USER_ID_99 = 99L;
     public static final LocalDate USER_BIRTHDAY = LocalDate.of(2000, 1, 10);
+    public static final LocalDate USER_SVETA_BIRTHDAY = LocalDate.of(1987, 4, 5);
     public static final String USER_FIRST_NAME_SVETA = "Sveta";
     public static final String USER_FIRST_NAME_SERGEY = "Sergey";
+    public static final String USER_LAST_NAME_SVETIKOVA = "Svetikova";
+    public static final String USER_LAST_NAME_FRAGMENT_OV = "ov";
+    public static final String USER_USERNAME_READER = "reader";
+    public static final String USER_USERNAME_LIBRARIAN = "librarian";
+    public static final String USER_READER_PASSWORD =
+            "{bcrypt}$2a$12$t0LpCTQb7NsIA/SY1GKaDewJFzoZmsE8Otog1lD67Vo1UXPeSUwq6";
+    public static final String USER_SVETA_PASSWORD =
+            "{bcrypt}$2a$12$rypMBywDDflUnbErMUO0A.JdZUbu/SK6hkAdsBZmjQTTwVFl00dzG";
     public static final String USER_EMAIL_EMAIL_EXAMPLE_COM = "email@example.com";
     public static final String USER_EMAIL_TEST_GMAIL_COM = "test@gmail.com";
+    public static final String USER_EMAIL_SVETA_GMAIL_COM = "sveta@gmail.com";
+    public static final String USER_SVETA_AVATAR = "avatar_2.jpg";
 
     public static final Integer USER_ROLE_ID_1 = 1;
     public static final Integer USER_ROLE_ID_2 = 2;
+    public static final int USER_ROLE_ID_3 = 3;
     public static final Integer USER_ROLE_ID_4 = 4;
+    public static final String USER_ROLE_READER = "ROLE_READER";
+    public static final String USER_ROLE_LIBRARIAN = "ROLE_LIBRARIAN";
     public static final String USER_ROLE_NAME_READER = "Reader";
 
     public static final Integer USER_STATUS_ID_1 = 1;
     public static final Integer USER_STATUS_ID_2 = 2;
     public static final Integer USER_STATUS_ID_3 = 3;
     public static final Integer USER_STATUS_ID_4 = 4;
+    public static final String USER_STATUS_ACTIVE = "Active";
     public static final String USER_STATUS_NAME_GUEST = "Guest";
 
     public static final String NAME_IMAGE_TEST = "test";
@@ -140,6 +176,7 @@ public class ConstantUtil {
             2022, 11, 1, 0, 0, 0
     );
 
+    public static final Long AUTHOR_ID_1 = 1L;
     public static final Long AUTHOR_ID_2 = 2L;
     public static final Long AUTHOR_ID_8 = 8L;
     public static final Long AUTHOR_ID_9 = 9L;
@@ -247,5 +284,54 @@ public class ConstantUtil {
         return BookLanguageReadDto.builder()
                 .id(id)
                 .build();
+    }
+
+    public static OrderStatusReadDto getOrderStatus(Integer id) {
+        return OrderStatusReadDto.builder()
+                .id(id)
+                .build();
+    }
+
+    public static UserReadDto getUser(Long id) {
+        return UserReadDto.builder()
+                .id(id)
+                .build();
+    }
+
+    public static UserRole getUserRole(Integer id, String name) {
+        return UserRole.builder()
+                .id(id)
+                .name(name)
+                .build();
+    }
+
+    public static UserRoleReadDto getUserRole(Integer id) {
+        return UserRoleReadDto.builder()
+                .id(id)
+                .name(USER_ROLE_LIBRARIAN)
+                .build();
+    }
+
+    public static UserStatusReadDto getUserStatus(Integer id) {
+        return UserStatusReadDto.builder()
+                .id(id)
+                .name(USER_STATUS_ACTIVE)
+                .build();
+    }
+
+    @Contract(" -> new")
+    public static @NotNull UserReadDto getUserSveta() {
+        return new UserReadDto(
+                USER_ID_2,
+                USER_USERNAME_LIBRARIAN,
+                USER_FIRST_NAME_SVETA,
+                USER_LAST_NAME_SVETIKOVA,
+                USER_EMAIL_SVETA_GMAIL_COM,
+                USER_SVETA_PASSWORD,
+                getUserRole(USER_ROLE_ID_4),
+                getUserStatus(USER_STATUS_ID_3),
+                USER_SVETA_BIRTHDAY,
+                USER_SVETA_AVATAR
+        );
     }
 }

@@ -4,9 +4,7 @@ import com.it.academy.library.model.entity.order.OrderStatus;
 import com.it.academy.library.querydsl.QueryPredicates;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
 import static com.it.academy.library.model.entity.order.QOrderStatus.orderStatus;
@@ -14,10 +12,8 @@ import static com.it.academy.library.model.entity.order.QOrderStatus.orderStatus
 /**
  * A DTO for the {@link OrderStatus} entity.
  */
-@Data
-@NoArgsConstructor
+@Getter
 @AllArgsConstructor
-@Builder
 public class OrderStatusFilter {
     private Integer id;
 

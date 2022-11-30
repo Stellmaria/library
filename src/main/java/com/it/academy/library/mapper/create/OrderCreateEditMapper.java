@@ -26,15 +26,6 @@ public class OrderCreateEditMapper implements Mapper<OrderCreateEditDto, Order> 
         return toObject;
     }
 
-    @Override
-    public Order map(@NotNull OrderCreateEditDto object) {
-        var order = new Order();
-
-        copy(object, order);
-
-        return order;
-    }
-
     private void copy(@NotNull OrderCreateEditDto object, @NotNull Order order) {
         order.setUser(getUser(object.getUserId()));
         order.setOrderStatus(getOrderStatus(object.getOrderStatusId()));

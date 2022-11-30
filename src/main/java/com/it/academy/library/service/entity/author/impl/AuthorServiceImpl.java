@@ -51,11 +51,9 @@ public class AuthorServiceImpl implements AuthorService {
                 .map(entity -> {
                     eventPublisher.publishEvent(new EntityEvent(entity, AccessType.CREATE));
 
-                    if (entity.getImage() == null) {
-                        entity.setImage("avatar_1.jpg");
-                    } else {
-                        entity.setImage(entity.getImage());
-                    }
+                    entity.setImage(entity.getImage() == null
+                            ? "avatar_1.jpg"
+                            : entity.getImage());
 
                     return authorRepository.save(entity);
                 })

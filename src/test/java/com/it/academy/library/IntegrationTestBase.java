@@ -10,9 +10,10 @@ import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 @IT
-@Sql({
-        "classpath:sql/data.sql"
-}
+@Sql(
+        {
+                "classpath:sql/data.sql"
+        }
 )
 @WithMockUser(username = "test", password = "test", authorities = {"ADMIN", "READER"})
 public abstract class IntegrationTestBase {

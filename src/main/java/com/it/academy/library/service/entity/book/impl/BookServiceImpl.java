@@ -29,6 +29,8 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.it.academy.library.service.image.impl.ImageServiceImpl.uploadImage;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -48,7 +50,7 @@ public class BookServiceImpl implements BookService {
         return Optional.of(dto)
                 .map(entity -> {
                     Optional.ofNullable(entity.getImage())
-                            .ifPresent(multipartFile -> ImageServiceImpl.uploadImage(multipartFile, imageService));
+                            .ifPresent(multipartFile -> uploadImage(multipartFile, imageService));
 
                     entity.setBookStatusId(1);
 
@@ -57,11 +59,9 @@ public class BookServiceImpl implements BookService {
                 .map(entity -> {
                     eventPublisher.publishEvent(new EntityEvent(entity, AccessType.CREATE));
 
-                    if (entity.getImage() == null) {
-                        entity.setImage("cover_0.jpg");
-                    } else {
-                        entity.setImage(entity.getImage());
-                    }
+                    entity.setImage(entity.getImage() == null
+                            ? "cover_0.jpg"
+                            : entity.getImage());
 
                     return bookRepository.save(entity);
                 })

@@ -4,7 +4,6 @@ import com.it.academy.library.model.entity.user.User;
 import com.it.academy.library.querydsl.QueryPredicates;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +19,6 @@ import static com.it.academy.library.model.entity.user.QUser.user;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class UserFilter {
     private Long id;
 

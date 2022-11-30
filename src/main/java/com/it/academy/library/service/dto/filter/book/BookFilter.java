@@ -7,7 +7,6 @@ import com.it.academy.library.service.dto.filter.order.OrderStatusFilter;
 import com.it.academy.library.service.dto.filter.user.UserFilter;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -24,7 +23,6 @@ import static com.it.academy.library.model.entity.book.QBook.book;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class BookFilter {
     private Long id;
 

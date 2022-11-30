@@ -32,10 +32,4 @@ public class QueryPredicates {
         return Optional.ofNullable(ExpressionUtils.allOf(predicates))
                 .orElseGet(() -> Expressions.asBoolean(true).isTrue());
     }
-
-    @SuppressWarnings("unused")
-    public Predicate buildOr() {
-        return Optional.ofNullable(ExpressionUtils.anyOf(predicates))
-                .orElseGet(() -> Expressions.asBoolean(true).isTrue());
-    }
 }

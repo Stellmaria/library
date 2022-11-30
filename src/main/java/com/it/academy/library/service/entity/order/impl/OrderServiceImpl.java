@@ -71,6 +71,7 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAllByUserFilter(filer).stream()
                 .map(entity -> {
                     eventPublisher.publishEvent(new EntityEvent(entity, AccessType.READ));
+
                     return orderReadMapper.map(entity);
                 })
                 .collect(Collectors.toList());

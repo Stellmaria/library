@@ -4,7 +4,6 @@ import com.it.academy.library.model.entity.Author;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
@@ -13,7 +12,6 @@ import java.time.LocalDate;
  */
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 public class AuthorReadDto {
     private Long id;

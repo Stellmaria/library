@@ -5,7 +5,6 @@ import com.it.academy.library.model.entity.book.BookSeries;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Collection;
 
@@ -14,7 +13,6 @@ import java.util.Collection;
  */
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 public class BookSeriesReadDto {
     private Integer id;

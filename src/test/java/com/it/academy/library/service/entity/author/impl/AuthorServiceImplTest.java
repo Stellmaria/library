@@ -145,4 +145,14 @@ class AuthorServiceImplTest extends IntegrationTestBase {
                 () -> assertFalse(authorService.delete(ConstantUtil.AUTHOR_ID_99))
         );
     }
+
+    @Test
+    @DisplayName("Find author image.")
+    void findImage() {
+        var expected = 16295;
+
+        var actual = authorService.findImage(ConstantUtil.AUTHOR_ID_1);
+
+        actual.ifPresent(entity -> assertEquals(expected, entity.length));
+    }
 }

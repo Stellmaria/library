@@ -78,13 +78,12 @@ public class AuthorController {
                          @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
         var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/authors/{id}");
-        if (view != null) {
-            return view;
-        }
 
-        return authorService.update(id, dto)
-                .map(it -> "redirect:/authors/{id}")
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return view != null
+                ? view
+                : authorService.update(id, dto)
+                        .map(it -> "redirect:/authors/{id}")
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/{id}/delete")

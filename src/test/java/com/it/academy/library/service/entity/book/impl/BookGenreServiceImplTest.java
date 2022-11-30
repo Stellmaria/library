@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @RequiredArgsConstructor
 @DisplayName("Book genre service test.")
 class BookGenreServiceImplTest extends IntegrationTestBase {
-
     private final BookGenreService bookGenreService;
 
     private final BookGenreRepository bookGenreRepository;

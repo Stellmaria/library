@@ -7,7 +7,9 @@ public interface Mapper<F, T> {
      * @param object from.
      * @return to.
      */
-    T map(F object);
+    default T map(F object) {
+        return null;
+    }
 
     /**
      * Converts one object to another.

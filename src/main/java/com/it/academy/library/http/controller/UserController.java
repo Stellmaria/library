@@ -81,13 +81,13 @@ public class UserController {
                          @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
         var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/users/{id}");
-        if (view != null) {
-            return view;
-        }
 
-        return userService.update(id, dto, SecurityContextHolder.getContext().getAuthentication())
-                .map(it -> "redirect:/users/{id}")
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return view != null
+                ? view
+                : userService.update(id, dto, SecurityContextHolder.getContext().getAuthentication())
+                        .map(it -> "redirect:/users/{id}")
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
     }
 
     @PostMapping("/{id}/delete")
@@ -116,6 +116,7 @@ public class UserController {
                     "There is already a user registered with the email provided"
             );
         }
+
         if (userService.findByUsername(dto.getUsername()).isPresent()) {
             bindingResult.rejectValue(
                     "username", "error.user",

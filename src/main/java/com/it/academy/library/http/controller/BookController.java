@@ -97,13 +97,13 @@ public class BookController {
                          @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
         var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/books/{id}");
-        if (view != null) {
-            return view;
-        }
 
-        return bookService.update(id, dto)
-                .map(it -> "redirect:/books/{id}")
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return view != null
+                ? view
+                : bookService.update(id, dto)
+                        .map(it -> "redirect:/books/{id}")
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
     }
 
     @PostMapping("/{id}/delete")

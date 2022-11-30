@@ -5,16 +5,12 @@ import com.it.academy.library.model.repository.entity.order.OrderRepository;
 import com.it.academy.library.service.dto.create.OrderCreateEditDto;
 import com.it.academy.library.service.dto.filter.order.OrderFilter;
 import com.it.academy.library.service.dto.read.order.OrderReadDto;
-import com.it.academy.library.service.dto.read.order.OrderStatusReadDto;
-import com.it.academy.library.service.dto.read.user.UserReadDto;
 import com.it.academy.library.service.entity.order.OrderService;
 import com.it.academy.library.util.ConstantUtil;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Pageable;
-
-import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -34,10 +30,10 @@ class OrderServiceImplTest extends IntegrationTestBase {
     void findById() {
         var expected = new OrderReadDto(
                 1L,
-                UserReadDto.builder().id(3L).build(),
-                OrderStatusReadDto.builder().id(3).build(),
-                LocalDateTime.of(2022, 10, 23, 10, 0, 0),
-                LocalDateTime.of(2022, 10, 17, 10, 0, 0)
+                ConstantUtil.getUser(ConstantUtil.USER_ID_3),
+                ConstantUtil.getOrderStatus(ConstantUtil.ORDER_STATUS_ID_3),
+                ConstantUtil.ORDER_1_ORDER_DATE,
+                ConstantUtil.ORDER_1_RETURN_DATE
         );
 
         var actual = orderService.findById(expected.getId());
@@ -80,7 +76,7 @@ class OrderServiceImplTest extends IntegrationTestBase {
     void findByUserId() {
         var expected = 2;
 
-        var actual = orderService.findByUserId(3L);
+        var actual = orderService.findByUserId(ConstantUtil.USER_ID_3);
 
         assertThat(actual).hasSize(expected);
     }
@@ -89,13 +85,13 @@ class OrderServiceImplTest extends IntegrationTestBase {
     @DisplayName("Update order.")
     void update() {
         var order = new OrderCreateEditDto(
-                4L,
-                1,
-                LocalDateTime.of(2022, 11, 30, 18, 0),
-                LocalDateTime.of(2022, 12, 30, 18, 0)
+                ConstantUtil.USER_ID_4,
+                ConstantUtil.ORDER_STATUS_ID_1,
+                ConstantUtil.ORDER_NEW_ORDER_DATE,
+                ConstantUtil.ORDER_NEW_RETURN_DATE
         );
 
-        var actual = orderService.update(1L, order);
+        var actual = orderService.update(ConstantUtil.ORDER_ID_1, order);
 
         actual.ifPresent(entity ->
                 assertAll(
@@ -112,7 +108,7 @@ class OrderServiceImplTest extends IntegrationTestBase {
     void delete() {
         assertAll(
                 () -> assertTrue(orderService.delete(ConstantUtil.ORDER_ID_2)),
-                () -> assertFalse(orderService.delete(99L))
+                () -> assertFalse(orderService.delete(ConstantUtil.ORDER_ID_99))
         );
     }
 }

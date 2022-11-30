@@ -4,7 +4,6 @@ import com.it.academy.library.model.entity.book.BookGenre;
 import com.it.academy.library.querydsl.QueryPredicates;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +16,6 @@ import static com.it.academy.library.model.entity.book.QBookGenre.bookGenre;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class BookGenreFilter {
     private Integer id;
 
