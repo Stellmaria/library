@@ -1,4 +1,4 @@
-package com.it.academy.library.model.repository.entity;
+package com.it.academy.library;
 
 import com.it.academy.library.annotation.IT;
 import org.jetbrains.annotations.NotNull;

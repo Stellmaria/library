@@ -1,7 +1,7 @@
 package com.it.academy.library.service.entity.author.impl;
 
-import com.it.academy.library.model.repository.entity.AuthorRepository;
-import com.it.academy.library.model.repository.entity.IntegrationTestBase;
+import com.it.academy.library.IntegrationTestBase;
+import com.it.academy.library.model.repository.entity.author.AuthorRepository;
 import com.it.academy.library.service.dto.create.AuthorCreateEditDto;
 import com.it.academy.library.service.dto.filter.AuthorFilter;
 import com.it.academy.library.service.dto.read.AuthorReadDto;

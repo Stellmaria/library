@@ -1,4 +1,4 @@
-package com.it.academy.library.model.repository.entity;
+package com.it.academy.library.model.repository.entity.author;
 
 import com.it.academy.library.model.entity.Author;
 import com.it.academy.library.model.repository.filter.FilterAuthorRepository;

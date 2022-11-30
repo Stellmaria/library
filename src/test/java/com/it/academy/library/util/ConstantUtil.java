@@ -53,16 +53,14 @@ public class ConstantUtil {
     public static final Integer BOOK_GENRE_ID_1 = 1;
     public static final Integer BOOK_GENRE_ID_2 = 2;
     public static final Integer BOOK_GENRE_ID_4 = 4;
+    public static final Integer BOOK_GENRE_ID_6 = 6;
+    public static final Integer BOOK_GENRE_ID_7 = 7;
     public static final Integer BOOK_GENRE_ID_8 = 8;
     public static final Integer BOOK_GENRE_ID_11 = 11;
+    public static final Integer BOOK_GENRE_ID_99 = 99;
     public static final String BOOK_GENRE_NAME_CORRUPTION = "Corruption";
     public static final String BOOK_GENRE_NAME_ROMANCE = "Romance";
     public static final String BOOK_GENRE_FRAGMENT_NAME_SS = "ss";
-
-    public static final int BOOK_GENRE_ID_6 = 6;
-    public static final Integer BOOK_GENRE_ID_7 = 7;
-    public static final Integer BOOK_GENRE_ID_10 = 10;
-    public static final Integer BOOK_GENRE_ID_99 = 99;
 
     public static final Integer BOOK_LANGUAGE_ID_10 = 10;
     public static final Integer BOOK_LANGUAGE_ID_13 = 13;
@@ -143,7 +141,7 @@ public class ConstantUtil {
     );
 
     public static final Long AUTHOR_ID_2 = 2L;
-    public static final long AUTHOR_ID_8 = 8L;
+    public static final Long AUTHOR_ID_8 = 8L;
     public static final Long AUTHOR_ID_9 = 9L;
     public static final Long AUTHOR_ID_15 = 15L;
     public static final Long AUTHOR_ID_19 = 19L;

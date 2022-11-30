@@ -1,8 +1,8 @@
 package com.it.academy.library.model.repository.entity.order;
 
+import com.it.academy.library.IntegrationTestBase;
 import com.it.academy.library.mapper.filter.order.OrderStatusFilterMapper;
 import com.it.academy.library.model.entity.order.OrderStatus;
-import com.it.academy.library.model.repository.entity.IntegrationTestBase;
 import com.it.academy.library.util.ConstantUtil;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;

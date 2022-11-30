@@ -1,6 +1,6 @@
 package com.it.academy.library.service.entity.book.impl;
 
-import com.it.academy.library.model.repository.entity.IntegrationTestBase;
+import com.it.academy.library.IntegrationTestBase;
 import com.it.academy.library.model.repository.entity.book.BookGenreRepository;
 import com.it.academy.library.service.dto.create.book.BookGenreCreateEditDto;
 import com.it.academy.library.service.dto.filter.book.BookGenreFilter;
@@ -67,9 +67,9 @@ class BookGenreServiceImplTest extends IntegrationTestBase {
     @Test
     @DisplayName("Find all book genre with filter.")
     void findAllWithFilter() {
-        var expected = 1;
+        var expected = 2;
         var filter = new BookGenreFilter();
-        filter.setName(ConstantUtil.BOOK_GENRE_NAME_CORRUPTION);
+        filter.setName(ConstantUtil.BOOK_GENRE_FRAGMENT_NAME_SS);
 
         var actual = bookGenreService.findAll(filter, Pageable.ofSize(ConstantUtil.PAGE_SIZE));
 
@@ -123,7 +123,7 @@ class BookGenreServiceImplTest extends IntegrationTestBase {
     @DisplayName("Delete book genre.")
     void delete() {
         assertAll(
-                () -> assertTrue(bookGenreService.delete(ConstantUtil.BOOK_GENRE_ID_10)),
+                () -> assertTrue(bookGenreService.delete(ConstantUtil.BOOK_GENRE_ID_4)),
                 () -> assertFalse(bookGenreService.delete(ConstantUtil.BOOK_GENRE_ID_99))
         );
     }

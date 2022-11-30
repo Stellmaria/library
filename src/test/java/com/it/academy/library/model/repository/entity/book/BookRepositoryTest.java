@@ -1,5 +1,6 @@
 package com.it.academy.library.model.repository.entity.book;
 
+import com.it.academy.library.IntegrationTestBase;
 import com.it.academy.library.mapper.filter.AuthorFilterMapper;
 import com.it.academy.library.mapper.filter.book.BookFilterMapper;
 import com.it.academy.library.mapper.filter.book.BookFormatFilterMapper;
@@ -20,7 +21,6 @@ import com.it.academy.library.model.entity.book.BookSeries;
 import com.it.academy.library.model.entity.book.BookStatus;
 import com.it.academy.library.model.entity.order.Order;
 import com.it.academy.library.model.entity.user.User;
-import com.it.academy.library.model.repository.entity.IntegrationTestBase;
 import com.it.academy.library.util.ConstantUtil;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;

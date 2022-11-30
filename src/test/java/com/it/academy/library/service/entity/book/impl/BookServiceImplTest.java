@@ -1,8 +1,8 @@
 package com.it.academy.library.service.entity.book.impl;
 
+import com.it.academy.library.IntegrationTestBase;
 import com.it.academy.library.mapper.read.book.BookSeriesReadMapper;
 import com.it.academy.library.mapper.read.book.BookStatusReadMapper;
-import com.it.academy.library.model.repository.entity.IntegrationTestBase;
 import com.it.academy.library.service.dto.create.book.BookCreateEditDto;
 import com.it.academy.library.service.dto.filter.book.BookFilter;
 import com.it.academy.library.service.dto.read.book.BookFormatReadDto;

@@ -5,7 +5,7 @@ import com.it.academy.library.listener.entity.EntityEvent;
 import com.it.academy.library.mapper.create.AuthorCreateEditMapper;
 import com.it.academy.library.mapper.read.author.AuthorReadMapper;
 import com.it.academy.library.model.entity.Author;
-import com.it.academy.library.model.repository.entity.AuthorRepository;
+import com.it.academy.library.model.repository.entity.author.AuthorRepository;
 import com.it.academy.library.service.dto.create.AuthorCreateEditDto;
 import com.it.academy.library.service.dto.filter.AuthorFilter;
 import com.it.academy.library.service.dto.filter.book.BookFilter;

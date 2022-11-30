@@ -1,32 +1,38 @@
 package com.it.academy.library.service.dto.read.user;
 
 import com.it.academy.library.model.entity.user.User;
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 /**
  * A DTO for the {@link User} entity.
  */
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class UserReadDto {
-    Long id;
+    private Long id;
 
-    String username;
+    private String username;
 
-    String firstName;
+    private String firstName;
 
-    String lastName;
+    private String lastName;
 
-    String email;
+    private String email;
 
-    String password;
+    private String password;
 
-    UserRoleReadDto userRole;
+    private UserRoleReadDto userRole;
 
-    UserStatusReadDto userStatus;
+    private UserStatusReadDto userStatus;
 
-    LocalDate birthday;
+    private LocalDate birthday;
 
-    String image;
+    private String image;
 }

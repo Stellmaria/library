@@ -1,14 +1,20 @@
 package com.it.academy.library.service.dto.read.order;
 
 import com.it.academy.library.model.entity.order.OrderStatus;
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * A DTO for the {@link OrderStatus} entity.
  */
-@Value
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class OrderStatusReadDto {
-    Integer id;
+    private Integer id;
 
-    String name;
+    private String name;
 }

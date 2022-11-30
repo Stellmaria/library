@@ -1,8 +1,8 @@
 package com.it.academy.library.model.repository.entity.book;
 
+import com.it.academy.library.IntegrationTestBase;
 import com.it.academy.library.mapper.filter.book.BookPublishingHouseFilterMapper;
 import com.it.academy.library.model.entity.book.BookPublishingHouse;
-import com.it.academy.library.model.repository.entity.IntegrationTestBase;
 import com.it.academy.library.util.ConstantUtil;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;

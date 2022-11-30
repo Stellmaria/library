@@ -1,6 +1,6 @@
 package com.it.academy.library.service.entity.book.impl;
 
-import com.it.academy.library.model.repository.entity.IntegrationTestBase;
+import com.it.academy.library.IntegrationTestBase;
 import com.it.academy.library.model.repository.entity.book.BookLanguageRepository;
 import com.it.academy.library.service.entity.book.BookLanguageService;
 import lombok.RequiredArgsConstructor;

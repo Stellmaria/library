@@ -1,5 +1,6 @@
-package com.it.academy.library.model.repository.entity;
+package com.it.academy.library.model.repository.entity.author;
 
+import com.it.academy.library.IntegrationTestBase;
 import com.it.academy.library.mapper.filter.AuthorFilterMapper;
 import com.it.academy.library.mapper.filter.book.BookFilterMapper;
 import com.it.academy.library.model.entity.Author;

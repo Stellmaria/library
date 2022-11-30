@@ -10,7 +10,7 @@ import com.it.academy.library.model.entity.book.BookPublishingHouse;
 import com.it.academy.library.model.entity.book.BookSeries;
 import com.it.academy.library.model.entity.book.BookStatus;
 import com.it.academy.library.model.entity.order.Order;
-import com.it.academy.library.model.repository.entity.AuthorRepository;
+import com.it.academy.library.model.repository.entity.author.AuthorRepository;
 import com.it.academy.library.model.repository.entity.book.BookFormatRepository;
 import com.it.academy.library.model.repository.entity.book.BookGenreRepository;
 import com.it.academy.library.model.repository.entity.book.BookLanguageRepository;
