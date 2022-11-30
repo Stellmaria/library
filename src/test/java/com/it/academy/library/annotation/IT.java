@@ -20,4 +20,5 @@ import java.lang.annotation.Target;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public @interface IT {
+
 }

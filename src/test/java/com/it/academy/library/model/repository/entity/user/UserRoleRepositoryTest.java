@@ -15,9 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @RequiredArgsConstructor
 @DisplayName("User role repository test.")
 class UserRoleRepositoryTest extends IntegrationTestBase {
-    private static final Integer USER_ROLE_ID_4 = 4;
-    private static final Integer USER_ROLE_ID_5 = 5;
-
     private final UserRoleRepository userRoleRepository;
 
     private final UserRoleFilterMapper userRoleFilterMapper;
@@ -42,19 +39,19 @@ class UserRoleRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Update user role.")
     void updateUserRole() {
-        var userRole = userRoleRepository.findById(USER_ROLE_ID_4);
+        var userRole = userRoleRepository.findById(ConstantUtil.USER_ROLE_ID_4);
 
         userRole.ifPresent(entity -> {
             entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
 
             userRoleRepository.save(entity);
         });
-        var actual = userRoleRepository.findById(USER_ROLE_ID_4);
+        var actual = userRoleRepository.findById(ConstantUtil.USER_ROLE_ID_4);
 
         actual.ifPresent(entity ->
                 assertAll(
                         () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName()),
-                        () -> assertEquals(USER_ROLE_ID_4, entity.getId())
+                        () -> assertEquals(ConstantUtil.USER_ROLE_ID_4, entity.getId())
                 )
         );
     }
@@ -64,7 +61,7 @@ class UserRoleRepositoryTest extends IntegrationTestBase {
     void deleteUserRole() {
         var expected = userRoleRepository.count() - 1;
 
-        userRoleRepository.deleteById(USER_ROLE_ID_5);
+        userRoleRepository.deleteById(ConstantUtil.USER_ROLE_ID_2);
         var actual = userRoleRepository.count();
 
         assertEquals(expected, actual);

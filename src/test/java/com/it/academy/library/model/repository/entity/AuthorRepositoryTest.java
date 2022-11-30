@@ -16,10 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @RequiredArgsConstructor
 @DisplayName("Author repository test.")
 class AuthorRepositoryTest extends IntegrationTestBase {
-    private static final String AUTHOR_FIRST_NAME_JAMES = "James";
-    private static final Long AUTHOR_ID_2 = 2L;
-    private static final Long AUTHOR_ID_15 = 15L;
-
     private final AuthorRepository authorRepository;
 
     private final AuthorFilterMapper authorFilterMapper;
@@ -57,7 +53,7 @@ class AuthorRepositoryTest extends IntegrationTestBase {
     void deleteAuthor() {
         var expected = authorRepository.count() - 1;
 
-        authorRepository.deleteById(AUTHOR_ID_2);
+        authorRepository.deleteById(ConstantUtil.AUTHOR_ID_2);
         var actual = authorRepository.count();
 
         assertEquals(expected, actual);
@@ -66,7 +62,7 @@ class AuthorRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Update author.")
     void updateAuthor() {
-        var author = authorRepository.findById(AUTHOR_ID_15);
+        var author = authorRepository.findById(ConstantUtil.AUTHOR_ID_15);
 
         author.ifPresent(entity -> {
             entity.setFirstName(ConstantUtil.NEW + ConstantUtil.UPDATE);
@@ -78,11 +74,11 @@ class AuthorRepositoryTest extends IntegrationTestBase {
 
             authorRepository.save(entity);
         });
-        var actual = authorRepository.findById(AUTHOR_ID_15);
+        var actual = authorRepository.findById(ConstantUtil.AUTHOR_ID_15);
 
         actual.ifPresent(entity ->
                 assertAll(
-                        () -> assertEquals(AUTHOR_ID_15, entity.getId()),
+                        () -> assertEquals(ConstantUtil.AUTHOR_ID_15, entity.getId()),
                         () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getFirstName()),
                         () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getLastName()),
                         () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getImage()),
@@ -98,7 +94,7 @@ class AuthorRepositoryTest extends IntegrationTestBase {
     void findAllAuthorByAuthorFilter() {
         var expected = 1;
         var author = new Author();
-        author.setFirstName(AUTHOR_FIRST_NAME_JAMES);
+        author.setFirstName(ConstantUtil.AUTHOR_FIRST_NAME_JAMES);
 
         var actual = authorRepository.findAllByAuthorFilter(
                 authorFilterMapper.map(author)

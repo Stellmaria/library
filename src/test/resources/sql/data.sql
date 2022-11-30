@@ -1,6 +1,186 @@
---liquibase formatted sql
+DROP TABLE IF EXISTS author CASCADE;
+CREATE TABLE IF NOT EXISTS author
+(
+    id          BIGSERIAL PRIMARY KEY,
+    first_name  VARCHAR(64) NOT NULL,
+    last_name   VARCHAR(64) NOT NULL,
+    image       VARCHAR(255),
+    birthday    DATE,
+    date_death  DATE,
+    description VARCHAR(255),
+    created_at  TIMESTAMP WITHOUT TIME ZONE,
+    modified_at TIMESTAMP WITHOUT TIME ZONE,
+    created_by  VARCHAR(64),
+    modified_by VARCHAR(64)
+);
 
---changeset stell:1
+DROP TABLE IF EXISTS book_language CASCADE;
+CREATE TABLE IF NOT EXISTS book_language
+(
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR(64) UNIQUE NOT NULL
+);
+
+DROP TABLE IF EXISTS book_format CASCADE;
+CREATE TABLE IF NOT EXISTS book_format
+(
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR(64) UNIQUE NOT NULL
+);
+
+DROP TABLE IF EXISTS book_publishing_house CASCADE;
+CREATE TABLE IF NOT EXISTS book_publishing_house
+(
+    id          SERIAL PRIMARY KEY,
+    name        VARCHAR(64) UNIQUE NOT NULL,
+    created_at  TIMESTAMP WITHOUT TIME ZONE,
+    modified_at TIMESTAMP WITHOUT TIME ZONE,
+    created_by  VARCHAR(64),
+    modified_by VARCHAR(64)
+);
+
+DROP TABLE IF EXISTS book_series CASCADE;
+CREATE TABLE IF NOT EXISTS book_series
+(
+    id          SERIAL PRIMARY KEY,
+    name        VARCHAR(64) UNIQUE NOT NULL,
+    created_at  TIMESTAMP WITHOUT TIME ZONE,
+    modified_at TIMESTAMP WITHOUT TIME ZONE,
+    created_by  VARCHAR(64),
+    modified_by VARCHAR(64)
+);
+
+DROP TABLE IF EXISTS book_genre CASCADE;
+CREATE TABLE IF NOT EXISTS book_genre
+(
+    id          SERIAL PRIMARY KEY,
+    name        VARCHAR(64) UNIQUE NOT NULL,
+    created_at  TIMESTAMP WITHOUT TIME ZONE,
+    modified_at TIMESTAMP WITHOUT TIME ZONE,
+    created_by  VARCHAR(64),
+    modified_by VARCHAR(64)
+);
+
+DROP TABLE IF EXISTS book_status CASCADE;
+CREATE TABLE IF NOT EXISTS book_status
+(
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR(64) UNIQUE NOT NULL
+);
+
+DROP TABLE IF EXISTS user_role CASCADE;
+CREATE TABLE IF NOT EXISTS user_role
+(
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR(64) UNIQUE NOT NULL
+);
+
+DROP TABLE IF EXISTS user_status CASCADE;
+CREATE TABLE IF NOT EXISTS user_status
+(
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR(64) UNIQUE NOT NULL
+);
+
+DROP TABLE IF EXISTS users CASCADE;
+CREATE TABLE IF NOT EXISTS users
+(
+    id             BIGSERIAL PRIMARY KEY,
+    username       VARCHAR(50) UNIQUE NOT NULL,
+    first_name     VARCHAR(99)        NOT NULL,
+    last_name      VARCHAR(99)        NOT NULL,
+    email          VARCHAR(50) UNIQUE NOT NULL,
+    password       VARCHAR(128)       NOT NULL DEFAULT '{noop}111111',
+    user_role_id   INTEGER DEFAULT 1  NOT NULL,
+    user_status_id INTEGER DEFAULT 1  NOT NULL,
+    birthday       DATE,
+    image          VARCHAR(255),
+    created_at     TIMESTAMP WITHOUT TIME ZONE,
+    modified_at    TIMESTAMP WITHOUT TIME ZONE,
+    created_by     VARCHAR(64),
+    modified_by    VARCHAR(64),
+    FOREIGN KEY (user_role_id) REFERENCES user_role (id)
+        ON UPDATE CASCADE ON DELETE SET DEFAULT,
+    FOREIGN KEY (user_status_id) REFERENCES user_status (id)
+        ON UPDATE CASCADE ON DELETE SET DEFAULT
+);
+
+DROP TABLE IF EXISTS order_status CASCADE;
+CREATE TABLE IF NOT EXISTS order_status
+(
+    id   SERIAL PRIMARY KEY,
+    name VARCHAR(64) UNIQUE NOT NULL
+);
+
+DROP TABLE IF EXISTS orders CASCADE;
+CREATE TABLE IF NOT EXISTS orders
+(
+    id              BIGSERIAL PRIMARY KEY,
+    user_id         BIGINT  DEFAULT 1 NOT NULL,
+    order_status_id INTEGER DEFAULT 1 NOT NULL,
+    order_date      TIMESTAMP         NOT NULL,
+    return_date     TIMESTAMP         NOT NULL,
+    created_at      TIMESTAMP WITHOUT TIME ZONE,
+    modified_at     TIMESTAMP WITHOUT TIME ZONE,
+    created_by      VARCHAR(64),
+    modified_by     VARCHAR(64),
+    FOREIGN KEY (user_id) REFERENCES users (id)
+        ON UPDATE CASCADE ON DELETE SET DEFAULT,
+    FOREIGN KEY (order_status_id) REFERENCES order_status (id)
+        ON UPDATE CASCADE ON DELETE SET DEFAULT
+);
+
+DROP TABLE IF EXISTS book CASCADE;
+CREATE TABLE IF NOT EXISTS book
+(
+    id                       BIGSERIAL PRIMARY KEY,
+    title                    VARCHAR(255)      NOT NULL,
+    subtitle                 VARCHAR(255),
+    year                     INTEGER,
+    quantity                 BIGINT            NOT NULL,
+    isbn_10                  VARCHAR(10),
+    isbn_13                  VARCHAR(15),
+    image                    VARCHAR(255),
+    book_status_id           INTEGER DEFAULT 1 NOT NULL,
+    book_language_id         INTEGER,
+    book_format_id           INTEGER,
+    book_publishing_house_id INTEGER,
+    book_series_id           INTEGER,
+    order_id                 BIGINT,
+    created_at               TIMESTAMP WITHOUT TIME ZONE,
+    modified_at              TIMESTAMP WITHOUT TIME ZONE,
+    created_by               VARCHAR(64),
+    modified_by              VARCHAR(64),
+    FOREIGN KEY (book_status_id) REFERENCES book_status (id)
+        ON UPDATE CASCADE ON DELETE SET DEFAULT,
+    FOREIGN KEY (book_language_id) REFERENCES book_language (id)
+        ON UPDATE CASCADE ON DELETE SET NULL,
+    FOREIGN KEY (book_format_id) REFERENCES book_format (id)
+        ON UPDATE CASCADE ON DELETE SET NULL,
+    FOREIGN KEY (book_publishing_house_id) REFERENCES book_publishing_house (id)
+        ON UPDATE CASCADE ON DELETE SET NULL,
+    FOREIGN KEY (book_series_id) REFERENCES book_series (id)
+        ON UPDATE CASCADE ON DELETE SET NULL,
+    FOREIGN KEY (order_id) REFERENCES orders (id)
+        ON DELETE SET NULL
+);
+
+DROP TABLE IF EXISTS books_genres CASCADE;
+CREATE TABLE IF NOT EXISTS books_genres
+(
+    id       BIGSERIAL PRIMARY KEY,
+    book_id  BIGINT REFERENCES book (id) ON DELETE CASCADE,
+    genre_id INTEGER REFERENCES book_genre (id) ON DELETE CASCADE
+);
+
+DROP TABLE IF EXISTS books_authors CASCADE;
+CREATE TABLE IF NOT EXISTS books_authors
+(
+    id        BIGSERIAL PRIMARY KEY,
+    book_id   BIGINT REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    author_id BIGINT REFERENCES author (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 INSERT INTO author (id, first_name, last_name, created_at, created_by, birthday, date_death, image)
 VALUES (1, 'Stieg', 'Larsson', '2022-11-1T00:00', 'stell', '1954-9-15',
         '2004-11-9', 'author_1.jpg'),
@@ -59,10 +239,8 @@ VALUES (1, 'Stieg', 'Larsson', '2022-11-1T00:00', 'stell', '1954-9-15',
        (19, 'J', 'Tolkien', '2022-11-1T00:00', 'stell', '1892-2-3',
         '1973-9-2', 'author_19.jpg');
 
---changeset stell:2
 SELECT SETVAL('author_id_seq', (SELECT MAX(id) FROM author));
 
---changeset stell:3
 INSERT INTO book_language (id, name)
 VALUES (1, 'English'),
        (2, 'German'),
@@ -123,10 +301,8 @@ VALUES (1, 'English'),
        (57, 'Welsh'),
        (58, 'Yiddish');
 
---changeset stell:4
 SELECT SETVAL('book_language_id_seq', (SELECT MAX(id) FROM book_language));
 
---changeset stell:5
 INSERT INTO book_format (id, name)
 VALUES (1, 'Mass Market Paperback'),
        (2, 'Hardcover'),
@@ -138,10 +314,8 @@ VALUES (1, 'Mass Market Paperback'),
        (8, 'Turtleback'),
        (9, 'Audible');
 
---changeset stell:6
 SELECT SETVAL('book_format_id_seq', (SELECT MAX(id) FROM book_format));
 
---changeset stell:7
 INSERT INTO book_publishing_house (id, name, created_at, created_by)
 VALUES (1, 'Apress', '2022-11-1T00:00', 'stell'),
        (2, 'Arthur A. Levine Books', '2022-11-1T00:00', 'stell'),
@@ -159,10 +333,8 @@ VALUES (1, 'Apress', '2022-11-1T00:00', 'stell'),
        (14, 'Scribner', '2022-11-1T00:00', 'stell'),
        (15, 'ACT', '2022-11-1T00:00', 'stell');
 
---changeset stell:8
 SELECT SETVAL('book_publishing_house_id_seq', (SELECT MAX(id) FROM book_publishing_house));
 
---changeset stell:9
 INSERT INTO book_series (id, name, created_at, created_by)
 VALUES (1, 'The Experts Voice', '2022-11-1T00:00', 'stell'),
        (2, 'Millennium', '2022-11-1T00:00', 'stell'),
@@ -170,10 +342,8 @@ VALUES (1, 'The Experts Voice', '2022-11-1T00:00', 'stell'),
        (4, 'Harry Potter', '2022-11-1T00:00', 'stell'),
        (5, 'The Twilight Saga', '2022-11-1T00:00', 'stell');
 
---changeset stell:10
 SELECT SETVAL('book_series_id_seq', (SELECT MAX(id) FROM book_series));
 
---changeset stell:11
 INSERT INTO book_genre (id, name, created_at, created_by)
 VALUES (1, 'Business', '2022-11-1T00:00', 'stell'),
        (2, 'Children', '2022-11-1T00:00', 'stell'),
@@ -187,39 +357,31 @@ VALUES (1, 'Business', '2022-11-1T00:00', 'stell'),
        (10, 'Computer hackers', '2022-11-1T00:00', 'stell'),
        (11, 'Corruption', '2022-11-1T00:00', 'stell');
 
---changeset stell:12
 SELECT SETVAL('book_genre_id_seq', (SELECT MAX(id) FROM book_genre));
 
---changeset stell:13
 INSERT INTO book_status (id, name)
 VALUES (1, 'Unconfirmed'),
        (2, 'Reading room'),
        (3, 'Home');
 
---changeset stell:14
 SELECT SETVAL('book_status_id_seq', (SELECT MAX(id) FROM book_status));
 
---changeset stell:15
 INSERT INTO user_role (id, name)
 VALUES (1, 'ROLE_GUEST'),
        (2, 'ROLE_ADMIN'),
        (3, 'ROLE_READER'),
        (4, 'ROLE_LIBRARIAN');
 
---changeset stell:16
 SELECT SETVAL('user_role_id_seq', (SELECT MAX(id) FROM user_role));
 
---changeset stell:17
 INSERT INTO user_status (id, name)
 VALUES (1, 'Guest'),
        (2, 'Unconfirmed'),
        (3, 'Active'),
        (4, 'Locked');
 
---changeset stell:18
 SELECT SETVAL('user_status_id_seq', (SELECT MAX(id) FROM user_status));
 
---changeset stell:19
 INSERT INTO users (id, username, first_name, last_name, email, password, user_role_id, user_status_id, birthday, image,
                    created_at, created_by)
 VALUES (1, 'guest', 'Guest', 'Guest', 'guest@gmail.com',
@@ -243,20 +405,16 @@ VALUES (1, 'guest', 'Guest', 'Guest', 'guest@gmail.com',
         '{bcrypt}$2a$12$arbqMqs83k2rc6QDCb5sH.h.ASaEmenOXnB9b1YOUIKbf1rPiinLi', 2, 3,
         '1989-7-7', 'avatar_5.jpg', '2022-11-1T00:00', 'stell');
 
---changeset stell:20
 SELECT SETVAL('users_id_seq', (SELECT MAX(id) FROM users));
 
---changeset stell:21
 INSERT INTO order_status (id, name)
 VALUES (1, 'Unconfirmed'),
        (2, 'Approved'),
        (3, 'Blocked');
 
---changeset stell:22
 SELECT SETVAL('order_status_id_seq', (SELECT MAX(id) FROM order_status));
 
---changeset stell:23
-INSERT INTO Orders (id, user_id, order_status_id, order_date, return_date, created_at, created_by)
+INSERT INTO orders (id, user_id, order_status_id, order_date, return_date, created_at, created_by)
 VALUES (1, 3, 3, '2022-10-23T10:00', '2022-10-17T10:00',
         '2022-10-23T10:00', 'stell'),
 
@@ -269,10 +427,8 @@ VALUES (1, 3, 3, '2022-10-23T10:00', '2022-10-17T10:00',
        (4, 4, 2, '2022-10-25T18:00', '2022-10-29T11:45',
         '2022-10-25T18:00', 'stell');
 
---changeset stell:24
 SELECT SETVAL('orders_id_seq', (SELECT MAX(id) FROM orders));
 
---changeset stell:25
 INSERT INTO book (id, title, year, isbn_10, isbn_13, book_language_id, book_format_id,
                   book_publishing_house_id, book_series_id, order_id, book_status_id, created_at, created_by, image,
                   quantity)
@@ -364,10 +520,8 @@ VALUES (1, 'Twilight', 2008, '0316038377', '9780316038379', 1, 1,
         null, null, 3, null, 1,
         '2022-11-1T00:00', 'stell', 'cover_22.jpeg', 4);
 
---changeset stell:26
 SELECT SETVAL('book_id_seq', (SELECT MAX(id) FROM book));
 
---changeset stell:27
 INSERT INTO books_authors (id, book_id, author_id)
 VALUES (1, 1, 11),
        (2, 2, 5),
@@ -395,10 +549,8 @@ VALUES (1, 1, 11),
        (24, 21, 1),
        (25, 22, 9);
 
---changeset stell:28
 SELECT SETVAL('books_authors_id_seq', (SELECT MAX(id) FROM books_authors));
 
---changeset stell:29
 INSERT INTO books_genres (id, book_id, genre_id)
 VALUES (1, 1, 8),
        (2, 2, 2),
@@ -428,5 +580,4 @@ VALUES (1, 1, 8),
        (26, 15, 9),
        (27, 22, 6);
 
---changeset stell:30
 SELECT SETVAL('books_genres_id_seq', (SELECT MAX(id) FROM books_genres));

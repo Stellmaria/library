@@ -33,14 +33,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @RequiredArgsConstructor
 @DisplayName("Book repository test.")
 class BookRepositoryTest extends IntegrationTestBase {
-    private static final String BOOK_FORMAT_NAME_MASS_MARKET_PAPERBACK = "Mass Market Paperback";
-    private static final String BOOK_LANGUAGE_NAME_POLISH = "Polish";
-    private static final Long BOOK_ID_4 = 4L;
-    private static final Long BOOK_ID_6 = 6L;
-    private static final String BOOK_SERIES_MILLENNIUM = "Millennium";
-    private static final String FIRST_NAME_STIEG = "Stieg";
-    private static final long QUANTITY_4 = 4L;
-
     private final BookRepository bookRepository;
 
     private final AuthorFilterMapper authorFilterMapper;
@@ -62,16 +54,16 @@ class BookRepositoryTest extends IntegrationTestBase {
                 .title(ConstantUtil.NEW + ConstantUtil.SAVE)
                 .subtitle(ConstantUtil.NEW + ConstantUtil.SAVE)
                 .year(ConstantUtil.BOOK_YEAR_2023)
-                .isbn10(ConstantUtil.ISBN_10)
-                .isbn13(ConstantUtil.ISBN_13)
+                .isbn10(ConstantUtil.BOOK_ISBN_10)
+                .isbn13(ConstantUtil.BOOK_ISBN_13)
                 .image(ConstantUtil.NEW + ConstantUtil.SAVE)
-                .bookStatus(getBookStatus())
-                .bookLanguage(getBookLanguage())
-                .bookFormat(getBookFormat())
-                .bookPublishingHouse(getBookPublishingHouse())
-                .bookSeries(getBookSeries())
-                .order(getOrder())
-                .quantity(QUANTITY_4)
+                .bookStatus(ConstantUtil.getBookStatus())
+                .bookLanguage(ConstantUtil.getBookLanguage())
+                .bookFormat(ConstantUtil.getBookFormat())
+                .bookPublishingHouse(ConstantUtil.getBookPublishingHouse())
+                .bookSeries(ConstantUtil.getBookSeries())
+                .order(ConstantUtil.getOrder())
+                .quantity(ConstantUtil.BOOK_QUANTITY_4)
                 .build();
 
         var actual = bookRepository.save(book);
@@ -97,34 +89,34 @@ class BookRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Update book.")
     void updateBook() {
-        var book = bookRepository.findById(BOOK_ID_4);
+        var book = bookRepository.findById(ConstantUtil.BOOK_ID_4);
 
         book.ifPresent(entity -> {
             entity.setTitle(ConstantUtil.NEW + ConstantUtil.UPDATE);
             entity.setSubtitle(ConstantUtil.NEW + ConstantUtil.UPDATE);
             entity.setYear(ConstantUtil.BOOK_YEAR_2023);
-            entity.setIsbn10(ConstantUtil.ISBN_10);
-            entity.setIsbn13(ConstantUtil.ISBN_13);
+            entity.setIsbn10(ConstantUtil.BOOK_ISBN_10);
+            entity.setIsbn13(ConstantUtil.BOOK_ISBN_13);
             entity.setImage(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            entity.setBookStatus(getBookStatus());
-            entity.setBookLanguage(getBookLanguage());
-            entity.setBookFormat(getBookFormat());
-            entity.setBookPublishingHouse(getBookPublishingHouse());
-            entity.setBookSeries(getBookSeries());
-            entity.setOrder(getOrder());
+            entity.setBookStatus(ConstantUtil.getBookStatus());
+            entity.setBookLanguage(ConstantUtil.getBookLanguage());
+            entity.setBookFormat(ConstantUtil.getBookFormat());
+            entity.setBookPublishingHouse(ConstantUtil.getBookPublishingHouse());
+            entity.setBookSeries(ConstantUtil.getBookSeries());
+            entity.setOrder(ConstantUtil.getOrder());
 
             bookRepository.save(entity);
         });
-        var actual = bookRepository.findById(BOOK_ID_4);
+        var actual = bookRepository.findById(ConstantUtil.BOOK_ID_4);
 
         actual.ifPresent(entity ->
                 assertAll(
-                        () -> assertEquals(BOOK_ID_4, entity.getId()),
+                        () -> assertEquals(ConstantUtil.BOOK_ID_4, entity.getId()),
                         () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getTitle()),
                         () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getSubtitle()),
                         () -> assertEquals(ConstantUtil.BOOK_YEAR_2023, entity.getYear()),
-                        () -> assertEquals(ConstantUtil.ISBN_10, entity.getIsbn10()),
-                        () -> assertEquals(ConstantUtil.ISBN_13, entity.getIsbn13()),
+                        () -> assertEquals(ConstantUtil.BOOK_ISBN_10, entity.getIsbn10()),
+                        () -> assertEquals(ConstantUtil.BOOK_ISBN_13, entity.getIsbn13()),
                         () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getImage()),
                         () -> assertEquals(ConstantUtil.BOOK_STATUS_ID_1, entity.getBookStatus().getId()),
                         () -> assertEquals(ConstantUtil.BOOK_LANGUAGE_ID_13, entity.getBookLanguage().getId()),
@@ -143,7 +135,7 @@ class BookRepositoryTest extends IntegrationTestBase {
     void deleteBook() {
         var expected = bookRepository.count() - 1;
 
-        bookRepository.deleteById(BOOK_ID_6);
+        bookRepository.deleteById(ConstantUtil.BOOK_ID_6);
         var actual = bookRepository.count();
 
         assertEquals(expected, actual);
@@ -154,7 +146,7 @@ class BookRepositoryTest extends IntegrationTestBase {
     void findAllBookByBooksLanguageFilter() {
         var expected = 2;
         var bookLanguage = new BookLanguage();
-        bookLanguage.setName(BOOK_LANGUAGE_NAME_POLISH);
+        bookLanguage.setName(ConstantUtil.BOOK_LANGUAGE_NAME_POLISH);
 
         var actual = bookRepository.findAllByBookLanguageFilter(
                 bookLanguageFilterMapper.map(bookLanguage)
@@ -168,7 +160,7 @@ class BookRepositoryTest extends IntegrationTestBase {
     void findAllBookByBookFormatFilter() {
         var expected = 1;
         var bookFormat = new BookFormat();
-        bookFormat.setName(BOOK_FORMAT_NAME_MASS_MARKET_PAPERBACK);
+        bookFormat.setName(ConstantUtil.BOOK_FORMAT_NAME_MASS_MARKET_PAPERBACK);
 
         var actual = bookRepository.findAllByBookFormatFilter(
                 bookFormatFilterMapper.map(bookFormat)
@@ -209,7 +201,7 @@ class BookRepositoryTest extends IntegrationTestBase {
     void findAllBookByBookSeriesFilter() {
         var expected = 4;
         var bookSeries = new BookSeries();
-        bookSeries.setName(BOOK_SERIES_MILLENNIUM);
+        bookSeries.setName(ConstantUtil.BOOK_SERIES_NAME_MILLENNIUM);
 
         var actual = bookRepository.findAllByBookSeriesFilter(
                 bookSeriesFilterMapper.map(bookSeries)
@@ -223,7 +215,7 @@ class BookRepositoryTest extends IntegrationTestBase {
     void findAllBookByOrderFilter() {
         var expected = 1;
         var order = new Order();
-        order.setOrderDate(ConstantUtil.ORDER_DATE_10);
+        order.setOrderDate(ConstantUtil.ORDER_DATE_2022_10_23_T_14_35);
 
         var actual = bookRepository.findAllByOrderFilter(
                 orderFilterMapper.map(order)
@@ -265,7 +257,7 @@ class BookRepositoryTest extends IntegrationTestBase {
     void findAllBookByAuthorFilter() {
         var expected = 4;
         var author = new Author();
-        author.setFirstName(FIRST_NAME_STIEG);
+        author.setFirstName(ConstantUtil.AUTHOR_FIRST_NAME_STIEG);
 
         var actual = bookRepository.findAllByAuthorFilter(
                 authorFilterMapper.map(author)
@@ -286,41 +278,5 @@ class BookRepositoryTest extends IntegrationTestBase {
         );
 
         assertThat(actual).hasSize(expected);
-    }
-
-    private BookStatus getBookStatus() {
-        return BookStatus.builder()
-                .id(ConstantUtil.BOOK_STATUS_ID_1)
-                .build();
-    }
-
-    private BookLanguage getBookLanguage() {
-        return BookLanguage.builder()
-                .id(ConstantUtil.BOOK_LANGUAGE_ID_13)
-                .build();
-    }
-
-    private BookFormat getBookFormat() {
-        return BookFormat.builder()
-                .id(ConstantUtil.BOOK_FORMAT_ID_4)
-                .build();
-    }
-
-    private BookPublishingHouse getBookPublishingHouse() {
-        return BookPublishingHouse.builder()
-                .id(ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_1)
-                .build();
-    }
-
-    private BookSeries getBookSeries() {
-        return BookSeries.builder()
-                .id(ConstantUtil.BOOK_SERIES_ID_3)
-                .build();
-    }
-
-    private Order getOrder() {
-        return Order.builder()
-                .id(ConstantUtil.ORDER_ID_4)
-                .build();
     }
 }

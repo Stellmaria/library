@@ -15,10 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @RequiredArgsConstructor
 @DisplayName("Order status repository test.")
 class OrderStatusRepositoryTest extends IntegrationTestBase {
-    private static final String ORDER_STATUS_NAME_UNCONFIRMED = "Unconfirmed";
-    private static final Integer ORDER_STATUS_ID_2 = 2;
-    private static final Integer ORDER_STATUS_ID_3 = 3;
-
     private final OrderStatusRepository orderStatusRepository;
 
     private final OrderStatusFilterMapper orderStatusFilterMapper;
@@ -43,19 +39,19 @@ class OrderStatusRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Update order status.")
     void update() {
-        var orderStatus = orderStatusRepository.findById(ORDER_STATUS_ID_2);
+        var orderStatus = orderStatusRepository.findById(ConstantUtil.ORDER_STATUS_ID_2);
 
         orderStatus.ifPresent(entity -> {
             entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
 
             orderStatusRepository.save(entity);
         });
-        var actual = orderStatusRepository.findById(ORDER_STATUS_ID_2);
+        var actual = orderStatusRepository.findById(ConstantUtil.ORDER_STATUS_ID_2);
 
         actual.ifPresent(entity ->
                 assertAll(
                         () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName()),
-                        () -> assertEquals(ORDER_STATUS_ID_2, entity.getId())
+                        () -> assertEquals(ConstantUtil.ORDER_STATUS_ID_2, entity.getId())
                 )
         );
     }
@@ -65,7 +61,7 @@ class OrderStatusRepositoryTest extends IntegrationTestBase {
     void deleteOrderStatus() {
         var expected = orderStatusRepository.count() - 1;
 
-        orderStatusRepository.deleteById(ORDER_STATUS_ID_3);
+        orderStatusRepository.deleteById(ConstantUtil.ORDER_STATUS_ID_3);
         var actual = orderStatusRepository.count();
 
         assertEquals(expected, actual);
@@ -75,7 +71,7 @@ class OrderStatusRepositoryTest extends IntegrationTestBase {
     @DisplayName("Find all order status by order status filter.")
     void findAllOrderStatusByOrderStatusFilter() {
         var expected = 1;
-        orderStatus.setName(ORDER_STATUS_NAME_UNCONFIRMED);
+        orderStatus.setName(ConstantUtil.ORDER_STATUS_NAME_UNCONFIRMED);
 
         var actual = orderStatusRepository.findAllByOrderStatusFilter(
                 orderStatusFilterMapper.map(orderStatus)

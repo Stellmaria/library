@@ -15,9 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @RequiredArgsConstructor
 @DisplayName("User status repository test.")
 class UserStatusRepositoryTest extends IntegrationTestBase {
-    private static final Integer USER_STATUS_ID_3 = 3;
-    private static final Integer USER_STATUS_ID_4 = 4;
-
     private final UserStatusRepository userStatusRepository;
 
     private final UserStatusFilterMapper userStatusFilterMapper;
@@ -42,19 +39,19 @@ class UserStatusRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Update user status.")
     void updateUserStatus() {
-        var userStatus = userStatusRepository.findById(USER_STATUS_ID_3);
+        var userStatus = userStatusRepository.findById(ConstantUtil.USER_STATUS_ID_3);
 
         userStatus.ifPresent(entity -> {
             entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
 
             userStatusRepository.save(entity);
         });
-        var actual = userStatusRepository.findById(USER_STATUS_ID_3);
+        var actual = userStatusRepository.findById(ConstantUtil.USER_STATUS_ID_3);
 
         actual.ifPresent(entity ->
                 assertAll(
                         () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName()),
-                        () -> assertEquals(USER_STATUS_ID_3, entity.getId())
+                        () -> assertEquals(ConstantUtil.USER_STATUS_ID_3, entity.getId())
                 )
         );
     }
@@ -64,7 +61,7 @@ class UserStatusRepositoryTest extends IntegrationTestBase {
     void delete() {
         var expected = userStatusRepository.count() - 1;
 
-        userStatusRepository.deleteById(USER_STATUS_ID_4);
+        userStatusRepository.deleteById(ConstantUtil.USER_STATUS_ID_4);
         var actual = userStatusRepository.count();
 
         assertEquals(expected, actual);

@@ -21,12 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @RequiredArgsConstructor
 @DisplayName("Book genre service test.")
 class BookGenreServiceImplTest extends IntegrationTestBase {
-    private static final String BOOK_GENRE_NAME_CORRUPTION = "Corruption";
-    private static final int BOOK_GENRE_ID_11 = 11;
-    private static final String BOOK_GENRE_NAME_ROMANCE = "Romance";
-    private static final int BOOK_GENRE_ID_8 = 8;
-    private static final int BOOK_GENRE_ID_10 = 10;
-    private static final int BOOK_GENRE_ID_99 = 99;
 
     private final BookGenreService bookGenreService;
 
@@ -46,8 +40,8 @@ class BookGenreServiceImplTest extends IntegrationTestBase {
     @DisplayName("Find book genre by id.")
     void findById() {
         var expected = new BookGenreReadDto(
-                BOOK_GENRE_ID_11,
-                BOOK_GENRE_NAME_CORRUPTION
+                ConstantUtil.BOOK_GENRE_ID_11,
+                ConstantUtil.BOOK_GENRE_NAME_CORRUPTION
         );
 
         var actual = bookGenreService.findById(expected.getId());
@@ -75,9 +69,9 @@ class BookGenreServiceImplTest extends IntegrationTestBase {
     void findAllWithFilter() {
         var expected = 1;
         var filter = new BookGenreFilter();
-        filter.setName(BOOK_GENRE_NAME_CORRUPTION);
+        filter.setName(ConstantUtil.BOOK_GENRE_NAME_CORRUPTION);
 
-        var actual = bookGenreService.findAll(filter, Pageable.ofSize(20));
+        var actual = bookGenreService.findAll(filter, Pageable.ofSize(ConstantUtil.PAGE_SIZE));
 
         assertThat(actual).hasSize(expected);
     }
@@ -86,8 +80,8 @@ class BookGenreServiceImplTest extends IntegrationTestBase {
     @DisplayName("Find book genre by name.")
     void findByName() {
         var expected = new BookGenreReadDto(
-                BOOK_GENRE_ID_8,
-                BOOK_GENRE_NAME_ROMANCE
+                ConstantUtil.BOOK_GENRE_ID_8,
+                ConstantUtil.BOOK_GENRE_NAME_ROMANCE
         );
 
         var actual = bookGenreService.findByName(expected.getName());
@@ -105,7 +99,7 @@ class BookGenreServiceImplTest extends IntegrationTestBase {
     void findAllByBookId() {
         var expected = 1;
 
-        var actual = bookGenreService.findAllByBookId(8L);
+        var actual = bookGenreService.findAllByBookId(ConstantUtil.BOOK_ID_8);
 
         assertThat(actual).hasSize(expected);
     }
@@ -113,15 +107,14 @@ class BookGenreServiceImplTest extends IntegrationTestBase {
     @Test
     @DisplayName("Update book genre.")
     void update() {
-        var id = 7;
         var bookGenre = new BookGenreCreateEditDto(ConstantUtil.NEW + ConstantUtil.UPDATE);
 
-        var actual = bookGenreService.update(id, bookGenre);
+        var actual = bookGenreService.update(ConstantUtil.BOOK_GENRE_ID_7, bookGenre);
 
         actual.ifPresent(entity ->
                 assertAll(
                         () -> assertEquals(bookGenre.getName(), entity.getName()),
-                        () -> assertEquals(id, entity.getId())
+                        () -> assertEquals(ConstantUtil.BOOK_GENRE_ID_7, entity.getId())
                 )
         );
     }
@@ -130,8 +123,8 @@ class BookGenreServiceImplTest extends IntegrationTestBase {
     @DisplayName("Delete book genre.")
     void delete() {
         assertAll(
-                () -> assertTrue(bookGenreService.delete(BOOK_GENRE_ID_10)),
-                () -> assertFalse(bookGenreService.delete(BOOK_GENRE_ID_99))
+                () -> assertTrue(bookGenreService.delete(ConstantUtil.BOOK_GENRE_ID_10)),
+                () -> assertFalse(bookGenreService.delete(ConstantUtil.BOOK_GENRE_ID_99))
         );
     }
 }

@@ -13,8 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Pageable;
 import org.springframework.mock.web.MockMultipartFile;
 
-import java.time.LocalDate;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,16 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @RequiredArgsConstructor
 @DisplayName("Author service test.")
 class AuthorServiceImplTest extends IntegrationTestBase {
-    private static final String IMAGE_AVATAR_1 = "avatar_1.jpg";
-    private static final long AUTHOR_ID_19 = 19L;
-    private static final long AUTHOR_ID_99 = 99L;
-    private static final long AUTHOR_ID_9 = 9L;
-    private static final String AUTHOR_FIRST_NAME_STEPHEN = "Stephen";
-    private static final String AUTHOR_LAST_NAME_KING = "King";
-    private static final String AUTHOR_IMAGE_9 = "author_9.jpeg";
-    private static final LocalDate AUTHOR_BIRTHDAY = LocalDate.of(1947, 9, 21);
-    private static final String AUTHOR_LAST_NAME_PETERS = "Peters";
-
     private final AuthorService authorService;
 
     private final AuthorRepository authorRepository;
@@ -55,7 +43,7 @@ class AuthorServiceImplTest extends IntegrationTestBase {
         assertAll(
                 () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getFirstName()),
                 () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getLastName()),
-                () -> assertEquals(IMAGE_AVATAR_1, actual.getImage()),
+                () -> assertEquals(ConstantUtil.AUTHOR_IMAGE_AVATAR_1, actual.getImage()),
                 () -> assertEquals(ConstantUtil.AUTHOR_BIRTHDAY, actual.getBirthday()),
                 () -> assertEquals(ConstantUtil.AUTHOR_DATE_DEATH, actual.getDateDeath()),
                 () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getDescription())
@@ -66,11 +54,11 @@ class AuthorServiceImplTest extends IntegrationTestBase {
     @DisplayName("Find author by id.")
     void findById() {
         var expected = new AuthorReadDto(
-                AUTHOR_ID_9,
-                AUTHOR_FIRST_NAME_STEPHEN,
-                AUTHOR_LAST_NAME_KING,
-                AUTHOR_IMAGE_9,
-                AUTHOR_BIRTHDAY,
+                ConstantUtil.AUTHOR_ID_9,
+                ConstantUtil.AUTHOR_FIRST_NAME_STEPHEN,
+                ConstantUtil.AUTHOR_LAST_NAME_KING,
+                ConstantUtil.AUTHOR_IMAGE_9,
+                ConstantUtil.AUTHOR_STEPHEN_KING_BIRTHDAY,
                 null,
                 null
         );
@@ -105,9 +93,9 @@ class AuthorServiceImplTest extends IntegrationTestBase {
     void findAllWithFilter() {
         var expected = 1;
         var filter = new AuthorFilter();
-        filter.setLastName(AUTHOR_LAST_NAME_PETERS);
+        filter.setLastName(ConstantUtil.AUTHOR_LAST_NAME_PETERS);
 
-        var actual = authorService.findAll(filter, Pageable.ofSize(20));
+        var actual = authorService.findAll(filter, Pageable.ofSize(ConstantUtil.PAGE_SIZE));
 
         assertThat(actual).hasSize(expected);
     }
@@ -125,7 +113,6 @@ class AuthorServiceImplTest extends IntegrationTestBase {
     @Test
     @DisplayName("Update author.")
     void update() {
-        var id = 8L;
         var author = new AuthorCreateEditDto(
                 ConstantUtil.NEW + ConstantUtil.SAVE,
                 ConstantUtil.NEW + ConstantUtil.SAVE,
@@ -135,14 +122,14 @@ class AuthorServiceImplTest extends IntegrationTestBase {
                 ConstantUtil.NEW + ConstantUtil.SAVE
         );
 
-        var actual = authorService.update(id, author);
+        var actual = authorService.update(ConstantUtil.AUTHOR_ID_8, author);
 
         actual.ifPresent(entity ->
                 assertAll(
-                        () -> assertEquals(id, entity.getId()),
+                        () -> assertEquals(ConstantUtil.AUTHOR_ID_8, entity.getId()),
                         () -> assertEquals(author.getFirstName(), entity.getFirstName()),
                         () -> assertEquals(author.getLastName(), entity.getLastName()),
-                        () -> assertEquals(IMAGE_AVATAR_1, entity.getImage()),
+                        () -> assertEquals(ConstantUtil.AUTHOR_IMAGE_AVATAR_1, entity.getImage()),
                         () -> assertEquals(author.getBirthday(), entity.getBirthday()),
                         () -> assertEquals(author.getDateDeath(), entity.getDateDeath()),
                         () -> assertEquals(author.getDescription(), entity.getDescription())
@@ -154,8 +141,8 @@ class AuthorServiceImplTest extends IntegrationTestBase {
     @DisplayName("Delete author.")
     void delete() {
         assertAll(
-                () -> assertTrue(authorService.delete(AUTHOR_ID_19)),
-                () -> assertFalse(authorService.delete(AUTHOR_ID_99))
+                () -> assertTrue(authorService.delete(ConstantUtil.AUTHOR_ID_19)),
+                () -> assertFalse(authorService.delete(ConstantUtil.AUTHOR_ID_99))
         );
     }
 }

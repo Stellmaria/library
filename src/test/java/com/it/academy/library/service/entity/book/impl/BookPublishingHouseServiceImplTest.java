@@ -21,14 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @RequiredArgsConstructor
 @DisplayName("Book publishing house service test.")
 class BookPublishingHouseServiceImplTest extends IntegrationTestBase {
-    private static final int BOOK_PUBLISHING_HOUSE_ID_12 = 12;
-    private static final String BOOK_PUBLISHING_HOUSE_NAME_POGUE_PRESS = "Pogue Press";
-    private static final int BOOK_PUBLISHING_HOUSE_ID_1 = 1;
-    private static final String BOOK_PUBLISHING_HOUSE_NAME_APRESS = "Apress";
-    private static final int BOOK_PUBLISHING_HOUSE_ID_10 = 10;
-    private static final int BOOK_PUBLISHING_HOUSE_ID_99 = 99;
-    private static final String BOOK_PUBLISHING_HOUSE_NAME_CROWN = "Crown";
-
     private final BookPublishingHouseRepository bookPublishingHouseRepository;
 
     private final BookPublishingHouseService bookPublishingHouseService;
@@ -47,8 +39,8 @@ class BookPublishingHouseServiceImplTest extends IntegrationTestBase {
     @DisplayName("Find book publishing house by id.")
     void findById() {
         var expected = new BookPublishingHouseReadDto(
-                BOOK_PUBLISHING_HOUSE_ID_12,
-                BOOK_PUBLISHING_HOUSE_NAME_POGUE_PRESS
+                ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_12,
+                ConstantUtil.BOOK_PUBLISHING_HOUSE_NAME_POGUE_PRESS
         );
 
         var actual = bookPublishingHouseService.findById(expected.getId());
@@ -76,10 +68,10 @@ class BookPublishingHouseServiceImplTest extends IntegrationTestBase {
     void findAllWithFilter() {
         var expected = 1;
         var filter = new BookPublishingHouseFilter();
-        filter.setName(BOOK_PUBLISHING_HOUSE_NAME_CROWN);
+        filter.setName(ConstantUtil.BOOK_PUBLISHING_HOUSE_NAME_CROWN);
 
         var actual = bookPublishingHouseService.findAll(
-                filter, Pageable.ofSize(20)
+                filter, Pageable.ofSize(ConstantUtil.PAGE_SIZE)
         );
 
         assertThat(actual).hasSize(expected);
@@ -89,8 +81,8 @@ class BookPublishingHouseServiceImplTest extends IntegrationTestBase {
     @DisplayName("Find book publishing house by name.")
     void findByName() {
         var expected = new BookPublishingHouseReadDto(
-                BOOK_PUBLISHING_HOUSE_ID_1,
-                BOOK_PUBLISHING_HOUSE_NAME_APRESS
+                ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_1,
+                ConstantUtil.BOOK_PUBLISHING_HOUSE_NAME_APRESS
         );
 
         var actual = bookPublishingHouseService.findByName(expected.getName());
@@ -122,8 +114,8 @@ class BookPublishingHouseServiceImplTest extends IntegrationTestBase {
     @Test
     void delete() {
         assertAll(
-                () -> assertTrue(bookPublishingHouseService.delete(BOOK_PUBLISHING_HOUSE_ID_10)),
-                () -> assertFalse(bookPublishingHouseService.delete(BOOK_PUBLISHING_HOUSE_ID_99))
+                () -> assertTrue(bookPublishingHouseService.delete(ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_10)),
+                () -> assertFalse(bookPublishingHouseService.delete(ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_99))
         );
     }
 }

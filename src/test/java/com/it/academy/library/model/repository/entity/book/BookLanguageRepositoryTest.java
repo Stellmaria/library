@@ -15,8 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @RequiredArgsConstructor
 @DisplayName("Book repository test.")
 class BookLanguageRepositoryTest extends IntegrationTestBase {
-    private static final String BOOK_LANGUAGE_FRAGMENT_NAME_IAN = "ian";
-
     private final BookLanguageRepository bookLanguageRepository;
 
     private final BookLanguageFilterMapper bookLanguageFilterMapper;
@@ -73,7 +71,7 @@ class BookLanguageRepositoryTest extends IntegrationTestBase {
     @DisplayName("Find all book language by book language filter.")
     void findAllBookLanguageByBookLanguageFilter() {
         var expected = 21;
-        bookLanguage.setName(BOOK_LANGUAGE_FRAGMENT_NAME_IAN);
+        bookLanguage.setName(ConstantUtil.BOOK_LANGUAGE_FRAGMENT_NAME_IAN);
 
         var actual = bookLanguageRepository.findAllByBookLanguageFilter(
                 bookLanguageFilterMapper.map(bookLanguage)

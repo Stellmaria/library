@@ -19,12 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @RequiredArgsConstructor
 @DisplayName("User repository test.")
 class UserRepositoryTest extends IntegrationTestBase {
-    private static final Integer USER_ROLE_ID_2 = 2;
-    private static final Integer USER_STATUS_ID_2 = 2;
-    private static final Long USER_ID_4 = 4L;
-    private static final String EMAIL_EXAMPLE_COM = "email@example.com";
-    private static final String TEST_GMAIL_COM = "test@gmail.com";
-
     private final UserRepository userRepository;
 
     private final UserFilterMapper userFilterMapper;
@@ -39,10 +33,10 @@ class UserRepositoryTest extends IntegrationTestBase {
                 .username(ConstantUtil.NEW + ConstantUtil.SAVE)
                 .firstName(ConstantUtil.NEW + ConstantUtil.SAVE)
                 .lastName(ConstantUtil.NEW + ConstantUtil.SAVE)
-                .email(EMAIL_EXAMPLE_COM)
+                .email(ConstantUtil.USER_EMAIL_EMAIL_EXAMPLE_COM)
                 .password(ConstantUtil.NEW + ConstantUtil.SAVE)
-                .userRole(getUserRole())
-                .userStatus(getUserStatus())
+                .userRole(ConstantUtil.getUserRole())
+                .userStatus(ConstantUtil.getUserStatus())
                 .birthday(ConstantUtil.USER_BIRTHDAY)
                 .build();
 
@@ -71,10 +65,10 @@ class UserRepositoryTest extends IntegrationTestBase {
             entity.setLastName(ConstantUtil.NEW + ConstantUtil.UPDATE);
             entity.setFirstName(ConstantUtil.NEW + ConstantUtil.UPDATE);
             entity.setUsername(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            entity.setEmail(TEST_GMAIL_COM);
+            entity.setEmail(ConstantUtil.USER_EMAIL_TEST_GMAIL_COM);
             entity.setPassword(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            entity.setUserRole(getUserRole());
-            entity.setUserStatus(getUserStatus());
+            entity.setUserRole(ConstantUtil.getUserRole());
+            entity.setUserStatus(ConstantUtil.getUserStatus());
             entity.setBirthday(ConstantUtil.USER_BIRTHDAY);
 
             userRepository.save(entity);
@@ -86,10 +80,10 @@ class UserRepositoryTest extends IntegrationTestBase {
                         () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getUsername()),
                         () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getFirstName()),
                         () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getLastName()),
-                        () -> assertEquals(TEST_GMAIL_COM, entity.getEmail()),
+                        () -> assertEquals(ConstantUtil.USER_EMAIL_TEST_GMAIL_COM, entity.getEmail()),
                         () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getPassword()),
-                        () -> assertEquals(USER_ROLE_ID_2, entity.getUserRole().getId()),
-                        () -> assertEquals(USER_STATUS_ID_2, entity.getUserStatus().getId()),
+                        () -> assertEquals(ConstantUtil.USER_ROLE_ID_2, entity.getUserRole().getId()),
+                        () -> assertEquals(ConstantUtil.USER_STATUS_ID_2, entity.getUserStatus().getId()),
                         () -> assertEquals(ConstantUtil.USER_ID_5, entity.getId()),
                         () -> assertEquals(ConstantUtil.USER_BIRTHDAY, entity.getBirthday())
                 )
@@ -101,7 +95,7 @@ class UserRepositoryTest extends IntegrationTestBase {
     void deleteUser() {
         var expected = userRepository.count() - 1;
 
-        userRepository.deleteById(USER_ID_4);
+        userRepository.deleteById(ConstantUtil.USER_ID_4);
         var actual = userRepository.count();
 
         assertEquals(expected, actual);
@@ -147,17 +141,5 @@ class UserRepositoryTest extends IntegrationTestBase {
         );
 
         assertThat(actual).hasSize(expected);
-    }
-
-    private UserStatus getUserStatus() {
-        return UserStatus.builder()
-                .id(UserRepositoryTest.USER_STATUS_ID_2)
-                .build();
-    }
-
-    private UserRole getUserRole() {
-        return UserRole.builder()
-                .id(UserRepositoryTest.USER_ROLE_ID_2)
-                .build();
     }
 }

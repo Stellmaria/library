@@ -17,9 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @RequiredArgsConstructor
 @DisplayName("Book genre repository test.")
 class BookGenreRepositoryTest extends IntegrationTestBase {
-    private static final Integer BOOK_GENRE_ID_2 = 2;
-    private static final Integer BOOK_GENRE_ID_4 = 4;
-
     private final BookGenreRepository bookGenreRepository;
 
     private final BookGenreFilterMapper bookGenreFilterMapper;
@@ -47,7 +44,7 @@ class BookGenreRepositoryTest extends IntegrationTestBase {
     void deleteBookGenre() {
         var expected = bookGenreRepository.count() - 1;
 
-        bookGenreRepository.deleteById(BOOK_GENRE_ID_4);
+        bookGenreRepository.deleteById(ConstantUtil.BOOK_GENRE_ID_4);
         var actual = bookGenreRepository.count();
 
         assertEquals(expected, actual);
@@ -56,14 +53,14 @@ class BookGenreRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Update book genre.")
     void updateBookGenre() {
-        var bookGenre = bookGenreRepository.findById(BOOK_GENRE_ID_2);
+        var bookGenre = bookGenreRepository.findById(ConstantUtil.BOOK_GENRE_ID_2);
 
         bookGenre.ifPresent(entity -> {
             entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
 
             bookGenreRepository.save(entity);
         });
-        var actual = bookGenreRepository.findById(BOOK_GENRE_ID_2);
+        var actual = bookGenreRepository.findById(ConstantUtil.BOOK_GENRE_ID_2);
 
         actual.ifPresent(entity ->
                 assertEquals(

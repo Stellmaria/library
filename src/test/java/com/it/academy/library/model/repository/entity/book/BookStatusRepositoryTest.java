@@ -15,9 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @RequiredArgsConstructor
 @DisplayName("Book status repository test.")
 class BookStatusRepositoryTest extends IntegrationTestBase {
-    private static final Integer BOOK_STATUS_ID_3 = 3;
-    private static final Integer BOOK_STATUS_ID_4 = 4;
-
     private final BookStatusRepository bookStatusRepository;
 
     private final BookStatusFilterMapper bookStatusFilterMapper;
@@ -44,7 +41,7 @@ class BookStatusRepositoryTest extends IntegrationTestBase {
     void deleteBookStatus() {
         var expected = bookStatusRepository.count() - 1;
 
-        bookStatusRepository.deleteById(BOOK_STATUS_ID_4);
+        bookStatusRepository.deleteById(ConstantUtil.BOOK_STATUS_ID_1);
         var actual = bookStatusRepository.count();
 
         assertEquals(expected, actual);
@@ -53,18 +50,18 @@ class BookStatusRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Update book status.")
     void updateBookStatus() {
-        var bookStatus = bookStatusRepository.findById(BOOK_STATUS_ID_3);
+        var bookStatus = bookStatusRepository.findById(ConstantUtil.BOOK_STATUS_ID_3);
         bookStatus.ifPresent(entity -> {
             entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
 
             bookStatusRepository.save(entity);
         });
 
-        var actual = bookStatusRepository.findById(BOOK_STATUS_ID_3);
+        var actual = bookStatusRepository.findById(ConstantUtil.BOOK_STATUS_ID_3);
 
         actual.ifPresent(entity ->
                 assertAll(
-                        () -> assertEquals(BOOK_STATUS_ID_3, entity.getId()),
+                        () -> assertEquals(ConstantUtil.BOOK_STATUS_ID_3, entity.getId()),
                         () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName())
                 )
         );

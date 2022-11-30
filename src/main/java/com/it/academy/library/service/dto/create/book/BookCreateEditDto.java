@@ -2,6 +2,7 @@ package com.it.academy.library.service.dto.create.book;
 
 import com.it.academy.library.model.entity.book.Book;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.ISBN;
@@ -18,6 +19,7 @@ import java.util.Collection;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class BookCreateEditDto {
     @NotBlank(message = "The title must not be empty.")
     private String title;

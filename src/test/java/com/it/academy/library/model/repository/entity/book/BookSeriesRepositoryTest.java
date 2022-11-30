@@ -15,10 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @RequiredArgsConstructor
 @DisplayName("Book series repository test.")
 class BookSeriesRepositoryTest extends IntegrationTestBase {
-    private static final String BOOK_SERIES_DARK_TOWN = "Dark town";
-    private static final Integer BOOK_SERIES_ID_1 = 1;
-    private static final Integer BOOK_SERIES_ID_2 = 2;
-
     private final BookSeriesRepository bookSeriesRepository;
 
     private final BookSeriesFilterMapper bookSeriesFilterMapper;
@@ -45,7 +41,7 @@ class BookSeriesRepositoryTest extends IntegrationTestBase {
     void delete() {
         var expected = bookSeriesRepository.count() - 1;
 
-        bookSeriesRepository.deleteById(BOOK_SERIES_ID_1);
+        bookSeriesRepository.deleteById(ConstantUtil.BOOK_SERIES_ID_1);
         var actual = bookSeriesRepository.count();
 
         assertEquals(expected, actual);
@@ -54,18 +50,18 @@ class BookSeriesRepositoryTest extends IntegrationTestBase {
     @Test
     @DisplayName("Update book series.")
     void updateBookSeries() {
-        var bookSeries = bookSeriesRepository.findById(BOOK_SERIES_ID_2);
+        var bookSeries = bookSeriesRepository.findById(ConstantUtil.BOOK_SERIES_ID_2);
         bookSeries.ifPresent(entity -> {
             entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
 
             bookSeriesRepository.save(entity);
         });
 
-        var actual = bookSeriesRepository.findById(BOOK_SERIES_ID_2);
+        var actual = bookSeriesRepository.findById(ConstantUtil.BOOK_SERIES_ID_2);
 
         actual.ifPresent(entity ->
                 assertAll(
-                        () -> assertEquals(BOOK_SERIES_ID_2, entity.getId()),
+                        () -> assertEquals(ConstantUtil.BOOK_SERIES_ID_2, entity.getId()),
                         () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName())
                 )
         );
@@ -75,7 +71,7 @@ class BookSeriesRepositoryTest extends IntegrationTestBase {
     @DisplayName("Find all book by book series filter.")
     void findAllBookByBookSeriesFilter() {
         var expected = 1;
-        bookSeries.setName(BOOK_SERIES_DARK_TOWN);
+        bookSeries.setName(ConstantUtil.getBookSeriesDarkTown().getName());
 
         var actual = bookSeriesRepository.findAllByBookSeriesFilter(
                 bookSeriesFilterMapper.map(bookSeries)

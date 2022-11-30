@@ -15,9 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @RequiredArgsConstructor
 @DisplayName("Book format repository test.")
 class BookFormatRepositoryTest extends IntegrationTestBase {
-    private static final Integer BOOK_FORMAT_ID_9 = 9;
-    private static final String BOOK_FORMAT_FRAGMENT_NAME_VER = "ver";
-
     private final BookFormatRepository bookFormatRepository;
 
     private final BookFormatFilterMapper bookFormatFilterMapper;
@@ -44,7 +41,7 @@ class BookFormatRepositoryTest extends IntegrationTestBase {
     void deleteBookFormat() {
         var expected = bookFormatRepository.count() - 1;
 
-        bookFormatRepository.deleteById(BOOK_FORMAT_ID_9);
+        bookFormatRepository.deleteById(ConstantUtil.BOOK_FORMAT_ID_9);
         var actual = bookFormatRepository.count();
 
         assertEquals(expected, actual);
@@ -74,7 +71,7 @@ class BookFormatRepositoryTest extends IntegrationTestBase {
     @DisplayName("Find all book format by book format filter.")
     void findAllBookFormatByBookFormatFilter() {
         var expected = 2;
-        bookFormat.setName(BOOK_FORMAT_FRAGMENT_NAME_VER);
+        bookFormat.setName(ConstantUtil.BOOK_FORMAT_FRAGMENT_NAME_VER);
 
         var actual = bookFormatRepository.findAllByBookFormatFilter(
                 bookFormatFilterMapper.map(bookFormat)
