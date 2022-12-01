@@ -81,7 +81,7 @@
 </header>
 
 <main>
-    <div class="product-element" sec:authorize="hasRole('ADMIN')">
+    <div class="product-element" sec:authorize="hasAnyRole('ADMIN', 'LIBRARIAN')">
         <form method="post" th:action="@{/orders/{orderId}/update(orderId=${order.id})}" th:object="${order}">
             <label for="status">Status
                 <select id="status" name="orderStatusId">
