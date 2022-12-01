@@ -42,7 +42,7 @@ public class UserController {
                          RedirectAttributes redirectAttributes) {
         validate(dto, bindingResult);
 
-        var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/users/registration");
+        var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/registration");
         if (view != null) {
             return view;
         }

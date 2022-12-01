@@ -27,8 +27,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @RequiredArgsConstructor
 @DisplayName("User service test.")
 class UserServiceImplTest extends IntegrationTestBase {
-
-
     private final UserService userService;
 
     private final UserRepository userRepository;
