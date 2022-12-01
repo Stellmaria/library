@@ -31,7 +31,7 @@ class UserRoleRepositoryTest extends IntegrationTestBase {
         var actualCount = userRoleRepository.count();
 
         assertAll(
-                () -> assertEquals(expectedCount, actualCount),
+                () -> assertEquals(expectedCount, actualCount, "The number of custom roles must match."),
                 () -> assertEquals(userRole.getName(), actual.getName())
         );
     }
@@ -51,7 +51,7 @@ class UserRoleRepositoryTest extends IntegrationTestBase {
         actual.ifPresent(entity ->
                 assertAll(
                         () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName()),
-                        () -> assertEquals(ConstantUtil.USER_ROLE_ID_4, entity.getId())
+                        () -> assertEquals(ConstantUtil.USER_ROLE_ID_4, entity.getId(), "The ids must match.")
                 )
         );
     }
@@ -64,7 +64,7 @@ class UserRoleRepositoryTest extends IntegrationTestBase {
         userRoleRepository.deleteById(ConstantUtil.USER_ROLE_ID_2);
         var actual = userRoleRepository.count();
 
-        assertEquals(expected, actual);
+        assertEquals(expected, actual, "The number of custom roles must match.Им");
     }
 
     @Test

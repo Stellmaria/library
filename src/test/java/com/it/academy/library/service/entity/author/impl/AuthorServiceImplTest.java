@@ -67,7 +67,7 @@ class AuthorServiceImplTest extends IntegrationTestBase {
 
         actual.ifPresent(entity ->
                 assertAll(
-                        () -> assertEquals(expected.getId(), entity.getId()),
+                        () -> assertEquals(expected.getId(), entity.getId(), "Author IDs must match."),
                         () -> assertEquals(expected.getFirstName(), entity.getFirstName()),
                         () -> assertEquals(expected.getLastName(), entity.getLastName()),
                         () -> assertEquals(expected.getImage(), entity.getImage()),
@@ -126,7 +126,7 @@ class AuthorServiceImplTest extends IntegrationTestBase {
 
         actual.ifPresent(entity ->
                 assertAll(
-                        () -> assertEquals(ConstantUtil.AUTHOR_ID_8, entity.getId()),
+                        () -> assertEquals(ConstantUtil.AUTHOR_ID_8, entity.getId(), "Author IDs must match."),
                         () -> assertEquals(author.getFirstName(), entity.getFirstName()),
                         () -> assertEquals(author.getLastName(), entity.getLastName()),
                         () -> assertEquals(ConstantUtil.AUTHOR_IMAGE_AVATAR_1, entity.getImage()),

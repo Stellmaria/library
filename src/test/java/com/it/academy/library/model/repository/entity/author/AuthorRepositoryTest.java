@@ -39,7 +39,7 @@ class AuthorRepositoryTest extends IntegrationTestBase {
         var actualCount = authorRepository.count();
 
         assertAll(
-                () -> assertEquals(expectedCount, actualCount),
+                () -> assertEquals(expectedCount, actualCount, "The number of authors must match."),
                 () -> assertEquals(author.getFirstName(), actual.getFirstName()),
                 () -> assertEquals(author.getLastName(), actual.getLastName()),
                 () -> assertEquals(author.getImage(), actual.getImage()),
@@ -57,7 +57,7 @@ class AuthorRepositoryTest extends IntegrationTestBase {
         authorRepository.deleteById(ConstantUtil.AUTHOR_ID_2);
         var actual = authorRepository.count();
 
-        assertEquals(expected, actual);
+        assertEquals(expected, actual, "The number of authors must match.");
     }
 
     @Test

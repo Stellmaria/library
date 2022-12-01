@@ -44,7 +44,7 @@ class BookLanguageRepositoryTest extends IntegrationTestBase {
         bookLanguageRepository.deleteById(ConstantUtil.BOOK_LANGUAGE_ID_10);
         var actual = bookLanguageRepository.count();
 
-        assertEquals(expected, actual);
+        assertEquals(expected, actual, "The number of book languages of the books must match.");
     }
 
     @Test

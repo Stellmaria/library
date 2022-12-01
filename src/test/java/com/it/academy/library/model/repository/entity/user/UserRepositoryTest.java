@@ -44,15 +44,15 @@ class UserRepositoryTest extends IntegrationTestBase {
         var actualCount = userRepository.count();
 
         assertAll(
-                () -> assertEquals(expectedCount, actualCount),
-                () -> assertEquals(user.getUsername(), actual.getUsername()),
+                () -> assertEquals(expectedCount, actualCount, "The number of users must match."),
+                () -> assertEquals(user.getUsername(), actual.getUsername(), "Users' usernames must match."),
                 () -> assertEquals(user.getFirstName(), actual.getFirstName()),
-                () -> assertEquals(user.getLastName(), actual.getLastName()),
-                () -> assertEquals(user.getEmail(), actual.getEmail()),
-                () -> assertEquals(user.getPassword(), actual.getPassword()),
+                () -> assertEquals(user.getLastName(), actual.getLastName(), "The last user name must match."),
+                () -> assertEquals(user.getEmail(), actual.getEmail(), "Users' emails must match."),
+                () -> assertEquals(user.getPassword(), actual.getPassword(), "User passwords must match."),
                 () -> assertEquals(user.getUserRole().getId(), actual.getUserRole().getId()),
                 () -> assertEquals(user.getUserStatus().getId(), actual.getUserStatus().getId()),
-                () -> assertEquals(user.getBirthday(), actual.getBirthday())
+                () -> assertEquals(user.getBirthday(), actual.getBirthday(), "Users' birth dates must match.")
         );
     }
 
@@ -84,7 +84,7 @@ class UserRepositoryTest extends IntegrationTestBase {
                         () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getPassword()),
                         () -> assertEquals(ConstantUtil.USER_ROLE_ID_2, entity.getUserRole().getId()),
                         () -> assertEquals(ConstantUtil.USER_STATUS_ID_2, entity.getUserStatus().getId()),
-                        () -> assertEquals(ConstantUtil.USER_ID_5, entity.getId()),
+                        () -> assertEquals(ConstantUtil.USER_ID_5, entity.getId(), "User IDs must match."),
                         () -> assertEquals(ConstantUtil.USER_BIRTHDAY, entity.getBirthday())
                 )
         );

@@ -31,7 +31,7 @@ class UserStatusRepositoryTest extends IntegrationTestBase {
         var actualCount = userStatusRepository.count();
 
         assertAll(
-                () -> assertEquals(expectedCount, actualCount),
+                () -> assertEquals(expectedCount, actualCount, "The number of user statuses must match."),
                 () -> assertEquals(userStatus.getName(), actual.getName())
         );
     }
@@ -51,7 +51,7 @@ class UserStatusRepositoryTest extends IntegrationTestBase {
         actual.ifPresent(entity ->
                 assertAll(
                         () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName()),
-                        () -> assertEquals(ConstantUtil.USER_STATUS_ID_3, entity.getId())
+                        () -> assertEquals(ConstantUtil.USER_STATUS_ID_3, entity.getId(), "The ids must match.")
                 )
         );
     }
@@ -64,7 +64,7 @@ class UserStatusRepositoryTest extends IntegrationTestBase {
         userStatusRepository.deleteById(ConstantUtil.USER_STATUS_ID_4);
         var actual = userStatusRepository.count();
 
-        assertEquals(expected, actual);
+        assertEquals(expected, actual, "The number of user statuses must match.");
     }
 
     @Test

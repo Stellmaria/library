@@ -31,7 +31,7 @@ class BookSeriesServiceImplTest extends IntegrationTestBase {
 
         var actual = bookSeriesService.create(bookSeries);
 
-        assertEquals(actual.getName(), bookSeries.getName());
+        assertEquals(actual.getName(), bookSeries.getName(), "The names must match.");
     }
 
     @Test
@@ -43,8 +43,8 @@ class BookSeriesServiceImplTest extends IntegrationTestBase {
 
         actual.ifPresent(entity ->
                 assertAll(
-                        () -> assertEquals(expected.getName(), entity.getName()),
-                        () -> assertEquals(expected.getId(), entity.getId())
+                        () -> assertEquals(expected.getName(), entity.getName(), "The names must match."),
+                        () -> assertEquals(expected.getId(), entity.getId(), "The ids must match.")
                 )
         );
 
@@ -73,6 +73,7 @@ class BookSeriesServiceImplTest extends IntegrationTestBase {
     }
 
     @Test
+    @DisplayName("Find book series by name.")
     void findByName() {
         var expected = ConstantUtil.getBookSeriesDarkTown();
 
@@ -80,8 +81,8 @@ class BookSeriesServiceImplTest extends IntegrationTestBase {
 
         actual.ifPresent(entity ->
                 assertAll(
-                        () -> assertEquals(expected.getName(), entity.getName()),
-                        () -> assertEquals(expected.getId(), entity.getId())
+                        () -> assertEquals(expected.getName(), entity.getName(), "The names must match."),
+                        () -> assertEquals(expected.getId(), entity.getId(), "The ids must match.")
                 )
         );
     }
@@ -89,15 +90,14 @@ class BookSeriesServiceImplTest extends IntegrationTestBase {
     @Test
     @DisplayName("Update book series.")
     void update() {
-        var id = 4;
         var bookSeries = new BookSeriesCreateEditDto(ConstantUtil.UPDATE + ConstantUtil.NEW);
 
-        var actual = bookSeriesService.update(id, bookSeries);
+        var actual = bookSeriesService.update(ConstantUtil.BOOK_SERIES_ID_4, bookSeries);
 
         actual.ifPresent(entity ->
                 assertAll(
-                        () -> assertEquals(bookSeries.getName(), entity.getName()),
-                        () -> assertEquals(id, entity.getId())
+                        () -> assertEquals(bookSeries.getName(), entity.getName(), "The names must match."),
+                        () -> assertEquals(ConstantUtil.BOOK_SERIES_ID_4, entity.getId(), "The ids must match.")
                 )
         );
     }

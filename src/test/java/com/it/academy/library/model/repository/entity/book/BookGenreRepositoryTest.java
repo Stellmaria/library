@@ -47,7 +47,7 @@ class BookGenreRepositoryTest extends IntegrationTestBase {
         bookGenreRepository.deleteById(ConstantUtil.BOOK_GENRE_ID_4);
         var actual = bookGenreRepository.count();
 
-        assertEquals(expected, actual);
+        assertEquals(expected, actual, "The number of book genres of books must match.");
     }
 
     @Test

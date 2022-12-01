@@ -32,7 +32,7 @@ class BookPublishingHouseServiceImplTest extends IntegrationTestBase {
 
         var actual = bookPublishingHouseService.create(bookPublishingHouse);
 
-        assertEquals(bookPublishingHouse.getName(), actual.getName());
+        assertEquals(bookPublishingHouse.getName(), actual.getName(), "The names must match.");
     }
 
     @Test
@@ -47,8 +47,8 @@ class BookPublishingHouseServiceImplTest extends IntegrationTestBase {
 
         actual.ifPresent(entity ->
                 assertAll(
-                        () -> assertEquals(expected.getId(), entity.getId()),
-                        () -> assertEquals(expected.getName(), entity.getName())
+                        () -> assertEquals(expected.getId(), entity.getId(), "The ids must match."),
+                        () -> assertEquals(expected.getName(), entity.getName(), "The names must match.")
                 )
         );
     }
@@ -89,8 +89,8 @@ class BookPublishingHouseServiceImplTest extends IntegrationTestBase {
 
         actual.ifPresent(entity ->
                 assertAll(
-                        () -> assertEquals(expected.getName(), entity.getName()),
-                        () -> assertEquals(expected.getId(), entity.getId())
+                        () -> assertEquals(expected.getName(), entity.getName(), "The names must match."),
+                        () -> assertEquals(expected.getId(), entity.getId(), "The ids must match.")
                 )
         );
     }
@@ -98,15 +98,14 @@ class BookPublishingHouseServiceImplTest extends IntegrationTestBase {
     @Test
     @DisplayName("Update book publishing house.")
     void update() {
-        var id = 2;
         var bookPublishingHouse = new BookPublishingHouseCreateEditDto(ConstantUtil.UPDATE + ConstantUtil.NEW);
 
-        var actual = bookPublishingHouseService.update(id, bookPublishingHouse);
+        var actual = bookPublishingHouseService.update(ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_1, bookPublishingHouse);
 
         actual.ifPresent(entity ->
                 assertAll(
-                        () -> assertEquals(entity.getName(), bookPublishingHouse.getName()),
-                        () -> assertEquals(entity.getId(), id)
+                        () -> assertEquals(bookPublishingHouse.getName(), entity.getName()),
+                        () -> assertEquals(ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_1, entity.getId())
                 )
         );
     }

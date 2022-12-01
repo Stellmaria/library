@@ -40,11 +40,11 @@ class OrderRepositoryTest extends IntegrationTestBase {
         var actualCount = orderRepository.count();
 
         assertAll(
-                () -> assertEquals(expectedCount, actualCount),
-                () -> assertEquals(order.getUser().getId(), actual.getUser().getId()),
+                () -> assertEquals(expectedCount, actualCount, "The number of orders must match."),
+                () -> assertEquals(order.getUser().getId(), actual.getUser().getId(), "User id must match."),
                 () -> assertEquals(order.getOrderStatus().getId(), actual.getOrderStatus().getId()),
-                () -> assertEquals(order.getOrderDate(), actual.getOrderDate()),
-                () -> assertEquals(order.getReturnDate(), actual.getReturnDate())
+                () -> assertEquals(order.getOrderDate(), actual.getOrderDate(), "Order dates must match."),
+                () -> assertEquals(order.getReturnDate(), actual.getReturnDate(), "Order dates must match.")
         );
     }
 
@@ -69,7 +69,7 @@ class OrderRepositoryTest extends IntegrationTestBase {
                         () -> assertEquals(ConstantUtil.ORDER_STATUS_ID_1, entity.getOrderStatus().getId()),
                         () -> assertEquals(ConstantUtil.ORDER_DATE_2022_10_23_T_14_35, entity.getOrderDate()),
                         () -> assertEquals(ConstantUtil.ORDER_RETURN_DATE_2022_10_21_T_18_05, entity.getReturnDate()),
-                        () -> assertEquals(ConstantUtil.ORDER_ID_3, entity.getId())
+                        () -> assertEquals(ConstantUtil.ORDER_ID_3, entity.getId(), "Order ID must match.")
                 )
         );
     }
@@ -82,7 +82,7 @@ class OrderRepositoryTest extends IntegrationTestBase {
         orderRepository.deleteById(ConstantUtil.ORDER_ID_2);
         var actual = orderRepository.count();
 
-        assertEquals(expected, actual);
+        assertEquals(expected, actual, "The number of orders must match.");
     }
 
     @Test

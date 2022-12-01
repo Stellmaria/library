@@ -44,7 +44,7 @@ class BookSeriesRepositoryTest extends IntegrationTestBase {
         bookSeriesRepository.deleteById(ConstantUtil.BOOK_SERIES_ID_1);
         var actual = bookSeriesRepository.count();
 
-        assertEquals(expected, actual);
+        assertEquals(expected, actual, "The number of book series of books must match.");
     }
 
     @Test

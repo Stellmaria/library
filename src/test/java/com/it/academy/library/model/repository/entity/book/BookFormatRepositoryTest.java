@@ -44,7 +44,7 @@ class BookFormatRepositoryTest extends IntegrationTestBase {
         bookFormatRepository.deleteById(ConstantUtil.BOOK_FORMAT_ID_9);
         var actual = bookFormatRepository.count();
 
-        assertEquals(expected, actual);
+        assertEquals(expected, actual, "The number of book formats of books must match.");
     }
 
     @Test

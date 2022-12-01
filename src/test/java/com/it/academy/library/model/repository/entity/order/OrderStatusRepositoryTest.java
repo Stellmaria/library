@@ -31,8 +31,8 @@ class OrderStatusRepositoryTest extends IntegrationTestBase {
         var actualCount = orderStatusRepository.count();
 
         assertAll(
-                () -> assertEquals(expectedCount, actualCount),
-                () -> assertEquals(orderStatus.getName(), actual.getName())
+                () -> assertEquals(expectedCount, actualCount, "The number of order statuses must match."),
+                () -> assertEquals(orderStatus.getName(), actual.getName(), "Order status names must match.")
         );
     }
 
@@ -64,7 +64,7 @@ class OrderStatusRepositoryTest extends IntegrationTestBase {
         orderStatusRepository.deleteById(ConstantUtil.ORDER_STATUS_ID_3);
         var actual = orderStatusRepository.count();
 
-        assertEquals(expected, actual);
+        assertEquals(expected, actual, "The number of order statuses must match.");
     }
 
     @Test

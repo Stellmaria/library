@@ -26,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static com.it.academy.library.util.ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -70,13 +71,13 @@ class BookRepositoryTest extends IntegrationTestBase {
         var actualCount = bookRepository.count();
 
         assertAll(
-                () -> assertEquals(expectedCount, actualCount),
-                () -> assertEquals(book.getTitle(), actual.getTitle()),
-                () -> assertEquals(book.getSubtitle(), actual.getSubtitle()),
-                () -> assertEquals(book.getYear(), actual.getYear()),
+                () -> assertEquals(expectedCount, actualCount, "The number of books must match."),
+                () -> assertEquals(book.getTitle(), actual.getTitle(), "Book titles must match."),
+                () -> assertEquals(book.getSubtitle(), actual.getSubtitle(), "Book subtitles must match."),
+                () -> assertEquals(book.getYear(), actual.getYear(), "The year of the books must match."),
                 () -> assertEquals(book.getIsbn10(), actual.getIsbn10()),
                 () -> assertEquals(book.getIsbn13(), actual.getIsbn13()),
-                () -> assertEquals(book.getImage(), actual.getImage()),
+                () -> assertEquals(book.getImage(), actual.getImage(), "Book covers must match."),
                 () -> assertEquals(book.getBookStatus().getId(), actual.getBookStatus().getId()),
                 () -> assertEquals(book.getBookLanguage().getId(), actual.getBookLanguage().getId()),
                 () -> assertEquals(book.getBookFormat().getId(), actual.getBookFormat().getId()),
@@ -111,7 +112,7 @@ class BookRepositoryTest extends IntegrationTestBase {
 
         actual.ifPresent(entity ->
                 assertAll(
-                        () -> assertEquals(ConstantUtil.BOOK_ID_4, entity.getId()),
+                        () -> assertEquals(ConstantUtil.BOOK_ID_4, entity.getId(), "Book ids must match."),
                         () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getTitle()),
                         () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getSubtitle()),
                         () -> assertEquals(ConstantUtil.BOOK_YEAR_2023, entity.getYear()),
@@ -121,9 +122,7 @@ class BookRepositoryTest extends IntegrationTestBase {
                         () -> assertEquals(ConstantUtil.BOOK_STATUS_ID_1, entity.getBookStatus().getId()),
                         () -> assertEquals(ConstantUtil.BOOK_LANGUAGE_ID_13, entity.getBookLanguage().getId()),
                         () -> assertEquals(ConstantUtil.BOOK_FORMAT_ID_4, entity.getBookFormat().getId()),
-                        () -> assertEquals(
-                                ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_1, entity.getBookPublishingHouse().getId()
-                        ),
+                        () -> assertEquals(BOOK_PUBLISHING_HOUSE_ID_1, entity.getBookPublishingHouse().getId()),
                         () -> assertEquals(ConstantUtil.BOOK_SERIES_ID_3, entity.getBookSeries().getId()),
                         () -> assertEquals(ConstantUtil.ORDER_ID_4, entity.getOrder().getId())
                 )
@@ -138,7 +137,7 @@ class BookRepositoryTest extends IntegrationTestBase {
         bookRepository.deleteById(ConstantUtil.BOOK_ID_6);
         var actual = bookRepository.count();
 
-        assertEquals(expected, actual);
+        assertEquals(expected, actual, "The number of books must match.");
     }
 
     @Test

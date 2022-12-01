@@ -29,7 +29,7 @@ class OrderServiceImplTest extends IntegrationTestBase {
     @DisplayName("Find order by id.")
     void findById() {
         var expected = new OrderReadDto(
-                1L,
+                ConstantUtil.ORDER_ID_1,
                 ConstantUtil.getUser(ConstantUtil.USER_ID_3),
                 ConstantUtil.getOrderStatus(ConstantUtil.ORDER_STATUS_ID_3),
                 ConstantUtil.ORDER_1_ORDER_DATE,
@@ -40,7 +40,7 @@ class OrderServiceImplTest extends IntegrationTestBase {
 
         actual.ifPresent(entity ->
                 assertAll(
-                        () -> assertEquals(expected.getId(), entity.getId()),
+                        () -> assertEquals(expected.getId(), entity.getId(), "The ids must match."),
                         () -> assertEquals(expected.getUser().getId(), entity.getUser().getId()),
                         () -> assertEquals(expected.getOrderStatus().getId(), entity.getOrderStatus().getId()),
                         () -> assertEquals(expected.getOrderDate(), entity.getOrderDate()),

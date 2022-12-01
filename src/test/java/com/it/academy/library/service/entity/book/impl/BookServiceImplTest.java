@@ -60,9 +60,9 @@ class BookServiceImplTest extends IntegrationTestBase {
         var actual = bookService.create(book);
 
         assertAll(
-                () -> assertEquals(book.getTitle(), actual.getTitle()),
-                () -> assertEquals(book.getSubtitle(), actual.getSubtitle()),
-                () -> assertEquals(book.getYear(), actual.getYear()),
+                () -> assertEquals(book.getTitle(), actual.getTitle(), "Book titles must match."),
+                () -> assertEquals(book.getSubtitle(), actual.getSubtitle(), "Book subtitle must match."),
+                () -> assertEquals(book.getYear(), actual.getYear(), "The year of the books must coincide."),
                 () -> assertEquals(book.getIsbn10(), actual.getIsbn10()),
                 () -> assertEquals(book.getIsbn13(), actual.getIsbn13()),
                 () -> assertEquals(ConstantUtil.BOOK_COVER_IMAGE_NAME_0, actual.getImage()),
@@ -72,7 +72,7 @@ class BookServiceImplTest extends IntegrationTestBase {
                 () -> assertEquals(book.getBookPublishingHouseId(), actual.getBookPublishingHouse().getId()),
                 () -> assertEquals(book.getBookSeriesId(), actual.getBookSeries().getId()),
                 () -> assertEquals(book.getBookStatusId(), actual.getBookStatus().getId()),
-                () -> assertEquals(book.getOrderId(), actual.getOrder().getId()),
+                () -> assertEquals(book.getOrderId(), actual.getOrder().getId(), "Book order IDs must match."),
                 () -> assertEquals(book.getAuthorsId().size(), actual.getAuthors().size()),
                 () -> assertEquals(book.getGenresId().size(), actual.getGenres().size())
         );
@@ -106,20 +106,20 @@ class BookServiceImplTest extends IntegrationTestBase {
 
         actual.ifPresent(entity ->
                 assertAll(
-                        () -> assertEquals(entity.getTitle(), expected.getTitle()),
-                        () -> assertEquals(entity.getSubtitle(), expected.getSubtitle()),
-                        () -> assertEquals(entity.getYear(), expected.getYear()),
-                        () -> assertEquals(entity.getIsbn10(), expected.getIsbn10()),
-                        () -> assertEquals(entity.getIsbn13(), expected.getIsbn13()),
-                        () -> assertEquals(entity.getImage(), expected.getImage()),
-                        () -> assertEquals(entity.getBookStatus().getId(), expected.getBookStatus().getId()),
-                        () -> assertEquals(entity.getBookLanguage().getId(), expected.getBookLanguage().getId()),
+                        () -> assertEquals(expected.getTitle(), entity.getTitle(), "Book titles must match."),
+                        () -> assertEquals(expected.getSubtitle(), entity.getSubtitle()),
+                        () -> assertEquals(expected.getYear(), entity.getYear()),
+                        () -> assertEquals(expected.getIsbn10(), entity.getIsbn10()),
+                        () -> assertEquals(expected.getIsbn13(), entity.getIsbn13()),
+                        () -> assertEquals(expected.getImage(), entity.getImage()),
+                        () -> assertEquals(expected.getBookStatus().getId(), entity.getBookStatus().getId()),
+                        () -> assertEquals(expected.getBookLanguage().getId(), entity.getBookLanguage().getId()),
                         () -> assertNull(entity.getBookFormat()),
-                        () -> assertNull(entity.getBookPublishingHouse()),
-                        () -> assertEquals(entity.getBookSeries().getId(), expected.getBookSeries().getId()),
-                        () -> assertEquals(entity.getBookStatus().getId(), expected.getBookStatus().getId()),
+                        () -> assertNull(expected.getBookPublishingHouse()),
+                        () -> assertEquals(expected.getBookSeries().getId(), entity.getBookSeries().getId()),
+                        () -> assertEquals(expected.getBookStatus().getId(), entity.getBookStatus().getId()),
                         () -> assertNull(entity.getOrder()),
-                        () -> assertEquals(entity.getAuthors().size(), expected.getAuthors().size()),
+                        () -> assertEquals(expected.getAuthors().size(), entity.getAuthors().size()),
                         () -> assertEquals(expected.getGenres().size(), entity.getGenres().size())
                 )
         );
@@ -218,21 +218,21 @@ class BookServiceImplTest extends IntegrationTestBase {
 
         actual.ifPresent(entity ->
                 assertAll(
-                        () -> assertEquals(entity.getTitle(), book.getTitle()),
-                        () -> assertEquals(entity.getSubtitle(), book.getSubtitle()),
-                        () -> assertEquals(entity.getYear(), book.getYear()),
-                        () -> assertEquals(entity.getIsbn10(), book.getIsbn10()),
-                        () -> assertEquals(entity.getIsbn13(), book.getIsbn13()),
+                        () -> assertEquals(book.getTitle(), entity.getTitle(), "Book titles must match."),
+                        () -> assertEquals(book.getSubtitle(), entity.getSubtitle()),
+                        () -> assertEquals(book.getYear(), entity.getYear(), "The years must coincide."),
+                        () -> assertEquals(book.getIsbn10(), entity.getIsbn10()),
+                        () -> assertEquals(book.getIsbn13(), entity.getIsbn13()),
                         () -> assertEquals(ConstantUtil.BOOK_COVER_18, entity.getImage()),
-                        () -> assertEquals(entity.getBookStatus().getId(), book.getBookStatusId()),
-                        () -> assertEquals(entity.getBookLanguage().getId(), book.getBookLanguageId()),
-                        () -> assertEquals(entity.getBookFormat(), bookFormat),
-                        () -> assertEquals(entity.getBookPublishingHouse(), publishingHouse),
-                        () -> assertEquals(entity.getBookSeries().getId(), book.getBookSeriesId()),
-                        () -> assertEquals(entity.getBookStatus().getId(), book.getBookStatusId()),
+                        () -> assertEquals(book.getBookStatusId(), entity.getBookStatus().getId()),
+                        () -> assertEquals(book.getBookLanguageId(), entity.getBookLanguage().getId()),
+                        () -> assertEquals(bookFormat, entity.getBookFormat(), "Book formats must match."),
+                        () -> assertEquals(publishingHouse, entity.getBookPublishingHouse()),
+                        () -> assertEquals(book.getBookSeriesId(), entity.getBookSeries().getId()),
+                        () -> assertEquals(book.getBookStatusId(), entity.getBookStatus().getId()),
                         () -> assertEquals(ConstantUtil.ORDER_ID_2, entity.getOrder().getId()),
-                        () -> assertEquals(entity.getAuthors().size(), book.getAuthorsId().size()),
-                        () -> assertEquals(entity.getGenres().size(), book.getGenresId().size())
+                        () -> assertEquals(book.getAuthorsId().size(), entity.getAuthors().size()),
+                        () -> assertEquals(book.getGenresId().size(), entity.getGenres().size())
                 )
         );
     }

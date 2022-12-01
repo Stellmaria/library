@@ -16,7 +16,7 @@ import org.springframework.security.core.userdetails.User;
 
 import java.util.Collections;
 
-import static com.it.academy.library.util.ConstantUtil.UPDATE;
+import static com.it.academy.library.util.ConstantUtil.USER_ROLE_ID_3;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -38,9 +38,7 @@ class UserServiceImplTest extends IntegrationTestBase {
         var expected = new User(
                 ConstantUtil.USER_USERNAME_READER,
                 ConstantUtil.USER_READER_PASSWORD,
-                Collections.singleton(
-                        ConstantUtil.getUserRole(ConstantUtil.USER_ROLE_ID_3, ConstantUtil.USER_ROLE_READER)
-                )
+                Collections.singleton(ConstantUtil.getUserRole(USER_ROLE_ID_3, ConstantUtil.USER_ROLE_READER))
         );
 
         var actual = userService.loadUserByUsername(ConstantUtil.USER_USERNAME_READER);
@@ -176,11 +174,11 @@ class UserServiceImplTest extends IntegrationTestBase {
     @DisplayName("Update user.")
     void update() {
         var user = new UserCreateEditDto(
-                UPDATE + ConstantUtil.NEW,
-                UPDATE + ConstantUtil.NEW,
-                UPDATE + ConstantUtil.NEW,
+                ConstantUtil.UPDATE + ConstantUtil.NEW,
+                ConstantUtil.UPDATE + ConstantUtil.NEW,
+                ConstantUtil.UPDATE + ConstantUtil.NEW,
                 ConstantUtil.USER_EMAIL_TEST_GMAIL_COM,
-                UPDATE + ConstantUtil.NEW,
+                ConstantUtil.UPDATE + ConstantUtil.NEW,
                 ConstantUtil.USER_ROLE_ID_1,
                 ConstantUtil.USER_STATUS_ID_1,
                 ConstantUtil.USER_BIRTHDAY,
@@ -193,9 +191,9 @@ class UserServiceImplTest extends IntegrationTestBase {
 
         actual.ifPresent(entity ->
                 assertAll(
-                        () -> assertEquals(UPDATE + ConstantUtil.NEW, entity.getUsername()),
-                        () -> assertEquals(UPDATE + ConstantUtil.NEW, entity.getFirstName()),
-                        () -> assertEquals(UPDATE + ConstantUtil.NEW, entity.getLastName()),
+                        () -> assertEquals(ConstantUtil.UPDATE + ConstantUtil.NEW, entity.getUsername()),
+                        () -> assertEquals(ConstantUtil.UPDATE + ConstantUtil.NEW, entity.getFirstName()),
+                        () -> assertEquals(ConstantUtil.UPDATE + ConstantUtil.NEW, entity.getLastName()),
                         () -> assertEquals(ConstantUtil.USER_EMAIL_TEST_GMAIL_COM, entity.getEmail()),
                         () -> assertEquals(3, entity.getUserRole().getId()),
                         () -> assertEquals(3, entity.getUserStatus().getId()),

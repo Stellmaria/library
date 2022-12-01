@@ -47,8 +47,8 @@ class BookGenreServiceImplTest extends IntegrationTestBase {
 
         actual.ifPresent(entity ->
                 assertAll(
-                        () -> assertEquals(expected.getId(), entity.getId()),
-                        () -> assertEquals(expected.getName(), entity.getName())
+                        () -> assertEquals(expected.getId(), entity.getId(), "The ids must match."),
+                        () -> assertEquals(expected.getName(), entity.getName(), "The names must match.")
                 )
         );
     }
@@ -87,7 +87,7 @@ class BookGenreServiceImplTest extends IntegrationTestBase {
 
         actual.ifPresent(entity ->
                 assertAll(
-                        () -> assertEquals(expected.getId(), entity.getId()),
+                        () -> assertEquals(expected.getId(), entity.getId(), "The ids must match."),
                         () -> assertTrue(expected.getName().equalsIgnoreCase(entity.getName()))
                 )
         );

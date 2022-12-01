@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.it.academy.library.util.ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -45,25 +44,25 @@ class BookPublishingHouseRepositoryTest extends IntegrationTestBase {
         bookPublishingHouseRepository.deleteById(ConstantUtil.BOOK_PUBLISHING_HOURS_ID_15);
         var actual = bookPublishingHouseRepository.count();
 
-        assertEquals(expected, actual);
+        assertEquals(expected, actual, "The number of book publishing houses of books must match.");
     }
 
     @Test
     @DisplayName("Update book publishing house.")
     void updateBookPublishingHouse() {
         var bookPublishingHouse =
-                bookPublishingHouseRepository.findById(BOOK_PUBLISHING_HOUSE_ID_1);
+                bookPublishingHouseRepository.findById(ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_1);
 
         bookPublishingHouse.ifPresent(entity -> {
             entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
 
             bookPublishingHouseRepository.save(entity);
         });
-        var actual = bookPublishingHouseRepository.findById(BOOK_PUBLISHING_HOUSE_ID_1);
+        var actual = bookPublishingHouseRepository.findById(ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_1);
 
         actual.ifPresent(entity ->
                 assertAll(
-                        () -> assertEquals(BOOK_PUBLISHING_HOUSE_ID_1, entity.getId()),
+                        () -> assertEquals(ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_1, entity.getId()),
                         () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName())
                 )
         );

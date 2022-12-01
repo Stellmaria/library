@@ -31,8 +31,8 @@ class BookStatusRepositoryTest extends IntegrationTestBase {
         var actualCount = bookStatusRepository.count();
 
         assertAll(
-                () -> assertEquals(expectedCount, actualCount),
-                () -> assertEquals(bookStatus.getName(), actual.getName())
+                () -> assertEquals(expectedCount, actualCount, "The number of book statuses must match."),
+                () -> assertEquals(bookStatus.getName(), actual.getName(), "Book status names must match.")
         );
     }
 
@@ -44,7 +44,7 @@ class BookStatusRepositoryTest extends IntegrationTestBase {
         bookStatusRepository.deleteById(ConstantUtil.BOOK_STATUS_ID_1);
         var actual = bookStatusRepository.count();
 
-        assertEquals(expected, actual);
+        assertEquals(expected, actual, "The number of book statuses must match.");
     }
 
     @Test

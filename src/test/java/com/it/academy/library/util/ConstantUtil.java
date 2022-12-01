@@ -34,6 +34,7 @@ public class ConstantUtil {
     public static final Integer BOOK_SERIES_ID_1 = 1;
     public static final Integer BOOK_SERIES_ID_2 = 2;
     public static final Integer BOOK_SERIES_ID_3 = 3;
+    public static final Integer BOOK_SERIES_ID_4 = 4;
     public static final Integer BOOK_SERIES_ID_5 = 5;
     public static final Integer BOOK_SERIES_ID_99 = 99;
     public static final String BOOK_SERIES_NAME_DARK_TOWN = "Dark town";
