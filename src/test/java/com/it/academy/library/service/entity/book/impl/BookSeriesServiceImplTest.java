@@ -8,6 +8,7 @@ import com.it.academy.library.service.entity.book.BookSeriesService;
 import com.it.academy.library.util.ConstantUtil;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Pageable;
 
@@ -24,14 +25,42 @@ class BookSeriesServiceImplTest extends IntegrationTestBase {
 
     private final BookSeriesRepository bookSeriesRepository;
 
-    @Test
-    @DisplayName("Save book series.")
-    void create() {
-        var bookSeries = new BookSeriesCreateEditDto(ConstantUtil.SAVE + ConstantUtil.NEW);
+    @Nested
+    @DisplayName("CRUD methods.")
+    class CRUD {
+        @Test
+        @DisplayName("Save book series.")
+        void create() {
+            var bookSeries = new BookSeriesCreateEditDto(ConstantUtil.SAVE + ConstantUtil.NEW);
 
-        var actual = bookSeriesService.create(bookSeries);
+            var actual = bookSeriesService.create(bookSeries);
 
-        assertEquals(actual.getName(), bookSeries.getName(), "The names must match.");
+            assertEquals(actual.getName(), bookSeries.getName(), "The names must match.");
+        }
+
+        @Test
+        @DisplayName("Update book series.")
+        void update() {
+            var bookSeries = new BookSeriesCreateEditDto(ConstantUtil.UPDATE + ConstantUtil.NEW);
+
+            var actual = bookSeriesService.update(ConstantUtil.BOOK_SERIES_ID_4, bookSeries);
+
+            actual.ifPresent(entity ->
+                    assertAll(
+                            () -> assertEquals(bookSeries.getName(), entity.getName(), "The names must match."),
+                            () -> assertEquals(ConstantUtil.BOOK_SERIES_ID_4, entity.getId())
+                    )
+            );
+        }
+
+        @Test
+        @DisplayName("Delete book series")
+        void delete() {
+            assertAll(
+                    () -> assertTrue(bookSeriesService.delete(ConstantUtil.BOOK_SERIES_ID_5)),
+                    () -> assertFalse(bookSeriesService.delete(ConstantUtil.BOOK_SERIES_ID_99))
+            );
+        }
     }
 
     @Test
@@ -84,30 +113,6 @@ class BookSeriesServiceImplTest extends IntegrationTestBase {
                         () -> assertEquals(expected.getName(), entity.getName(), "The names must match."),
                         () -> assertEquals(expected.getId(), entity.getId(), "The ids must match.")
                 )
-        );
-    }
-
-    @Test
-    @DisplayName("Update book series.")
-    void update() {
-        var bookSeries = new BookSeriesCreateEditDto(ConstantUtil.UPDATE + ConstantUtil.NEW);
-
-        var actual = bookSeriesService.update(ConstantUtil.BOOK_SERIES_ID_4, bookSeries);
-
-        actual.ifPresent(entity ->
-                assertAll(
-                        () -> assertEquals(bookSeries.getName(), entity.getName(), "The names must match."),
-                        () -> assertEquals(ConstantUtil.BOOK_SERIES_ID_4, entity.getId(), "The ids must match.")
-                )
-        );
-    }
-
-    @Test
-    @DisplayName("Delete book series")
-    void delete() {
-        assertAll(
-                () -> assertTrue(bookSeriesService.delete(ConstantUtil.BOOK_SERIES_ID_5)),
-                () -> assertFalse(bookSeriesService.delete(ConstantUtil.BOOK_SERIES_ID_99))
         );
     }
 }

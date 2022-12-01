@@ -9,9 +9,12 @@ import com.it.academy.library.service.entity.book.BookPublishingHouseService;
 import com.it.academy.library.util.ConstantUtil;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Pageable;
 
+import static com.it.academy.library.util.ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_1;
+import static com.it.academy.library.util.ConstantUtil.UPDATE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,13 +29,21 @@ class BookPublishingHouseServiceImplTest extends IntegrationTestBase {
     private final BookPublishingHouseService bookPublishingHouseService;
 
     @Test
-    @DisplayName("Save book publishing house.")
-    void create() {
-        var bookPublishingHouse = new BookPublishingHouseCreateEditDto(ConstantUtil.SAVE + ConstantUtil.NEW);
+    @DisplayName("Find book publishing house by name.")
+    void findByName() {
+        var expected = new BookPublishingHouseReadDto(
+                BOOK_PUBLISHING_HOUSE_ID_1,
+                ConstantUtil.BOOK_PUBLISHING_HOUSE_NAME_APRESS
+        );
 
-        var actual = bookPublishingHouseService.create(bookPublishingHouse);
+        var actual = bookPublishingHouseService.findByName(expected.getName());
 
-        assertEquals(bookPublishingHouse.getName(), actual.getName(), "The names must match.");
+        actual.ifPresent(entity ->
+                assertAll(
+                        () -> assertEquals(expected.getName(), entity.getName(), "The names must match."),
+                        () -> assertEquals(expected.getId(), entity.getId(), "The ids must match.")
+                )
+        );
     }
 
     @Test
@@ -77,44 +88,40 @@ class BookPublishingHouseServiceImplTest extends IntegrationTestBase {
         assertThat(actual).hasSize(expected);
     }
 
-    @Test
-    @DisplayName("Find book publishing house by name.")
-    void findByName() {
-        var expected = new BookPublishingHouseReadDto(
-                ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_1,
-                ConstantUtil.BOOK_PUBLISHING_HOUSE_NAME_APRESS
-        );
+    @Nested
+    @DisplayName("CRUD methods.")
+    class CRUD {
+        @Test
+        @DisplayName("Save book publishing house.")
+        void create() {
+            var bookPublishingHouse = new BookPublishingHouseCreateEditDto(ConstantUtil.SAVE + ConstantUtil.NEW);
 
-        var actual = bookPublishingHouseService.findByName(expected.getName());
+            var actual = bookPublishingHouseService.create(bookPublishingHouse);
 
-        actual.ifPresent(entity ->
-                assertAll(
-                        () -> assertEquals(expected.getName(), entity.getName(), "The names must match."),
-                        () -> assertEquals(expected.getId(), entity.getId(), "The ids must match.")
-                )
-        );
-    }
+            assertEquals(bookPublishingHouse.getName(), actual.getName(), "The names must match.");
+        }
 
-    @Test
-    @DisplayName("Update book publishing house.")
-    void update() {
-        var bookPublishingHouse = new BookPublishingHouseCreateEditDto(ConstantUtil.UPDATE + ConstantUtil.NEW);
+        @Test
+        @DisplayName("Update book publishing house.")
+        void update() {
+            var bookPublishingHouse = new BookPublishingHouseCreateEditDto(UPDATE + ConstantUtil.NEW);
 
-        var actual = bookPublishingHouseService.update(ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_1, bookPublishingHouse);
+            var actual = bookPublishingHouseService.update(BOOK_PUBLISHING_HOUSE_ID_1, bookPublishingHouse);
 
-        actual.ifPresent(entity ->
-                assertAll(
-                        () -> assertEquals(bookPublishingHouse.getName(), entity.getName()),
-                        () -> assertEquals(ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_1, entity.getId())
-                )
-        );
-    }
+            actual.ifPresent(entity ->
+                    assertAll(
+                            () -> assertEquals(bookPublishingHouse.getName(), entity.getName()),
+                            () -> assertEquals(BOOK_PUBLISHING_HOUSE_ID_1, entity.getId())
+                    )
+            );
+        }
 
-    @Test
-    void delete() {
-        assertAll(
-                () -> assertTrue(bookPublishingHouseService.delete(ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_10)),
-                () -> assertFalse(bookPublishingHouseService.delete(ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_99))
-        );
+        @Test
+        void delete() {
+            assertAll(
+                    () -> assertTrue(bookPublishingHouseService.delete(ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_10)),
+                    () -> assertFalse(bookPublishingHouseService.delete(ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_99))
+            );
+        }
     }
 }

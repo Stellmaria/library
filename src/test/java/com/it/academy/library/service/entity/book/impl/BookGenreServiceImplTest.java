@@ -9,6 +9,7 @@ import com.it.academy.library.service.entity.book.BookGenreService;
 import com.it.academy.library.util.ConstantUtil;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Pageable;
 
@@ -25,14 +26,42 @@ class BookGenreServiceImplTest extends IntegrationTestBase {
 
     private final BookGenreRepository bookGenreRepository;
 
-    @Test
-    @DisplayName("Save book genre.")
-    void create() {
-        var bookGenre = new BookGenreCreateEditDto(ConstantUtil.SAVE + ConstantUtil.NEW);
+    @Nested
+    @DisplayName("CRUD methods.")
+    class CRUD {
+        @Test
+        @DisplayName("Save book genre.")
+        void create() {
+            var bookGenre = new BookGenreCreateEditDto(ConstantUtil.SAVE + ConstantUtil.NEW);
 
-        var actual = bookGenreService.create(bookGenre);
+            var actual = bookGenreService.create(bookGenre);
 
-        assertEquals(bookGenre.getName(), actual.getName());
+            assertEquals(bookGenre.getName(), actual.getName());
+        }
+
+        @Test
+        @DisplayName("Update book genre.")
+        void update() {
+            var bookGenre = new BookGenreCreateEditDto(ConstantUtil.NEW + ConstantUtil.UPDATE);
+
+            var actual = bookGenreService.update(ConstantUtil.BOOK_GENRE_ID_7, bookGenre);
+
+            actual.ifPresent(entity ->
+                    assertAll(
+                            () -> assertEquals(bookGenre.getName(), entity.getName()),
+                            () -> assertEquals(ConstantUtil.BOOK_GENRE_ID_7, entity.getId())
+                    )
+            );
+        }
+
+        @Test
+        @DisplayName("Delete book genre.")
+        void delete() {
+            assertAll(
+                    () -> assertTrue(bookGenreService.delete(ConstantUtil.BOOK_GENRE_ID_4)),
+                    () -> assertFalse(bookGenreService.delete(ConstantUtil.BOOK_GENRE_ID_99))
+            );
+        }
     }
 
     @Test
@@ -101,29 +130,5 @@ class BookGenreServiceImplTest extends IntegrationTestBase {
         var actual = bookGenreService.findAllByBookId(ConstantUtil.BOOK_ID_8);
 
         assertThat(actual).hasSize(expected);
-    }
-
-    @Test
-    @DisplayName("Update book genre.")
-    void update() {
-        var bookGenre = new BookGenreCreateEditDto(ConstantUtil.NEW + ConstantUtil.UPDATE);
-
-        var actual = bookGenreService.update(ConstantUtil.BOOK_GENRE_ID_7, bookGenre);
-
-        actual.ifPresent(entity ->
-                assertAll(
-                        () -> assertEquals(bookGenre.getName(), entity.getName()),
-                        () -> assertEquals(ConstantUtil.BOOK_GENRE_ID_7, entity.getId())
-                )
-        );
-    }
-
-    @Test
-    @DisplayName("Delete book genre.")
-    void delete() {
-        assertAll(
-                () -> assertTrue(bookGenreService.delete(ConstantUtil.BOOK_GENRE_ID_4)),
-                () -> assertFalse(bookGenreService.delete(ConstantUtil.BOOK_GENRE_ID_99))
-        );
     }
 }

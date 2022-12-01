@@ -4,7 +4,6 @@ import com.it.academy.library.model.entity.book.Book;
 import com.it.academy.library.service.dto.read.AuthorReadDto;
 import com.it.academy.library.service.dto.read.order.OrderReadDto;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Value;
 
 import java.time.LocalDateTime;
@@ -15,7 +14,6 @@ import java.util.Collection;
  */
 @Value
 @AllArgsConstructor
-@Builder
 public class BookReadDto {
     Long id;
 

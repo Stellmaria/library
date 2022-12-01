@@ -6,6 +6,7 @@ import com.it.academy.library.model.entity.book.BookStatus;
 import com.it.academy.library.util.ConstantUtil;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,50 +22,54 @@ class BookStatusRepositoryTest extends IntegrationTestBase {
 
     private final BookStatus bookStatus = new BookStatus();
 
-    @Test
-    @DisplayName("Save book status.")
-    void saveBookStatus() {
-        var expectedCount = bookStatusRepository.count() + 1;
-        bookStatus.setName(ConstantUtil.NEW + ConstantUtil.SAVE);
+    @Nested
+    @DisplayName("CRUD methods.")
+    class CRUD {
+        @Test
+        @DisplayName("Save book status.")
+        void saveBookStatus() {
+            var expectedCount = bookStatusRepository.count() + 1;
+            bookStatus.setName(ConstantUtil.NEW + ConstantUtil.SAVE);
 
-        var actual = bookStatusRepository.save(bookStatus);
-        var actualCount = bookStatusRepository.count();
+            var actual = bookStatusRepository.save(bookStatus);
+            var actualCount = bookStatusRepository.count();
 
-        assertAll(
-                () -> assertEquals(expectedCount, actualCount, "The number of book statuses must match."),
-                () -> assertEquals(bookStatus.getName(), actual.getName(), "Book status names must match.")
-        );
-    }
+            assertAll(
+                    () -> assertEquals(expectedCount, actualCount, "The number of book statuses must match."),
+                    () -> assertEquals(bookStatus.getName(), actual.getName(), "Book status names must match.")
+            );
+        }
 
-    @Test
-    @DisplayName("Delete book status.")
-    void deleteBookStatus() {
-        var expected = bookStatusRepository.count() - 1;
+        @Test
+        @DisplayName("Delete book status.")
+        void deleteBookStatus() {
+            var expected = bookStatusRepository.count() - 1;
 
-        bookStatusRepository.deleteById(ConstantUtil.BOOK_STATUS_ID_1);
-        var actual = bookStatusRepository.count();
+            bookStatusRepository.deleteById(ConstantUtil.BOOK_STATUS_ID_1);
+            var actual = bookStatusRepository.count();
 
-        assertEquals(expected, actual, "The number of book statuses must match.");
-    }
+            assertEquals(expected, actual, "The number of book statuses must match.");
+        }
 
-    @Test
-    @DisplayName("Update book status.")
-    void updateBookStatus() {
-        var bookStatus = bookStatusRepository.findById(ConstantUtil.BOOK_STATUS_ID_3);
-        bookStatus.ifPresent(entity -> {
-            entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
+        @Test
+        @DisplayName("Update book status.")
+        void updateBookStatus() {
+            var bookStatus = bookStatusRepository.findById(ConstantUtil.BOOK_STATUS_ID_3);
+            bookStatus.ifPresent(entity -> {
+                entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
 
-            bookStatusRepository.save(entity);
-        });
+                bookStatusRepository.save(entity);
+            });
 
-        var actual = bookStatusRepository.findById(ConstantUtil.BOOK_STATUS_ID_3);
+            var actual = bookStatusRepository.findById(ConstantUtil.BOOK_STATUS_ID_3);
 
-        actual.ifPresent(entity ->
-                assertAll(
-                        () -> assertEquals(ConstantUtil.BOOK_STATUS_ID_3, entity.getId()),
-                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName())
-                )
-        );
+            actual.ifPresent(entity ->
+                    assertAll(
+                            () -> assertEquals(ConstantUtil.BOOK_STATUS_ID_3, entity.getId()),
+                            () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName())
+                    )
+            );
+        }
     }
 
     @Test

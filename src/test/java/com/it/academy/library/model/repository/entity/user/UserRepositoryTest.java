@@ -10,6 +10,7 @@ import com.it.academy.library.model.entity.user.UserStatus;
 import com.it.academy.library.util.ConstantUtil;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,80 +26,84 @@ class UserRepositoryTest extends IntegrationTestBase {
     private final UserRoleFilterMapper userRoleFilterMapper;
     private final UserStatusFilterMapper userStatusFilterMapper;
 
-    @Test
-    @DisplayName("Save user.")
-    void saveUser() {
-        var expectedCount = userRepository.count() + 1;
-        var user = User.builder()
-                .username(ConstantUtil.NEW + ConstantUtil.SAVE)
-                .firstName(ConstantUtil.NEW + ConstantUtil.SAVE)
-                .lastName(ConstantUtil.NEW + ConstantUtil.SAVE)
-                .email(ConstantUtil.USER_EMAIL_EMAIL_EXAMPLE_COM)
-                .password(ConstantUtil.NEW + ConstantUtil.SAVE)
-                .userRole(ConstantUtil.getUserRole())
-                .userStatus(ConstantUtil.getUserStatus())
-                .birthday(ConstantUtil.USER_BIRTHDAY)
-                .build();
+    @Nested
+    @DisplayName("CRUD methods.")
+    class CRUD {
+        @Test
+        @DisplayName("Save user.")
+        void saveUser() {
+            var expectedCount = userRepository.count() + 1;
+            var user = User.builder()
+                    .username(ConstantUtil.NEW + ConstantUtil.SAVE)
+                    .firstName(ConstantUtil.NEW + ConstantUtil.SAVE)
+                    .lastName(ConstantUtil.NEW + ConstantUtil.SAVE)
+                    .email(ConstantUtil.USER_EMAIL_EMAIL_EXAMPLE_COM)
+                    .password(ConstantUtil.NEW + ConstantUtil.SAVE)
+                    .userRole(ConstantUtil.getUserRole())
+                    .userStatus(ConstantUtil.getUserStatus())
+                    .birthday(ConstantUtil.USER_BIRTHDAY)
+                    .build();
 
-        var actual = userRepository.save(user);
-        var actualCount = userRepository.count();
+            var actual = userRepository.save(user);
+            var actualCount = userRepository.count();
 
-        assertAll(
-                () -> assertEquals(expectedCount, actualCount, "The number of users must match."),
-                () -> assertEquals(user.getUsername(), actual.getUsername(), "Users' usernames must match."),
-                () -> assertEquals(user.getFirstName(), actual.getFirstName()),
-                () -> assertEquals(user.getLastName(), actual.getLastName(), "The last user name must match."),
-                () -> assertEquals(user.getEmail(), actual.getEmail(), "Users' emails must match."),
-                () -> assertEquals(user.getPassword(), actual.getPassword(), "User passwords must match."),
-                () -> assertEquals(user.getUserRole().getId(), actual.getUserRole().getId()),
-                () -> assertEquals(user.getUserStatus().getId(), actual.getUserStatus().getId()),
-                () -> assertEquals(user.getBirthday(), actual.getBirthday(), "Users' birth dates must match.")
-        );
-    }
+            assertAll(
+                    () -> assertEquals(expectedCount, actualCount, "The number of users must match."),
+                    () -> assertEquals(user.getUsername(), actual.getUsername()),
+                    () -> assertEquals(user.getFirstName(), actual.getFirstName()),
+                    () -> assertEquals(user.getLastName(), actual.getLastName()),
+                    () -> assertEquals(user.getEmail(), actual.getEmail(), "Users' emails must match."),
+                    () -> assertEquals(user.getPassword(), actual.getPassword(), "User passwords must match."),
+                    () -> assertEquals(user.getUserRole().getId(), actual.getUserRole().getId()),
+                    () -> assertEquals(user.getUserStatus().getId(), actual.getUserStatus().getId()),
+                    () -> assertEquals(user.getBirthday(), actual.getBirthday())
+            );
+        }
 
-    @Test
-    @DisplayName("Update user.")
-    void update() {
-        var user = userRepository.findById(ConstantUtil.USER_ID_5);
+        @Test
+        @DisplayName("Update user.")
+        void update() {
+            var user = userRepository.findById(ConstantUtil.USER_ID_5);
 
-        user.ifPresent(entity -> {
-            entity.setLastName(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            entity.setFirstName(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            entity.setUsername(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            entity.setEmail(ConstantUtil.USER_EMAIL_TEST_GMAIL_COM);
-            entity.setPassword(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            entity.setUserRole(ConstantUtil.getUserRole());
-            entity.setUserStatus(ConstantUtil.getUserStatus());
-            entity.setBirthday(ConstantUtil.USER_BIRTHDAY);
+            user.ifPresent(entity -> {
+                entity.setLastName(ConstantUtil.NEW + ConstantUtil.UPDATE);
+                entity.setFirstName(ConstantUtil.NEW + ConstantUtil.UPDATE);
+                entity.setUsername(ConstantUtil.NEW + ConstantUtil.UPDATE);
+                entity.setEmail(ConstantUtil.USER_EMAIL_TEST_GMAIL_COM);
+                entity.setPassword(ConstantUtil.NEW + ConstantUtil.UPDATE);
+                entity.setUserRole(ConstantUtil.getUserRole());
+                entity.setUserStatus(ConstantUtil.getUserStatus());
+                entity.setBirthday(ConstantUtil.USER_BIRTHDAY);
 
-            userRepository.save(entity);
-        });
-        var actual = userRepository.findById(ConstantUtil.USER_ID_5);
+                userRepository.save(entity);
+            });
+            var actual = userRepository.findById(ConstantUtil.USER_ID_5);
 
-        actual.ifPresent(entity ->
-                assertAll(
-                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getUsername()),
-                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getFirstName()),
-                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getLastName()),
-                        () -> assertEquals(ConstantUtil.USER_EMAIL_TEST_GMAIL_COM, entity.getEmail()),
-                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getPassword()),
-                        () -> assertEquals(ConstantUtil.USER_ROLE_ID_2, entity.getUserRole().getId()),
-                        () -> assertEquals(ConstantUtil.USER_STATUS_ID_2, entity.getUserStatus().getId()),
-                        () -> assertEquals(ConstantUtil.USER_ID_5, entity.getId(), "User IDs must match."),
-                        () -> assertEquals(ConstantUtil.USER_BIRTHDAY, entity.getBirthday())
-                )
-        );
-    }
+            actual.ifPresent(entity ->
+                    assertAll(
+                            () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getUsername()),
+                            () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getFirstName()),
+                            () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getLastName()),
+                            () -> assertEquals(ConstantUtil.USER_EMAIL_TEST_GMAIL_COM, entity.getEmail()),
+                            () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getPassword()),
+                            () -> assertEquals(ConstantUtil.USER_ROLE_ID_2, entity.getUserRole().getId()),
+                            () -> assertEquals(ConstantUtil.USER_STATUS_ID_2, entity.getUserStatus().getId()),
+                            () -> assertEquals(ConstantUtil.USER_ID_5, entity.getId(), "User IDs must match."),
+                            () -> assertEquals(ConstantUtil.USER_BIRTHDAY, entity.getBirthday())
+                    )
+            );
+        }
 
-    @Test
-    @DisplayName("Delete user.")
-    void deleteUser() {
-        var expected = userRepository.count() - 1;
+        @Test
+        @DisplayName("Delete user.")
+        void deleteUser() {
+            var expected = userRepository.count() - 1;
 
-        userRepository.deleteById(ConstantUtil.USER_ID_4);
-        var actual = userRepository.count();
+            userRepository.deleteById(ConstantUtil.USER_ID_4);
+            var actual = userRepository.count();
 
-        assertEquals(expected, actual);
+            assertEquals(expected, actual);
+        }
     }
 
     @Test

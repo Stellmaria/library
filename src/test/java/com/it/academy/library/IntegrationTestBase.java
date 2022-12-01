@@ -15,7 +15,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
                 "classpath:sql/data.sql"
         }
 )
-@WithMockUser(username = "test", password = "test", authorities = {"ADMIN", "READER"})
+@WithMockUser(username = "admin", password = "admin", authorities = {"ROLE_ADMIN"})
 public abstract class IntegrationTestBase {
     private static final PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:15.0");
 

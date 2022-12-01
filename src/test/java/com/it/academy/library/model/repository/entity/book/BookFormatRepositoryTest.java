@@ -6,6 +6,7 @@ import com.it.academy.library.model.entity.book.BookFormat;
 import com.it.academy.library.util.ConstantUtil;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,50 +22,54 @@ class BookFormatRepositoryTest extends IntegrationTestBase {
 
     private final BookFormat bookFormat = new BookFormat();
 
-    @Test
-    @DisplayName("Save book format.")
-    void saveBookFormat() {
-        var expectedCount = bookFormatRepository.count() + 1;
-        bookFormat.setName(ConstantUtil.NEW + ConstantUtil.SAVE);
+    @Nested
+    @DisplayName("CRUD methods.")
+    class CRUD {
+        @Test
+        @DisplayName("Save book format.")
+        void saveBookFormat() {
+            var expectedCount = bookFormatRepository.count() + 1;
+            bookFormat.setName(ConstantUtil.NEW + ConstantUtil.SAVE);
 
-        var actual = bookFormatRepository.save(bookFormat);
-        var actualCount = bookFormatRepository.count();
+            var actual = bookFormatRepository.save(bookFormat);
+            var actualCount = bookFormatRepository.count();
 
-        assertAll(
-                () -> assertEquals(expectedCount, actualCount),
-                () -> assertEquals(bookFormat.getName(), actual.getName())
-        );
-    }
+            assertAll(
+                    () -> assertEquals(expectedCount, actualCount),
+                    () -> assertEquals(bookFormat.getName(), actual.getName())
+            );
+        }
 
-    @Test
-    @DisplayName("Delete book format.")
-    void deleteBookFormat() {
-        var expected = bookFormatRepository.count() - 1;
+        @Test
+        @DisplayName("Delete book format.")
+        void deleteBookFormat() {
+            var expected = bookFormatRepository.count() - 1;
 
-        bookFormatRepository.deleteById(ConstantUtil.BOOK_FORMAT_ID_9);
-        var actual = bookFormatRepository.count();
+            bookFormatRepository.deleteById(ConstantUtil.BOOK_FORMAT_ID_9);
+            var actual = bookFormatRepository.count();
 
-        assertEquals(expected, actual, "The number of book formats of books must match.");
-    }
+            assertEquals(expected, actual, "The number of book formats of books must match.");
+        }
 
-    @Test
-    @DisplayName("Update book format.")
-    void updateBookFormat() {
-        var bookFormat = bookFormatRepository.findById(ConstantUtil.BOOK_FORMAT_ID_4);
+        @Test
+        @DisplayName("Update book format.")
+        void updateBookFormat() {
+            var bookFormat = bookFormatRepository.findById(ConstantUtil.BOOK_FORMAT_ID_4);
 
-        bookFormat.ifPresent(entity -> {
-            entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
+            bookFormat.ifPresent(entity -> {
+                entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
 
-            bookFormatRepository.save(entity);
-        });
-        var actual = bookFormatRepository.findById(ConstantUtil.BOOK_FORMAT_ID_4);
+                bookFormatRepository.save(entity);
+            });
+            var actual = bookFormatRepository.findById(ConstantUtil.BOOK_FORMAT_ID_4);
 
-        actual.ifPresent(entity ->
-                assertAll(
-                        () -> assertEquals(ConstantUtil.BOOK_FORMAT_ID_4, entity.getId()),
-                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName())
-                )
-        );
+            actual.ifPresent(entity ->
+                    assertAll(
+                            () -> assertEquals(ConstantUtil.BOOK_FORMAT_ID_4, entity.getId()),
+                            () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName())
+                    )
+            );
+        }
     }
 
     @Test

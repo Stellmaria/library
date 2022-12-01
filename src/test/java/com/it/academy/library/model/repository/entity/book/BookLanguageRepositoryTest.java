@@ -6,6 +6,7 @@ import com.it.academy.library.model.entity.book.BookLanguage;
 import com.it.academy.library.util.ConstantUtil;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,50 +22,54 @@ class BookLanguageRepositoryTest extends IntegrationTestBase {
 
     private final BookLanguage bookLanguage = new BookLanguage();
 
-    @Test
-    @DisplayName("Save book language.")
-    void saveBookLanguage() {
-        var expectedCount = bookLanguageRepository.count() + 1;
-        bookLanguage.setName(ConstantUtil.NEW + ConstantUtil.SAVE);
+    @Nested
+    @DisplayName("CRUD methods.")
+    class CRUD {
+        @Test
+        @DisplayName("Save book language.")
+        void saveBookLanguage() {
+            var expectedCount = bookLanguageRepository.count() + 1;
+            bookLanguage.setName(ConstantUtil.NEW + ConstantUtil.SAVE);
 
-        var actual = bookLanguageRepository.save(bookLanguage);
-        var actualCount = bookLanguageRepository.count();
+            var actual = bookLanguageRepository.save(bookLanguage);
+            var actualCount = bookLanguageRepository.count();
 
-        assertAll(
-                () -> assertEquals(expectedCount, actualCount),
-                () -> assertEquals(bookLanguage.getName(), actual.getName())
-        );
-    }
+            assertAll(
+                    () -> assertEquals(expectedCount, actualCount),
+                    () -> assertEquals(bookLanguage.getName(), actual.getName())
+            );
+        }
 
-    @Test
-    @DisplayName("Delete book language.")
-    void deleteBookLanguage() {
-        var expected = bookLanguageRepository.count() - 1;
+        @Test
+        @DisplayName("Delete book language.")
+        void deleteBookLanguage() {
+            var expected = bookLanguageRepository.count() - 1;
 
-        bookLanguageRepository.deleteById(ConstantUtil.BOOK_LANGUAGE_ID_10);
-        var actual = bookLanguageRepository.count();
+            bookLanguageRepository.deleteById(ConstantUtil.BOOK_LANGUAGE_ID_10);
+            var actual = bookLanguageRepository.count();
 
-        assertEquals(expected, actual, "The number of book languages of the books must match.");
-    }
+            assertEquals(expected, actual, "The number of book languages of the books must match.");
+        }
 
-    @Test
-    @DisplayName("Update book language.")
-    void updateBookLanguage() {
-        var bookLanguage = bookLanguageRepository.findById(ConstantUtil.BOOK_LANGUAGE_ID_13);
+        @Test
+        @DisplayName("Update book language.")
+        void updateBookLanguage() {
+            var bookLanguage = bookLanguageRepository.findById(ConstantUtil.BOOK_LANGUAGE_ID_13);
 
-        bookLanguage.ifPresent(entity -> {
-            entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
+            bookLanguage.ifPresent(entity -> {
+                entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
 
-            bookLanguageRepository.save(entity);
-        });
-        var actual = bookLanguageRepository.findById(ConstantUtil.BOOK_LANGUAGE_ID_13);
+                bookLanguageRepository.save(entity);
+            });
+            var actual = bookLanguageRepository.findById(ConstantUtil.BOOK_LANGUAGE_ID_13);
 
-        actual.ifPresent(entity ->
-                assertAll(
-                        () -> assertEquals(ConstantUtil.BOOK_LANGUAGE_ID_13, entity.getId()),
-                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName())
-                )
-        );
+            actual.ifPresent(entity ->
+                    assertAll(
+                            () -> assertEquals(ConstantUtil.BOOK_LANGUAGE_ID_13, entity.getId()),
+                            () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName())
+                    )
+            );
+        }
     }
 
     @Test

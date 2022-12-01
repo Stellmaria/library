@@ -24,6 +24,7 @@ import com.it.academy.library.model.entity.user.User;
 import com.it.academy.library.util.ConstantUtil;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static com.it.academy.library.util.ConstantUtil.BOOK_PUBLISHING_HOUSE_ID_1;
@@ -47,97 +48,101 @@ class BookRepositoryTest extends IntegrationTestBase {
     private final OrderFilterMapper orderFilterMapper;
     private final UserFilterMapper userFilterMapper;
 
-    @Test
-    @DisplayName("Save book.")
-    void saveBook() {
-        var expectedCount = bookRepository.count() + 1;
-        var book = Book.builder()
-                .title(ConstantUtil.NEW + ConstantUtil.SAVE)
-                .subtitle(ConstantUtil.NEW + ConstantUtil.SAVE)
-                .year(ConstantUtil.BOOK_YEAR_2023)
-                .isbn10(ConstantUtil.BOOK_ISBN_10)
-                .isbn13(ConstantUtil.BOOK_ISBN_13)
-                .image(ConstantUtil.NEW + ConstantUtil.SAVE)
-                .bookStatus(ConstantUtil.getBookStatus())
-                .bookLanguage(ConstantUtil.getBookLanguage())
-                .bookFormat(ConstantUtil.getBookFormat())
-                .bookPublishingHouse(ConstantUtil.getBookPublishingHouse())
-                .bookSeries(ConstantUtil.getBookSeries())
-                .order(ConstantUtil.getOrder())
-                .quantity(ConstantUtil.BOOK_QUANTITY_4)
-                .build();
+    @Nested
+    @DisplayName("CRUD methods.")
+    class CRUD {
+        @Test
+        @DisplayName("Save book.")
+        void saveBook() {
+            var expectedCount = bookRepository.count() + 1;
+            var book = Book.builder()
+                    .title(ConstantUtil.NEW + ConstantUtil.SAVE)
+                    .subtitle(ConstantUtil.NEW + ConstantUtil.SAVE)
+                    .year(ConstantUtil.BOOK_YEAR_2023)
+                    .isbn10(ConstantUtil.BOOK_ISBN_10)
+                    .isbn13(ConstantUtil.BOOK_ISBN_13)
+                    .image(ConstantUtil.NEW + ConstantUtil.SAVE)
+                    .bookStatus(ConstantUtil.getBookStatus())
+                    .bookLanguage(ConstantUtil.getBookLanguage())
+                    .bookFormat(ConstantUtil.getBookFormat())
+                    .bookPublishingHouse(ConstantUtil.getBookPublishingHouse())
+                    .bookSeries(ConstantUtil.getBookSeries())
+                    .order(ConstantUtil.getOrder())
+                    .quantity(ConstantUtil.BOOK_QUANTITY_4)
+                    .build();
 
-        var actual = bookRepository.save(book);
-        var actualCount = bookRepository.count();
+            var actual = bookRepository.save(book);
+            var actualCount = bookRepository.count();
 
-        assertAll(
-                () -> assertEquals(expectedCount, actualCount, "The number of books must match."),
-                () -> assertEquals(book.getTitle(), actual.getTitle(), "Book titles must match."),
-                () -> assertEquals(book.getSubtitle(), actual.getSubtitle(), "Book subtitles must match."),
-                () -> assertEquals(book.getYear(), actual.getYear(), "The year of the books must match."),
-                () -> assertEquals(book.getIsbn10(), actual.getIsbn10()),
-                () -> assertEquals(book.getIsbn13(), actual.getIsbn13()),
-                () -> assertEquals(book.getImage(), actual.getImage(), "Book covers must match."),
-                () -> assertEquals(book.getBookStatus().getId(), actual.getBookStatus().getId()),
-                () -> assertEquals(book.getBookLanguage().getId(), actual.getBookLanguage().getId()),
-                () -> assertEquals(book.getBookFormat().getId(), actual.getBookFormat().getId()),
-                () -> assertEquals(book.getBookPublishingHouse().getId(), actual.getBookPublishingHouse().getId()),
-                () -> assertEquals(book.getBookSeries().getId(), actual.getBookSeries().getId()),
-                () -> assertEquals(book.getOrder().getId(), actual.getOrder().getId())
-        );
-    }
+            assertAll(
+                    () -> assertEquals(expectedCount, actualCount, "The number of books must match."),
+                    () -> assertEquals(book.getTitle(), actual.getTitle(), "Book titles must match."),
+                    () -> assertEquals(book.getSubtitle(), actual.getSubtitle(), "Book subtitles must match."),
+                    () -> assertEquals(book.getYear(), actual.getYear(), "The year of the books must match."),
+                    () -> assertEquals(book.getIsbn10(), actual.getIsbn10()),
+                    () -> assertEquals(book.getIsbn13(), actual.getIsbn13()),
+                    () -> assertEquals(book.getImage(), actual.getImage(), "Book covers must match."),
+                    () -> assertEquals(book.getBookStatus().getId(), actual.getBookStatus().getId()),
+                    () -> assertEquals(book.getBookLanguage().getId(), actual.getBookLanguage().getId()),
+                    () -> assertEquals(book.getBookFormat().getId(), actual.getBookFormat().getId()),
+                    () -> assertEquals(book.getBookPublishingHouse().getId(), actual.getBookPublishingHouse().getId()),
+                    () -> assertEquals(book.getBookSeries().getId(), actual.getBookSeries().getId()),
+                    () -> assertEquals(book.getOrder().getId(), actual.getOrder().getId())
+            );
+        }
 
-    @Test
-    @DisplayName("Update book.")
-    void updateBook() {
-        var book = bookRepository.findById(ConstantUtil.BOOK_ID_4);
+        @Test
+        @DisplayName("Update book.")
+        void updateBook() {
+            var book = bookRepository.findById(ConstantUtil.BOOK_ID_4);
 
-        book.ifPresent(entity -> {
-            entity.setTitle(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            entity.setSubtitle(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            entity.setYear(ConstantUtil.BOOK_YEAR_2023);
-            entity.setIsbn10(ConstantUtil.BOOK_ISBN_10);
-            entity.setIsbn13(ConstantUtil.BOOK_ISBN_13);
-            entity.setImage(ConstantUtil.NEW + ConstantUtil.UPDATE);
-            entity.setBookStatus(ConstantUtil.getBookStatus());
-            entity.setBookLanguage(ConstantUtil.getBookLanguage());
-            entity.setBookFormat(ConstantUtil.getBookFormat());
-            entity.setBookPublishingHouse(ConstantUtil.getBookPublishingHouse());
-            entity.setBookSeries(ConstantUtil.getBookSeries());
-            entity.setOrder(ConstantUtil.getOrder());
+            book.ifPresent(entity -> {
+                entity.setTitle(ConstantUtil.NEW + ConstantUtil.UPDATE);
+                entity.setSubtitle(ConstantUtil.NEW + ConstantUtil.UPDATE);
+                entity.setYear(ConstantUtil.BOOK_YEAR_2023);
+                entity.setIsbn10(ConstantUtil.BOOK_ISBN_10);
+                entity.setIsbn13(ConstantUtil.BOOK_ISBN_13);
+                entity.setImage(ConstantUtil.NEW + ConstantUtil.UPDATE);
+                entity.setBookStatus(ConstantUtil.getBookStatus());
+                entity.setBookLanguage(ConstantUtil.getBookLanguage());
+                entity.setBookFormat(ConstantUtil.getBookFormat());
+                entity.setBookPublishingHouse(ConstantUtil.getBookPublishingHouse());
+                entity.setBookSeries(ConstantUtil.getBookSeries());
+                entity.setOrder(ConstantUtil.getOrder());
 
-            bookRepository.save(entity);
-        });
-        var actual = bookRepository.findById(ConstantUtil.BOOK_ID_4);
+                bookRepository.save(entity);
+            });
+            var actual = bookRepository.findById(ConstantUtil.BOOK_ID_4);
 
-        actual.ifPresent(entity ->
-                assertAll(
-                        () -> assertEquals(ConstantUtil.BOOK_ID_4, entity.getId(), "Book ids must match."),
-                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getTitle()),
-                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getSubtitle()),
-                        () -> assertEquals(ConstantUtil.BOOK_YEAR_2023, entity.getYear()),
-                        () -> assertEquals(ConstantUtil.BOOK_ISBN_10, entity.getIsbn10()),
-                        () -> assertEquals(ConstantUtil.BOOK_ISBN_13, entity.getIsbn13()),
-                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getImage()),
-                        () -> assertEquals(ConstantUtil.BOOK_STATUS_ID_1, entity.getBookStatus().getId()),
-                        () -> assertEquals(ConstantUtil.BOOK_LANGUAGE_ID_13, entity.getBookLanguage().getId()),
-                        () -> assertEquals(ConstantUtil.BOOK_FORMAT_ID_4, entity.getBookFormat().getId()),
-                        () -> assertEquals(BOOK_PUBLISHING_HOUSE_ID_1, entity.getBookPublishingHouse().getId()),
-                        () -> assertEquals(ConstantUtil.BOOK_SERIES_ID_3, entity.getBookSeries().getId()),
-                        () -> assertEquals(ConstantUtil.ORDER_ID_4, entity.getOrder().getId())
-                )
-        );
-    }
+            actual.ifPresent(entity ->
+                    assertAll(
+                            () -> assertEquals(ConstantUtil.BOOK_ID_4, entity.getId(), "Book ids must match."),
+                            () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getTitle()),
+                            () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getSubtitle()),
+                            () -> assertEquals(ConstantUtil.BOOK_YEAR_2023, entity.getYear()),
+                            () -> assertEquals(ConstantUtil.BOOK_ISBN_10, entity.getIsbn10()),
+                            () -> assertEquals(ConstantUtil.BOOK_ISBN_13, entity.getIsbn13()),
+                            () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getImage()),
+                            () -> assertEquals(ConstantUtil.BOOK_STATUS_ID_1, entity.getBookStatus().getId()),
+                            () -> assertEquals(ConstantUtil.BOOK_LANGUAGE_ID_13, entity.getBookLanguage().getId()),
+                            () -> assertEquals(ConstantUtil.BOOK_FORMAT_ID_4, entity.getBookFormat().getId()),
+                            () -> assertEquals(BOOK_PUBLISHING_HOUSE_ID_1, entity.getBookPublishingHouse().getId()),
+                            () -> assertEquals(ConstantUtil.BOOK_SERIES_ID_3, entity.getBookSeries().getId()),
+                            () -> assertEquals(ConstantUtil.ORDER_ID_4, entity.getOrder().getId())
+                    )
+            );
+        }
 
-    @Test
-    @DisplayName("Delete book.")
-    void deleteBook() {
-        var expected = bookRepository.count() - 1;
+        @Test
+        @DisplayName("Delete book.")
+        void deleteBook() {
+            var expected = bookRepository.count() - 1;
 
-        bookRepository.deleteById(ConstantUtil.BOOK_ID_6);
-        var actual = bookRepository.count();
+            bookRepository.deleteById(ConstantUtil.BOOK_ID_6);
+            var actual = bookRepository.count();
 
-        assertEquals(expected, actual, "The number of books must match.");
+            assertEquals(expected, actual, "The number of books must match.");
+        }
     }
 
     @Test

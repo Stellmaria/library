@@ -6,6 +6,7 @@ import com.it.academy.library.model.entity.order.OrderStatus;
 import com.it.academy.library.util.ConstantUtil;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,50 +22,54 @@ class OrderStatusRepositoryTest extends IntegrationTestBase {
 
     private final OrderStatus orderStatus = new OrderStatus();
 
-    @Test
-    @DisplayName("Save order status.")
-    void saveOrderStatus() {
-        var expectedCount = orderStatusRepository.count() + 1;
-        orderStatus.setName(ConstantUtil.NEW + ConstantUtil.SAVE);
+    @Nested
+    @DisplayName("CRUD methods.")
+    class CRUD {
+        @Test
+        @DisplayName("Save order status.")
+        void saveOrderStatus() {
+            var expectedCount = orderStatusRepository.count() + 1;
+            orderStatus.setName(ConstantUtil.NEW + ConstantUtil.SAVE);
 
-        var actual = orderStatusRepository.save(orderStatus);
-        var actualCount = orderStatusRepository.count();
+            var actual = orderStatusRepository.save(orderStatus);
+            var actualCount = orderStatusRepository.count();
 
-        assertAll(
-                () -> assertEquals(expectedCount, actualCount, "The number of order statuses must match."),
-                () -> assertEquals(orderStatus.getName(), actual.getName(), "Order status names must match.")
-        );
-    }
+            assertAll(
+                    () -> assertEquals(expectedCount, actualCount, "The number of order statuses must match."),
+                    () -> assertEquals(orderStatus.getName(), actual.getName())
+            );
+        }
 
-    @Test
-    @DisplayName("Update order status.")
-    void update() {
-        var orderStatus = orderStatusRepository.findById(ConstantUtil.ORDER_STATUS_ID_2);
+        @Test
+        @DisplayName("Update order status.")
+        void update() {
+            var orderStatus = orderStatusRepository.findById(ConstantUtil.ORDER_STATUS_ID_2);
 
-        orderStatus.ifPresent(entity -> {
-            entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
+            orderStatus.ifPresent(entity -> {
+                entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
 
-            orderStatusRepository.save(entity);
-        });
-        var actual = orderStatusRepository.findById(ConstantUtil.ORDER_STATUS_ID_2);
+                orderStatusRepository.save(entity);
+            });
+            var actual = orderStatusRepository.findById(ConstantUtil.ORDER_STATUS_ID_2);
 
-        actual.ifPresent(entity ->
-                assertAll(
-                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName()),
-                        () -> assertEquals(ConstantUtil.ORDER_STATUS_ID_2, entity.getId())
-                )
-        );
-    }
+            actual.ifPresent(entity ->
+                    assertAll(
+                            () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName()),
+                            () -> assertEquals(ConstantUtil.ORDER_STATUS_ID_2, entity.getId())
+                    )
+            );
+        }
 
-    @Test
-    @DisplayName("Delete order status.")
-    void deleteOrderStatus() {
-        var expected = orderStatusRepository.count() - 1;
+        @Test
+        @DisplayName("Delete order status.")
+        void deleteOrderStatus() {
+            var expected = orderStatusRepository.count() - 1;
 
-        orderStatusRepository.deleteById(ConstantUtil.ORDER_STATUS_ID_3);
-        var actual = orderStatusRepository.count();
+            orderStatusRepository.deleteById(ConstantUtil.ORDER_STATUS_ID_3);
+            var actual = orderStatusRepository.count();
 
-        assertEquals(expected, actual, "The number of order statuses must match.");
+            assertEquals(expected, actual, "The number of order statuses must match.");
+        }
     }
 
     @Test

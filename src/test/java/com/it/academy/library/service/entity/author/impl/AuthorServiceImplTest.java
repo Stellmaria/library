@@ -9,6 +9,7 @@ import com.it.academy.library.service.entity.author.AuthorService;
 import com.it.academy.library.util.ConstantUtil;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Pageable;
 import org.springframework.mock.web.MockMultipartFile;
@@ -26,28 +27,68 @@ class AuthorServiceImplTest extends IntegrationTestBase {
 
     private final AuthorRepository authorRepository;
 
-    @Test
-    @DisplayName("Save author.")
-    void create() {
-        var author = new AuthorCreateEditDto(
-                ConstantUtil.NEW + ConstantUtil.SAVE,
-                ConstantUtil.NEW + ConstantUtil.SAVE,
-                new MockMultipartFile(ConstantUtil.NAME_IMAGE_TEST, new byte[0]),
-                ConstantUtil.AUTHOR_BIRTHDAY,
-                ConstantUtil.AUTHOR_DATE_DEATH,
-                ConstantUtil.NEW + ConstantUtil.SAVE
-        );
+    @Nested
+    @DisplayName("CRUD methods.")
+    class CRUD {
+        @Test
+        @DisplayName("Save author.")
+        void create() {
+            var author = new AuthorCreateEditDto(
+                    ConstantUtil.NEW + ConstantUtil.SAVE,
+                    ConstantUtil.NEW + ConstantUtil.SAVE,
+                    new MockMultipartFile(ConstantUtil.NAME_IMAGE_TEST, new byte[0]),
+                    ConstantUtil.AUTHOR_BIRTHDAY,
+                    ConstantUtil.AUTHOR_DATE_DEATH,
+                    ConstantUtil.NEW + ConstantUtil.SAVE
+            );
 
-        var actual = authorService.create(author);
+            var actual = authorService.create(author);
 
-        assertAll(
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getFirstName()),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getLastName()),
-                () -> assertEquals(ConstantUtil.AUTHOR_IMAGE_AVATAR_1, actual.getImage()),
-                () -> assertEquals(ConstantUtil.AUTHOR_BIRTHDAY, actual.getBirthday()),
-                () -> assertEquals(ConstantUtil.AUTHOR_DATE_DEATH, actual.getDateDeath()),
-                () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getDescription())
-        );
+            assertAll(
+                    () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getFirstName()),
+                    () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getLastName()),
+                    () -> assertEquals(ConstantUtil.AUTHOR_IMAGE_AVATAR_1, actual.getImage()),
+                    () -> assertEquals(ConstantUtil.AUTHOR_BIRTHDAY, actual.getBirthday()),
+                    () -> assertEquals(ConstantUtil.AUTHOR_DATE_DEATH, actual.getDateDeath()),
+                    () -> assertEquals(ConstantUtil.NEW + ConstantUtil.SAVE, actual.getDescription())
+            );
+        }
+
+        @Test
+        @DisplayName("Update author.")
+        void update() {
+            var author = new AuthorCreateEditDto(
+                    ConstantUtil.NEW + ConstantUtil.SAVE,
+                    ConstantUtil.NEW + ConstantUtil.SAVE,
+                    new MockMultipartFile(ConstantUtil.NAME_IMAGE_TEST, new byte[0]),
+                    ConstantUtil.AUTHOR_BIRTHDAY,
+                    ConstantUtil.AUTHOR_DATE_DEATH,
+                    ConstantUtil.NEW + ConstantUtil.SAVE
+            );
+
+            var actual = authorService.update(ConstantUtil.AUTHOR_ID_8, author);
+
+            actual.ifPresent(entity ->
+                    assertAll(
+                            () -> assertEquals(ConstantUtil.AUTHOR_ID_8, entity.getId()),
+                            () -> assertEquals(author.getFirstName(), entity.getFirstName()),
+                            () -> assertEquals(author.getLastName(), entity.getLastName()),
+                            () -> assertEquals(ConstantUtil.AUTHOR_IMAGE_AVATAR_1, entity.getImage()),
+                            () -> assertEquals(author.getBirthday(), entity.getBirthday()),
+                            () -> assertEquals(author.getDateDeath(), entity.getDateDeath()),
+                            () -> assertEquals(author.getDescription(), entity.getDescription())
+                    )
+            );
+        }
+
+        @Test
+        @DisplayName("Delete author.")
+        void delete() {
+            assertAll(
+                    () -> assertTrue(authorService.delete(ConstantUtil.AUTHOR_ID_19)),
+                    () -> assertFalse(authorService.delete(ConstantUtil.AUTHOR_ID_99))
+            );
+        }
     }
 
     @Test
@@ -108,42 +149,6 @@ class AuthorServiceImplTest extends IntegrationTestBase {
         var actual = authorService.findAllByBookId(17L);
 
         assertThat(actual).hasSize(expected);
-    }
-
-    @Test
-    @DisplayName("Update author.")
-    void update() {
-        var author = new AuthorCreateEditDto(
-                ConstantUtil.NEW + ConstantUtil.SAVE,
-                ConstantUtil.NEW + ConstantUtil.SAVE,
-                new MockMultipartFile(ConstantUtil.NAME_IMAGE_TEST, new byte[0]),
-                ConstantUtil.AUTHOR_BIRTHDAY,
-                ConstantUtil.AUTHOR_DATE_DEATH,
-                ConstantUtil.NEW + ConstantUtil.SAVE
-        );
-
-        var actual = authorService.update(ConstantUtil.AUTHOR_ID_8, author);
-
-        actual.ifPresent(entity ->
-                assertAll(
-                        () -> assertEquals(ConstantUtil.AUTHOR_ID_8, entity.getId(), "Author IDs must match."),
-                        () -> assertEquals(author.getFirstName(), entity.getFirstName()),
-                        () -> assertEquals(author.getLastName(), entity.getLastName()),
-                        () -> assertEquals(ConstantUtil.AUTHOR_IMAGE_AVATAR_1, entity.getImage()),
-                        () -> assertEquals(author.getBirthday(), entity.getBirthday()),
-                        () -> assertEquals(author.getDateDeath(), entity.getDateDeath()),
-                        () -> assertEquals(author.getDescription(), entity.getDescription())
-                )
-        );
-    }
-
-    @Test
-    @DisplayName("Delete author.")
-    void delete() {
-        assertAll(
-                () -> assertTrue(authorService.delete(ConstantUtil.AUTHOR_ID_19)),
-                () -> assertFalse(authorService.delete(ConstantUtil.AUTHOR_ID_99))
-        );
     }
 
     @Test

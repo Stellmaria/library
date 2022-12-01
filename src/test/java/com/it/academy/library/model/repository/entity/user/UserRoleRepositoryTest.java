@@ -6,6 +6,7 @@ import com.it.academy.library.model.entity.user.UserRole;
 import com.it.academy.library.util.ConstantUtil;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,50 +22,54 @@ class UserRoleRepositoryTest extends IntegrationTestBase {
 
     private final UserRole userRole = new UserRole();
 
-    @Test
-    @DisplayName("Save user role.")
-    void saveUserRole() {
-        var expectedCount = userRoleRepository.count() + 1;
-        userRole.setName(ConstantUtil.NEW + ConstantUtil.SAVE);
+    @Nested
+    @DisplayName("CRUD methods.")
+    class CRUD {
+        @Test
+        @DisplayName("Save user role.")
+        void saveUserRole() {
+            var expectedCount = userRoleRepository.count() + 1;
+            userRole.setName(ConstantUtil.NEW + ConstantUtil.SAVE);
 
-        var actual = userRoleRepository.save(userRole);
-        var actualCount = userRoleRepository.count();
+            var actual = userRoleRepository.save(userRole);
+            var actualCount = userRoleRepository.count();
 
-        assertAll(
-                () -> assertEquals(expectedCount, actualCount, "The number of custom roles must match."),
-                () -> assertEquals(userRole.getName(), actual.getName())
-        );
-    }
+            assertAll(
+                    () -> assertEquals(expectedCount, actualCount, "The number of custom roles must match."),
+                    () -> assertEquals(userRole.getName(), actual.getName())
+            );
+        }
 
-    @Test
-    @DisplayName("Update user role.")
-    void updateUserRole() {
-        var userRole = userRoleRepository.findById(ConstantUtil.USER_ROLE_ID_4);
+        @Test
+        @DisplayName("Update user role.")
+        void updateUserRole() {
+            var userRole = userRoleRepository.findById(ConstantUtil.USER_ROLE_ID_4);
 
-        userRole.ifPresent(entity -> {
-            entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
+            userRole.ifPresent(entity -> {
+                entity.setName(ConstantUtil.NEW + ConstantUtil.UPDATE);
 
-            userRoleRepository.save(entity);
-        });
-        var actual = userRoleRepository.findById(ConstantUtil.USER_ROLE_ID_4);
+                userRoleRepository.save(entity);
+            });
+            var actual = userRoleRepository.findById(ConstantUtil.USER_ROLE_ID_4);
 
-        actual.ifPresent(entity ->
-                assertAll(
-                        () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName()),
-                        () -> assertEquals(ConstantUtil.USER_ROLE_ID_4, entity.getId(), "The ids must match.")
-                )
-        );
-    }
+            actual.ifPresent(entity ->
+                    assertAll(
+                            () -> assertEquals(ConstantUtil.NEW + ConstantUtil.UPDATE, entity.getName()),
+                            () -> assertEquals(ConstantUtil.USER_ROLE_ID_4, entity.getId())
+                    )
+            );
+        }
 
-    @Test
-    @DisplayName("Delete user role.")
-    void deleteUserRole() {
-        var expected = userRoleRepository.count() - 1;
+        @Test
+        @DisplayName("Delete user role.")
+        void deleteUserRole() {
+            var expected = userRoleRepository.count() - 1;
 
-        userRoleRepository.deleteById(ConstantUtil.USER_ROLE_ID_2);
-        var actual = userRoleRepository.count();
+            userRoleRepository.deleteById(ConstantUtil.USER_ROLE_ID_2);
+            var actual = userRoleRepository.count();
 
-        assertEquals(expected, actual, "The number of custom roles must match.Им");
+            assertEquals(expected, actual, "The number of custom roles must match.Им");
+        }
     }
 
     @Test

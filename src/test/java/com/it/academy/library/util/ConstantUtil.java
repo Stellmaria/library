@@ -1,5 +1,7 @@
 package com.it.academy.library.util;
 
+import com.it.academy.library.mapper.read.book.BookSeriesReadMapper;
+import com.it.academy.library.mapper.read.book.BookStatusReadMapper;
 import com.it.academy.library.model.entity.book.BookFormat;
 import com.it.academy.library.model.entity.book.BookLanguage;
 import com.it.academy.library.model.entity.book.BookPublishingHouse;
@@ -13,6 +15,7 @@ import com.it.academy.library.model.entity.user.UserStatus;
 import com.it.academy.library.service.dto.read.AuthorReadDto;
 import com.it.academy.library.service.dto.read.book.BookGenreReadDto;
 import com.it.academy.library.service.dto.read.book.BookLanguageReadDto;
+import com.it.academy.library.service.dto.read.book.BookReadDto;
 import com.it.academy.library.service.dto.read.book.BookSeriesReadDto;
 import com.it.academy.library.service.dto.read.order.OrderStatusReadDto;
 import com.it.academy.library.service.dto.read.user.UserReadDto;
@@ -24,6 +27,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @UtilityClass
 public class ConstantUtil {
@@ -69,6 +73,7 @@ public class ConstantUtil {
     public static final String BOOK_GENRE_NAME_ROMANCE = "Romance";
     public static final String BOOK_GENRE_FRAGMENT_NAME_SS = "ss";
 
+    public static final Integer BOOK_LANGUAGE_ID_1 = 1;
     public static final Integer BOOK_LANGUAGE_ID_10 = 10;
     public static final Integer BOOK_LANGUAGE_ID_13 = 13;
     public static final String BOOK_LANGUAGE_FRAGMENT_NAME_IAN = "ian";
@@ -80,7 +85,7 @@ public class ConstantUtil {
     public static final Long BOOK_ID_8 = 8L;
     public static final Long BOOK_ID_17 = 17L;
     public static final Long BOOK_ID_18 = 18L;
-    public static final Long BOOK_ID_21 = 22L;
+    public static final Long BOOK_ID_22 = 22L;
     public static final Long BOOK_ID_99 = 99L;
     public static final String BOOK_TITLE_DARK_TOWER_I = "Dark Tower I";
     public static final String BOOK_TITLE_TWILIGHT = "Twilight";
@@ -333,6 +338,31 @@ public class ConstantUtil {
                 getUserStatus(USER_STATUS_ID_3),
                 USER_SVETA_BIRTHDAY,
                 USER_SVETA_AVATAR
+        );
+    }
+
+    @Contract("_, _ -> new")
+    public @NotNull BookReadDto getDarkTownBook(@NotNull BookStatusReadMapper bookStatusReadMapper,
+                                                @NotNull BookSeriesReadMapper bookSeriesReadMapper) {
+        return new BookReadDto(
+                ConstantUtil.BOOK_ID_22,
+                ConstantUtil.BOOK_TITLE_DARK_TOWER_I,
+                null,
+                ConstantUtil.BOOK_YEAR_2016,
+                ConstantUtil.BOOK_QUANTITY_4,
+                ConstantUtil.BOOK_DARK_TOWN_ISBN_10,
+                ConstantUtil.BOOK_DARK_TOWN_ISBN_13,
+                ConstantUtil.BOOK_DARK_TOWN_COVER,
+                bookStatusReadMapper.map(ConstantUtil.getBookStatus()),
+                ConstantUtil.getBookLanguage(ConstantUtil.BOOK_LANGUAGE_ID_1),
+                null,
+                null,
+                bookSeriesReadMapper.map(ConstantUtil.getBookSeries()),
+                null,
+                List.of(ConstantUtil.getAuthor()),
+                List.of(ConstantUtil.getBookGenre()),
+                ConstantUtil.CREATE_AT,
+                ConstantUtil.ADMIN_NAME_STELL
         );
     }
 }
