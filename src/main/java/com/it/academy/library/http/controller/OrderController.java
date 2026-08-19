@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -36,13 +37,21 @@ public class OrderController {
     private final BookService bookService;
     private final CartService cartService;
 
-    @GetMapping("cart/create")
-    public String create(RedirectAttributes redirectAttributes, @NotNull Principal principal) {
+    @PostMapping("/cart/checkout")
+    @PreAuthorize("hasRole('READER')")
+    public String checkout(RedirectAttributes redirectAttributes, @NotNull Principal principal) {
+        if (cartService.getBooks().isEmpty()) {
+            redirectAttributes.addFlashAttribute("outOfStockMessage", "Cart is empty");
+            return "redirect:/orders/cart";
+        }
+
+        var user = userService.findByUsername(principal.getName())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+
         try {
-            cartService.checkout(userService.findByUsername(principal.getName()).orElse(null));
+            cartService.checkout(user);
         } catch (NotEnoughBooksInStockException e) {
             redirectAttributes.addFlashAttribute("outOfStockMessage", e.getMessage());
-
             return "redirect:/orders/cart";
         }
 
@@ -50,6 +59,7 @@ public class OrderController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public String findAll(@NotNull Model model, OrderFilter filter, Pageable pageable) {
         model.addAttribute("orders", PageResponse.of(orderService.findAll(filter, pageable)));
         model.addAttribute("filter", filter);
@@ -59,6 +69,7 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public String findById(@PathVariable("id") Long id, Model model) {
         return orderService.findById(id)
                 .map(dto -> {
@@ -66,7 +77,6 @@ public class OrderController {
                     model.addAttribute("statuses", orderStatusService.findAll());
                     model.addAttribute("users", userService.findAll());
                     model.addAttribute("books", bookService.findAllByOrderId(id));
-                    model.addAttribute("users", userService.findAll());
 
                     return "order/order";
                 })
@@ -74,6 +84,7 @@ public class OrderController {
     }
 
     @PostMapping("/{id}/update")
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public String update(@PathVariable("id") Long id, @Validated OrderCreateEditDto dto) {
         return orderService.update(id, dto)
                 .map(it -> "redirect:/orders/{id}")
@@ -81,6 +92,7 @@ public class OrderController {
     }
 
     @PostMapping("/{id}/delete")
+    @PreAuthorize("hasRole('ADMIN')")
     public String delete(@PathVariable("id") Long id) {
         if (!orderService.delete(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -90,6 +102,7 @@ public class OrderController {
     }
 
     @GetMapping("/cart")
+    @PreAuthorize("hasRole('READER')")
     public String cart(@NotNull Model model) {
         model.addAttribute("books", cartService.getBooks());
         model.addAttribute("users", userService.findAll());
@@ -97,7 +110,8 @@ public class OrderController {
         return "order/cart";
     }
 
-    @GetMapping("/cart/addBook/{id}")
+    @PostMapping("/cart/books/{id}")
+    @PreAuthorize("hasRole('READER')")
     public String addBookToCart(@PathVariable("id") Long id) {
         return bookService.findById(id)
                 .map(cartService::addBook)
@@ -105,7 +119,8 @@ public class OrderController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/cart/removeBook/{id}")
+    @PostMapping("/cart/books/{id}/remove")
+    @PreAuthorize("hasRole('READER')")
     public String removeBook(@PathVariable("id") Long id) {
         return bookService.findById(id)
                 .map(cartService::removeBook)
@@ -114,11 +129,13 @@ public class OrderController {
     }
 
     @GetMapping("/userOrders")
-    public String findOrder(@NotNull Model model, @NotNull Principal principal) {
+    @PreAuthorize("hasRole('READER')")
+    public String findUserOrders(@NotNull Model model, @NotNull Principal principal) {
         var user = Objects.requireNonNull(userService.findByUsername(principal.getName())
                 .orElse(null));
 
         model.addAttribute("orders", orderService.findByUserId(user.getId()));
+        model.addAttribute("users", userService.findAll());
 
         return "order/order";
     }
