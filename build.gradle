@@ -87,6 +87,13 @@ compileQuerydsl {
 tasks.named('test') {
     outputs.dir snippetsDir
     useJUnitPlatform()
+    testLogging {
+        events 'failed'
+        exceptionFormat 'full'
+        showCauses true
+        showExceptions true
+        showStackTraces true
+    }
 }
 
 tasks.named('asciidoctor') {
