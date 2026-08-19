@@ -6,6 +6,7 @@ import com.it.academy.library.service.dto.filter.user.UserFilter;
 import com.it.academy.library.service.entity.user.UserRoleService;
 import com.it.academy.library.service.entity.user.UserService;
 import com.it.academy.library.service.entity.user.UserStatusService;
+import com.it.academy.library.service.validation.OnCreate;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -38,7 +39,7 @@ public class UserController {
     private final UserStatusService userStatusService;
 
     @PostMapping
-    public String create(@Validated @NotNull UserCreateEditDto dto,
+    public String create(@Validated(OnCreate.class) @NotNull UserCreateEditDto dto,
                          @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
         validate(dto, bindingResult);
