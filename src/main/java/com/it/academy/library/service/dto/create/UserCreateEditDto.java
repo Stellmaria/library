@@ -1,10 +1,10 @@
 package com.it.academy.library.service.dto.create;
 
 import com.it.academy.library.model.entity.user.User;
+import com.it.academy.library.service.validation.OnCreate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.FieldNameConstants;
-import org.postgresql.util.LruCache;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,7 +24,7 @@ public class UserCreateEditDto {
     @Size(
             min = 3,
             max = 50,
-            message = "The username cannot contain less than 1 character and more than 99 characters."
+            message = "The username must contain between 3 and 50 characters."
     )
     private String username;
 
@@ -32,7 +32,7 @@ public class UserCreateEditDto {
     @Size(
             min = 1,
             max = 99,
-            message = "The first name cannot contain less than 1 character and more than 64 characters."
+            message = "The first name must contain between 1 and 99 characters."
     )
     private String firstName;
 
@@ -40,7 +40,7 @@ public class UserCreateEditDto {
     @Size(
             min = 1,
             max = 99,
-            message = "Last name cannot be less than 1 character and more than 64 characters."
+            message = "Last name must contain between 1 and 99 characters."
     )
     private String lastName;
 
@@ -49,11 +49,11 @@ public class UserCreateEditDto {
     @Size(
             min = 10,
             max = 50,
-            message = "Email cannot contain less than 10 characters and more than 50 characters."
+            message = "Email must contain between 10 and 50 characters."
     )
     private String email;
 
-    @NotBlank(groups = LruCache.CreateAction.class)
+    @NotBlank(groups = OnCreate.class, message = "Password cannot be empty.")
     private String rawPassword;
 
     private Integer userRoleId;

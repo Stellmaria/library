@@ -7,6 +7,8 @@ import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.it.academy.library.service.dto.create.UserCreateEditDto.Fields.email;
@@ -14,6 +16,7 @@ import static com.it.academy.library.service.dto.create.UserCreateEditDto.Fields
 import static com.it.academy.library.service.dto.create.UserCreateEditDto.Fields.lastName;
 import static com.it.academy.library.service.dto.create.UserCreateEditDto.Fields.rawPassword;
 import static com.it.academy.library.service.dto.create.UserCreateEditDto.Fields.username;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -32,9 +35,11 @@ class UserControllerTest extends IntegrationTestBase {
 
     @SneakyThrows
     @Test
-    @DisplayName("Save user.")
+    @WithAnonymousUser
+    @DisplayName("Anonymous user can register with a valid CSRF token.")
     void create() {
         mockMvc.perform(post("/users")
+                        .with(csrf())
                         .param(username, USER_USERNAME_TEST)
                         .param(firstName, ConstantUtil.USER_FIRST_NAME_SVETA)
                         .param(lastName, ConstantUtil.USER_LAST_NAME_SVETIKOVA)
@@ -49,9 +54,11 @@ class UserControllerTest extends IntegrationTestBase {
 
     @SneakyThrows
     @Test
-    @DisplayName("Not save user.")
+    @WithAnonymousUser
+    @DisplayName("Registration validates duplicate usernames.")
     void notCreate() {
         mockMvc.perform(post("/users")
+                        .with(csrf())
                         .param(username, ConstantUtil.USER_USERNAME_READER)
                         .param(firstName, ConstantUtil.USER_FIRST_NAME_SVETA)
                         .param(lastName, ConstantUtil.USER_LAST_NAME_SVETIKOVA)
@@ -66,7 +73,21 @@ class UserControllerTest extends IntegrationTestBase {
 
     @SneakyThrows
     @Test
-    @DisplayName("Find all user.")
+    @DisplayName("POST requests without CSRF are rejected.")
+    void rejectPostWithoutCsrf() {
+        mockMvc.perform(post("/users")
+                        .param(username, USER_USERNAME_TEST)
+                        .param(firstName, ConstantUtil.USER_FIRST_NAME_SVETA)
+                        .param(lastName, ConstantUtil.USER_LAST_NAME_SVETIKOVA)
+                        .param(email, ConstantUtil.USER_EMAIL_EMAIL_EXAMPLE_COM)
+                        .param(rawPassword, USER_PASSWORD_TEST)
+                )
+                .andExpect(status().isForbidden());
+    }
+
+    @SneakyThrows
+    @Test
+    @DisplayName("Find all users as admin.")
     void findAll() {
         mockMvc.perform(get("/users"))
                 .andExpect(status().is2xxSuccessful())
@@ -78,7 +99,7 @@ class UserControllerTest extends IntegrationTestBase {
 
     @SneakyThrows
     @Test
-    @DisplayName("Find user by id.")
+    @DisplayName("Find user by id as admin.")
     void findById() {
         mockMvc.perform(get("/users/{id}", 1))
                 .andExpect(status().is2xxSuccessful())
@@ -95,5 +116,23 @@ class UserControllerTest extends IntegrationTestBase {
     void notFindById() {
         mockMvc.perform(get("/users/{id}", 99))
                 .andExpect(status().isNotFound());
+    }
+
+    @SneakyThrows
+    @Test
+    @WithMockUser(username = "reader", authorities = "ROLE_READER")
+    @DisplayName("Reader can open own profile.")
+    void readerCanOpenOwnProfile() {
+        mockMvc.perform(get("/users/{id}", ConstantUtil.USER_ID_3))
+                .andExpect(status().isOk());
+    }
+
+    @SneakyThrows
+    @Test
+    @WithMockUser(username = "reader", authorities = "ROLE_READER")
+    @DisplayName("Reader cannot open another user's profile.")
+    void readerCannotOpenAnotherProfile() {
+        mockMvc.perform(get("/users/{id}", ConstantUtil.USER_ID_2))
+                .andExpect(status().isForbidden());
     }
 }

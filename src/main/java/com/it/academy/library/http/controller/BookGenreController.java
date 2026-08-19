@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,6 +32,7 @@ public class BookGenreController {
     private final UserService userService;
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public String create(@Validated @NotNull BookGenreCreateEditDto dto,
                          @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
@@ -69,6 +71,7 @@ public class BookGenreController {
     }
 
     @PostMapping("/{id}/update")
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public String update(@PathVariable("id") Integer id,
                          @Validated @NotNull BookGenreCreateEditDto dto,
                          @NotNull BindingResult bindingResult,
@@ -82,10 +85,10 @@ public class BookGenreController {
                 : bookGenreService.update(id, dto)
                         .map(it -> "redirect:/books/genres/{id}")
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
     }
 
     @PostMapping("/{id}/delete")
+    @PreAuthorize("hasRole('ADMIN')")
     public String delete(@PathVariable("id") Integer id) {
         if (!bookGenreService.delete(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -95,6 +98,7 @@ public class BookGenreController {
     }
 
     @GetMapping("/addGenre")
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public String addBook(@NotNull Model model, BookGenreCreateEditDto dto) {
         model.addAttribute("genre", dto);
         model.addAttribute("users", userService.findAll());

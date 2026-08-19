@@ -14,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,6 +37,7 @@ public class AuthorController {
     private final UserService userService;
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public String create(@Validated @NotNull AuthorCreateEditDto dto,
                          @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
@@ -48,7 +50,6 @@ public class AuthorController {
 
         return "redirect:/authors";
     }
-
 
     @GetMapping
     public String findAll(@NotNull Model model, AuthorFilter filter, Pageable pageable) {
@@ -73,6 +74,7 @@ public class AuthorController {
     }
 
     @PostMapping("/{id}/update")
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public String update(@PathVariable("id") Long id,
                          @Validated AuthorCreateEditDto dto,
                          @NotNull BindingResult bindingResult,
@@ -87,6 +89,7 @@ public class AuthorController {
     }
 
     @PostMapping("/{id}/delete")
+    @PreAuthorize("hasRole('ADMIN')")
     public String delete(@PathVariable("id") Long id) {
         if (!authorService.delete(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -99,13 +102,14 @@ public class AuthorController {
     public ResponseEntity<byte[]> findAvatar(@PathVariable("id") Long id) {
         return authorService.findImage(id)
                 .map(it -> ResponseEntity.ok()
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)
                         .contentLength(it.length)
                         .body(it))
                 .orElseGet(notFound()::build);
     }
 
     @GetMapping("/addAuthor")
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public String addAuthor(@NotNull Model model, AuthorCreateEditDto dto) {
         model.addAttribute("author", dto);
         model.addAttribute("users", userService.findAll());

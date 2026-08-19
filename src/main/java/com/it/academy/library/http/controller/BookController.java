@@ -20,6 +20,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,6 +49,7 @@ public class BookController {
     private final UserService userService;
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public String create(@Validated @NotNull BookCreateEditDto dto,
                          @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
@@ -92,6 +94,7 @@ public class BookController {
     }
 
     @PostMapping("/{id}/update")
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public String update(@PathVariable("id") Long id,
                          @Validated BookCreateEditDto dto,
                          @NotNull BindingResult bindingResult,
@@ -107,6 +110,7 @@ public class BookController {
     }
 
     @PostMapping("/{id}/delete")
+    @PreAuthorize("hasRole('ADMIN')")
     public String delete(@PathVariable("id") Long id) {
         if (!bookService.delete(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -116,6 +120,7 @@ public class BookController {
     }
 
     @GetMapping("/addBook")
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public String addBook(@NotNull Model model, BookCreateEditDto dto) {
         model.addAttribute("book", dto);
         model.addAttribute("statuses", bookStatusService.findAll());
@@ -134,7 +139,7 @@ public class BookController {
     public ResponseEntity<byte[]> findAvatar(@PathVariable("id") Long id) {
         return bookService.findImage(id)
                 .map(it -> ResponseEntity.ok()
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)
                         .contentLength(it.length)
                         .body(it))
                 .orElseGet(notFound()::build);

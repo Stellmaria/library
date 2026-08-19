@@ -4,10 +4,7 @@
     <meta charset="UTF-8">
     <title>Cart</title>
 
-    <!--    Style main-->
     <link rel="stylesheet" th:href="@{/styles/css/main.css}">
-
-    <!--    Style for product-->
     <link rel="stylesheet" th:href="@{/styles/css/product/product.css}">
 
     <style th:inline="text">
@@ -17,7 +14,6 @@
     </style>
 </head>
 <body>
-
 <header class="header">
     <div class="container">
         <div class="header-row">
@@ -31,11 +27,8 @@
                         <a th:href="@{/books}">Books</a>
                         <div class="dropdown-menu">
                             <p><a th:href="@{/books/series}">Series</a></p>
-
                             <p><a th:href="@{/authors}">Authors</a></p>
-
                             <p><a th:href="@{/books/publishingHouses}">Houses</a></p>
-
                             <p><a th:href="@{/books/genres}">Genres</a></p>
                         </div>
                     </li>
@@ -61,13 +54,9 @@
             </nav>
 
             <div class="header-login">
-                <a class="btn" sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
+                <span class="header-login-name" sec:authentication="name">Username</span>
 
-                <span class="header-login-name" sec:authentication="name" sec:authorize="isAuthenticated()">
-                    Username
-                </span>
-
-                <form action="/logout" method="post" sec:authorize="isAuthenticated()">
+                <form action="/logout" method="post">
                     <button class="btn" type="submit">Logout</button>
                 </form>
 
@@ -80,39 +69,39 @@
 </header>
 
 <main>
-    <header>
-        <div class="product-container">
-            <section class="featured-section">
-                <div class="container">
-                    <p class="section-header-title" th:if="${outOfStockMessage}" th:utext="${outOfStockMessage}"></p>
+    <div class="product-container">
+        <section class="featured-section">
+            <div class="container">
+                <p class="section-header-title" th:if="${outOfStockMessage}" th:text="${outOfStockMessage}"></p>
+                <p class="section-header-title" th:if="${books.isEmpty()}">Your cart is empty.</p>
 
-                    <div class="products-wrapper" th:each="book : ${books.entrySet()}">
-                        <div class="product">
-                            <a class="product-link" th:href="@{'/books/' + ${book.getKey().id}}">
-                                <div class="product-bloc">
-                                    <img alt="Product image" class="product-image" th:if="${book.getKey().image}"
-                                         th:src="@{/books/{bookId}/image(bookId=${book.getKey().id})}">
+                <div class="products-wrapper" th:each="book : ${books.entrySet()}">
+                    <div class="product">
+                        <a class="product-link" th:href="@{'/books/' + ${book.getKey().id}}">
+                            <div class="product-bloc">
+                                <img alt="Product image" class="product-image" th:if="${book.getKey().image}"
+                                     th:src="@{/books/{bookId}/image(bookId=${book.getKey().id})}">
 
-                                    <h4 class="product_title">
-                                        <span th:text="${book.getKey().title}">Title</span>
-                                    </h4>
-                                </div>
-                            </a>
+                                <h4 class="product_title">
+                                    <span th:text="${book.getKey().title}">Title</span>
+                                </h4>
+                                <p>Quantity: <span th:text="${book.getValue()}">1</span></p>
+                            </div>
+                        </a>
 
-                            <a class="link" th:href="@{'/orders/cart/removeBook/{id}'(id=${book.getKey().id})}">
-                                <button class="btn" type="button">Remove</button>
-                            </a>
-
-                            <a class="link" th:href="@{'/orders/cart/create'}">
-                                <button class="btn" type="button">Checkout</button>
-                            </a>
-                        </div>
+                        <form method="post"
+                              th:action="@{/orders/cart/books/{id}/remove(id=${book.getKey().id})}">
+                            <button class="btn" type="submit">Remove</button>
+                        </form>
                     </div>
                 </div>
-            </section>
-        </div>
-    </header>
-</main>
 
+                <form method="post" th:action="@{/orders/cart/checkout}" th:if="${!books.isEmpty()}">
+                    <button class="btn" type="submit">Checkout</button>
+                </form>
+            </div>
+        </section>
+    </div>
+</main>
 </body>
 </html>
