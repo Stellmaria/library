@@ -14,7 +14,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -53,6 +54,7 @@ public class UserController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public String findAll(@NotNull Model model, UserFilter filter, Pageable pageable) {
         model.addAttribute("users", PageResponse.of(userService.findAll(filter, pageable)));
         model.addAttribute("filter", filter);
@@ -62,7 +64,9 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public String findById(@PathVariable("id") Long id, Model model) {
+    public String findById(@PathVariable("id") Long id, Model model, Authentication authentication) {
+        verifyUserAccess(id, authentication);
+
         return userService.findById(id)
                 .map(dto -> {
                     model.addAttribute("user", dto);
@@ -79,18 +83,21 @@ public class UserController {
     public String update(@PathVariable("id") Long id,
                          @Validated @NotNull UserCreateEditDto dto,
                          @NotNull BindingResult bindingResult,
-                         RedirectAttributes redirectAttributes) {
+                         RedirectAttributes redirectAttributes,
+                         Authentication authentication) {
+        verifyUserAccess(id, authentication);
+
         var view = checkError(dto, bindingResult, redirectAttributes, "redirect:/users/{id}");
 
         return view != null
                 ? view
-                : userService.update(id, dto, SecurityContextHolder.getContext().getAuthentication())
+                : userService.update(id, dto, authentication)
                         .map(it -> "redirect:/users/{id}")
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
     }
 
     @PostMapping("/{id}/delete")
+    @PreAuthorize("hasRole('ADMIN')")
     public String delete(@PathVariable("id") Long id) {
         if (!userService.delete(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -103,10 +110,31 @@ public class UserController {
     public ResponseEntity<byte[]> findAvatar(@PathVariable("id") Long id) {
         return userService.findAvatar(id)
                 .map(it -> ResponseEntity.ok()
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)
                         .contentLength(it.length)
                         .body(it))
                 .orElseGet(notFound()::build);
+    }
+
+    private void verifyUserAccess(Long id, Authentication authentication) {
+        if (authentication == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
+
+        var isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(authority -> "ROLE_ADMIN".equals(authority.getAuthority()));
+
+        if (isAdmin) {
+            return;
+        }
+
+        var currentUserId = userService.findByUsername(authentication.getName())
+                .map(user -> user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+
+        if (!id.equals(currentUserId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
     }
 
     private void validate(@NotNull UserCreateEditDto dto, @NotNull BindingResult bindingResult) {
