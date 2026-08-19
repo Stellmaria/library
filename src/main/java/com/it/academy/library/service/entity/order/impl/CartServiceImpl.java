@@ -5,7 +5,6 @@ import com.it.academy.library.listener.entity.AccessType;
 import com.it.academy.library.listener.entity.EntityEvent;
 import com.it.academy.library.mapper.convert.book.BookMapper;
 import com.it.academy.library.mapper.convert.user.UserMapper;
-import com.it.academy.library.mapper.filter.order.OrderFilterMapper;
 import com.it.academy.library.model.entity.book.Book;
 import com.it.academy.library.model.entity.order.Order;
 import com.it.academy.library.model.entity.order.OrderStatus;
@@ -28,7 +27,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 @Service
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -40,7 +38,6 @@ public class CartServiceImpl implements CartService {
 
     private final BookMapper bookMapper;
     private final UserMapper userMapper;
-    private final OrderFilterMapper orderFilterMapper;
 
     private final ApplicationEventPublisher eventPublisher;
 
@@ -71,23 +68,38 @@ public class CartServiceImpl implements CartService {
         return books;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void checkout(UserReadDto user) throws NotEnoughBooksInStockException {
-        var order = new Order();
-        order.setId(createNewOrder(user).getId());
+        if (books.isEmpty()) {
+            throw new IllegalStateException("Cannot checkout an empty cart");
+        }
+
+        var inventory = new HashMap<Book, Long>();
 
         for (Map.Entry<Book, Long> entry : books.entrySet()) {
-            var book = bookRepository.findById(entry.getKey().getId()).orElse(null);
+            var requestedQuantity = entry.getValue();
+            var bookId = entry.getKey().getId();
+            var book = bookRepository.findByIdForUpdate(bookId)
+                    .orElseThrow(() -> new IllegalStateException("Book not found: " + bookId));
+
             eventPublisher.publishEvent(new EntityEvent(book, AccessType.READ));
 
-            if (Objects.requireNonNull(book).getQuantity() < entry.getValue()) {
+            if (requestedQuantity <= 0 || book.getQuantity() < requestedQuantity) {
                 throw new NotEnoughBooksInStockException(book);
             }
 
-            entry.getKey().setQuantity(book.getQuantity() - entry.getValue());
-            entry.getKey().setOrder(order);
+            inventory.put(book, requestedQuantity);
         }
-        bookRepository.saveAllAndFlush(books.keySet());
-        eventPublisher.publishEvent(new EntityEvent(books.keySet(), AccessType.UPDATE));
+
+        var order = createNewOrder(user);
+
+        inventory.forEach((book, requestedQuantity) -> {
+            book.setQuantity(book.getQuantity() - requestedQuantity);
+            book.setOrder(order);
+        });
+
+        bookRepository.saveAllAndFlush(inventory.keySet());
+        eventPublisher.publishEvent(new EntityEvent(inventory.keySet(), AccessType.UPDATE));
 
         books.clear();
     }
@@ -95,13 +107,7 @@ public class CartServiceImpl implements CartService {
     private Order createNewOrder(UserReadDto user) {
         var order = orderRepository.saveAndFlush(createOrder(user));
         eventPublisher.publishEvent(new EntityEvent(order, AccessType.CREATE));
-
-        var orderFilter = orderFilterMapper.map(order);
-
-        return Objects.requireNonNull(orderRepository.findAllByOrderFilter(orderFilter).stream()
-                .findFirst()
-                .orElse(null)
-        );
+        return order;
     }
 
     private @NotNull Order createOrder(UserReadDto user) {
