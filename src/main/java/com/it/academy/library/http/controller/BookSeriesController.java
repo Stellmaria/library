@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,6 +32,7 @@ public class BookSeriesController {
     private final UserService userService;
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public String create(@Validated @NotNull BookSeriesCreateEditDto dto,
                          @NotNull BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
@@ -45,7 +47,6 @@ public class BookSeriesController {
 
         return "redirect:/books/series";
     }
-
 
     @GetMapping
     public String findAll(@NotNull Model model, BookSeriesFilter filter, Pageable pageable) {
@@ -70,6 +71,7 @@ public class BookSeriesController {
     }
 
     @PostMapping("/{id}/update")
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public String update(@PathVariable("id") Integer id,
                          @Validated @NotNull BookSeriesCreateEditDto dto,
                          @NotNull BindingResult bindingResult,
@@ -83,10 +85,10 @@ public class BookSeriesController {
                 : bookSeriesService.update(id, dto)
                         .map(it -> "redirect:/books/series/{id}")
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
     }
 
     @PostMapping("/{id}/delete")
+    @PreAuthorize("hasRole('ADMIN')")
     public String delete(@PathVariable("id") Integer id) {
         if (!bookSeriesService.delete(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -96,6 +98,7 @@ public class BookSeriesController {
     }
 
     @GetMapping("/addSeries")
+    @PreAuthorize("hasAnyRole('ADMIN', 'LIBRARIAN')")
     public String addBook(@NotNull Model model, BookSeriesCreateEditDto dto) {
         model.addAttribute("series", dto);
         model.addAttribute("users", userService.findAll());
